@@ -1,0 +1,29 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "This file needs to exist for linklocal to work. Files in this folder are require-able via require('common/components/xxx'). See https://github.com/timoxley/linklocal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Chang Wang <cheapsteak@gmail.com> (https://github.com/cheapsteak)",
+  "license": "ISC",
+  "browserify": {
+    "transform": [
+      [
+        "babelify"
+      ],
+      [
+        "yamlify"
+      ],
+      [
+        "stringify",
+        {
+          "extensions": [
+            ".svg"
+          ]
+        }
+      ]
+    ]
+  }
+}
