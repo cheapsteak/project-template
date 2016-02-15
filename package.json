@@ -1,0 +1,100 @@
+{
+  "name": "success-academy",
+  "version": "0.0.0",
+  "description": "Success Academy",
+  "author": {
+    "name": "chang wang",
+    "email": "garnwraly@gmail.com"
+  },
+  "scripts": {
+    "build": "gulp build",
+    "build:production": "NODE_ENV=production npm run build",
+    "start": "BABEL_ENV=development gulp",
+    "postinstall": "linklocal",
+    "deploy:dev": "npm run build:production && rsync -rPz build/ ubuntu@???.jam3.net:/var/www/html/"
+  },
+  "license": "ISC",
+  "repository": "https://github.com/Jam3/prj-success-academy",
+  "dependencies": {
+    "babel-polyfill": "^6.5.0",
+    "domready": "^1.0.8",
+    "gsap-promise": "^1.4.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-router": "^2.0.0",
+    "react-transition-group-plus": "^0.1.4"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-plugin-add-module-exports": "^0.1.2",
+    "babel-plugin-react-transform": "^2.0.0-beta1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13",
+    "babel-runtime": "^5.8.34",
+    "babelify": "^7.2.0",
+    "browser-sync": "^2.9.4",
+    "browserify": "^13.0.0",
+    "browserify-hmr": "^0.3.1",
+    "browsernizr": "^2.0.1",
+    "colors": "^1.1.2",
+    "common": "file:./src/common",
+    "connect-modrewrite": "^0.8.2",
+    "envify": "^3.4.0",
+    "eslint": "^1.10.3",
+    "eslint-config-airbnb": "^2.0.0",
+    "eslint-plugin-react": "^3.11.2",
+    "exorcist": "^0.4.0",
+    "gulp": "3.9.0",
+    "gulp-autoprefixer": "1.0.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-duration": "0.0.0",
+    "gulp-header": "^1.7.1",
+    "gulp-if": "^2.0.0",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-inject": "^3.0.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-rev": "^4.0.0",
+    "gulp-rimraf": "^0.2.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.3.0",
+    "gulp-streamify": "0.0.5",
+    "gulp-stylus": "^2.3.0",
+    "gulp-uglify": "~1.0.1",
+    "gulp-util": "~3.0.1",
+    "gulp-watch": "^4.3.4",
+    "linklocal": "^2.5.2",
+    "livereactload": "^2.1.0",
+    "minimist": "^1.2.0",
+    "mobile-detect": "^1.3.0",
+    "node-notifier": "^4.2.1",
+    "notify-error": "^1.2.0",
+    "react-proxy": "^1.1.2",
+    "react-transform-hmr": "^1.0.1",
+    "require-path-relative": "^1.0.1",
+    "run-sequence": "^1.1.5",
+    "stringify": "^3.2.0",
+    "uglify-js": "^2.6.1",
+    "vinyl-source-stream": "^1.1.0",
+    "vinyl-transform": "^1.0.0",
+    "watchify": "^3.7.0",
+    "yamlify": "^0.1.2"
+  },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "yamlify",
+      "envify",
+      [
+        "stringify",
+        {
+          "extensions": [
+            ".svg"
+          ]
+        }
+      ]
+    ]
+  }
+}
