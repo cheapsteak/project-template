@@ -23,7 +23,8 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0",
-    "react-transition-group-plus": "^0.1.4"
+    "react-transition-group-plus": "^0.1.4",
+    "seriously": "github:namniak/Seriously.js"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
@@ -48,6 +49,7 @@
     "eslint-plugin-react": "^3.11.2",
     "exorcist": "^0.4.0",
     "gulp": "3.9.0",
+    "gulp-add": "0.0.2",
     "gulp-autoprefixer": "1.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",

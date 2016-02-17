@@ -1,0 +1,29 @@
+.video-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  .bg-video {
+    opacity: 0;
+    visibility: hidden;
+
+    &.loaded {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .fg-canvas {
+    opacity: 0;
+    visibility: hidden;
+
+    &.loaded {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .fg-video {
+    display: none;
+  }
+}
