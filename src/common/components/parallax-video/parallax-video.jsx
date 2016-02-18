@@ -25,13 +25,17 @@ export default class VideoPlayer extends React.Component {
   }
 
   static propTypes = {
-    bgVideo: React.PropTypes.string,
-    fgVideo: React.PropTypes.string
+    bgVid: React.PropTypes.string,
+    fgVid: React.PropTypes.string,
+    title: React.PropTypes.string,
+    chapterName: React.PropTypes.string
   };
 
   static defaultProps = {
-    bgVid: '../videos/bg.mp4',
-    fgVid: '../videos/fg.mp4'
+    bgVid: '../videos/bg-1080.mp4',
+    fgVid: '../videos/fg-1080.mp4',
+    title: 'Chapter',
+    chapterName: 'science'
   };
 
   handleResize = () => {
@@ -61,7 +65,6 @@ export default class VideoPlayer extends React.Component {
     var chroma = seriously.effect('chroma');
 
     chroma.source = fgVideo;
-    //chroma.screen = 'rgb(48,23,43)';
     //chroma.screen = '#29fe2f';
     target.source = chroma;
 
@@ -112,10 +115,14 @@ export default class VideoPlayer extends React.Component {
             </video>
           </span>
           <span className={`layer`} data-depth="0.5">
-            <canvas width="1280" height="720" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
+            <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
+
           <span className={`layer`} data-depth="0.3">
-            <div ref="title" className={`title`}>SCIENCE</div>
+            <div className={`text-container`}>
+              <div ref="title" className={`title`}>{this.props.title}</div>
+              <div ref="title" className={`chapter-name`}>{this.props.chapterName}</div>
+            </div>
           </span>
         </div>
       </div>
