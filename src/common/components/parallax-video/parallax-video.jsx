@@ -4,14 +4,14 @@ import animate from 'gsap-promise';
 import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
+import blurEffect from 'seriously/effects/seriously.blur';
 
 const states = {
   LOADING: 'loading',
   LOADED: 'loaded'
 };
 
-var containerEl, bgVideo, fgVideo, fgCanvas;
-var seriously, target, chroma;
+var containerEl, bgVideo, fgVideo, bgCanvas, fgCanvas;
 var loadedVideos = 0;
 
 export default class VideoPlayer extends React.Component {
@@ -29,50 +29,74 @@ export default class VideoPlayer extends React.Component {
   };
 
   static defaultProps = {
-    bgVideo: '../videos/bg.mp4',
-    fgVideo: '../videos/fg.mp4'
+    bgVid: '../videos/bg.mp4',
+    fgVid: '../videos/fg.mp4'
   };
 
   handleResize = () => {
-    mediaBgCover(bgVideo, containerEl);
+    mediaBgCover(bgCanvas, containerEl);
     mediaBgCover(fgCanvas, containerEl);
   };
 
-  handleVideosLoaded = () => {
+  handleVideosReady = () => {
     loadedVideos++;
     if (loadedVideos == 2) {
       this.handleResize();
       this.setState({status: states.LOADED});
+      bgVideo.play();
+      fgVideo.play();
     }
   };
 
+  setBgVideo = () => {
+    bgVideo = document.createElement('video');
+    bgVideo.src = this.props.bgVid;
+    bgVideo.loop = true;
+
+    var seriously = new Seriously();
+    var target = seriously.target(this.refs.bgCanvas);
+    var blur = seriously.effect('blur');
+    var reformat = seriously.transform('reformat');
+
+    reformat.source = bgVideo;
+    blur.source = reformat;
+    blur.amount = 0;
+    target.source = blur;
+
+    seriously.go();
+  };
+
   setFgVideo = () => {
-    seriously = new Seriously();
-    target = seriously.target(this.refs.fgCanvas);
-    chroma = seriously.effect('chroma');
+    fgVideo = document.createElement('video');
+    fgVideo.src = this.props.fgVid;
+    fgVideo.loop = true;
+
+    var seriously = new Seriously();
+    var target = seriously.target(this.refs.fgCanvas);
+    var chroma = seriously.effect('chroma');
 
     chroma.source = fgVideo;
-    chroma.screen = '#347e46';
+    chroma.screen = '#42835d';
     target.source = chroma;
+
     seriously.go();
   };
 
   setEvents = () => {
     bgVideo.addEventListener('loadstart', () => {
-      console.time('bgVideoLoaded');
+      console.time('bg-video-ready');
     });
     bgVideo.addEventListener('canplay', () => {
-      this.handleVideosLoaded();
-      console.timeEnd('bgVideoLoaded');
+      this.handleVideosReady();
+      console.timeEnd('bg-video-ready');
     });
 
     fgVideo.addEventListener('loadstart', () => {
-      console.time('fgVideoLoaded');
+      console.time('fg-video-ready');
     });
-
     fgVideo.addEventListener('canplay', () => {
-      this.handleVideosLoaded();
-      console.timeEnd('fgVideoLoaded');
+      this.handleVideosReady();
+      console.timeEnd('fg-video-ready');
     });
 
     window.addEventListener('resize', this.handleResize);
@@ -80,12 +104,13 @@ export default class VideoPlayer extends React.Component {
 
   componentDidMount() {
     containerEl = findDOMNode(this);
-    bgVideo = findDOMNode(this.refs.bgVideo);
-    fgVideo = findDOMNode(this.refs.fgVideo);
+    bgCanvas = findDOMNode(this.refs.bgCanvas);
     fgCanvas = findDOMNode(this.refs.fgCanvas);
 
-    this.setEvents();
+    this.setBgVideo();
     this.setFgVideo();
+
+    this.setEvents();
   }
 
   componentWillUnmount() {
@@ -94,26 +119,11 @@ export default class VideoPlayer extends React.Component {
 
   render() {
     return (
-      <div className={`video-container`}>
-
-        <video
-          ref="bgVideo"
-          autoPlay="true"
-          preload="true"
-          loop="true"
-          muted="true"
-          className={`bg-video ${this.state.status}`}
-        >
-          <source src={this.props.bgVideo} type="video/mp4"/>
-        </video>
-
+      <div className={`parallax-video-container`}>
+        <canvas width="1364" height="720" ref="bgCanvas" className={`bg-canvas ${this.state.status}`}></canvas>
         <canvas width="1280" height="720" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
-
-        <video ref="fgVideo" className={`fg-video`} autoPlay="true" preload="true" loop="true" muted="true">
-          <source src={this.props.fgVideo} type="video/mp4"/>
-        </video>
-
       </div>
     );
   }
+
 }

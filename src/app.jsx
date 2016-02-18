@@ -3,7 +3,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
-import VideoPlayer from './common/components/video-player-canvas/video-player-canvas.jsx';
+import Stats from './common/utils/stats';
+import VideoPlayer from './common/components/parallax-video/parallax-video.jsx';
 
 class App extends React.Component {
   render () {
