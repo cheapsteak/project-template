@@ -11,8 +11,9 @@ const states = {
   LOADED: 'loaded'
 };
 
-var containerEl, bgVideo, fgVideo, bgCanvas, fgCanvas;
+var containerEl, bgVideo, fgVideo;
 var loadedVideos = 0;
+var parallax;
 
 export default class VideoPlayer extends React.Component {
   constructor(props) {
@@ -34,8 +35,9 @@ export default class VideoPlayer extends React.Component {
   };
 
   handleResize = () => {
-    mediaBgCover(bgCanvas, containerEl);
-    mediaBgCover(fgCanvas, containerEl);
+    mediaBgCover(this.refs.bgVideo, containerEl);
+    mediaBgCover(this.refs.fgCanvas, containerEl);
+    parallax.limit(100, 100);
   };
 
   handleVideosReady = () => {
@@ -48,27 +50,10 @@ export default class VideoPlayer extends React.Component {
     }
   };
 
-  setBgVideo = () => {
-    bgVideo = document.createElement('video');
-    bgVideo.src = this.props.bgVid;
-    bgVideo.loop = true;
-
-    var seriously = new Seriously();
-    var target = seriously.target(this.refs.bgCanvas);
-    var blur = seriously.effect('blur');
-    var reformat = seriously.transform('reformat');
-
-    reformat.source = bgVideo;
-    blur.source = reformat;
-    blur.amount = 0;
-    target.source = blur;
-
-    seriously.go();
-  };
-
   setFgVideo = () => {
     fgVideo = document.createElement('video');
     fgVideo.src = this.props.fgVid;
+    fgVideo.preload = true;
     fgVideo.loop = true;
 
     var seriously = new Seriously();
@@ -76,7 +61,8 @@ export default class VideoPlayer extends React.Component {
     var chroma = seriously.effect('chroma');
 
     chroma.source = fgVideo;
-    chroma.screen = '#42835d';
+    //chroma.screen = 'rgb(48,23,43)';
+    //chroma.screen = '#29fe2f';
     target.source = chroma;
 
     seriously.go();
@@ -104,13 +90,12 @@ export default class VideoPlayer extends React.Component {
 
   componentDidMount() {
     containerEl = findDOMNode(this);
-    bgCanvas = findDOMNode(this.refs.bgCanvas);
-    fgCanvas = findDOMNode(this.refs.fgCanvas);
+    bgVideo = this.refs.bgVideo;
 
-    this.setBgVideo();
     this.setFgVideo();
-
     this.setEvents();
+
+    parallax = new Parallax(this.refs.scene);
   }
 
   componentWillUnmount() {
@@ -120,8 +105,19 @@ export default class VideoPlayer extends React.Component {
   render() {
     return (
       <div className={`parallax-video-container`}>
-        <canvas width="1364" height="720" ref="bgCanvas" className={`bg-canvas ${this.state.status}`}></canvas>
-        <canvas width="1280" height="720" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
+        <div ref="scene" className={`scene ${this.state.status}`}>
+          <span className={`layer`} data-depth="0.7">
+            <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
+              <source src={this.props.bgVid} type="video/mp4"/>
+            </video>
+          </span>
+          <span className={`layer`} data-depth="0.5">
+            <canvas width="1280" height="720" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
+          </span>
+          <span className={`layer`} data-depth="0.3">
+            <div ref="title" className={`title`}>SCIENCE</div>
+          </span>
+        </div>
       </div>
     );
   }
