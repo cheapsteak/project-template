@@ -4,7 +4,9 @@ import animate from 'gsap-promise';
 import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
-import blurEffect from 'seriously/effects/seriously.blur';
+
+const maxParaX = 100;
+const maxParaY = 100;
 
 const states = {
   LOADING: 'loading',
@@ -13,14 +15,15 @@ const states = {
 
 var containerEl, bgVideo, fgVideo;
 var loadedVideos = 0;
-var parallax;
 
 export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      status: states.LOADING
+      status: states.LOADING,
+      sceneScale: 1,
+      textLeftPos: 0
     }
   }
 
@@ -28,20 +31,33 @@ export default class VideoPlayer extends React.Component {
     bgVid: React.PropTypes.string,
     fgVid: React.PropTypes.string,
     title: React.PropTypes.string,
-    chapterName: React.PropTypes.string
+    subtitle: React.PropTypes.string
   };
 
   static defaultProps = {
     bgVid: '../videos/bg-1080.mp4',
     fgVid: '../videos/fg-1080.mp4',
-    title: 'Chapter',
-    chapterName: 'science'
+    title: 'chapter',
+    subtitle: 'science'
   };
 
   handleResize = () => {
     mediaBgCover(this.refs.bgVideo, containerEl);
     mediaBgCover(this.refs.fgCanvas, containerEl);
-    parallax.limit(100, 100);
+
+    var sceneWidth = this.refs.scene.offsetWidth;
+    var sceneHeight = this.refs.scene.offsetHeight;
+
+    var scaleX = (sceneWidth + maxParaX * 2) / sceneWidth;
+    var scaleY = (sceneHeight + maxParaY * 2) / sceneHeight;
+    var scale = Math.max(scaleX, scaleY);
+
+    var textLeftPos = window.innerWidth * (scale - 1) / 2;
+
+    this.setState({
+      sceneScale: scale,
+      textLeftPos: textLeftPos
+    });
   };
 
   handleVideosReady = () => {
@@ -98,7 +114,10 @@ export default class VideoPlayer extends React.Component {
     this.setFgVideo();
     this.setEvents();
 
-    parallax = new Parallax(this.refs.scene);
+    var parallax = new Parallax(this.refs.scene, {
+      limitX: maxParaX,
+      invertY: maxParaY
+    });
   }
 
   componentWillUnmount() {
@@ -108,23 +127,33 @@ export default class VideoPlayer extends React.Component {
   render() {
     return (
       <div className={`parallax-video-container`}>
-        <div ref="scene" className={`scene ${this.state.status}`}>
+
+        <div
+          ref="scene"
+          className={`scene ${this.state.status}`}
+          style={{transform: 'scale(' + this.state.sceneScale + ') translate3d(0,0,0)'}}
+        >
           <span className={`layer`} data-depth="0.7">
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
               <source src={this.props.bgVid} type="video/mp4"/>
             </video>
           </span>
+
           <span className={`layer`} data-depth="0.5">
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
 
           <span className={`layer`} data-depth="0.3">
-            <div className={`text-container`}>
-              <div ref="title" className={`title`}>{this.props.title}</div>
-              <div ref="title" className={`chapter-name`}>{this.props.chapterName}</div>
+            <div
+              className={`text-container`}
+              style={{transform: 'scale(' + (1/this.state.sceneScale) + ')'}}
+            >
+              <div className={`title`} style={{left: this.state.textLeftPos}}>{this.props.title}</div>
+              <div className={`subtitle`} style={{left: this.state.textLeftPos}}>{this.props.subtitle}</div>
             </div>
           </span>
         </div>
+
       </div>
     );
   }
