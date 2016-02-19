@@ -4,7 +4,6 @@ import animate from 'gsap-promise';
 import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
-import blurEffect from 'seriously/effects/seriously.blur';
 
 const states = {
   LOADING: 'loading',
@@ -120,8 +119,8 @@ export default class VideoPlayer extends React.Component {
 
           <span className={`layer`} data-depth="0.3">
             <div className={`text-container`}>
-              <div ref="title" className={`title`}>{this.props.title}</div>
-              <div ref="title" className={`subtitle`}>{this.props.subtitle}</div>
+              <div className={`title`}>{this.props.title}</div>
+              <div className={`subtitle`}>{this.props.subtitle}</div>
             </div>
           </span>
         </div>
