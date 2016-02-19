@@ -4,7 +4,8 @@ import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
 import Stats from './common/utils/stats';
-import VideoPlayer from './common/components/parallax-video/parallax-video.jsx';
+import ParallaxVideo from './common/components/parallax-video/parallax-video.jsx';
+import VideoPlayer from './common/components/video-player/video-player.jsx';
 
 class App extends React.Component {
   render () {
@@ -17,7 +18,7 @@ class App extends React.Component {
       className="route-content-wrapper"
       data-route={pathname}
       >
-      <VideoPlayer/>
+      <ParallaxVideo/>
       {React.cloneElement(this.props.children || <div />, { key: key })}
     </TransitionGroup>;
   }

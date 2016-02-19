@@ -62,7 +62,7 @@ export default class VideoPlayer extends React.Component {
   };
 
   setEvents = () => {
-    videoEl.addEventListener('loadedmetadata', () => {
+    videoEl.addEventListener('canplay', () => {
       this.handleResize();
       this.playVideo();
     });

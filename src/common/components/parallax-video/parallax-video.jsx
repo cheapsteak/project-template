@@ -116,7 +116,6 @@ export default class VideoPlayer extends React.Component {
           <span className={`layer`} data-depth="0.5">
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
-
           <span className={`layer`} data-depth="0.3">
             <div className={`text-container`}>
               <div className={`title`}>{this.props.title}</div>
