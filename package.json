@@ -20,6 +20,7 @@
     "domready": "^1.0.8",
     "gsap-promise": "^1.4.1",
     "gulp-sourcemaps": "^1.6.0",
+    "pannellum": "^2.2.0",
     "parallax": "github:wagerfield/parallax",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
