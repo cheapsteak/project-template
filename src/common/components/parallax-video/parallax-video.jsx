@@ -28,20 +28,20 @@ export default class VideoPlayer extends React.Component {
     bgVid: React.PropTypes.string,
     fgVid: React.PropTypes.string,
     title: React.PropTypes.string,
-    chapterName: React.PropTypes.string
+    subtitle: React.PropTypes.string
   };
 
   static defaultProps = {
     bgVid: '../videos/bg-1080.mp4',
     fgVid: '../videos/fg-1080.mp4',
-    title: 'Chapter',
-    chapterName: 'science'
+    title: 'chapter',
+    subtitle: 'science'
   };
 
   handleResize = () => {
     mediaBgCover(this.refs.bgVideo, containerEl);
     mediaBgCover(this.refs.fgCanvas, containerEl);
-    parallax.limit(100, 100);
+    parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
   handleVideosReady = () => {
@@ -121,7 +121,7 @@ export default class VideoPlayer extends React.Component {
           <span className={`layer`} data-depth="0.3">
             <div className={`text-container`}>
               <div ref="title" className={`title`}>{this.props.title}</div>
-              <div ref="title" className={`chapter-name`}>{this.props.chapterName}</div>
+              <div ref="title" className={`subtitle`}>{this.props.subtitle}</div>
             </div>
           </span>
         </div>
