@@ -19,7 +19,7 @@ import uglify from 'gulp-uglify';
 import watchify from 'watchify';
 import watch from 'gulp-watch';
 import inject from 'gulp-inject';
-import add from 'gulp-add';
+import modRewrite from 'connect-modrewrite';
 
 // eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
@@ -183,7 +183,12 @@ gulp.task('server', () => {
     notify: false,
     ghostMode: false,
     server: {
-      baseDir: paths.destination
+      baseDir: paths.destination,
+      middleware: [
+        modRewrite([
+          '^[^\\.]*$ /index.html [L]'
+        ])
+      ]
     }
   });
 });
