@@ -24,7 +24,7 @@ export default class VideoPlayer extends React.Component {
   };
 
   static defaultProps = {
-    src: 'https://pannellum.org/images/cerro-toco-0.jpg'
+    src: '../images/pan-test.jpg'
   };
 
   componentDidMount() {
