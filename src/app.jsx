@@ -3,7 +3,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
-import ParallaxVideoWrapper from './common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
 
 class App extends React.Component {
   render () {
