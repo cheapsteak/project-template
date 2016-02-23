@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
 import Stats from './common/utils/stats';
-import ParallaxVideo from './common/components/parallax-video/parallax-video.jsx';
+import ParallaxVideoWrapper from './common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
 import VideoPlayer from './common/components/video-player/video-player.jsx';
 
 class App extends React.Component {
@@ -18,19 +18,7 @@ class App extends React.Component {
       className="route-content-wrapper"
       data-route={pathname}
     >
-      <ParallaxVideo
-        bgVideoPath={'../videos/bg-1080.mp4'}
-        fgVideoPath={'../videos/fg-1080.mp4'}
-        animateIn={ () => {console.log('animateIn passed prop')} }
-      >
-          <span className={`layer`} data-depth="0.3">
-            <div className={`text-container`}>
-              <div className={`title`}>Explore</div>
-              <div className={`subtitle`}>Science</div>
-              <div className={`description`}>At Success Academy we completely redefined how to teach Science.</div>
-            </div>
-          </span>
-      </ParallaxVideo>
+      <ParallaxVideoWrapper />
 
     </TransitionGroup>;
   }

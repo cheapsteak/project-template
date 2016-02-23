@@ -123,7 +123,7 @@ export default class ParallaxVideo extends React.Component {
 
   render() {
     return (
-      <div className={`parallax-video-container`}>
+      <div className={`parallax-video`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
           <span className={`layer`} data-depth={this.props.bgVideoDepth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
