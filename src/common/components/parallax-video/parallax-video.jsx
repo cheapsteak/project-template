@@ -1,6 +1,5 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import animate from 'gsap-promise';
 import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
@@ -10,7 +9,7 @@ const states = {
   LOADED: 'loaded'
 };
 
-export default class VideoPlayer extends React.Component {
+export default class ParallaxVideo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -26,20 +25,22 @@ export default class VideoPlayer extends React.Component {
   loadedVideos = 0;
 
   static propTypes = {
-    bgVideo: React.PropTypes.shape({
-      path: React.PropTypes.string.isRequired,
-      depth: React.PropTypes.number
-    }),
-    fgVideo: React.PropTypes.shape({
-      path: React.PropTypes.string.isRequired,
-      depth: React.PropTypes.number
-    }),
-    animateIn: React.PropTypes.func
+    bgVideoPath: React.PropTypes.string.isRequired,
+    fgVideoPath: React.PropTypes.string.isRequired,
+    bgVideoDepth: React.PropTypes.number,
+    fgVideoDepth: React.PropTypes.number,
+    animateIn: React.PropTypes.func,
+    animateOut: React.PropTypes.func
   };
 
   static defaultProps = {
+    bgVideoDepth: 0.7,
+    fgVideoDepth: 0.5,
     animateIn: () => {
       console.log('default animateIn');
+    },
+    animateOut: () => {
+      console.log('default animateOut');
     }
   };
 
@@ -63,7 +64,7 @@ export default class VideoPlayer extends React.Component {
 
   setFgVideo = () => {
     this.fgVideo = document.createElement('video');
-    this.fgVideo.src = this.props.fgVideo.path;
+    this.fgVideo.src = this.props.fgVideoPath;
     this.fgVideo.preload = true;
     this.fgVideo.loop = true;
 
@@ -124,21 +125,16 @@ export default class VideoPlayer extends React.Component {
     return (
       <div className={`parallax-video-container`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span
-            className={`layer`}
-            data-depth={this.props.bgVideo.depth !== undefined ? this.props.bgVideo.depth :0.7}
-          >
+          <span className={`layer`} data-depth={this.props.bgVideoDepth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
-              <source src={this.props.bgVideo.path} type="video/mp4"/>
+              <source src={this.props.bgVideoPath} type="video/mp4"/>
             </video>
           </span>
 
-          <span
-            className={`layer`}
-            data-depth={this.props.bgVideo.depth !== undefined ? this.props.bgVideo.depth :0.5}
-          >
+          <span className={`layer`} data-depth={this.props.fgVideoDepth}>
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
+
           {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
         </div>
       </div>

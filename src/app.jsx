@@ -19,8 +19,8 @@ class App extends React.Component {
       data-route={pathname}
     >
       <ParallaxVideo
-        bgVideo={ {path: '../videos/bg-1080.mp4'} }
-        fgVideo={ {path: '../videos/fg-1080.mp4'} }
+        bgVideoPath={'../videos/bg-1080.mp4'}
+        fgVideoPath={'../videos/fg-1080.mp4'}
         animateIn={ () => {console.log('animateIn passed prop')} }
       >
           <span className={`layer`} data-depth="0.3">
