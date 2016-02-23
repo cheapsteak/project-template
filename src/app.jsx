@@ -18,7 +18,7 @@ class App extends React.Component {
       className="route-content-wrapper"
       data-route={pathname}
     >
-      <ParallaxVideoWrapper />
+      <ParallaxVideoWrapper inHomePage={true}/>
 
     </TransitionGroup>;
   }
