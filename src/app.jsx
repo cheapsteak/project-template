@@ -4,7 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
 import Test from 'common/test/test.jsx';
-    
+
 class App extends React.Component {
   render () {
     console.log('render');
@@ -30,7 +30,11 @@ domready(function () {
   render((
     <Router history={browserHistory} onUpdate={handleRouteUpdate}>
       <Route path="/" component={App}>
-        <Route path="test" component={Test} />
+
+      </Route>
+
+      <Route path="/tests" component={require('./tests/tests.jsx')}>
+        {require('./tests/routes.jsx')}
       </Route>
     </Router>
   ), document.getElementById('container'));
