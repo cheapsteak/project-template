@@ -124,12 +124,19 @@ export default class VideoPlayer extends React.Component {
     return (
       <div className={`parallax-video-container`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span className={`layer`} data-depth={this.props.bgVideo.depth || 0.7}>
+          <span
+            className={`layer`}
+            data-depth={this.props.bgVideo.depth !== undefined ? this.props.bgVideo.depth :0.7}
+          >
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
               <source src={this.props.bgVideo.path} type="video/mp4"/>
             </video>
           </span>
-          <span className={`layer`} data-depth={this.props.fgVideo.depth || 0.5}>
+
+          <span
+            className={`layer`}
+            data-depth={this.props.bgVideo.depth !== undefined ? this.props.bgVideo.depth :0.5}
+          >
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
           {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
