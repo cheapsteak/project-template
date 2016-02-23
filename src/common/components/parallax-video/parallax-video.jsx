@@ -27,40 +27,37 @@ export default class VideoPlayer extends React.Component {
 
   static propTypes = {
     bgVideo: React.PropTypes.shape({
-      path: React.PropTypes.string,
+      path: React.PropTypes.string.isRequired,
       depth: React.PropTypes.number
     }),
     fgVideo: React.PropTypes.shape({
-      path: React.PropTypes.string,
+      path: React.PropTypes.string.isRequired,
       depth: React.PropTypes.number
-    })
+    }),
+    animateIn: React.PropTypes.func
   };
 
   static defaultProps = {
-    bgVideo: {
-      path: '../videos/bg-1080.mp4',
-      depth: 0.7
-    },
-    fgVideo: {
-      path: '../videos/fg-1080.mp4',
-      depth: 0.5
+    animateIn: () => {
+      console.log('default animateIn');
     }
   };
 
-  handleResize = () => {
+  positionElements = () => {
     mediaBgCover(this.refs.bgVideo, this.containerEl);
     mediaBgCover(this.refs.fgCanvas, this.containerEl);
     this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
-  handleVideosReady = () => {
+  onVideosReady = () => {
     this.loadedVideos++;
 
     if (this.loadedVideos == 2) {
-      this.handleResize();
+      this.positionElements();
       this.setState({status: states.LOADED});
       this.bgVideo.play();
       this.fgVideo.play();
+      this.props.animateIn();
     }
   };
 
@@ -87,11 +84,11 @@ export default class VideoPlayer extends React.Component {
         console.time('bg-video-ready');
       });
       this.bgVideo.addEventListener('canplay', () => {
-        this.handleVideosReady();
+        this.onVideosReady();
         console.timeEnd('bg-video-ready');
       });
     } else {
-      this.handleVideosReady();
+      this.onVideosReady();
     }
 
     if (this.fgVideo.readyState !== 4) {
@@ -99,14 +96,14 @@ export default class VideoPlayer extends React.Component {
         console.time('fg-video-ready');
       });
       this.fgVideo.addEventListener('canplay', () => {
-        this.handleVideosReady();
+        this.onVideosReady();
         console.timeEnd('fg-video-ready');
       });
     } else {
-      this.handleVideosReady();
+      this.onVideosReady();
     }
 
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.positionElements);
   };
 
   componentDidMount() {
@@ -119,19 +116,20 @@ export default class VideoPlayer extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    this.fgVideo = null;
+    window.removeEventListener('resize', this.positionElements);
   }
 
   render() {
     return (
       <div className={`parallax-video-container`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span className={`layer`} data-depth={this.props.bgVideo.depth}>
+          <span className={`layer`} data-depth={this.props.bgVideo.depth || 0.7}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
               <source src={this.props.bgVideo.path} type="video/mp4"/>
             </video>
           </span>
-          <span className={`layer`} data-depth={this.props.fgVideo.depth}>
+          <span className={`layer`} data-depth={this.props.fgVideo.depth || 0.5}>
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
           {React.cloneElement(this.props.children || <div />, {ref: 'child'})}

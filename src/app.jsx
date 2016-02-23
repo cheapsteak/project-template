@@ -18,7 +18,11 @@ class App extends React.Component {
       className="route-content-wrapper"
       data-route={pathname}
     >
-      <ParallaxVideo>
+      <ParallaxVideo
+        bgVideo={ {path: '../videos/bg-1080.mp4'} }
+        fgVideo={ {path: '../videos/fg-1080.mp4'} }
+        animateIn={ () => {console.log('animateIn passed prop')} }
+      >
           <span className={`layer`} data-depth="0.3">
             <div className={`text-container`}>
               <div className={`title`}>Explore</div>
