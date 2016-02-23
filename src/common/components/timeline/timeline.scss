@@ -1,0 +1,120 @@
+.timeline {
+  $bg-color: #8F8F8F;
+  cursor: pointer;
+
+  &-container {
+    position: relative;
+    width: 100%;
+    height: 37px;
+    background-color: $bg-color;
+    list-style: none;
+  }
+
+  &-cover {
+    $tip-width: 3px;
+    position: relative;
+    background-color: #B1B1B1;
+    height: 100%;
+    z-index: 2;
+    transition: width 0.3s ease;
+
+    &:before {
+      content: attr(data-time);
+      color: white;
+      font-size: 12px;
+      position: absolute;
+      bottom: 50px;
+      left: 100%;
+      transform: translateX(-50%)
+    }
+
+    &:after {
+      content:'';
+      position: absolute;
+      bottom: 0;
+      right: -$tip-width/2;
+      width: $tip-width;
+      height: calc(100% + 8px);
+      background-color: white;
+    }
+  }
+
+  .plot {
+    z-index: 3;
+    background: url('../timeline-circle.png') no-repeat center;
+    background-size: 100% auto;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all .3s ease-in;
+
+    img {
+      position: absolute;
+      opacity: 0;
+      left: 0;
+      bottom: 38px;
+      transform: translateX(-50%);
+      transition: all .2s ease;
+      pointer-events: none;
+    }
+
+    .image-wrapper {
+      &:after {
+        content: '';
+        pointer-events: none;
+        opacity: 0;
+        position: absolute;
+        width: 2px;
+        height: 30px;
+        background-color: white;
+        left: 50%;
+        bottom: 5px;
+        transform: translate(-50%, -50%);
+        transition: all .3s ease;
+      }
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      opacity: 0.3;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background-color: white;
+      transition: transform .3s ease;
+    }
+
+    &:not(.selected):hover {
+      img {
+        bottom: 50px;
+        opacity: 1;
+        transition: all .3s ease;
+      }
+
+      .image-wrapper {
+        &:after{
+          opacity: 1;
+          bottom: 7px;
+        }
+      }
+
+      &:after {
+        transform: translate(-50%, -50%) scale(1);
+        transition: transform .3s ease;
+      }
+    }
+  }
+
+  ul {
+    list-style: none;
+    li {
+      float: left;
+    }
+  }
+}

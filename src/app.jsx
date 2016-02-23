@@ -3,12 +3,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
-import Stats from './common/utils/stats';
 import ParallaxVideoWrapper from './common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
-import VideoPlayer from './common/components/video-player/video-player.jsx';
 
 class App extends React.Component {
-  render() {
+  render () {
     console.log('render');
     const { pathname } = this.props.location;
     let key = pathname.split('/')[1] || 'root';
@@ -19,12 +17,12 @@ class App extends React.Component {
       data-route={pathname}
     >
       <ParallaxVideoWrapper inHomePage={true}/>
-
+      {React.cloneElement(this.props.children || <div />, { key: key })}
     </TransitionGroup>;
   }
 }
 
-function handleRouteUpdate() {
+function handleRouteUpdate () {
   console.log('route updated');
   ga('send', 'pageview');
 }
@@ -33,7 +31,12 @@ domready(function () {
   render((
     <Router history={browserHistory} onUpdate={handleRouteUpdate}>
       <Route path="/" component={App}>
+
+      </Route>
+
+      <Route path="/tests" component={require('./tests/tests.jsx')}>
+        {require('./tests/routes.jsx')}
       </Route>
     </Router>
   ), document.getElementById('container'));
-});
+})
