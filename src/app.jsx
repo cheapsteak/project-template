@@ -8,7 +8,7 @@ import ParallaxVideo from './common/components/parallax-video/parallax-video.jsx
 import VideoPlayer from './common/components/video-player/video-player.jsx';
 
 class App extends React.Component {
-  render () {
+  render() {
     console.log('render');
     const { pathname } = this.props.location;
     let key = pathname.split('/')[1] || 'root';
@@ -17,14 +17,22 @@ class App extends React.Component {
       component="div"
       className="route-content-wrapper"
       data-route={pathname}
-      >
-      <ParallaxVideo/>
-      {React.cloneElement(this.props.children || <div />, { key: key })}
+    >
+      <ParallaxVideo>
+          <span className={`layer`} data-depth="0.3">
+            <div className={`text-container`}>
+              <div className={`title`}>Explore</div>
+              <div className={`subtitle`}>Science</div>
+              <div className={`description`}>At Success Academy we completely redefined how to teach Science.</div>
+            </div>
+          </span>
+      </ParallaxVideo>
+
     </TransitionGroup>;
   }
 }
 
-function handleRouteUpdate () {
+function handleRouteUpdate() {
   console.log('route updated');
   ga('send', 'pageview');
 }
@@ -36,4 +44,4 @@ domready(function () {
       </Route>
     </Router>
   ), document.getElementById('container'));
-})
+});

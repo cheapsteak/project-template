@@ -10,10 +10,6 @@ const states = {
   LOADED: 'loaded'
 };
 
-var containerEl, bgVideo, fgVideo;
-var loadedVideos = 0;
-var parallax;
-
 export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
@@ -23,47 +19,62 @@ export default class VideoPlayer extends React.Component {
     }
   }
 
+  bgVideo;
+  fgVideo;
+  containerEl;
+  parallax;
+  loadedVideos = 0;
+
   static propTypes = {
-    bgVid: React.PropTypes.string,
-    fgVid: React.PropTypes.string,
-    title: React.PropTypes.string,
-    subtitle: React.PropTypes.string
+    bgVideo: React.PropTypes.shape({
+      path: React.PropTypes.string,
+      depth: React.PropTypes.number
+    }),
+    fgVideo: React.PropTypes.shape({
+      path: React.PropTypes.string,
+      depth: React.PropTypes.number
+    })
   };
 
   static defaultProps = {
-    bgVid: '../videos/bg-1080.mp4',
-    fgVid: '../videos/fg-1080.mp4',
-    title: 'chapter',
-    subtitle: 'science'
+    bgVideo: {
+      path: '../videos/bg-1080.mp4',
+      depth: 0.7
+    },
+    fgVideo: {
+      path: '../videos/fg-1080.mp4',
+      depth: 0.5
+    }
   };
 
   handleResize = () => {
-    mediaBgCover(this.refs.bgVideo, containerEl);
-    mediaBgCover(this.refs.fgCanvas, containerEl);
-    parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
+    mediaBgCover(this.refs.bgVideo, this.containerEl);
+    mediaBgCover(this.refs.fgCanvas, this.containerEl);
+    this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
   handleVideosReady = () => {
-    loadedVideos++;
-    if (loadedVideos == 2) {
+    this.loadedVideos++;
+
+    if (this.loadedVideos == 2) {
       this.handleResize();
       this.setState({status: states.LOADED});
-      bgVideo.play();
-      fgVideo.play();
+      this.bgVideo.play();
+      this.fgVideo.play();
     }
   };
 
   setFgVideo = () => {
-    fgVideo = document.createElement('video');
-    fgVideo.src = this.props.fgVid;
-    fgVideo.preload = true;
-    fgVideo.loop = true;
+    this.fgVideo = document.createElement('video');
+    this.fgVideo.src = this.props.fgVideo.path;
+    this.fgVideo.preload = true;
+    this.fgVideo.loop = true;
 
     var seriously = new Seriously();
     var target = seriously.target(this.refs.fgCanvas);
     var chroma = seriously.effect('chroma');
 
-    chroma.source = fgVideo;
+    chroma.source = this.fgVideo;
     //chroma.screen = '#29fe2f';
     target.source = chroma;
 
@@ -71,33 +82,40 @@ export default class VideoPlayer extends React.Component {
   };
 
   setEvents = () => {
-    bgVideo.addEventListener('loadstart', () => {
-      console.time('bg-video-ready');
-    });
-    bgVideo.addEventListener('canplay', () => {
+    if (this.bgVideo.readyState !== 4) {
+      this.bgVideo.addEventListener('loadstart', () => {
+        console.time('bg-video-ready');
+      });
+      this.bgVideo.addEventListener('canplay', () => {
+        this.handleVideosReady();
+        console.timeEnd('bg-video-ready');
+      });
+    } else {
       this.handleVideosReady();
-      console.timeEnd('bg-video-ready');
-    });
+    }
 
-    fgVideo.addEventListener('loadstart', () => {
-      console.time('fg-video-ready');
-    });
-    fgVideo.addEventListener('canplay', () => {
+    if (this.fgVideo.readyState !== 4) {
+      this.fgVideo.addEventListener('loadstart', () => {
+        console.time('fg-video-ready');
+      });
+      this.fgVideo.addEventListener('canplay', () => {
+        this.handleVideosReady();
+        console.timeEnd('fg-video-ready');
+      });
+    } else {
       this.handleVideosReady();
-      console.timeEnd('fg-video-ready');
-    });
+    }
 
     window.addEventListener('resize', this.handleResize);
   };
 
   componentDidMount() {
-    containerEl = findDOMNode(this);
-    bgVideo = this.refs.bgVideo;
-
+    this.containerEl = findDOMNode(this);
+    this.bgVideo = this.refs.bgVideo;
     this.setFgVideo();
-    this.setEvents();
 
-    parallax = new Parallax(this.refs.scene);
+    this.parallax = new Parallax(this.refs.scene);
+    this.setEvents();
   }
 
   componentWillUnmount() {
@@ -108,20 +126,15 @@ export default class VideoPlayer extends React.Component {
     return (
       <div className={`parallax-video-container`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span className={`layer`} data-depth="0.7">
+          <span className={`layer`} data-depth={this.props.bgVideo.depth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
-              <source src={this.props.bgVid} type="video/mp4"/>
+              <source src={this.props.bgVideo.path} type="video/mp4"/>
             </video>
           </span>
-          <span className={`layer`} data-depth="0.5">
+          <span className={`layer`} data-depth={this.props.fgVideo.depth}>
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
           </span>
-          <span className={`layer`} data-depth="0.3">
-            <div className={`text-container`}>
-              <div className={`title`}>{this.props.title}</div>
-              <div className={`subtitle`}>{this.props.subtitle}</div>
-            </div>
-          </span>
+          {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
         </div>
       </div>
     );
