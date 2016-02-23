@@ -43,7 +43,7 @@
     "browsernizr": "^2.0.1",
     "colors": "^1.1.2",
     "common": "file:./src/common",
-    "connect-modrewrite": "^0.8.2",
+    "connect-modrewrite": "^0.8.5",
     "envify": "^3.4.0",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^2.0.0",
