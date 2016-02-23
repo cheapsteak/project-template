@@ -1,8 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router';
+import componentsManifest from './components-manifest.jsx';
 
 export default function (props) {
   const { pathname } = props.location;
-  let key = pathname.split('/')[1] || 'root';
+  const key = pathname.split('/')[2] || 'root';
+  const isIndexPage = key === 'root';
 
-  return React.cloneElement(props.children || <div />, { key: key });
+  return <div>
+    {isIndexPage  && Object.keys(componentsManifest).map((componentName) => <Link to={`/tests/${componentName}`}>{componentName}</Link>)}
+    {React.cloneElement(props.children || <div />, { key: key })}
+  </div>;
 }
