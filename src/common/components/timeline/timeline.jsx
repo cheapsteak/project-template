@@ -14,24 +14,27 @@ export default class Timeline extends React.Component {
     // }, 50)
   }
 
+  componentWillReceiveProps({ currentTime}) {
+    this.setState({ currentTime });
+  }
+
   handleContainerClick = (e) => {
     const el = findDOMNode(this)
     const positionX = e.clientX - el.getBoundingClientRect().left;
-    this.setState({ currentTime: positionX / el.offsetWidth * this.props.duration })
-  }
-
-  handlePlotHover = (e) => {
-
+    // this.setState({ currentTime: positionX / el.offsetWidth * this.props.duration })
+    this.props.onTimeChange(positionX / el.offsetWidth * this.props.duration);
   };
+
 
   handlePlotClick = (time, e) => {
     e.stopPropagation();
-    this.setState({currentTime: time });
+    this.props.onTimeChange(time);
   };
 
-  secondsToMinutes (seconds) {
-    var minutes = Math.floor(seconds / 60);
-    var seconds = Math.round(seconds - (minutes * 60));
+  secondsToMinutes (totalSeconds) {
+    const totSeconds = parseFloat(totalSeconds);
+    var minutes = Math.floor(totSeconds / 60);
+    var seconds = Math.round(totSeconds - (minutes * 60));
 
     if (minutes < 10) {
       minutes = "0" + minutes;

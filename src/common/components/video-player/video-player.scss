@@ -1,0 +1,16 @@
+.video-player {
+  position: relative;
+  display: inline-block;
+
+  &-controls {
+    display: flex;
+  }
+
+  &-buttons {
+    flex: 1;
+  }
+
+  .timeline {
+    flex: 1;
+  }
+}

@@ -30,9 +30,7 @@ domready(function () {
   render((
     <Router history={browserHistory} onUpdate={handleRouteUpdate}>
       <Route path="/" component={App}>
-
       </Route>
-
       <Route path="/tests" component={require('./tests/tests.jsx')}>
         {require('./tests/routes.jsx')}
       </Route>
