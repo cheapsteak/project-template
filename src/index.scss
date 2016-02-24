@@ -11,3 +11,7 @@ body {
 #container {
   background-color: green;
 }
+
+@import 'common/styles/reset';
+@import 'tests/tests';
+@import 'common/components/timeline/timeline';

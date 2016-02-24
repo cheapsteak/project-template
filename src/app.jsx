@@ -3,10 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-transition-group-plus';
-import Stats from './common/utils/stats';
-import ParallaxVideo from './common/components/parallax-video/parallax-video.jsx';
-import VideoPlayer from './common/components/video-player/video-player.jsx';
-import ThreeSixty from './common/components/panorama/panorama.jsx';
+import Panorama from './common/components/panorama/panorama.jsx';
 
 class App extends React.Component {
   render () {
@@ -19,7 +16,7 @@ class App extends React.Component {
       className="route-content-wrapper"
       data-route={pathname}
       >
-      <ThreeSixty/>
+      <Panorama />
       {React.cloneElement(this.props.children || <div />, { key: key })}
     </TransitionGroup>;
   }
@@ -34,6 +31,11 @@ domready(function () {
   render((
     <Router history={browserHistory} onUpdate={handleRouteUpdate}>
       <Route path="/" component={App}>
+
+      </Route>
+
+      <Route path="/tests" component={require('./tests/tests.jsx')}>
+        {require('./tests/routes.jsx')}
       </Route>
     </Router>
   ), document.getElementById('container'));
