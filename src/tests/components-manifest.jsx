@@ -4,4 +4,5 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
+  'panorama': require('common/components/panorama/panorama'),
 };
