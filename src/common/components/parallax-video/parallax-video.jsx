@@ -22,6 +22,7 @@ export default class ParallaxVideo extends React.Component {
   fgVideo;
   containerEl;
   parallax;
+  seriously;
   loadedVideos = 0;
 
   static propTypes = {
@@ -29,6 +30,7 @@ export default class ParallaxVideo extends React.Component {
     fgVideoPath: React.PropTypes.string.isRequired,
     bgVideoDepth: React.PropTypes.number,
     fgVideoDepth: React.PropTypes.number,
+    parallaxOpts: React.PropTypes.object,
     animateIn: React.PropTypes.func,
     animateOut: React.PropTypes.func
   };
@@ -36,6 +38,7 @@ export default class ParallaxVideo extends React.Component {
   static defaultProps = {
     bgVideoDepth: 0.7,
     fgVideoDepth: 0.5,
+    parallaxOpts: {},
     animateIn: () => {
       console.log('default animateIn');
     },
@@ -45,12 +48,12 @@ export default class ParallaxVideo extends React.Component {
   };
 
   positionElements = () => {
-    mediaBgCover(this.refs.bgVideo, this.containerEl);
-    mediaBgCover(this.refs.fgCanvas, this.containerEl);
+    mediaBgCover(this.bgVideo, this.containerEl);
+    mediaBgCover(this.fgCanvas, this.containerEl);
     this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
-  onVideosReady = () => {
+  onVideoReady = () => {
     this.loadedVideos++;
 
     if (this.loadedVideos == 2) {
@@ -68,15 +71,15 @@ export default class ParallaxVideo extends React.Component {
     this.fgVideo.preload = true;
     this.fgVideo.loop = true;
 
-    var seriously = new Seriously();
-    var target = seriously.target(this.refs.fgCanvas);
-    var chroma = seriously.effect('chroma');
+    this.seriously = new Seriously();
+    var target = this.seriously.target(this.refs.fgCanvas);
+    var chroma = this.seriously.effect('chroma');
 
     chroma.source = this.fgVideo;
     //chroma.screen = '#29fe2f';
     target.source = chroma;
 
-    seriously.go();
+    this.seriously.go();
   };
 
   setEvents = () => {
@@ -85,11 +88,11 @@ export default class ParallaxVideo extends React.Component {
         console.time('bg-video-ready');
       });
       this.bgVideo.addEventListener('canplay', () => {
-        this.onVideosReady();
+        this.onVideoReady();
         console.timeEnd('bg-video-ready');
       });
     } else {
-      this.onVideosReady();
+      this.onVideoReady();
     }
 
     if (this.fgVideo.readyState !== 4) {
@@ -97,11 +100,11 @@ export default class ParallaxVideo extends React.Component {
         console.time('fg-video-ready');
       });
       this.fgVideo.addEventListener('canplay', () => {
-        this.onVideosReady();
+        this.onVideoReady();
         console.timeEnd('fg-video-ready');
       });
     } else {
-      this.onVideosReady();
+      this.onVideoReady();
     }
 
     window.addEventListener('resize', this.positionElements);
@@ -109,10 +112,12 @@ export default class ParallaxVideo extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.bgVideo = this.refs.bgVideo;
-    this.setFgVideo();
+    this.bgVideo = findDOMNode(this.refs.bgVideo);
+    this.fgCanvas = findDOMNode(this.refs.fgCanvas);
 
-    this.parallax = new Parallax(this.refs.scene);
+    this.parallax = new Parallax(this.refs.scene, this.props.parallaxOpts);
+
+    this.setFgVideo();
     this.setEvents();
   }
 
@@ -125,11 +130,11 @@ export default class ParallaxVideo extends React.Component {
     return (
       <div className={`parallax-video`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span className={`layer`} data-depth={this.props.bgVideoDepth}>
+          <div className={`layer`} data-depth={this.props.bgVideoDepth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
               <source src={this.props.bgVideoPath} type="video/mp4"/>
             </video>
-          </span>
+          </div>
 
           <span className={`layer`} data-depth={this.props.fgVideoDepth}>
             <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
