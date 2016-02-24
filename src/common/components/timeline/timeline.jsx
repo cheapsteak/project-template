@@ -7,7 +7,7 @@ export default class Timeline extends React.Component {
     style: React.PropTypes.object,
     currentTime: React.PropTypes.number.isRequired,
     duration: React.PropTypes.number.isRequired,
-    onTimeChange: React.PropTypes.func.isRequired,
+    onTimeChange: React.PropTypes.func,
     items: React.PropTypes.array
   };
 
@@ -15,34 +15,36 @@ export default class Timeline extends React.Component {
     super(props)
 
     this.state = {
-      currentTime: props.currentTime,
-      position: ''
+      currentTime: props.currentTime
     }
-    // setInterval(() => {
-    //   this.setState({ currentTime: (this.state.currentTime + 0.1) % props.duration }) 
-    // }, 50)
   }
 
   componentWillReceiveProps({ currentTime}) {
     this.setState({ currentTime });
   }
 
+  changeCurrentTime(time) {
+    this.props.onTimeChange
+      ? this.props.onTimeChange(time)
+      : this.setState({ currentTime: time });
+  }
+
   handleContainerClick = (e) => {
     const el = findDOMNode(this)
     const positionX = e.clientX - el.getBoundingClientRect().left;
-    this.props.onTimeChange(positionX / el.offsetWidth * this.props.duration);
-  };
-
+    const newTime = positionX / el.offsetWidth * this.props.duration;
+    this.changeCurrentTime(newTime);
+  }
 
   handlePlotClick = (time, e) => {
     e.stopPropagation();
-    this.props.onTimeChange(time);
+    this.changeCurrentTime(time);
   };
 
   secondsToMinutes (totalSeconds) {
-    const totSeconds = parseFloat(totalSeconds);
-    var minutes = Math.floor(totSeconds / 60);
-    var seconds = Math.round(totSeconds - (minutes * 60));
+    const totalSecondsFloat = parseFloat(totalSeconds);
+    let minutes = Math.floor(totalSecondsFloat / 60);
+    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
 
     if (minutes < 10) {
       minutes = "0" + minutes;
@@ -52,26 +54,26 @@ export default class Timeline extends React.Component {
       seconds = "0" + seconds;
     }
 
-    var time = minutes + ':' + seconds;
+    const time = minutes + ':' + seconds;
 
     return time;
   }
 
   render () {
-    const { width, height, currentTime, duration, items, style } = this.props;
+    const { width, height, duration, items, style } = this.props;
     return (
       <div className="timeline" style={style}>
         <div className="timeline-container" onClick={this.handleContainerClick}>
           <div
             className="timeline-cover"
-            style={{ width: (currentTime/duration * 100) + '%' }}
-            data-time={this.secondsToMinutes(currentTime)}
+            style={{ width: (this.state.currentTime/duration * 100) + '%' }}
+            data-time={this.secondsToMinutes(this.state.currentTime)}
           >
           </div>
           { 
             items.map(plot => {
               const style = { left: (plot.time / duration * 100) + '%' }; 
-              const className = currentTime === plot.time ? ' selected' : '';
+              const className = this.state.currentTime === plot.time ? ' selected' : '';
 
               return (
                 <div

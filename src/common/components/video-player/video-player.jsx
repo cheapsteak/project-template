@@ -60,7 +60,6 @@ export default class VideoPlayer extends React.Component {
         onLoadedMetadata={this.handleMetadataLoaded}
         onEnded={this.handleVideoPlayPause}
         onTimeUpdate={this.handleTimeUpdate}
-        muted
       >
       </video>
       <div className="controls">
