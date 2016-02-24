@@ -1,5 +1,6 @@
 .timeline {
   $bg-color: #8F8F8F;
+  position: relative;
   cursor: pointer;
   background-color: rgba(143,143,143,0.4);
 
@@ -18,7 +19,7 @@
     background-color: #B1B1B1;
     height: 100%;
     z-index: 2;
-    transition: width 0.3s ease-out;
+    transition: width 0.1s ease-out;
 
     &:before {
       content: attr(data-time);

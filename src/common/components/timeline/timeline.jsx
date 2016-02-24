@@ -2,6 +2,15 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 
 export default class Timeline extends React.Component {
+
+  static propTypes = {
+    style: React.PropTypes.object,
+    currentTime: React.PropTypes.number.isRequired,
+    duration: React.PropTypes.number.isRequired,
+    onTimeChange: React.PropTypes.func.isRequired,
+    items: React.PropTypes.array
+  };
+
   constructor(props) {
     super(props)
 
@@ -21,7 +30,6 @@ export default class Timeline extends React.Component {
   handleContainerClick = (e) => {
     const el = findDOMNode(this)
     const positionX = e.clientX - el.getBoundingClientRect().left;
-    // this.setState({ currentTime: positionX / el.offsetWidth * this.props.duration })
     this.props.onTimeChange(positionX / el.offsetWidth * this.props.duration);
   };
 
@@ -50,20 +58,20 @@ export default class Timeline extends React.Component {
   }
 
   render () {
-    const { width, height, duration, items, style } = this.props;
+    const { width, height, currentTime, duration, items, style } = this.props;
     return (
       <div className="timeline" style={style}>
         <div className="timeline-container" onClick={this.handleContainerClick}>
           <div
             className="timeline-cover"
-            style={{ width: (this.state.currentTime/duration * 100) + '%' }}
-            data-time={this.secondsToMinutes(this.state.currentTime)}
+            style={{ width: (currentTime/duration * 100) + '%' }}
+            data-time={this.secondsToMinutes(currentTime)}
           >
           </div>
           { 
             items.map(plot => {
               const style = { left: (plot.time / duration * 100) + '%' }; 
-              const className = this.state.currentTime === plot.time ? ' selected' : '';
+              const className = currentTime === plot.time ? ' selected' : '';
 
               return (
                 <div
