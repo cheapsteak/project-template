@@ -28,6 +28,8 @@ export default class ParallaxVideo extends React.Component {
   static propTypes = {
     bgVideoPath: React.PropTypes.string.isRequired,
     fgVideoPath: React.PropTypes.string.isRequired,
+    fgVideoWidth: React.PropTypes.number,
+    fgVideoHeight: React.PropTypes.number,
     bgVideoDepth: React.PropTypes.number,
     fgVideoDepth: React.PropTypes.number,
     parallaxOpts: React.PropTypes.object,
@@ -38,6 +40,8 @@ export default class ParallaxVideo extends React.Component {
   static defaultProps = {
     bgVideoDepth: 0.7,
     fgVideoDepth: 0.5,
+    fgVideoWidth: 1920,  // this will determine canvas width
+    fgVideoHeight: 1080, // this will determine canvas height
     parallaxOpts: {},
     animateIn: () => {
       console.log('default animateIn');
@@ -136,9 +140,14 @@ export default class ParallaxVideo extends React.Component {
             </video>
           </div>
 
-          <span className={`layer`} data-depth={this.props.fgVideoDepth}>
-            <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
-          </span>
+          <div className={`layer`} data-depth={this.props.fgVideoDepth}>
+            <canvas
+              ref="fgCanvas"
+              width={this.props.fgVideoWidth}
+              height={this.props.fgVideoHeight}
+              className={`fg-canvas ${this.state.status}`}
+            ></canvas>
+          </div>
 
           {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
         </div>
