@@ -95,7 +95,7 @@ export default class ParallaxVideoWrapper extends React.Component {
         <ParallaxVideo
           ref="parallaxVideo"
           bgVideoPath={'../videos/bg-1080.mp4'}
-          fgVideoPath={'../videos/fg-1080.mp4'}
+          fgVideoPath={'../videos/fg-1080-1.mp4'}
           animateIn={this.state.videoAnimateInFn}
           animateOut={this.state.videoAnimateOutFn}
         >
