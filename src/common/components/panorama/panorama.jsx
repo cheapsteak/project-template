@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
+import PanoramaCompass from './compass/compass.jsx';
 
 const states = {
   LOADING: 'loading',
@@ -19,7 +20,9 @@ export default class Panorama extends React.Component {
     this.state = {
       status: states.LOADING,
       zoomLevel: defaultZoomLevel,
-      sliderPosition: 0
+      sliderPosition: 0,
+      lat: 0,
+      lng: 0
     }
   }
 
@@ -45,14 +48,14 @@ export default class Panorama extends React.Component {
   handleZoomIn = () => {
     if (this.state.zoomLevel < 1) {
       this.updateZoomLevel(zoomStep);
-      console.log('zoom in')
+      //console.log('zoom in')
     }
   };
 
   handleZoomOut = () => {
     if (this.state.zoomLevel > 0) {
       this.updateZoomLevel(-zoomStep);
-      console.log('zoom out')
+      //console.log('zoom out')
     }
   };
 
@@ -67,12 +70,12 @@ export default class Panorama extends React.Component {
   stopDrag = (coordX) => {
     if (this.isDraggingSlider) {
       this.isDraggingSlider = false;
-      console.log('stop drag')
+      //console.log('stop drag')
     }
   };
 
   handleSliderDrag = () => {
-    console.log('start drag')
+    //console.log('start drag')
     this.isDraggingSlider = true;
 
     document.addEventListener('mousemove', (e) => this.doDrag(e.clientX));
@@ -91,7 +94,7 @@ export default class Panorama extends React.Component {
     var sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
     this.setState({zoomLevel: zoomLevel, sliderPosition: sliderPos});
 
-    console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
+    //console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
   };
 
   handleMouseWheel = (e) => {
@@ -122,10 +125,8 @@ export default class Panorama extends React.Component {
       }
     });
 
-    this.panorama.on('zoom-updated', (levelNum) => {
-      if (levelNum >= minZoomNum && levelNum <= maxZoomNum) {
-        this.setZoom(levelNum);
-      }
+    this.panorama.on('position-updated', (lng, lat) => {
+      this.setState({lat: lat, lng: lng});
     });
 
     this.containerEl.addEventListener('mousewheel', (e) => this.handleMouseWheel(e));
@@ -139,20 +140,21 @@ export default class Panorama extends React.Component {
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
+        <PanoramaCompass lat={this.state.lat} lng={this.state.lng}></PanoramaCompass>
         <div className={`panorama-controls`}>
           <div className={`zoom-controls`}>
-            <div className={`zoom-out zoom`} onClick={this.handleZoomOut}></div>
-            <div className={`zoom-in zoom`} onClick={this.handleZoomIn}></div>
+            <div className={`zoom-out zoom`} onClick={this.handleZoomOut}>-</div>
+            <div className={`zoom-in zoom`} onClick={this.handleZoomIn}>+</div>
 
             <div ref="slider" className={`slider`}>
               <div
                 ref="indicator"
-                className={`indicator`}
+                className={`slider-indicator`}
                 style={ {transform: 'translateX(' + this.state.sliderPosition + 'px)'} }
                 onMouseDown={this.handleSliderDrag}
                 onTouchStart={this.handleSliderDrag}
               >
-                {parseFloat(this.state.zoomLevel + 1).toPrecision(2)}
+                {parseFloat(this.state.zoomLevel + 1).toPrecision(2)}x
               </div>
             </div>
           </div>

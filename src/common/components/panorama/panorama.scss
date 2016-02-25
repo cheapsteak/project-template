@@ -1,3 +1,5 @@
+@import "./compass/compass";
+
 .panorama {
   position: relative;
   width: 100%;
@@ -44,6 +46,7 @@
       margin-right: 10px;
       width: 470px;
       height: 100%;
+      text-align: center;
 
       .zoom {
         position: absolute;
@@ -51,6 +54,9 @@
         width: 50px;
         height: 50px;
         cursor: pointer;
+        color: #fff;
+        font-size: 20px;
+        padding: 15px;
 
         &.zoom-in {
           right: 0;
@@ -64,7 +70,7 @@
         height: 100%;
         background-color: rgba(255, 255, 255, 0.2);
 
-        .indicator {
+        .slider-indicator {
           position: absolute;
           top: 50%;
           margin-top: -15px;
@@ -72,6 +78,7 @@
           width: 30px;
           height: 30px;
           cursor: pointer;
+          padding: 5px 0;
           transition: transform 0.1s;
         }
       }
@@ -82,7 +89,7 @@
       padding-left: 10px;
 
       .fs-button {
-        background-color: #fff;
+        border: 1px dashed #fff;
         width: 50px;
         height: 50px;
         cursor: pointer;
