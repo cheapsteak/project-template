@@ -4,7 +4,15 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
-  panorama: require('common/components/panorama/panorama'),
+  'panorama-wrapper': {
+    component: require('common/components/panorama-wrapper/panorama-wrapper'),
+    props: {
+      images: [
+        '../images/pan-test.jpg',
+        '../images/pan-test-2.jpg'
+      ]
+    }
+  },
   photoessay: {
     component: require('common/components/photo-essay/photo-essay.jsx'),
     props: {

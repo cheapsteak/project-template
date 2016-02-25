@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
-import PanoramaCompass from './compass/compass.jsx';
+import PanoramaCompass from './compass/compass';
 
 const states = {
   LOADING: 'loading',
@@ -32,11 +32,7 @@ export default class Panorama extends React.Component {
   isDraggingSlider = false;
 
   static propTypes = {
-    src: React.PropTypes.string
-  };
-
-  static defaultProps = {
-    src: '../images/pan-test.jpg'
+    src: React.PropTypes.string.isRequired
   };
 
   updateZoomLevel = (step) => {
@@ -48,14 +44,12 @@ export default class Panorama extends React.Component {
   handleZoomIn = () => {
     if (this.state.zoomLevel < 1) {
       this.updateZoomLevel(zoomStep);
-      //console.log('zoom in')
     }
   };
 
   handleZoomOut = () => {
     if (this.state.zoomLevel > 0) {
       this.updateZoomLevel(-zoomStep);
-      //console.log('zoom out')
     }
   };
 
@@ -70,12 +64,10 @@ export default class Panorama extends React.Component {
   stopDrag = (coordX) => {
     if (this.isDraggingSlider) {
       this.isDraggingSlider = false;
-      //console.log('stop drag')
     }
   };
 
   handleSliderDrag = () => {
-    //console.log('start drag')
     this.isDraggingSlider = true;
 
     document.addEventListener('mousemove', (e) => this.doDrag(e.clientX));
@@ -102,12 +94,12 @@ export default class Panorama extends React.Component {
     (delta > 0) ? this.handleZoomIn() : this.handleZoomOut();
   };
 
-  componentDidMount() {
-    this.containerEl = findDOMNode(this);
+  setPanorama = (imagePath) => {
+    if (this.panorama) this.panorama.destroy();
 
     this.panorama = PhotoSphere({
       container: this.containerEl,
-      panorama: this.props.src,
+      panorama: imagePath,
       time_anim: false,
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
@@ -128,6 +120,12 @@ export default class Panorama extends React.Component {
     this.panorama.on('position-updated', (lng, lat) => {
       this.setState({lat: lat, lng: lng});
     });
+  };
+
+  componentDidMount() {
+    this.containerEl = findDOMNode(this);
+
+    this.setPanorama(this.props.src);
 
     this.containerEl.addEventListener('mousewheel', (e) => this.handleMouseWheel(e));
     this.containerEl.addEventListener('DOMMouseScroll', (e) => this.handleMouseWheel(e));
@@ -163,7 +161,6 @@ export default class Panorama extends React.Component {
           </div>
         </div>
       </div>
-
     );
   }
 }
