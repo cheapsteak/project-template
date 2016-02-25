@@ -2,28 +2,28 @@
   position: relative;
   width: 100%;
   height: 700px;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+
+  &.loaded {
+    opacity: 1;
+    visibility: visible;
+  }
 
   &:focus {
     outline: none;
   }
 
-  .pnlm-render-container {
-    width: 100%;
+  .psv-container, .psv-canvas-container {
     height: 100%;
   }
 
-  .pnlm-about-msg, .pnlm-panorama-info, .pnlm-controls {
-    display: none;
-  }
-
-  .pnlm-compass {
-    width: 50px;
-    height: 50px;
-    right: 70px;
-    bottom: 30px;
-    border-radius: 25px;
-    background-image: url('data:image/svg+xml,<svg%20xmlns%3D"http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg"%20height%3D"50"%20width%3D"50">%0A<path%20d%3D"m24.5078%206-3.2578%2018h7.5l-3.25781-18h-0.984376zm-3.2578%2020%203.2578%2018h0.9844l3.2578-18h-7.5zm1.19531%200.9941h5.10938l-2.5547%2014.1075-2.5547-14.1075z"%2F>%0A<%2Fsvg>%0A');
-    cursor: default;
+  .psv-container, .psv-canvas-container, .psv-hud {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
 
   $controlsWidth: 560px;
@@ -36,6 +36,7 @@
     height: 70px;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
+    z-index: 1000;
 
     .zoom-controls {
       display: inline-block;
@@ -71,6 +72,7 @@
           width: 30px;
           height: 30px;
           cursor: pointer;
+          transition: transform 0.1s;
         }
       }
     }

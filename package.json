@@ -22,6 +22,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "pannellum": "^2.2.0",
     "parallax": "github:wagerfield/parallax",
+    "photo-sphere": "github:namniak/Photo-Sphere-Viewer",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0",

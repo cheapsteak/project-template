@@ -1,26 +1,33 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import animate from 'gsap-promise';
-import Pannellum from 'pannellum';
+var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
 
-const maxZoomNum = 50;
-const minZoomNum = 120;
-const zoomRange = maxZoomNum + minZoomNum;
-const defaultZoomLevel = 0.5;
-const zoomStep = 0.05;
+const states = {
+  LOADING: 'loading',
+  LOADED: 'loaded'
+};
+
+const minZoomNum = 0;
+const maxZoomNum = 60;
+const defaultZoomLevel = 0;
+const zoomStep = 0.2;
 
 export default class Panorama extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      zoomLevel: 0,
+      status: states.LOADING,
+      zoomLevel: defaultZoomLevel,
       sliderPosition: 0
     }
   }
 
   containerEl;
   panorama;
+  zoomRange = maxZoomNum + minZoomNum;
+  isDraggingSlider = false;
 
   static propTypes = {
     src: React.PropTypes.string
@@ -30,69 +37,89 @@ export default class Panorama extends React.Component {
     src: '../images/pan-test.jpg'
   };
 
-  getZoomLevel = () => {
-    var currLevel = this.panorama.getHfov();
-    return currLevel / zoomRange;
-  };
-
-  updateZoomLevel = (zoomIn) => {
-    var currLevel = this.getZoomLevel();
-    var level = currLevel + (zoomStep * (zoomIn ? -1 : 1));
-
-    var sliderPos = this.refs.slider.offsetWidth * (1 - level) - this.refs.indicator.offsetWidth * 0.5;
-    console.log(level, sliderPos)
-
-    this.panorama.setHfov(zoomRange * level);
-    this.panorama.setUpdate(true);
-    this.setState({zoomLevel: level, sliderPosition: sliderPos});
+  updateZoomLevel = (step) => {
+    var zoomLevel = this.state.zoomLevel + step;
+    zoomLevel = parseFloat(zoomLevel).toPrecision(1);
+    this.panorama.zoom(this.zoomRange * zoomLevel);
   };
 
   handleZoomIn = () => {
-    var currLevel = this.getZoomLevel();
-    if (currLevel * zoomRange > maxZoomNum) {
-      this.updateZoomLevel(true);
+    if (this.state.zoomLevel < 1) {
+      this.updateZoomLevel(zoomStep);
       console.log('zoom in')
     }
   };
 
   handleZoomOut = () => {
-    var currLevel = this.getZoomLevel();
-    if (currLevel * zoomRange < minZoomNum) {
-      this.updateZoomLevel();
+    if (this.state.zoomLevel > 0) {
+      this.updateZoomLevel(-zoomStep);
       console.log('zoom out')
     }
   };
 
+  doDrag = (coordX) => {
+    if (this.isDraggingSlider) {
+      var pos = coordX - this.refs.slider.getBoundingClientRect().left;
+      var zoomLevel = Math.min(pos / this.refs.slider.offsetWidth, 1);
+      this.panorama.zoom(this.zoomRange * zoomLevel);
+    }
+  };
 
-  handleSliderZoom = () => {
-    console.log('wedwef')
-    //var currLevel = this.getZoomLevel();
-    //if (currLevel * zoomRange < minZoomNum) {
-    //  this.updateZoomLevel();
-    //  console.log('zoom out')
-    //}
+  stopDrag = (coordX) => {
+    if (this.isDraggingSlider) {
+      this.isDraggingSlider = false;
+      console.log('stop drag')
+    }
+  };
+
+  handleSliderDrag = () => {
+    console.log('start drag')
+    this.isDraggingSlider = true;
+
+    document.addEventListener('mousemove', (e) => this.doDrag(e.clientX));
+    document.addEventListener('touchmove', (e) => this.doDrag(e.targetTouches[0].clientX));
+
+    document.addEventListener('mouseup', () => this.stopDrag());
+    document.addEventListener('touchend', () => this.stopDrag());
   };
 
   handleFullScreen = () => {
     console.log('go fullscreen')
   };
 
+  setZoom = (levelNum) => {
+    var zoomLevel = levelNum / this.zoomRange;
+    var sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
+    this.setState({zoomLevel: zoomLevel, sliderPosition: sliderPos});
+
+    console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
-    this.panorama = pannellum.viewer(this.containerEl, {
-      type: 'equirectangular',
+    this.panorama = PhotoSphere({
+      container: this.containerEl,
       panorama: this.props.src,
-      autoLoad: true,
-      compass: true
+      time_anim: false,
+      min_fov: minZoomNum,
+      max_fov: maxZoomNum
     });
 
-    var initZoomNum = zoomRange * defaultZoomLevel;
-    var sliderPos = this.refs.slider.offsetWidth * (1 - defaultZoomLevel) - this.refs.indicator.offsetWidth * 0.5;
-    console.log(sliderPos)
+    this.panorama.on('ready', () => {
+      this.setState({status: states.LOADED});
+      this.panorama.zoom(defaultZoomLevel * this.zoomRange);
+    });
 
-    this.setState({zoomLevel: initZoomNum, sliderPosition: sliderPos});
-    this.panorama.setHfov(initZoomNum);
+    this.panorama.on('zoom-updated', (levelNum) => {
+      if (levelNum >= minZoomNum && levelNum <= maxZoomNum) {
+        this.setZoom(levelNum);
+      }
+    });
+
+    this.panorama.on('position-updated', (lng, lat) => {
+      console.log(lng, lat);
+    });
 
     window.pan = this.panorama;
   }
@@ -103,7 +130,7 @@ export default class Panorama extends React.Component {
 
   render() {
     return (
-      <div className={`panorama`}>
+      <div className={`panorama ${this.state.status}`}>
         <div className={`panorama-controls`}>
           <div className={`zoom-controls`}>
             <div className={`zoom-out zoom`} onClick={this.handleZoomOut}></div>
@@ -113,7 +140,12 @@ export default class Panorama extends React.Component {
               <div
                 ref="indicator"
                 className={`indicator`}
-                style={ {transform: 'translateX(' + this.state.sliderPosition + 'px)'} }></div>
+                style={ {transform: 'translateX(' + this.state.sliderPosition + 'px)'} }
+                onMouseDown={this.handleSliderDrag}
+                onTouchStart={this.handleSliderDrag}
+              >
+                {parseFloat(this.state.zoomLevel + 1).toPrecision(2)}
+              </div>
             </div>
           </div>
           <div className={`fs-controls`}>
