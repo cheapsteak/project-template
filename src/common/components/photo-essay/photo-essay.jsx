@@ -40,7 +40,7 @@ export default class PhotoEssay extends React.Component {
         </div>
         <div className="photo-controls">
           <div className="button back-button" onClick={this.handlePrevClick} dangerouslySetInnerHTML={{ __html: BackButtonSvg }}></div>
-          <div className="button next-button" onClick={this.handlePrevClick} dangerouslySetInnerHTML={{ __html: NextButtonSvg }}></div>
+          <div className="button next-button" onClick={this.handleNextClick} dangerouslySetInnerHTML={{ __html: NextButtonSvg }}></div>
           <div className="button fullscreen-button" onClick={this.handleFullscreenClick} dangerouslySetInnerHTML={{ __html: FullscreenButtonSvg }}></div>
           <div className="page-display">{`${index + 1} of ${this.props.photos.length}`}</div>
         </div>

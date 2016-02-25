@@ -16,7 +16,7 @@ export default {
         },
         { 
           id: '1',
-          description: 'The key to more success is to have a lot of pillows. Always remember in the jungle there’s a lot of they in there, after you overcome they, you will make it to paradise.',
+          description: 'I’m giving you cloth talk, cloth. Special cloth alert, cut from a special cloth. Watch your back, but more importantly when you get out the shower, dry your back, it’s a cold world out there. Stay focused. Find peace, life is like a water fall, you’ve gotta flow.',
           image: '../sample-photo-2.jpg'
         },
         { 
