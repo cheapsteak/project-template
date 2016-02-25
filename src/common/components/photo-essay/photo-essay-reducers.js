@@ -1,4 +1,4 @@
-import { PREV_PHOTO, NEXT_PHOTO, TOGGLE_FULLSCREEN } from '../../actions/photos.js'
+import { PREV_PHOTO, NEXT_PHOTO, TOGGLE_FULLSCREEN } from './photo-essay-actions.js';
 
 const defState = {
   index: 0,

@@ -8,9 +8,7 @@ module.exports = {
     ASSET_PATH: '/',
     gaID: ''
   },
-  get env () {
-    return process.env.NODE_ENV;
-  },
+  env: process.env.NODE_ENV,
   get ASSET_PATH () {
     return this[process.env.NODE_ENV || 'local'].ASSET_PATH;
   },
