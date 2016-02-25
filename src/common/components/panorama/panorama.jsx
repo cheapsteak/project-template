@@ -1,6 +1,5 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import animate from 'gsap-promise';
 var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
 
 const states = {
@@ -11,7 +10,7 @@ const states = {
 const minZoomNum = 0;
 const maxZoomNum = 60;
 const defaultZoomLevel = 0;
-const zoomStep = 0.2;
+const zoomStep = 0.1;
 
 export default class Panorama extends React.Component {
   constructor(props) {
@@ -95,6 +94,11 @@ export default class Panorama extends React.Component {
     console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
   };
 
+  handleMouseWheel = (e) => {
+    var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+    (delta > 0) ? this.handleZoomIn() : this.handleZoomOut();
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
@@ -103,7 +107,8 @@ export default class Panorama extends React.Component {
       panorama: this.props.src,
       time_anim: false,
       min_fov: minZoomNum,
-      max_fov: maxZoomNum
+      max_fov: maxZoomNum,
+      mousewheel: false
     });
 
     this.panorama.on('ready', () => {
@@ -117,11 +122,14 @@ export default class Panorama extends React.Component {
       }
     });
 
-    this.panorama.on('position-updated', (lng, lat) => {
-      console.log(lng, lat);
+    this.panorama.on('zoom-updated', (levelNum) => {
+      if (levelNum >= minZoomNum && levelNum <= maxZoomNum) {
+        this.setZoom(levelNum);
+      }
     });
 
-    window.pan = this.panorama;
+    this.containerEl.addEventListener('mousewheel', (e) => this.handleMouseWheel(e));
+    this.containerEl.addEventListener('DOMMouseScroll', (e) => this.handleMouseWheel(e));
   }
 
   componentWillUnmount() {
