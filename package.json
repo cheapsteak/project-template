@@ -24,6 +24,7 @@
     "parallax": "github:wagerfield/parallax",
     "photo-sphere": "github:namniak/Photo-Sphere-Viewer",
     "react": "^0.14.7",
+    "react-addons-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^2.0.0",
     "react-transition-group-plus": "^0.1.4",
@@ -82,6 +83,7 @@
     "run-sequence": "^1.1.5",
     "stringify": "^3.2.0",
     "uglify-js": "^2.6.1",
+    "unreachable-branch-transform": "^0.5.0",
     "vinyl-source-stream": "^1.1.0",
     "vinyl-transform": "^1.0.0",
     "watchify": "^3.7.0",
@@ -92,6 +94,7 @@
       "babelify",
       "yamlify",
       "envify",
+      "unreachable-branch-transform",
       [
         "stringify",
         {

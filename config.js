@@ -1,4 +1,5 @@
 module.exports = {
+  basePath: '/middleschool',
   local: {
     ASSET_PATH: '/',
     gaID: ''

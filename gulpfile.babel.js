@@ -107,7 +107,11 @@ gulp.task('templates', ['styles', 'scripts'], () => {
 
   const pipeline = gulp.src(paths.templates.source)
   .on('error', handleError)
-  .pipe(inject(resources, {ignorePath: 'build', removeTags: true}))
+  .pipe(inject(resources, {
+    ignorePath: 'build',
+    removeTags: true,
+    addPrefix: CONFIG.basePath
+  }))
   .pipe(gulp.dest(paths.templates.destination));
 
   if(production) {
@@ -184,6 +188,9 @@ gulp.task('server', () => {
     ghostMode: false,
     server: {
       baseDir: paths.destination,
+      routes: {
+        [CONFIG.basePath]: "build"
+      },
       middleware: [
         modRewrite([
           '^[^\\.]*$ /index.html [L]'
