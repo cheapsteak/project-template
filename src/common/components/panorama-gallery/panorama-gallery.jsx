@@ -15,19 +15,18 @@ export default class PanoramaGallery extends React.Component {
 
     this.state = {
       status: states.LOADING,
-      currIndex: props.index
+      currIndex: props.startIndex
     }
   }
 
   containerEl;
 
   static propTypes = {
-    index: React.PropTypes.array.number,
     images: React.PropTypes.array.isRequired
   };
 
   static defaultProps = {
-    index: 0
+    startIndex: 0
   };
 
   handlePrevClick = () => {

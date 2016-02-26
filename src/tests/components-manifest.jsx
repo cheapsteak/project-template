@@ -4,16 +4,7 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
-  'panorama-gallery': {
-    component: require('common/components/panorama-gallery/panorama-gallery'),
-    props: {
-      images: [
-        '../images/pan-1.jpg',
-        '../images/pan-2.jpg',
-        '../images/pan-3.jpg'
-      ]
-    }
-  },
+  'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
   'panorama': {
     component: require('common/components/panorama/panorama'),
     props: {
