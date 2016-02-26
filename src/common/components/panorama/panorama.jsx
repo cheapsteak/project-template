@@ -2,6 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
 import PanoramaCompass from './compass/compass';
+import FullBrowserSvg from '../../../assets/photo-essay-fullscreen-button.svg';
 
 const states = {
   LOADING: 'loading',
@@ -35,22 +36,28 @@ export default class Panorama extends React.Component {
     src: React.PropTypes.string.isRequired
   };
 
-  updateZoomLevel = (step) => {
-    var zoomLevel = this.state.zoomLevel + step;
+  updateZoomLevel = (zoomLevel) => {
     zoomLevel = parseFloat(zoomLevel).toPrecision(1);
     this.panorama.zoom(this.zoomRange * zoomLevel);
   };
 
   handleZoomIn = () => {
     if (this.state.zoomLevel < 1) {
-      this.updateZoomLevel(zoomStep);
+      this.updateZoomLevel(this.state.zoomLevel + zoomStep);
     }
   };
 
   handleZoomOut = () => {
     if (this.state.zoomLevel > 0) {
-      this.updateZoomLevel(-zoomStep);
+      this.updateZoomLevel(this.state.zoomLevel - zoomStep);
     }
+  };
+
+  setZoom = (levelNum) => {
+    var zoomLevel = levelNum / this.zoomRange;
+    var sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
+    this.setState({zoomLevel: zoomLevel, sliderPosition: sliderPos});
+    //console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
   };
 
   doDrag = (coordX) => {
@@ -61,7 +68,7 @@ export default class Panorama extends React.Component {
     }
   };
 
-  stopDrag = (coordX) => {
+  stopDrag = () => {
     if (this.isDraggingSlider) {
       this.isDraggingSlider = false;
     }
@@ -77,16 +84,8 @@ export default class Panorama extends React.Component {
     document.addEventListener('touchend', () => this.stopDrag());
   };
 
-  handleFullScreen = () => {
-    console.log('go fullscreen')
-  };
-
-  setZoom = (levelNum) => {
-    var zoomLevel = levelNum / this.zoomRange;
-    var sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
-    this.setState({zoomLevel: zoomLevel, sliderPosition: sliderPos});
-
-    //console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
+  handleFullBrowserClick = () => {
+    console.log('go full-browser')
   };
 
   handleMouseWheel = (e) => {
@@ -105,6 +104,8 @@ export default class Panorama extends React.Component {
       max_fov: maxZoomNum,
       mousewheel: false
     });
+
+    this.setState({lat: 0, lng: 0});
 
     this.panorama.on('ready', () => {
       this.setState({status: states.LOADED});
@@ -135,19 +136,25 @@ export default class Panorama extends React.Component {
     this.panorama.destroy();
   }
 
+  componentWillReceiveProps(newProps) {
+    if (newProps.src !== this.props.src) {
+      this.setPanorama(newProps.src);
+    }
+  }
+
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
         <PanoramaCompass lat={this.state.lat} lng={this.state.lng}></PanoramaCompass>
         <div className={`panorama-controls`}>
           <div className={`zoom-controls`}>
-            <div className={`zoom-out zoom`} onClick={this.handleZoomOut}>-</div>
-            <div className={`zoom-in zoom`} onClick={this.handleZoomIn}>+</div>
+            <div className={`zoom-out button`} onClick={this.handleZoomOut}>-</div>
+            <div className={`zoom-in button`} onClick={this.handleZoomIn}>+</div>
 
             <div ref="slider" className={`slider`}>
               <div
                 ref="indicator"
-                className={`slider-indicator`}
+                className={`slider-indicator button`}
                 style={ {transform: 'translateX(' + this.state.sliderPosition + 'px)'} }
                 onMouseDown={this.handleSliderDrag}
                 onTouchStart={this.handleSliderDrag}
@@ -156,9 +163,11 @@ export default class Panorama extends React.Component {
               </div>
             </div>
           </div>
-          <div className={`fs-controls`}>
-            <div className={`fs-button`} onClick={this.handleFullScreen}></div>
-          </div>
+          <div
+            className={`fullbrowser-button button`}
+            onClick={this.handleFullBrowserClick}
+            dangerouslySetInnerHTML={{ __html: FullBrowserSvg }}
+          ></div>
         </div>
       </div>
     );

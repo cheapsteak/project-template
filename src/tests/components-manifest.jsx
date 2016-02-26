@@ -4,13 +4,21 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
-  'panorama-wrapper': {
-    component: require('common/components/panorama-wrapper/panorama-wrapper'),
+  'panorama-gallery': {
+    component: require('common/components/panorama-gallery/panorama-gallery'),
     props: {
+      index: 0,
       images: [
-        '../images/pan-test.jpg',
-        '../images/pan-test-2.jpg'
+        '../images/pan-1.jpg',
+        '../images/pan-2.jpg',
+        '../images/pan-3.jpg'
       ]
+    }
+  },
+  'panorama': {
+    component: require('common/components/panorama/panorama'),
+    props: {
+      src: '../images/pan-1.jpg'
     }
   },
   photoessay: {

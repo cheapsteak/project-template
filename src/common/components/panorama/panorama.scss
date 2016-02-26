@@ -3,7 +3,7 @@
 .panorama {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 700px;
   opacity: 0;
   visibility: hidden;
   user-select: none;
@@ -11,10 +11,6 @@
   &.loaded {
     opacity: 1;
     visibility: visible;
-  }
-
-  &:focus {
-    outline: none;
   }
 
   .psv-container, .psv-canvas-container {
@@ -30,6 +26,8 @@
 
   $controlsWidth: 560px;
   .panorama-controls {
+    display: flex;
+    justify-content: space-between;
     position: absolute;
     left: 50%;
     margin-left: -$controlsWidth/2;
@@ -40,23 +38,34 @@
     padding: 10px;
     z-index: 1000;
 
-    .zoom-controls {
-      display: inline-block;
-      position: relative;
-      margin-right: 10px;
-      width: 470px;
-      height: 100%;
-      text-align: center;
+    .button {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
 
-      .zoom {
+      svg {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2px;
+      }
+    }
+
+    .zoom-controls {
+      display: flex;
+      position: relative;
+      width: 460px;
+      height: 100%;
+      margin-right: 20px;
+
+      .button {
         position: absolute;
         background-color: #000;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
         color: #fff;
         font-size: 20px;
-        padding: 15px;
 
         &.zoom-in {
           right: 0;
@@ -78,21 +87,11 @@
           width: 30px;
           height: 30px;
           cursor: pointer;
-          padding: 5px 0;
           transition: transform 0.1s;
+          font-size: 15px;
+          font-weight: 900;
+          color: #000;
         }
-      }
-    }
-
-    .fs-controls {
-      display: inline-block;
-      padding-left: 10px;
-
-      .fs-button {
-        border: 1px dashed #fff;
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
       }
     }
   }
