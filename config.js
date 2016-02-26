@@ -1,4 +1,5 @@
 module.exports = {
+  basePath: '/middleschool',
   local: {
     ASSET_PATH: '/',
     gaID: ''
@@ -7,6 +8,7 @@ module.exports = {
     ASSET_PATH: '/',
     gaID: ''
   },
+  env: process.env.NODE_ENV,
   get ASSET_PATH () {
     return this[process.env.NODE_ENV || 'local'].ASSET_PATH;
   },

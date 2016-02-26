@@ -4,4 +4,6 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
+  videoplayer: require('common/components/video-player/video-player.jsx'),
+  photoessay: require('./photo-essay/photo-essay.jsx')
 };

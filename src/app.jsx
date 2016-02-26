@@ -1,10 +1,7 @@
-import domready from 'domready';
 import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
-import TransitionGroup from 'react-transition-group-plus';
+import TransitionGroup from 'react-addons-transition-group';
 
-class App extends React.Component {
+export default class App extends React.Component {
   render () {
     console.log('render');
     const { pathname } = this.props.location;
@@ -19,20 +16,3 @@ class App extends React.Component {
     </TransitionGroup>;
   }
 }
-
-function handleRouteUpdate () {
-  console.log('route updated');
-  ga('send', 'pageview');
-}
-
-domready(function () {
-  render((
-    <Router history={browserHistory} onUpdate={handleRouteUpdate}>
-      <Route path="/" component={App}>
-      </Route>
-      <Route path="/tests" component={require('./tests/tests.jsx')}>
-        {require('./tests/routes.jsx')}
-      </Route>
-    </Router>
-  ), document.getElementById('container'));
-})

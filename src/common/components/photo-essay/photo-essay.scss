@@ -1,0 +1,96 @@
+.photo-essay {
+  position: relative;
+  max-width: 1100px;;
+  height: 570px;
+  background-color: black;
+
+  .image-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+    }
+  }
+
+  .photo-controls, .photo-description {
+    position: absolute;
+    bottom: 0;
+  }
+
+  .photo-description {
+    width: 50%;
+    height: 240px;
+    left: 0;
+    font-size: 16px;
+    line-height: 28px;
+    background-color: white;
+    padding: 25px 50px 25px 150px;
+    background-clip: padding-box; 
+    opacity: 0.8;
+    border-top: 40px solid rgba(255, 255, 255, 0.5);
+
+    h3 {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+
+  .photo-controls {
+    $page-display-height: 40px;
+    display: flex;
+    right: 0;
+    width: 240px;
+    height: 80px;
+    user-select: none;
+
+    .button {
+      flex: 1;
+      margin: 0;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        fill: none;
+        stroke: white;
+        stroke-width: 2px;
+      }
+    }
+
+    .button:nth-child(1) {
+      background-color: rgba(43, 43, 43, 0.7);
+    }
+
+    .button:nth-child(2) {
+      background-color: rgba(43, 43, 43, 0.8);
+    }
+
+    .button:nth-child(3) {
+      background-color: rgba(43, 43, 43, 0.9);
+  
+    }
+
+    .page-display {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      height: $page-display-height;
+      line-height: $page-display-height;
+      bottom: - $page-display-height;
+      color: white;
+      padding-left: 20px;
+      background-color: #2B2B2B;
+    }
+  }
+}
