@@ -1,7 +1,7 @@
 .photo-essay {
   position: relative;
-  width: 1350px;
-  height: 670px;
+  max-width: 1100px;;
+  height: 570px;
   background-color: black;
 
   .image-wrapper {
@@ -11,7 +11,6 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
-    object-fit: contain;
 
     img {
       width: 100%;
@@ -28,6 +27,7 @@
   .photo-description {
     width: 50%;
     height: 240px;
+    left: 0;
     font-size: 16px;
     line-height: 28px;
     background-color: white;
@@ -48,6 +48,7 @@
     right: 0;
     width: 240px;
     height: 80px;
+    user-select: none;
 
     .button {
       flex: 1;

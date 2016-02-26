@@ -1,101 +1,101 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
-import animate from 'gsap-promise';
-import mediaBgCover from '../../utils/media-bg-cover';
-
-const states = {
-  LOADING: 'loading',
-  PLAYING: 'playing',
-  PAUSED: 'paused'
-};
-
-var containerEl, videoEl;
+import Timeline from 'common/components/timeline/timeline';
+import PlayButtonSvg from '../../../assets/video-play-button.svg';
+import BackButtonSvg from '../../../assets/video-back-button.svg';
+import ForwardButtonSvg from '../../../assets/video-forward-button.svg';
 
 export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      status: states.LOADING
-    }
+      time: 0,
+      isPlaying: false,
+      isVideoLoaded: false
+    };
   }
 
   static propTypes = {
-    video: React.PropTypes.string,
-    type: React.PropTypes.string,
-    chapter: React.PropTypes.number
+    style: React.PropTypes.object,
+    src: React.PropTypes.string,
+    timeline: React.PropTypes.array
   };
 
-  static defaultProps = {
-    video: 'http://vjs.zencdn.net/v/oceans.mp4',
-    type: 'narrative',
-    chapter: 1
-  };
-
-  togglePlay = () => {
-    (this.state.status === states.PAUSED) ? this.playVideo() : this.pauseVideo();
-  };
-
-  handleClick = () => {
-    this.togglePlay();
-  };
-
-  handleKeypress = (e) => {
-    e.preventDefault();
-    if (e.keyCode === 32) this.togglePlay();
-  };
-
-  handleResize = () => {
-    mediaBgCover(videoEl, containerEl);
-  };
-
-  playVideo = () => {
-    this.setState({status: states.PLAYING});
-    videoEl.play();
-    console.log('video playing');
+  changeVideoTime = (time) => {
+    this.video.currentTime = time;
   };
 
   pauseVideo = () => {
-    this.setState({status: states.PAUSED});
-    videoEl.pause();
-    console.log('video paused');
+    this.video.pause();
   };
 
-  setEvents = () => {
-    videoEl.addEventListener('canplay', () => {
-      this.handleResize();
-      this.playVideo();
-    });
-
-    window.addEventListener('resize', this.handleResize);
-    window.addEventListener('keypress', this.handleKeypress);
+  handleMetadataLoaded = () => {
+    this.setState({isVideoLoaded: true});
   };
 
-  componentDidMount() {
-    containerEl = findDOMNode(this);
-    videoEl = findDOMNode(this.refs.video);
+  handleTimeUpdate = (e) => {
+    this.setState({time: e.target.currentTime});
+  };
 
-    this.setEvents();
-  }
+  handleVideoPlayPause = () => {
+    this.state.isPlaying
+      ? this.video.pause()
+      : this.video.play();
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
-    window.removeEventListener('keypress', this.handleKeypress);
-  }
+    this.setState({isPlaying: !this.state.isPlaying})
+  };
+
+  handleClickPrev = (e) => {
+
+  };
+
+  handleClickNext = (e) => {
+
+  };
 
   render() {
-    return (
-      <div className={`video-container`}>
-        <video
-          ref="video"
-          preload="true"
-          muted="true"
-          className={`video-player ${this.state.status}`}
-          onClick={this.handleClick}
-        >
-          <source src={this.props.video} type="video/mp4"/>
-        </video>
+    const { style } = this.props;
+    const tempPauseStyle = this.state.isPlaying ? {fill: 'black'} : undefined;
+
+    return <div className="video-player" style={style}>
+      <video
+        ref={(node) => this.video = node }
+        src={this.props.src}
+        preload="metadata"
+        onLoadedMetadata={this.handleMetadataLoaded}
+        onEnded={this.handleVideoPlayPause}
+        onTimeUpdate={this.handleTimeUpdate}
+      >
+      </video>
+      <div className="controls">
+        <div className="buttons">
+          <span
+            className="button"
+            style={tempPauseStyle}
+            dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+            onClick={this.handleVideoPlayPause}
+          >
+          </span>
+          <span
+            className="button"
+            dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+            onClick={this.handleClickPrev}
+          >
+          </span>
+          <span
+            className="button"
+            dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+            onClick={this.handleClickNext}
+          >
+          </span>
+        </div>
+        <Timeline
+          currentTime={this.state.time}
+          duration={ this.state.isVideoLoaded ? this.video.duration : 0 }
+          onTimeChange={this.changeVideoTime}
+          items={this.props.timeline}
+        />
       </div>
-    );
+    </div>
   }
 }

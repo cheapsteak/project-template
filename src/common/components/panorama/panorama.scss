@@ -1,0 +1,99 @@
+@import "./compass/compass";
+
+.panorama {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+
+  &.loaded {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .psv-container, .psv-canvas-container {
+    height: 100%;
+  }
+
+  .psv-container, .psv-canvas-container, .psv-hud {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  $controlsWidth: 560px;
+  .panorama-controls {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    left: 50%;
+    margin-left: -$controlsWidth/2;
+    bottom: 0;
+    width: $controlsWidth;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    z-index: 1000;
+
+    .button {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+
+      svg {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2px;
+      }
+    }
+
+    .zoom-controls {
+      display: flex;
+      position: relative;
+      width: 460px;
+      height: 100%;
+      margin-right: 20px;
+
+      .button {
+        position: absolute;
+        background-color: #000;
+        color: #fff;
+        font-size: 20px;
+
+        &.zoom-in {
+          right: 0;
+        }
+      }
+
+      .slider {
+        position: relative;
+        margin: auto;
+        width: 300px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.2);
+
+        .slider-indicator {
+          position: absolute;
+          top: 50%;
+          margin-top: -15px;
+          background-color: #00d6b2;
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          transition: transform 0.1s;
+          font-size: 15px;
+          font-weight: 900;
+          color: #000;
+        }
+      }
+    }
+  }
+}
+

@@ -21,11 +21,14 @@
     "gsap-promise": "^1.4.1",
     "gulp-sourcemaps": "^1.6.0",
     "parallax": "github:wagerfield/parallax",
+    "photo-sphere": "github:namniak/Photo-Sphere-Viewer",
     "react": "^0.14.7",
     "react-addons-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
     "react-router": "^2.0.0",
     "react-transition-group-plus": "^0.1.4",
+    "redux": "^3.3.1",
     "seriously": "github:namniak/Seriously.js"
   },
   "devDependencies": {
@@ -51,7 +54,6 @@
     "eslint-plugin-react": "^3.11.2",
     "exorcist": "^0.4.0",
     "gulp": "3.9.0",
-    "gulp-add": "0.0.2",
     "gulp-autoprefixer": "1.0.1",
     "gulp-concat": "^2.6.0",
     "gulp-duration": "0.0.0",

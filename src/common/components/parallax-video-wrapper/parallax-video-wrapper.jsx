@@ -32,7 +32,9 @@ export default class ParallaxVideoWrapper extends React.Component {
   static propTypes = {
     inHomePage: React.PropTypes.bool,
     inContentPage: React.PropTypes.bool,
-    inNarrativeVideo: React.PropTypes.bool
+    inNarrativeVideo: React.PropTypes.bool,
+    bgVideoPath: React.PropTypes.string.isRequired,
+    fgVideoPath: React.PropTypes.string.isRequired
   };
 
   animateInHomePage = () => {
@@ -94,8 +96,8 @@ export default class ParallaxVideoWrapper extends React.Component {
       <div className={`parallax-video-wrapper ${this.state.className}`}>
         <ParallaxVideo
           ref="parallaxVideo"
-          bgVideoPath={'../videos/bg-1080.mp4'}
-          fgVideoPath={'../videos/fg-1080-1.mp4'}
+          bgVideoPath={this.props.bgVideoPath}
+          fgVideoPath={this.props.fgVideoPath}
           animateIn={this.state.videoAnimateInFn}
           animateOut={this.state.videoAnimateOutFn}
         >

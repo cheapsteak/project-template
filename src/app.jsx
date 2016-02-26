@@ -1,6 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, Link, IndexRoute, IndexRedirect, browserHistory } from 'react-router';
 import TransitionGroup from 'react-addons-transition-group';
 
 export default class App extends React.Component {
@@ -18,4 +16,3 @@ export default class App extends React.Component {
     </TransitionGroup>;
   }
 }
-
