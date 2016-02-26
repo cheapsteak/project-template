@@ -13,17 +13,57 @@ export default class PhotoEssay extends React.Component {
     }
   }
 
-  handlePrevClick = () => {
-    this.setState({ 
-      current: this.state.current > 0 
-        ? (this.state.current - 1) % this.props.photos.length
-        : this.props.photos.length - 1
-    });
+  componentWillReceiveProps(nextProps) {        
+    this.setState({ current: nextProps.index });
+    this.setFullscreen(nextProps.isFullscreen);
   }
 
+  setFullscreen = (isFullscreen) => {
+
+    // NOTE: This is not the actual implementation
+    const el = findDOMNode(this);
+
+    if(isFullscreen) {
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+      } else if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  };
+
+  handlePrevClick = () => {
+    this.props.prev()
+
+    // this.setState({ 
+    //   current: this.state.current > 0 
+    //     ? (this.state.current - 1) % this.props.photos.length
+    //     : this.props.photos.length - 1
+    // });
+  };
+
   handleNextClick = () => {
-    this.setState({ current: (this.state.current + 1) % this.props.photos.length })
-  }
+    this.props.next()
+    // this.setState({ current: (this.state.current + 1) % this.props.photos.length })
+  };
+
+  handleFullscreenClick = () => {
+    this.props.toggleFullscreen();
+  };
 
   render () {
     const { style, photos } = this.props;
