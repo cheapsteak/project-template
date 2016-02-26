@@ -5,12 +5,7 @@
 export default {
   timeline: require('./timeline/timeline.jsx'),
   'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
-  'panorama': {
-    component: require('common/components/panorama/panorama'),
-    props: {
-      src: '../images/pan-1.jpg'
-    }
-  },
+  panorama: require('./panorama/panorama'),
   photoessay: {
     component: require('./photo-essay/photo-essay.jsx')
   }
