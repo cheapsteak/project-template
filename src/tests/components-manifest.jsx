@@ -7,7 +7,6 @@ export default {
   'panorama-gallery': {
     component: require('common/components/panorama-gallery/panorama-gallery'),
     props: {
-      index: 0,
       images: [
         '../images/pan-1.jpg',
         '../images/pan-2.jpg',

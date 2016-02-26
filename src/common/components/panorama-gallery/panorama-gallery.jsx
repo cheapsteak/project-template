@@ -22,7 +22,12 @@ export default class PanoramaGallery extends React.Component {
   containerEl;
 
   static propTypes = {
+    index: React.PropTypes.array.number,
     images: React.PropTypes.array.isRequired
+  };
+
+  static defaultProps = {
+    index: 0
   };
 
   handlePrevClick = () => {
