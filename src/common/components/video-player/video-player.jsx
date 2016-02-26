@@ -15,10 +15,15 @@ export default class VideoPlayer extends React.Component {
     };
   }
 
+  static propTypes = {
+    style: React.PropTypes.object,
+    src: React.PropTypes.string,
+    timeline: React.PropTypes.array
+  };
+
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
-
 
   pauseVideo = () => {
     this.video.pause();
