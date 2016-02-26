@@ -1,6 +1,5 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import animate from 'gsap-promise';
 import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
@@ -10,11 +9,7 @@ const states = {
   LOADED: 'loaded'
 };
 
-var containerEl, bgVideo, fgVideo;
-var loadedVideos = 0;
-var parallax;
-
-export default class VideoPlayer extends React.Component {
+export default class ParallaxVideo extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,105 +18,138 @@ export default class VideoPlayer extends React.Component {
     }
   }
 
+  bgVideo;
+  fgVideo;
+  containerEl;
+  parallax;
+  seriously;
+  loadedVideos = 0;
+
   static propTypes = {
-    bgVid: React.PropTypes.string,
-    fgVid: React.PropTypes.string,
-    title: React.PropTypes.string,
-    subtitle: React.PropTypes.string
+    bgVideoPath: React.PropTypes.string.isRequired,
+    fgVideoPath: React.PropTypes.string.isRequired,
+    fgVideoWidth: React.PropTypes.number,
+    fgVideoHeight: React.PropTypes.number,
+    bgVideoDepth: React.PropTypes.number,
+    fgVideoDepth: React.PropTypes.number,
+    parallaxOpts: React.PropTypes.object,
+    animateIn: React.PropTypes.func,
+    animateOut: React.PropTypes.func
   };
 
   static defaultProps = {
-    bgVid: '../videos/bg-1080.mp4',
-    fgVid: '../videos/fg-1080.mp4',
-    title: 'chapter',
-    subtitle: 'science'
+    bgVideoDepth: 0.7,
+    fgVideoDepth: 0.5,
+    fgVideoWidth: 1920,  // this will determine canvas width
+    fgVideoHeight: 1080, // this will determine canvas height
+    parallaxOpts: {},
+    animateIn: () => {
+      console.log('default animateIn');
+    },
+    animateOut: () => {
+      console.log('default animateOut');
+    }
   };
 
-  handleResize = () => {
-    mediaBgCover(this.refs.bgVideo, containerEl);
-    mediaBgCover(this.refs.fgCanvas, containerEl);
-    parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
+  positionElements = () => {
+    mediaBgCover(this.bgVideo, this.containerEl);
+    mediaBgCover(this.fgCanvas, this.containerEl);
+    this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
-  handleVideosReady = () => {
-    loadedVideos++;
-    if (loadedVideos == 2) {
-      this.handleResize();
+  onVideoReady = () => {
+    this.loadedVideos++;
+
+    if (this.loadedVideos == 2) {
+      this.positionElements();
       this.setState({status: states.LOADED});
-      bgVideo.play();
-      fgVideo.play();
+      this.bgVideo.play();
+      this.fgVideo.play();
+      this.props.animateIn();
     }
   };
 
   setFgVideo = () => {
-    fgVideo = document.createElement('video');
-    fgVideo.src = this.props.fgVid;
-    fgVideo.preload = true;
-    fgVideo.loop = true;
+    this.fgVideo = document.createElement('video');
+    this.fgVideo.src = this.props.fgVideoPath;
+    this.fgVideo.preload = true;
+    this.fgVideo.loop = true;
 
-    var seriously = new Seriously();
-    var target = seriously.target(this.refs.fgCanvas);
-    var chroma = seriously.effect('chroma');
+    this.seriously = new Seriously();
+    var target = this.seriously.target(this.refs.fgCanvas);
+    var chroma = this.seriously.effect('chroma');
 
-    chroma.source = fgVideo;
+    chroma.source = this.fgVideo;
     //chroma.screen = '#29fe2f';
     target.source = chroma;
 
-    seriously.go();
+    this.seriously.go();
   };
 
   setEvents = () => {
-    bgVideo.addEventListener('loadstart', () => {
-      console.time('bg-video-ready');
-    });
-    bgVideo.addEventListener('canplay', () => {
-      this.handleVideosReady();
-      console.timeEnd('bg-video-ready');
-    });
+    if (this.bgVideo.readyState !== 4) {
+      this.bgVideo.addEventListener('loadstart', () => {
+        console.time('bg-video-ready');
+      });
+      this.bgVideo.addEventListener('canplay', () => {
+        this.onVideoReady();
+        console.timeEnd('bg-video-ready');
+      });
+    } else {
+      this.onVideoReady();
+    }
 
-    fgVideo.addEventListener('loadstart', () => {
-      console.time('fg-video-ready');
-    });
-    fgVideo.addEventListener('canplay', () => {
-      this.handleVideosReady();
-      console.timeEnd('fg-video-ready');
-    });
+    if (this.fgVideo.readyState !== 4) {
+      this.fgVideo.addEventListener('loadstart', () => {
+        console.time('fg-video-ready');
+      });
+      this.fgVideo.addEventListener('canplay', () => {
+        this.onVideoReady();
+        console.timeEnd('fg-video-ready');
+      });
+    } else {
+      this.onVideoReady();
+    }
 
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.positionElements);
   };
 
   componentDidMount() {
-    containerEl = findDOMNode(this);
-    bgVideo = this.refs.bgVideo;
+    this.containerEl = findDOMNode(this);
+    this.bgVideo = findDOMNode(this.refs.bgVideo);
+    this.fgCanvas = findDOMNode(this.refs.fgCanvas);
+
+    this.parallax = new Parallax(this.refs.scene, this.props.parallaxOpts);
 
     this.setFgVideo();
     this.setEvents();
-
-    parallax = new Parallax(this.refs.scene);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    this.fgVideo = null;
+    window.removeEventListener('resize', this.positionElements);
   }
 
   render() {
     return (
-      <div className={`parallax-video-container`}>
+      <div className={`parallax-video`}>
         <div ref="scene" className={`scene ${this.state.status}`}>
-          <span className={`layer`} data-depth="0.7">
+          <div className={`layer`} data-depth={this.props.bgVideoDepth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
-              <source src={this.props.bgVid} type="video/mp4"/>
+              <source src={this.props.bgVideoPath} type="video/mp4"/>
             </video>
-          </span>
-          <span className={`layer`} data-depth="0.5">
-            <canvas width="1920" height="1080" ref="fgCanvas" className={`fg-canvas ${this.state.status}`}></canvas>
-          </span>
-          <span className={`layer`} data-depth="0.3">
-            <div className={`text-container`}>
-              <div className={`title`}>{this.props.title}</div>
-              <div className={`subtitle`}>{this.props.subtitle}</div>
-            </div>
-          </span>
+          </div>
+
+          <div className={`layer`} data-depth={this.props.fgVideoDepth}>
+            <canvas
+              ref="fgCanvas"
+              width={this.props.fgVideoWidth}
+              height={this.props.fgVideoHeight}
+              className={`fg-canvas ${this.state.status}`}
+            ></canvas>
+          </div>
+
+          {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
         </div>
       </div>
     );
