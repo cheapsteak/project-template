@@ -1,7 +1,7 @@
 .photo-essay {
   position: relative;
-  width: 95vw;
-  height: 670px;
+  max-width: 1100px;;
+  height: 570px;
   background-color: black;
 
   .image-wrapper {
@@ -13,8 +13,8 @@
     justify-content: center;
 
     img {
-      width: auto;
-      height: 100%;
+      width: 100%;
+      height: auto;
       overflow: hidden;
     }
   }
@@ -27,6 +27,7 @@
   .photo-description {
     width: 50%;
     height: 240px;
+    left: 0;
     font-size: 16px;
     line-height: 28px;
     background-color: white;
@@ -47,6 +48,7 @@
     right: 0;
     width: 240px;
     height: 80px;
+    user-select: none;
 
     .button {
       flex: 1;
