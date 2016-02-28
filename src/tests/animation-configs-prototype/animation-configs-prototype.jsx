@@ -1,9 +1,16 @@
 import React from 'react';
-import animations from './animation-configs-prototype-animations.js';
+import Box from './box/box.jsx';
+
+import TransitionGroup from 'react-transition-group-plus';
 
 
 export default class AnimationConfigsPrototype extends React.Component {
   render () {
-    return <div>asdfasd</div>;
+    return <div className="animation-configs-prototype">
+      <Box />
+      <Box />
+      <Box />
+      <Box />
+    </div>;
   }
 }

@@ -21,6 +21,7 @@
     "gsap-promise": "^1.4.1",
     "gulp-sourcemaps": "^1.6.0",
     "history": "^2.0.0",
+    "lodash": "^4.5.1",
     "parallax": "github:wagerfield/parallax",
     "photo-sphere": "github:namniak/Photo-Sphere-Viewer",
     "react": "^0.14.7",

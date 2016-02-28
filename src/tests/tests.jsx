@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
+import AnimationEditor from '../animation-editor/animation-editor.jsx';
 
 class ManifestMenu extends React.Component {
   state = {
@@ -48,7 +49,8 @@ export default function (props) {
   const key = pathname.split('/')[2] || 'root';
   const isIndexPage = key === 'root';
 
-  return <div>
+  return <div className="tests">
+    <AnimationEditor/>
     <ManifestMenu
       manifest={componentsManifest}
       isIndexPage={!isIndexPage}

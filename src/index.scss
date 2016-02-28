@@ -9,7 +9,7 @@ body {
 }
 
 #container {
-  background-color: green;
+  height: 100%;
 }
 
 @import 'common/styles/reset';
@@ -18,3 +18,4 @@ body {
 @import 'common/components/video-player/video-player';
 @import 'common/components/photo-essay/photo-essay';
 @import 'common/components/panorama-gallery/panorama-gallery';
+@import 'animation-editor/animation-editor.scss';
