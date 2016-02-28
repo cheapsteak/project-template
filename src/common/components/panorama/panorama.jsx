@@ -51,13 +51,13 @@ export default class Panorama extends React.Component {
     this.onZoomUpdate(zoomLevel);
   };
 
-  handleZoomIn = () => {
+  zoomIn = () => {
     if (this.state.zoomLevel < 1) {
       this.updateZoomLevel(this.state.zoomLevel + zoomStep);
     }
   };
 
-  handleZoomOut = () => {
+  zoomOut = () => {
     if (this.state.zoomLevel > 0) {
       this.updateZoomLevel(this.state.zoomLevel - zoomStep);
     }
@@ -69,7 +69,7 @@ export default class Panorama extends React.Component {
 
   handleMouseWheel = (e) => {
     const delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-    (delta > 0) ? this.handleZoomIn() : this.handleZoomOut();
+    (delta > 0) ? this.zoomIn() : this.zoomOut();
   };
 
   handleOrientationChange = (e) => {
@@ -153,8 +153,8 @@ export default class Panorama extends React.Component {
 
         <PanoramaControls
           zoomLevel={this.state.zoomLevel}
-          zoomIn={this.handleZoomIn}
-          zoomOut={this.handleZoomOut}
+          zoomIn={this.zoomIn}
+          zoomOut={this.zoomOut}
           onZoomUpdate={this.onZoomUpdate}
         />
 
