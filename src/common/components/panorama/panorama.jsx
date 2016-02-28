@@ -1,18 +1,21 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-var PhotoSphere = require('photo-sphere').PhotoSphereViewer;
 import PanoramaCompass from './compass/compass';
 import FullBrowserSvg from '../../../assets/photo-essay-fullscreen-button.svg';
+import PhotoSphere from 'photo-sphere-viewer';
 
 const states = {
   LOADING: 'loading',
-  LOADED: 'loaded'
+  INIT: 'init',
+  ACCELEROMETER: 'accelerometer-on'
 };
 
 const minZoomNum = 0;
 const maxZoomNum = 60;
-const defaultZoomLevel = 0;
+const initZoomLevel = 0; // 0-1 corresponds to minZoomNum and maxZoomNum respectively
 const zoomStep = 0.1;
+
+const zoomRangeNum = maxZoomNum + minZoomNum;
 
 export default class Panorama extends React.Component {
   constructor(props) {
@@ -20,25 +23,36 @@ export default class Panorama extends React.Component {
 
     this.state = {
       status: states.LOADING,
-      zoomLevel: defaultZoomLevel,
-      sliderPosition: 0,
-      lat: 0,
-      lng: 0
+      zoomLevel: initZoomLevel,
+      long: undefined,
+      lat: undefined,
+      sliderPos: 0
     }
   }
 
-  containerEl;
-  panorama;
-  zoomRange = maxZoomNum + minZoomNum;
-  isDraggingSlider = false;
+  componentWillReceiveProps(newProps) {
+    if (newProps.src !== this.props.src) {
+      this.setPanorama(newProps.src, newProps.initLong, newProps.initLat);
+    }
+  }
 
   static propTypes = {
-    src: React.PropTypes.string.isRequired
+    src: React.PropTypes.string.isRequired,
+    initLong: React.PropTypes.number,
+    initLat: React.PropTypes.number
   };
+
+  static defaultProps = {
+    initLong: 0,
+    initLat: 0
+  };
+
+  isDraggingSlider = false;
+
 
   updateZoomLevel = (zoomLevel) => {
     zoomLevel = parseFloat(zoomLevel).toPrecision(1);
-    this.panorama.zoom(this.zoomRange * zoomLevel);
+    this.panorama.zoom(zoomRangeNum * zoomLevel);
   };
 
   handleZoomIn = () => {
@@ -54,17 +68,17 @@ export default class Panorama extends React.Component {
   };
 
   setZoom = (levelNum) => {
-    var zoomLevel = levelNum / this.zoomRange;
-    var sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
-    this.setState({zoomLevel: zoomLevel, sliderPosition: sliderPos});
+    const zoomLevel = levelNum / zoomRangeNum;
+    const sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
+    this.setState({zoomLevel: zoomLevel, sliderPos: sliderPos});
     //console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
   };
 
   doDrag = (coordX) => {
     if (this.isDraggingSlider) {
-      var pos = coordX - this.refs.slider.getBoundingClientRect().left;
-      var zoomLevel = Math.min(pos / this.refs.slider.offsetWidth, 1);
-      this.panorama.zoom(this.zoomRange * zoomLevel);
+      const pos = coordX - this.refs.slider.getBoundingClientRect().left;
+      const zoomLevel = Math.min(pos / this.refs.slider.offsetWidth, 1);
+      this.panorama.zoom(zoomRangeNum * zoomLevel);
     }
   };
 
@@ -89,27 +103,41 @@ export default class Panorama extends React.Component {
   };
 
   handleMouseWheel = (e) => {
-    var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+    const delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
     (delta > 0) ? this.handleZoomIn() : this.handleZoomOut();
   };
 
-  setPanorama = (imagePath) => {
+  handleOrientationChange = (e) => {
+    if (this.state.status === states.ACCELEROMETER) {
+      const absolute = e.absolute;
+      const alpha = e.alpha;
+
+      const betaRad = e.beta * (Math.PI / 180);
+      const gammaRad = e.gamma * (Math.PI / 90);
+      console.log(absolute, alpha, betaRad, gammaRad)
+
+      const long = gammaRad;
+      const lat = betaRad;
+
+      this.panorama.rotate(long, lat);
+    }
+  };
+
+  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
     if (this.panorama) this.panorama.destroy();
 
-    this.panorama = PhotoSphere({
+    this.panorama = PhotoSphere.PhotoSphereViewer({
       container: this.containerEl,
-      panorama: imagePath,
+      panorama: src,
       time_anim: false,
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
       mousewheel: false
     });
 
-    this.setState({lat: 0, lng: 0});
-
     this.panorama.on('ready', () => {
-      this.setState({status: states.LOADED});
-      this.panorama.zoom(defaultZoomLevel * this.zoomRange);
+      this.setState({status: states.INIT, long: long, lat: lat});
+      this.panorama.zoom(initZoomLevel * zoomRangeNum);
     });
 
     this.panorama.on('zoom-updated', (levelNum) => {
@@ -118,34 +146,49 @@ export default class Panorama extends React.Component {
       }
     });
 
-    this.panorama.on('position-updated', (lng, lat) => {
-      this.setState({lat: lat, lng: lng});
+    this.panorama.on('position-updated', (long, lat) => {
+      this.setState({long, lat});
     });
+  };
+
+  handleAccelerometerClick = () => {
+    var state;
+    if (this.state.status === states.ACCELEROMETER) {
+      state = states.INIT;
+      this.panorama.rotate(this.props.initLong, this.props.initLat);
+    } else {
+      state = states.ACCELEROMETER;
+    }
+    this.setState({status: state});
   };
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
-    this.setPanorama(this.props.src);
+    this.setPanorama();
 
     this.containerEl.addEventListener('mousewheel', (e) => this.handleMouseWheel(e));
     this.containerEl.addEventListener('DOMMouseScroll', (e) => this.handleMouseWheel(e));
+    window.addEventListener('deviceorientation', this.handleOrientationChange);
   }
 
   componentWillUnmount() {
     this.panorama.destroy();
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.src !== this.props.src) {
-      this.setPanorama(newProps.src);
-    }
+    window.removeEventListener('deviceorientation', this.handleOrientationChange);
   }
 
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
-        <PanoramaCompass lat={this.state.lat} lng={this.state.lng}></PanoramaCompass>
+        <PanoramaCompass lat={this.state.lat} long={this.state.long}></PanoramaCompass>
+
+        <div
+          className={`toggle-accelerometer button ${this.state.status}`}
+          onClick={this.handleAccelerometerClick}
+        >
+          AC
+        </div>
+
         <div className={`panorama-controls`}>
           <div className={`zoom-controls`}>
             <div className={`zoom-out button`} onClick={this.handleZoomOut}>-</div>
@@ -155,7 +198,7 @@ export default class Panorama extends React.Component {
               <div
                 ref="indicator"
                 className={`slider-indicator button`}
-                style={ {transform: 'translateX(' + this.state.sliderPosition + 'px)'} }
+                style={ {transform: 'translateX(' + this.state.sliderPos + 'px)'} }
                 onMouseDown={this.handleSliderDrag}
                 onTouchStart={this.handleSliderDrag}
               >

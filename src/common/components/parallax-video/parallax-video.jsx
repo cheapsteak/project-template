@@ -1,8 +1,9 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
+
+const BackgroundCover = require('background-cover').BackgroundCover;
 
 const states = {
   LOADING: 'loading',
@@ -52,8 +53,8 @@ export default class ParallaxVideo extends React.Component {
   };
 
   positionElements = () => {
-    mediaBgCover(this.bgVideo, this.containerEl);
-    mediaBgCover(this.fgCanvas, this.containerEl);
+    BackgroundCover(this.bgVideo, this.containerEl);
+    BackgroundCover(this.fgCanvas, this.containerEl);
     this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 

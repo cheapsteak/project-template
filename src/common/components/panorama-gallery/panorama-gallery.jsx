@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Panorama from '../panorama/panorama';
-import PrevButtonSvg from '../../../assets/photo-essay-prev-button.svg';
-import NextButtonSvg from '../../../assets/photo-essay-next-button.svg';
+import PrevSvg from '../../../assets/photo-essay-prev-button.svg';
+import NextSvg from '../../../assets/photo-essay-next-button.svg';
 
 const states = {
   LOADING: 'loading',
@@ -15,30 +15,33 @@ export default class PanoramaGallery extends React.Component {
 
     this.state = {
       status: states.LOADING,
-      currIndex: props.startIndex
+      index: props.index
     }
   }
 
-  containerEl;
+  componentWillReceiveProps(nextProps) {
+    this.setState({index: nextProps.index});
+  }
 
   static propTypes = {
-    images: React.PropTypes.array.isRequired
+    index: React.PropTypes.number,
+    panoramas: React.PropTypes.array.isRequired,
+    prev: React.PropTypes.func,
+    next: React.PropTypes.func
   };
 
   static defaultProps = {
-    startIndex: 0
+    index: 0,
+    prev: () => console.log('go prev'),
+    next: () => console.log('go next')
   };
 
   handlePrevClick = () => {
-    var index = this.state.currIndex - 1;
-    if (index < 0) index = this.props.images.length - 1;
-    this.setState({currIndex: index});
+    this.props.prev();
   };
 
   handleNextClick = () => {
-    var index = this.state.currIndex + 1;
-    if (index > this.props.images.length - 1) index = 0;
-    this.setState({currIndex: index});
+    this.props.next();
   };
 
   componentDidMount() {
@@ -46,31 +49,24 @@ export default class PanoramaGallery extends React.Component {
   }
 
   render() {
+    const index = this.state.index;
+    const currPanorama = this.props.panoramas[index];
+
+    const controls = (this.props.panoramas.length > 1 ? (
+      <div className={`gallery-controls`}>
+        <div className={`button prev`} onClick={this.handlePrevClick} dangerouslySetInnerHTML={{__html: PrevSvg}}></div>
+        <div className={`button next`} onClick={this.handleNextClick} dangerouslySetInnerHTML={{__html: NextSvg}}></div>
+      </div>
+    ) : null);
+
     return (
       <div className={`panorama-gallery ${this.state.status}`}>
         <Panorama
-          ref="panorama"
-          src={this.props.images[this.state.currIndex]}
-        >
-        </Panorama>
-
-        {this.props.images.length > 1 ?
-          (
-            <div className={`gallery-controls`}>
-              <div
-                className={`button prev`}
-                onClick={this.handlePrevClick}
-                dangerouslySetInnerHTML={{ __html: PrevButtonSvg }}
-              ></div>
-              <div
-                className={`button next`}
-                onClick={this.handleNextClick}
-                dangerouslySetInnerHTML={{ __html: NextButtonSvg }}
-              ></div>
-            </div>
-          )
-          : null}
-
+          src={currPanorama.src}
+          initLong={currPanorama.initLong}
+          initLat={currPanorama.initLat}
+        />
+        {controls}
       </div>
     );
   }
