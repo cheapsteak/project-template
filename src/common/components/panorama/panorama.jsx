@@ -113,7 +113,7 @@ export default class Panorama extends React.Component {
       const alpha = e.alpha;
 
       const betaRad = e.beta * (Math.PI / 180);
-      const gammaRad = e.gamma * (Math.PI / 90);
+      const gammaRad = e.gamma * (Math.PI / 180);
       console.log(absolute, alpha, betaRad, gammaRad)
 
       const long = gammaRad;

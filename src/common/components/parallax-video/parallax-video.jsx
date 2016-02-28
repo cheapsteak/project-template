@@ -17,15 +17,10 @@ export default class ParallaxVideo extends React.Component {
     this.state = {
       status: states.LOADING,
       fgVideoWidth: null,
-      fgVideoHeight : null
+      fgVideoHeight: null
     }
   }
 
-  bgVideo;
-  fgVideo;
-  containerEl;
-  parallax;
-  seriously;
   loadedVideos = 0;
 
   static propTypes = {
@@ -64,7 +59,7 @@ export default class ParallaxVideo extends React.Component {
       this.setState({
         status: states.LOADED,
         fgVideoWidth: this.fgVideo.videoWidth,
-        fgVideoHeight : this.fgVideo.videoHeight
+        fgVideoHeight: this.fgVideo.videoHeight
       });
       this.bgVideo.play();
       this.fgVideo.play();
@@ -82,8 +77,8 @@ export default class ParallaxVideo extends React.Component {
 
   createAlphaVideo = () => {
     this.seriously = new Seriously();
-    var target = this.seriously.target(this.refs.fgCanvas);
-    var chroma = this.seriously.effect('chroma');
+    const target = this.seriously.target(this.refs.fgCanvas);
+    const chroma = this.seriously.effect('chroma');
 
     chroma.source = this.fgVideo;
     //chroma.screen = '#29fe2f';

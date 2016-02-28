@@ -25,10 +25,6 @@ export default class ParallaxVideoWrapper extends React.Component {
     }
   }
 
-  bgVideo;
-  fgVideo;
-  content;
-
   static propTypes = {
     inHomePage: React.PropTypes.bool,
     inContentPage: React.PropTypes.bool,
