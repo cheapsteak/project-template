@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import PanoramaCompass from './compass/compass';
-import FullBrowserSvg from '../../../assets/photo-essay-fullscreen-button.svg';
 import PhotoSphere from 'photo-sphere-viewer';
+import PanoramaCompass from './panorama-compass/panorama-compass';
+import PanoramaControls from './panorama-controls/panorama-controls';
 
 const states = {
   LOADING: 'loading',
@@ -25,8 +25,7 @@ export default class Panorama extends React.Component {
       status: states.LOADING,
       zoomLevel: initZoomLevel,
       long: undefined,
-      lat: undefined,
-      sliderPos: 0
+      lat: undefined
     }
   }
 
@@ -47,12 +46,9 @@ export default class Panorama extends React.Component {
     initLat: 0
   };
 
-  isDraggingSlider = false;
-
-
   updateZoomLevel = (zoomLevel) => {
     zoomLevel = parseFloat(zoomLevel).toPrecision(1);
-    this.panorama.zoom(zoomRangeNum * zoomLevel);
+    this.onZoomUpdate(zoomLevel);
   };
 
   handleZoomIn = () => {
@@ -67,39 +63,8 @@ export default class Panorama extends React.Component {
     }
   };
 
-  setZoom = (levelNum) => {
-    const zoomLevel = levelNum / zoomRangeNum;
-    const sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
-    this.setState({zoomLevel: zoomLevel, sliderPos: sliderPos});
-    //console.log('levelNum:', levelNum, 'zoomLevel', zoomLevel)
-  };
-
-  doDrag = (coordX) => {
-    if (this.isDraggingSlider) {
-      const pos = coordX - this.refs.slider.getBoundingClientRect().left;
-      const zoomLevel = Math.min(pos / this.refs.slider.offsetWidth, 1);
-      this.panorama.zoom(zoomRangeNum * zoomLevel);
-    }
-  };
-
-  stopDrag = () => {
-    if (this.isDraggingSlider) {
-      this.isDraggingSlider = false;
-    }
-  };
-
-  handleSliderDrag = () => {
-    this.isDraggingSlider = true;
-
-    document.addEventListener('mousemove', (e) => this.doDrag(e.clientX));
-    document.addEventListener('touchmove', (e) => this.doDrag(e.targetTouches[0].clientX));
-
-    document.addEventListener('mouseup', () => this.stopDrag());
-    document.addEventListener('touchend', () => this.stopDrag());
-  };
-
-  handleFullBrowserClick = () => {
-    console.log('go full-browser')
+  onZoomUpdate = (zoomLevel) => {
+    this.panorama.zoom(zoomRangeNum * zoomLevel);
   };
 
   handleMouseWheel = (e) => {
@@ -140,9 +105,10 @@ export default class Panorama extends React.Component {
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
     });
 
-    this.panorama.on('zoom-updated', (levelNum) => {
-      if (levelNum >= minZoomNum && levelNum <= maxZoomNum) {
-        this.setZoom(levelNum);
+    this.panorama.on('zoom-updated', (zoomLevelNum) => {
+      if (zoomLevelNum >= minZoomNum && zoomLevelNum <= maxZoomNum) {
+        const zoomLevel = zoomLevelNum / zoomRangeNum;
+        this.setState({zoomLevel});
       }
     });
 
@@ -151,7 +117,7 @@ export default class Panorama extends React.Component {
     });
   };
 
-  handleAccelerometerClick = () => {
+  handleAccelerometerToggle = () => {
     var state;
     if (this.state.status === states.ACCELEROMETER) {
       state = states.INIT;
@@ -180,38 +146,25 @@ export default class Panorama extends React.Component {
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
-        <PanoramaCompass lat={this.state.lat} long={this.state.long}></PanoramaCompass>
+        <PanoramaCompass
+          lat={this.state.lat}
+          long={this.state.long}
+        />
+
+        <PanoramaControls
+          zoomLevel={this.state.zoomLevel}
+          zoomIn={this.handleZoomIn}
+          zoomOut={this.handleZoomOut}
+          onZoomUpdate={this.onZoomUpdate}
+        />
 
         <div
           className={`toggle-accelerometer button ${this.state.status}`}
-          onClick={this.handleAccelerometerClick}
+          onClick={this.handleAccelerometerToggle}
         >
           AC
         </div>
 
-        <div className={`panorama-controls`}>
-          <div className={`zoom-controls`}>
-            <div className={`zoom-out button`} onClick={this.handleZoomOut}>-</div>
-            <div className={`zoom-in button`} onClick={this.handleZoomIn}>+</div>
-
-            <div ref="slider" className={`slider`}>
-              <div
-                ref="indicator"
-                className={`slider-indicator button`}
-                style={ {transform: 'translateX(' + this.state.sliderPos + 'px)'} }
-                onMouseDown={this.handleSliderDrag}
-                onTouchStart={this.handleSliderDrag}
-              >
-                {parseFloat(this.state.zoomLevel + 1).toPrecision(2)}x
-              </div>
-            </div>
-          </div>
-          <div
-            className={`fullbrowser-button button`}
-            onClick={this.handleFullBrowserClick}
-            dangerouslySetInnerHTML={{ __html: FullBrowserSvg }}
-          ></div>
-        </div>
       </div>
     );
   }
