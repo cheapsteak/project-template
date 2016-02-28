@@ -10,7 +10,7 @@ Note: If the link is broken use http://jam3-license.herokuapp.com/projects/[repo
 
 ## PROJECT DOCUMENTATION
 
-
+Requires npm 3+
 
 Folder Structure
 ```bash
