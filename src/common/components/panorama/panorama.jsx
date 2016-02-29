@@ -79,11 +79,11 @@ export default class Panorama extends React.Component {
       var long, lat;
 
       if (landscape) {
-        long = -(e.alpha) * deg2rad;
-        lat = -(e.gamma + 90) * deg2rad;
+        long = (window.orientation == 90 ? -(e.alpha + 180) : -(e.alpha)) * deg2rad;
+        lat = (window.orientation === 90 ? -(e.gamma + 90) : (e.gamma - 90)) * deg2rad;
       } else {
-        long = -e.alpha * deg2rad;
-        lat = (e.beta - 90) * deg2rad;
+        long = (window.orientation === 180 ? -e.alpha : -(e.alpha + 180)) * deg2rad;
+        lat = (window.orientation === 180 ? -(e.beta + 90) : (e.beta - 90)) * deg2rad;
       }
 
       this.panorama.rotate(long, lat);
