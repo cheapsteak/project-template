@@ -91,7 +91,10 @@ export default class PanoramaControls extends React.Component {
             <div
               ref="indicator"
               className={`slider-indicator button`}
-              style={ {transform: 'translateX(' + this.state.sliderPos + 'px)'} }
+              style={{
+                transform: 'translateX(' + this.state.sliderPos + 'px)',
+                WebkitTransform: 'translateX(' + this.state.sliderPos + 'px)'
+              }}
               onMouseDown={this.handleSliderDrag}
               onTouchStart={this.handleSliderDrag}
             >

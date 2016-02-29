@@ -25,7 +25,10 @@ export default class PanoramaCompass extends React.Component {
       <div className={`panorama-compass`}>
         <div
           className={`compass-indicator`}
-          style={ {transform: 'rotateZ(' + (this.props.long * 180/ Math.PI + 45) + 'deg)'} }
+          style={{
+            transform: 'rotateZ(' + (this.props.long * 180/ Math.PI + 45) + 'deg)',
+            WebkitTransform: 'rotateZ(' + (this.props.long * 180/ Math.PI + 45) + 'deg)'
+          }}
         >
           <div className={`indicator-point`}></div>
         </div>
