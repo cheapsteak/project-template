@@ -2,7 +2,7 @@ module.exports = (function () {
   var script = document.createElement('script');
   script.onload = function () {
     var stats = new Stats();
-    stats.domElement.style.cssText = 'position:fixed;left:0;top:0;z-index:10000';
+    stats.domElement.style.cssText = 'position:fixed;right:0;bottom:0;z-index:10000';
     document.body.appendChild(stats.domElement);
     requestAnimationFrame(function loop() {
       stats.update();

@@ -2,7 +2,6 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import animate from 'gsap-promise';
 import ParallaxVideo from '../parallax-video/parallax-video.jsx';
-import Stats from '../../utils/stats';
 
 const classes = {
   HOME: 'in-home-page',
