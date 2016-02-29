@@ -6,16 +6,14 @@ export default class PanoramaCompass extends React.Component {
     super(props);
   }
 
-  containerEl;
-
   static propTypes = {
-    lat: React.PropTypes.number,
-    lng: React.PropTypes.number
+    long: React.PropTypes.number,
+    lat: React.PropTypes.number
   };
 
   static defaultProps = {
-    lat: 0,
-    lng: 0
+    long: 0,
+    lat: 0
   };
 
   componentDidMount() {
@@ -27,7 +25,7 @@ export default class PanoramaCompass extends React.Component {
       <div className={`panorama-compass`}>
         <div
           className={`compass-indicator`}
-          style={ {transform: 'rotateZ(' + (this.props.lng * 180/ Math.PI + 45) + 'deg)'} }
+          style={ {transform: 'rotateZ(' + (this.props.long * 180/ Math.PI + 45) + 'deg)'} }
         >
           <div className={`indicator-point`}></div>
         </div>

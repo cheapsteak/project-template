@@ -1,8 +1,9 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import mediaBgCover from '../../utils/media-bg-cover';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
+
+const BackgroundCover = require('background-cover').BackgroundCover;
 
 const states = {
   LOADING: 'loading',
@@ -16,15 +17,10 @@ export default class ParallaxVideo extends React.Component {
     this.state = {
       status: states.LOADING,
       fgVideoWidth: null,
-      fgVideoHeight : null
+      fgVideoHeight: null
     }
   }
 
-  bgVideo;
-  fgVideo;
-  containerEl;
-  parallax;
-  seriously;
   loadedVideos = 0;
 
   static propTypes = {
@@ -50,8 +46,8 @@ export default class ParallaxVideo extends React.Component {
   };
 
   positionElements = () => {
-    mediaBgCover(this.bgVideo, this.containerEl);
-    mediaBgCover(this.fgCanvas, this.containerEl);
+    BackgroundCover(this.bgVideo, this.containerEl);
+    BackgroundCover(this.fgCanvas, this.containerEl);
     this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
@@ -63,7 +59,7 @@ export default class ParallaxVideo extends React.Component {
       this.setState({
         status: states.LOADED,
         fgVideoWidth: this.fgVideo.videoWidth,
-        fgVideoHeight : this.fgVideo.videoHeight
+        fgVideoHeight: this.fgVideo.videoHeight
       });
       this.bgVideo.play();
       this.fgVideo.play();
@@ -81,8 +77,8 @@ export default class ParallaxVideo extends React.Component {
 
   createAlphaVideo = () => {
     this.seriously = new Seriously();
-    var target = this.seriously.target(this.refs.fgCanvas);
-    var chroma = this.seriously.effect('chroma');
+    const target = this.seriously.target(this.refs.fgCanvas);
+    const chroma = this.seriously.effect('chroma');
 
     chroma.source = this.fgVideo;
     //chroma.screen = '#29fe2f';

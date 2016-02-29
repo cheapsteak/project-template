@@ -1,16 +1,18 @@
-@import "./compass/compass";
-
 .panorama {
   position: relative;
   width: 100%;
   height: 700px;
-  opacity: 0;
-  visibility: hidden;
   user-select: none;
 
-  &.loaded {
-    opacity: 1;
-    visibility: visible;
+  &.loading {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.accelerometer-on {
+    .psv-container {
+      pointer-events: none;
+    }
   }
 
   .psv-container, .psv-canvas-container {
@@ -24,75 +26,33 @@
     height: 100%;
   }
 
-  $controlsWidth: 560px;
-  .panorama-controls {
+  .button {
     display: flex;
-    justify-content: space-between;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    color: #fff;
+
+    svg {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2px;
+    }
+  }
+
+  .toggle-accelerometer {
     position: absolute;
-    left: 50%;
-    margin-left: -$controlsWidth/2;
+    left: 0;
     bottom: 0;
-    width: $controlsWidth;
+    width: 70px;
     height: 70px;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    z-index: 1000;
 
-    .button {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-
-      svg {
-        fill: none;
-        stroke: #fff;
-        stroke-width: 2px;
-      }
-    }
-
-    .zoom-controls {
-      display: flex;
-      position: relative;
-      width: 460px;
-      height: 100%;
-      margin-right: 20px;
-
-      .button {
-        position: absolute;
-        background-color: #000;
-        color: #fff;
-        font-size: 20px;
-
-        &.zoom-in {
-          right: 0;
-        }
-      }
-
-      .slider {
-        position: relative;
-        margin: auto;
-        width: 300px;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.2);
-
-        .slider-indicator {
-          position: absolute;
-          top: 50%;
-          margin-top: -15px;
-          background-color: #00d6b2;
-          width: 30px;
-          height: 30px;
-          cursor: pointer;
-          transition: transform 0.1s;
-          font-size: 15px;
-          font-weight: 900;
-          color: #000;
-        }
-      }
+    &.accelerometer-on {
+      color: red;
+      font-weight: 900;
     }
   }
 }
