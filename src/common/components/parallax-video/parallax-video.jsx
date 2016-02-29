@@ -14,7 +14,9 @@ export default class ParallaxVideo extends React.Component {
     super(props);
 
     this.state = {
-      status: states.LOADING
+      status: states.LOADING,
+      fgVideoWidth: null,
+      fgVideoHeight : null
     }
   }
 
@@ -28,8 +30,6 @@ export default class ParallaxVideo extends React.Component {
   static propTypes = {
     bgVideoPath: React.PropTypes.string.isRequired,
     fgVideoPath: React.PropTypes.string.isRequired,
-    fgVideoWidth: React.PropTypes.number,
-    fgVideoHeight: React.PropTypes.number,
     bgVideoDepth: React.PropTypes.number,
     fgVideoDepth: React.PropTypes.number,
     parallaxOpts: React.PropTypes.object,
@@ -40,8 +40,6 @@ export default class ParallaxVideo extends React.Component {
   static defaultProps = {
     bgVideoDepth: 0.7,
     fgVideoDepth: 0.5,
-    fgVideoWidth: 1920,  // this will determine canvas width
-    fgVideoHeight: 1080, // this will determine canvas height
     parallaxOpts: {},
     animateIn: () => {
       console.log('default animateIn');
@@ -62,19 +60,26 @@ export default class ParallaxVideo extends React.Component {
 
     if (this.loadedVideos == 2) {
       this.positionElements();
-      this.setState({status: states.LOADED});
+      this.setState({
+        status: states.LOADED,
+        fgVideoWidth: this.fgVideo.videoWidth,
+        fgVideoHeight : this.fgVideo.videoHeight
+      });
       this.bgVideo.play();
       this.fgVideo.play();
       this.props.animateIn();
+      this.createAlphaVideo();
     }
   };
 
-  setFgVideo = () => {
+  createFgVideoSource = () => {
     this.fgVideo = document.createElement('video');
     this.fgVideo.src = this.props.fgVideoPath;
     this.fgVideo.preload = true;
     this.fgVideo.loop = true;
+  };
 
+  createAlphaVideo = () => {
     this.seriously = new Seriously();
     var target = this.seriously.target(this.refs.fgCanvas);
     var chroma = this.seriously.effect('chroma');
@@ -103,6 +108,9 @@ export default class ParallaxVideo extends React.Component {
       this.fgVideo.addEventListener('loadstart', () => {
         console.time('fg-video-ready');
       });
+      this.fgVideo.addEventListener('mediadataloaded', () => {
+        console.log('setting state');
+      });
       this.fgVideo.addEventListener('canplay', () => {
         this.onVideoReady();
         console.timeEnd('fg-video-ready');
@@ -121,7 +129,7 @@ export default class ParallaxVideo extends React.Component {
 
     this.parallax = new Parallax(this.refs.scene, this.props.parallaxOpts);
 
-    this.setFgVideo();
+    this.createFgVideoSource();
     this.setEvents();
   }
 
@@ -143,8 +151,8 @@ export default class ParallaxVideo extends React.Component {
           <div className={`layer`} data-depth={this.props.fgVideoDepth}>
             <canvas
               ref="fgCanvas"
-              width={this.props.fgVideoWidth}
-              height={this.props.fgVideoHeight}
+              width={this.state.fgVideoWidth}
+              height={this.state.fgVideoHeight}
               className={`fg-canvas ${this.state.status}`}
             ></canvas>
           </div>
