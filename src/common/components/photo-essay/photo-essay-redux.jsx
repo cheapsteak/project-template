@@ -36,24 +36,12 @@ class PhotoEssayRedux extends React.Component {
   };
 
   render () {
-    const { model, style, photoEssays } = this.props;
-    const photoEssay = photoEssays[model];
-    let el = <div />;
-
-    if(photoEssay && !photoEssay.isLoading) {
-      const photo = photoEssay.photos[photoEssay.index];
-      
-      el = (
-        <PhotoEssay 
-          onPrevClick={this.handlePrevClick}
-          onNextClick={this.handleNextClick}
-          onFullBrowserClick={this.handleFullBrowserClick}
-          {...this.props}
-        />
-      )
-    }
-
-    return el;
+    return <PhotoEssay 
+      onPrevClick={this.handlePrevClick}
+      onNextClick={this.handleNextClick}
+      onFullBrowserClick={this.handleFullBrowserClick}
+      {...this.props}
+    />
   }
 }
 

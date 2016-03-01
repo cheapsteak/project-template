@@ -24,7 +24,15 @@ class PhotoEssay extends React.Component {
   render () {
     const { model, style, photoEssays } = this.props;
     const photoEssay = photoEssays[model];
-    const photo = photoEssay.photos[photoEssay.index];
+    let photo = {};
+    let currentPhotoNumber = 0;
+    let maxPhotoNumber = 0;
+
+    if(photoEssay) {
+      photo = photoEssay.photos[photoEssay.index];
+      currentPhotoNumber = photoEssay.index + 1;
+      maxPhotoNumber = photoEssay.photos.length;
+    } 
 
     return (
       <div className="photo-essay" style={style}>
@@ -39,7 +47,7 @@ class PhotoEssay extends React.Component {
           <div className="button back-button" onClick={this.handlePrevClick} dangerouslySetInnerHTML={{ __html: BackButtonSvg }}></div>
           <div className="button next-button" onClick={this.handleNextClick} dangerouslySetInnerHTML={{ __html: NextButtonSvg }}></div>
           <div className="button fullscreen-button" onClick={this.handleFullBrowserClick} dangerouslySetInnerHTML={{ __html: FullscreenButtonSvg }}></div>
-          <div className="page-display">{`${photoEssay.index + 1} of ${photoEssay.photos.length}`}</div>
+          <div className="page-display">{`${currentPhotoNumber} of ${maxPhotoNumber}`}</div>
         </div>
       </div>
     )

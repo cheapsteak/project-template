@@ -21,11 +21,15 @@ export default class FullBrowserElement extends React.Component {
     }
   };
 
+  componentWillEnter() {
+    console.log('CALLED!')
+  }
+
   animateToFullBrowser = () => {
     const { overlay, bg, original, animateEl } = this.refs;
     const clientRects = original.getClientRects()[0];
 
-    animate.set(animateEl, { position: 'absolute', top: clientRects.top, left: clientRects.left, width: clientRects.width, height: clientRects.height, zIndex: 1000 });
+    animate.set(animateEl, { position: 'absolute', top: clientRects.top, left: clientRects.left });
     animate.set(original, { visibility: 'hidden' });
     overlay.classList.remove('hidden');
     animate.fromTo(bg, 0.5, { opacity: 0 }, { opacity: 1 })
@@ -65,8 +69,6 @@ export default class FullBrowserElement extends React.Component {
     let originalStyle = animateToStyle;
     let animateToElement;
 
-    this.createElement('animateEl', Object.assign({}, originalStyle, {margin:0})) 
-
     if(isFullBrowser) {
       originalStyle = Object.assign(
         {},
@@ -81,7 +83,7 @@ export default class FullBrowserElement extends React.Component {
           zIndex: 1000 
         }
       );
-      animateToElement = this.createElement('target', Object.assign({}, animateToStyle, { visibility: 'hidden' }));
+      animateToElement = this.createElement('target', Object.assign({}, animateToStyle, { visibility: 'hidden', margin: 0 }));
     }
 
     return (
@@ -96,7 +98,7 @@ export default class FullBrowserElement extends React.Component {
           />
           { 
             // Thhe animating element (used for animation only)
-            this.createElement('animateEl', Object.assign({}, originalStyle, {margin:0})) 
+            this.createElement('animateEl', Object.assign({}, originalStyle, {margin: 0})) 
           }
         </div>
           { 
