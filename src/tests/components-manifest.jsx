@@ -6,5 +6,6 @@ export default {
   timeline: require('./timeline/timeline.jsx'),
   photoessay: {
     component: require('./photo-essay/photo-essay.jsx')
-  }
+  },
+  chapter: require('./chapter/chapter.jsx')
 };

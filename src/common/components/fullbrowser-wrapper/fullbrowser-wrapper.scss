@@ -1,6 +1,28 @@
 .fullbrowser-wrapper {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: -9999999;
+  .fullbrowser-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+
+    &.hidden {
+      display: none !important;
+      z-index: -1000;
+    }
+  }
+
+  .fullbrowser-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121212
+  }
+
+  .fullbrowser-clone {
+    position: absolute;
+  }
 }
