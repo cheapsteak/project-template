@@ -151,11 +151,6 @@ export default class Panorama extends React.Component {
     this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
   }
 
-  componentWillUnmount() {
-    this.panorama.destroy();
-    window.removeEventListener('deviceorientation', this.handleDeviceOrientation);
-  }
-
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
@@ -173,10 +168,7 @@ export default class Panorama extends React.Component {
           onZoomUpdate={this.onZoomUpdate}
         />
 
-        <div className={`accelerometer button ${this.state.status}`} onClick={this.handleAccelerometerClick}>
-          AC
-        </div>
-
+        <div className={`accelerometer button ${this.state.status}`} onClick={this.handleAccelerometerClick}>AC</div>
       </div>
     );
   }
