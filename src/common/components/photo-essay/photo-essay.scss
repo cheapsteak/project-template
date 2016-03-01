@@ -1,6 +1,6 @@
 .photo-essay {
   position: relative;
-  width: 95vw;
+  width: 1200px;
   height: 670px;
   background-color: black;
 
@@ -34,6 +34,7 @@
     background-clip: padding-box; 
     opacity: 0.8;
     border-top: 40px solid rgba(255, 255, 255, 0.5);
+    overflow: scroll;
 
     h3 {
       font-weight: bold;
