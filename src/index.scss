@@ -6,6 +6,7 @@
 body {
   background-color: black;
   content: $ASSET_PATH;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 #container {

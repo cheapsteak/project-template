@@ -28,7 +28,7 @@ export default class PanoramaControls extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.zoomLevel !== this.props.zoomLevel) {
-      this.setSliderPos(newProps.zoomLevel);
+      this.setIndicatorPos(newProps.zoomLevel);
     }
   }
 
@@ -58,7 +58,7 @@ export default class PanoramaControls extends React.Component {
     document.addEventListener('touchend', () => this.stopDrag());
   };
 
-  setSliderPos = (zoomLevel = this.props.zoomLevel) => {
+  setIndicatorPos = (zoomLevel = this.props.zoomLevel) => {
     const sliderPos = this.refs.slider.offsetWidth * zoomLevel - this.refs.indicator.offsetWidth * 0.5;
     this.setState({sliderPos});
   };
@@ -77,7 +77,7 @@ export default class PanoramaControls extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.setSliderPos();
+    this.setIndicatorPos();
   }
 
   render() {

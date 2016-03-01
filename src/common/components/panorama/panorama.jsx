@@ -1,6 +1,10 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import PhotoSphere from 'photo-sphere-viewer';
+import THREE from 'three';
+import raf from 'raf';
+import deviceOrientation from '../../utils/three-device-orientation';
+
 import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
 
@@ -10,13 +14,12 @@ const states = {
   ACCELEROMETER: 'accelerometer-on'
 };
 
-const minZoomNum = 0;
-const maxZoomNum = 60;
-const initZoomLevel = 0; // 0-1 corresponds to minZoomNum and maxZoomNum respectively
+const minZoomNum = 0;    // 1x
+const maxZoomNum = 60;   // 2x
+const initZoomLevel = 0; // from 0 to 1, corresponds to minZoomNum and maxZoomNum
 const zoomStep = 0.1;
 
 const zoomRangeNum = maxZoomNum + minZoomNum;
-const deg2rad = Math.PI / 180;
 
 export default class Panorama extends React.Component {
   constructor(props) {
@@ -73,23 +76,6 @@ export default class Panorama extends React.Component {
     (delta > 0) ? this.zoomIn() : this.zoomOut();
   };
 
-  handleDeviceOrientation = (e) => {
-    if (this.state.status === states.ACCELEROMETER) {
-      const landscape = window.innerWidth > window.innerHeight;
-      var long, lat;
-
-      if (landscape) {
-        long = (window.orientation == 90 ? -(e.alpha + 180) : -(e.alpha)) * deg2rad;
-        lat = (window.orientation === 90 ? -(e.gamma + 90) : (e.gamma - 90)) * deg2rad;
-      } else {
-        long = (window.orientation === 180 ? -e.alpha : -(e.alpha + 180)) * deg2rad;
-        lat = (window.orientation === 180 ? -(e.beta + 90) : (e.beta - 90)) * deg2rad;
-      }
-
-      this.panorama.rotate(long, lat);
-    }
-  };
-
   setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
     if (this.panorama) this.panorama.destroy();
 
@@ -105,6 +91,15 @@ export default class Panorama extends React.Component {
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
+
+      this.orientationControls = new THREE.DeviceOrientationControls(this.panorama.camera);
+
+      const _this = this;
+      raf(function tick() {
+        _this.orientationControls.update();
+        _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
+        raf(tick);
+      });
     });
 
     this.panorama.on('zoom-updated', (zoomLevelNum) => {
@@ -123,9 +118,11 @@ export default class Panorama extends React.Component {
     var status;
     if (this.state.status === states.ACCELEROMETER) {
       status = states.INIT;
+      this.orientationControls.disconnect();
       this.panorama.rotate(this.props.initLong, this.props.initLat);
     } else {
       status = states.ACCELEROMETER;
+      this.orientationControls.connect();
     }
     this.setState({status});
   };
@@ -137,7 +134,6 @@ export default class Panorama extends React.Component {
 
     this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
     this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
-    window.addEventListener('deviceorientation', this.handleDeviceOrientation);
   }
 
   componentWillUnmount() {
