@@ -9,5 +9,6 @@ export default {
   'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
   panorama: require('./panorama/panorama'),
   videoplayer: require('./video-player/video-player.jsx'),
-  photoessay: require('./photo-essay/photo-essay.jsx')
+  photoessay: require('./photo-essay/photo-essay.jsx'),
+  grid: require('./grid/grid.jsx')
 };
