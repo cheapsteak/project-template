@@ -1,5 +1,5 @@
 import React from 'react';
-import PhotoEssay from 'common/components/photo-essay/photo-essay';
+import PhotoEssay from 'common/components/photo-essay/photo-essay-redux';
 
 class TestPhotoEssay extends React.Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class TestPhotoEssay extends React.Component {
         <PhotoEssay
           model="test"
           style={{ margin: 'auto'}}
+          onFullBrowserClick={() => { alert('Full Browser Implementation Goes Here !')}}
         />
       </div>
     )

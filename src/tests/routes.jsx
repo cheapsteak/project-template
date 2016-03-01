@@ -3,8 +3,6 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
 import FullBrowserWrapper from './fullbrowser-wrapper/fullbrowser-wrapper.jsx';
 import FullBrowserWrapperMaximized from './fullbrowser-wrapper-maximized/fullbrowser-wrapper-maximized.jsx';
-import PhotoEssay from './photo-essay/photo-essay.jsx';
-import Test from './photo-essay/photo-essay.jsx';
 
 export default <Route>
   {
