@@ -1,4 +1,3 @@
-import Promise from 'bluebird';
 import dataModel from '../../data/photo-essays.js';
 
 export const PREV_PHOTO = 'PREV_PHOTO';
