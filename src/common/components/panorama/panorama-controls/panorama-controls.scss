@@ -63,9 +63,10 @@ $controlsWidth: 560px;
         width: 30px;
         height: 30px;
         cursor: pointer;
-        transition: transform 0.1s;
+        //transition: transform 0.1s;
         font-size: 15px;
         font-weight: 900;
+        z-index: 1000;
       }
     }
   }

@@ -1,6 +1,10 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import PhotoSphere from 'photo-sphere-viewer';
+import THREE from 'three';
+import raf from 'raf';
+import deviceOrientation from '../../utils/three-device-orientation';
+
 import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
 
@@ -10,9 +14,9 @@ const states = {
   ACCELEROMETER: 'accelerometer-on'
 };
 
-const minZoomNum = 0;
-const maxZoomNum = 60;
-const initZoomLevel = 0; // 0-1 corresponds to minZoomNum and maxZoomNum respectively
+const minZoomNum = 0;    // 1x
+const maxZoomNum = 60;   // 2x
+const initZoomLevel = 0; // from 0 to 1, corresponds to minZoomNum and maxZoomNum
 const zoomStep = 0.1;
 
 const zoomRangeNum = maxZoomNum + minZoomNum;
@@ -25,7 +29,8 @@ export default class Panorama extends React.Component {
       status: states.LOADING,
       zoomLevel: initZoomLevel,
       long: undefined,
-      lat: undefined
+      lat: undefined,
+      rotation: {x: 0, y: 0}
     }
   }
 
@@ -72,20 +77,29 @@ export default class Panorama extends React.Component {
     (delta > 0) ? this.zoomIn() : this.zoomOut();
   };
 
-  handleOrientationChange = (e) => {
-    if (this.state.status === states.ACCELEROMETER) {
-      const absolute = e.absolute;
-      const alpha = e.alpha;
+  setOrientationControls = () => {
+    this.orientationControls = new THREE.DeviceOrientationControls(this.panorama.camera);
 
-      const betaRad = e.beta * (Math.PI / 180);
-      const gammaRad = e.gamma * (Math.PI / 180);
-      console.log(absolute, alpha, betaRad, gammaRad)
+    const _this = this;
 
-      const long = gammaRad;
-      const lat = betaRad;
+    raf(function tick() {
+      if (!_this.panorama.renderer) return;
+      _this.orientationControls.update();
 
-      this.panorama.rotate(long, lat);
-    }
+      _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
+
+      if (_this.state.status === states.ACCELEROMETER) {
+        const x = -_this.orientationControls.getRotation().x;
+        const y = -_this.orientationControls.getRotation().y;
+
+        if (_this.state.rotation.x !== x) {
+          const rotation = {x, y};
+          _this.setState({rotation});
+        }
+      }
+      //console.log('raf loop');
+      raf(tick);
+    });
   };
 
   setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
@@ -103,6 +117,7 @@ export default class Panorama extends React.Component {
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
+      this.setOrientationControls();
     });
 
     this.panorama.on('zoom-updated', (zoomLevelNum) => {
@@ -113,19 +128,25 @@ export default class Panorama extends React.Component {
     });
 
     this.panorama.on('position-updated', (long, lat) => {
-      this.setState({long, lat});
+      var rotation = {x: long, y: lat};
+      this.setState({long, lat, rotation});
     });
   };
 
-  handleAccelerometerToggle = () => {
-    var state;
+  handleAccelerometerClick = () => {
+    var status;
     if (this.state.status === states.ACCELEROMETER) {
-      state = states.INIT;
+      status = states.INIT;
+      this.refs.controls.show();
+      this.orientationControls.disconnect();
       this.panorama.rotate(this.props.initLong, this.props.initLat);
     } else {
-      state = states.ACCELEROMETER;
+      this.updateZoomLevel(0);
+      status = states.ACCELEROMETER;
+      this.refs.controls.hide();
+      this.orientationControls.connect();
     }
-    this.setState({status: state});
+    this.setState({status});
   };
 
   componentDidMount() {
@@ -133,38 +154,33 @@ export default class Panorama extends React.Component {
 
     this.setPanorama();
 
-    this.containerEl.addEventListener('mousewheel', (e) => this.handleMouseWheel(e));
-    this.containerEl.addEventListener('DOMMouseScroll', (e) => this.handleMouseWheel(e));
-    window.addEventListener('deviceorientation', this.handleOrientationChange);
+    this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
+    this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
   }
 
   componentWillUnmount() {
     this.panorama.destroy();
-    window.removeEventListener('deviceorientation', this.handleOrientationChange);
+    this.orientationControls.disconnect();
   }
 
   render() {
     return (
       <div className={`panorama ${this.state.status}`}>
         <PanoramaCompass
-          lat={this.state.lat}
-          long={this.state.long}
+          ref="compass"
+          long={this.state.rotation.x}
+          lat={this.state.rotation.y}
         />
 
         <PanoramaControls
+          ref="controls"
           zoomLevel={this.state.zoomLevel}
           zoomIn={this.zoomIn}
           zoomOut={this.zoomOut}
           onZoomUpdate={this.onZoomUpdate}
         />
 
-        <div
-          className={`toggle-accelerometer button ${this.state.status}`}
-          onClick={this.handleAccelerometerToggle}
-        >
-          AC
-        </div>
-
+        <div className={`accelerometer button ${this.state.status}`} onClick={this.handleAccelerometerClick}>AC</div>
       </div>
     );
   }
