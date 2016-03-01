@@ -13,7 +13,7 @@ class PhotoEssayRedux extends React.Component {
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
 
     if(!props.photoEssays[props.model]) {
-      props.dispatch( actionCreators.loadPhotoEssay(props.model) )
+      this.boundActionCreators.setPhotoEssay(props.model);
     }
   }
 

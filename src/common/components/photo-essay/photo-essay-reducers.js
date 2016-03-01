@@ -1,11 +1,9 @@
-import { PREV_PHOTO, NEXT_PHOTO, REQUEST_ESSAY, RECIEVE_ESSAY } from './photo-essay-actions.js';
+import { PREV_PHOTO, NEXT_PHOTO, SET_PHOTO_ESSAY } from './photo-essay-actions.js';
 
 function photoEssay(state, action) {
   switch (action.type) {
-    case REQUEST_ESSAY:
-      return { isLoading: true };
-    case RECIEVE_ESSAY:
-      return Object.assign({ index: 0, isLoading: false }, action.data);
+    case SET_PHOTO_ESSAY:
+      return Object.assign({ index: 0 }, action.data);
     case PREV_PHOTO:
       return Object.assign({}, state, { index: state.index > 0 ? state.index - 1 : state.photos.length - 1 });
     case NEXT_PHOTO:
