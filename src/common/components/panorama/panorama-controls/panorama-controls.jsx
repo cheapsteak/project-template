@@ -75,6 +75,14 @@ export default class PanoramaControls extends React.Component {
     console.log('go full-browser')
   };
 
+  show = () => {
+    this.containerEl.style.visibility = 'visible';
+  };
+
+  hide = () => {
+    this.containerEl.style.visibility = 'hidden';
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.setIndicatorPos();

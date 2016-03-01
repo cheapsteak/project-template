@@ -29,7 +29,8 @@ export default class Panorama extends React.Component {
       status: states.LOADING,
       zoomLevel: initZoomLevel,
       long: undefined,
-      lat: undefined
+      lat: undefined,
+      rotation: {x: 0, y: 0}
     }
   }
 
@@ -98,6 +99,16 @@ export default class Panorama extends React.Component {
       raf(function tick() {
         _this.orientationControls.update();
         _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
+
+        if (_this.orientationControls.getRotation()) {
+          const x = -_this.orientationControls.getRotation().x;
+          const y = -_this.orientationControls.getRotation().y;
+
+          if (_this.state.rotation.x !== x) {
+            const rotation = {x, y};
+            _this.setState({rotation});
+          }
+        }
         raf(tick);
       });
     });
@@ -110,7 +121,8 @@ export default class Panorama extends React.Component {
     });
 
     this.panorama.on('position-updated', (long, lat) => {
-      this.setState({long, lat});
+      var rotation = {x: long, y: lat};
+      this.setState({long, lat, rotation});
     });
   };
 
@@ -118,10 +130,13 @@ export default class Panorama extends React.Component {
     var status;
     if (this.state.status === states.ACCELEROMETER) {
       status = states.INIT;
+      this.refs.controls.show();
       this.orientationControls.disconnect();
       this.panorama.rotate(this.props.initLong, this.props.initLat);
     } else {
+      this.updateZoomLevel(0);
       status = states.ACCELEROMETER;
+      this.refs.controls.hide();
       this.orientationControls.connect();
     }
     this.setState({status});
@@ -145,11 +160,13 @@ export default class Panorama extends React.Component {
     return (
       <div className={`panorama ${this.state.status}`}>
         <PanoramaCompass
-          long={this.state.long}
-          lat={this.state.lat}
+          ref="compass"
+          long={this.state.rotation.x}
+          lat={this.state.rotation.y}
         />
 
         <PanoramaControls
+          ref="controls"
           zoomLevel={this.state.zoomLevel}
           zoomIn={this.zoomIn}
           zoomOut={this.zoomOut}
