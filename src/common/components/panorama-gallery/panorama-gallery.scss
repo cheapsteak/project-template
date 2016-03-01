@@ -1,0 +1,39 @@
+.panorama-gallery {
+  position: relative;
+  background-color: #000;
+
+  .gallery-controls {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 140px;
+    height: 70px;
+    z-index: 1000;
+
+    .button {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 100%;
+      cursor: pointer;
+
+      &.prev {
+        background-color: rgba(43, 43, 43, 0.7);
+      }
+
+      &.next {
+        background-color: rgba(43, 43, 43, 0.8);
+      }
+
+      svg {
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2px;
+      }
+    }
+  }
+}
+

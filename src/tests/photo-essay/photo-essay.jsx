@@ -8,7 +8,7 @@ class TestPhotoEssay extends React.Component {
 
   render () {
     return (
-      <div style={{backgroundColor:'rgba(5,5,20,0.9)', height: '100vh',width:'100vw',display:'flex',alignItems:'center',justifyContent: 'center'}}>
+      <div style={{backgroundColor:'rgba(10,10,80,0.9)', height: '100vh',width:'100vw',display:'flex',alignItems:'center',justifyContent: 'center'}}>
         <PhotoEssay
           model="test"
           style={{ margin: 'auto'}}

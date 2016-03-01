@@ -4,8 +4,11 @@
 
 export default {
   timeline: require('./timeline/timeline.jsx'),
-  photoessay: {
-    component: require('./photo-essay/photo-essay.jsx')
-  },
-  chapter: require('./chapter/chapter.jsx')
+  photoessay: require('./photo-essay/photo-essay.jsx'),
+  chapter: require('./chapter/chapter.jsx'),
+  'parallax-video-wrapper': require('./parallax-video-wrapper/parallax-video-wrapper'),
+  'parallax-video': require('./parallax-video/parallax-video'),
+  'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
+  panorama: require('./panorama/panorama'),
+  videoplayer: require('./video-player/video-player.jsx')
 };

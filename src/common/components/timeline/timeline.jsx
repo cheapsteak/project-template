@@ -2,36 +2,49 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 
 export default class Timeline extends React.Component {
+
+  static propTypes = {
+    style: React.PropTypes.object,
+    currentTime: React.PropTypes.number.isRequired,
+    duration: React.PropTypes.number.isRequired,
+    onTimeChange: React.PropTypes.func,
+    items: React.PropTypes.array
+  };
+
   constructor(props) {
     super(props)
 
     this.state = {
-      currentTime: props.currentTime,
-      position: ''
+      currentTime: props.currentTime
     }
-    // setInterval(() => {
-    //   this.setState({ currentTime: (this.state.currentTime + 0.1) % props.duration }) 
-    // }, 50)
+  }
+
+  componentWillReceiveProps({ currentTime}) {
+    this.setState({ currentTime });
+  }
+
+  changeCurrentTime(time) {
+    this.props.onTimeChange
+      ? this.props.onTimeChange(time)
+      : this.setState({ currentTime: time });
   }
 
   handleContainerClick = (e) => {
     const el = findDOMNode(this)
     const positionX = e.clientX - el.getBoundingClientRect().left;
-    this.setState({ currentTime: positionX / el.offsetWidth * this.props.duration })
+    const newTime = positionX / el.offsetWidth * this.props.duration;
+    this.changeCurrentTime(newTime);
   }
-
-  handlePlotHover = (e) => {
-
-  };
 
   handlePlotClick = (time, e) => {
     e.stopPropagation();
-    this.setState({currentTime: time });
+    this.changeCurrentTime(time);
   };
 
-  secondsToMinutes (seconds) {
-    var minutes = Math.floor(seconds / 60);
-    var seconds = Math.round(seconds - (minutes * 60));
+  secondsToMinutes (totalSeconds) {
+    const totalSecondsFloat = parseFloat(totalSeconds);
+    let minutes = Math.floor(totalSecondsFloat / 60);
+    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
 
     if (minutes < 10) {
       minutes = "0" + minutes;
@@ -41,7 +54,7 @@ export default class Timeline extends React.Component {
       seconds = "0" + seconds;
     }
 
-    var time = minutes + ':' + seconds;
+    const time = minutes + ':' + seconds;
 
     return time;
   }

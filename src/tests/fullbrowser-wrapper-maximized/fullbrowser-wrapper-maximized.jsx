@@ -21,7 +21,7 @@ class TestFullbrowserWrapper extends React.Component {
     const id = pathname.split('/')[4] || undefined;
 
     return (
-      <div style={{backgroundColor:'rgba(5,5,20,0.9)', paddingBottom: '50px', textAlign: 'center'}}>
+      <div style={{backgroundColor:'rgba(10,10,80,0.9)', paddingBottom: '50px', textAlign: 'center'}}>
         {
           _.range(6).map((idx) => 
             <FullbrowserWrapper

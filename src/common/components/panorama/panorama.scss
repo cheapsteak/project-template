@@ -1,0 +1,59 @@
+.panorama {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  user-select: none;
+
+  &.loading {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &.accelerometer-on {
+    .psv-container {
+      pointer-events: none;
+    }
+  }
+
+  .psv-container, .psv-canvas-container {
+    height: 100%;
+  }
+
+  .psv-container, .psv-canvas-container, .psv-hud {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .button {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    color: #fff;
+
+    svg {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2px;
+    }
+  }
+
+  .toggle-accelerometer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 70px;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    &.accelerometer-on {
+      color: red;
+      font-weight: 900;
+    }
+  }
+}
+

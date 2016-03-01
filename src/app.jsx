@@ -11,9 +11,8 @@ export default class App extends React.Component {
       component="div"
       className="route-content-wrapper"
       data-route={pathname}
-      >
+    >
       {React.cloneElement(this.props.children || <div />, { key: key })}
     </TransitionGroup>;
   }
 }
-

@@ -4,7 +4,8 @@ import config from '../../config.js';
 
 const reducers = combineReducers({
   photoEssays: require('common/components/photo-essay/photo-essay-reducers.js'),
-  fullbrowser: require('common/components/fullbrowser-wrapper/fullbrowser-wrapper-reducers.js')
+  photos: require('common/components/photo-essay/photo-essay-reducers.js'),
+  panoramas: require('common/components/panorama-gallery/panorama-gallery-reducers.js')
 });
 
 export default createStore(
