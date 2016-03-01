@@ -77,6 +77,31 @@ export default class Panorama extends React.Component {
     (delta > 0) ? this.zoomIn() : this.zoomOut();
   };
 
+  setOrientationControls = () => {
+    this.orientationControls = new THREE.DeviceOrientationControls(this.panorama.camera);
+
+    const _this = this;
+
+    raf(function tick() {
+      if (!_this.panorama.renderer) return;
+      _this.orientationControls.update();
+
+      _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
+
+      if (_this.state.status === states.ACCELEROMETER) {
+        const x = -_this.orientationControls.getRotation().x;
+        const y = -_this.orientationControls.getRotation().y;
+
+        if (_this.state.rotation.x !== x) {
+          const rotation = {x, y};
+          _this.setState({rotation});
+        }
+      }
+      //console.log('raf loop');
+      raf(tick);
+    });
+  };
+
   setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
     if (this.panorama) this.panorama.destroy();
 
@@ -92,25 +117,7 @@ export default class Panorama extends React.Component {
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
-
-      this.orientationControls = new THREE.DeviceOrientationControls(this.panorama.camera);
-
-      const _this = this;
-      raf(function tick() {
-        _this.orientationControls.update();
-        _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
-
-        if (_this.state.status === states.ACCELEROMETER) {
-          const x = -_this.orientationControls.getRotation().x;
-          const y = -_this.orientationControls.getRotation().y;
-
-          if (_this.state.rotation.x !== x) {
-            const rotation = {x, y};
-            _this.setState({rotation});
-          }
-        }
-        raf(tick);
-      });
+      this.setOrientationControls();
     });
 
     this.panorama.on('zoom-updated', (zoomLevelNum) => {
@@ -149,6 +156,11 @@ export default class Panorama extends React.Component {
 
     this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
     this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
+  }
+
+  componentWillUnmount() {
+    this.panorama.destroy();
+    this.orientationControls.disconnect();
   }
 
   render() {
