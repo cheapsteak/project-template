@@ -100,7 +100,7 @@ export default class Panorama extends React.Component {
         _this.orientationControls.update();
         _this.panorama.renderer.render(_this.panorama.scene, _this.panorama.camera);
 
-        if (_this.orientationControls.getRotation()) {
+        if (_this.state.status === states.ACCELEROMETER) {
           const x = -_this.orientationControls.getRotation().x;
           const y = -_this.orientationControls.getRotation().y;
 
