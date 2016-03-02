@@ -1,4 +1,15 @@
-@import "./grid-1/index";
+@import "./grid-890/index";
+
+$grid-red: #9c291d;
+$grid-grey: #515d62;
+$grid-orange: #a07434;
+$grid-light-blue: #4f91b1;
+$grid-dark-blue: #131f2f;
+
+$grid-item-offset: 20px;
+$half-size: calc(50% - #{$grid-item-offset/2});
+$one-third-size: calc(100% / 3 - #{$grid-item-offset});
+$two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
 
 .grid-manager {
   position: absolute;
@@ -7,5 +18,14 @@
   background-color: #000;
   padding: 30px;
   overflow-y: scroll;
+
+  .grid {
+    width: 100%;
+
+    &.loading {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
 }
 
