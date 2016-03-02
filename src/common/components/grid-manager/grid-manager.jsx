@@ -1,7 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import Grid890 from './grid-1/index.jsx'
 
-export default class Grid extends React.Component {
+export default class GridManager extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,8 +22,8 @@ export default class Grid extends React.Component {
 
   render() {
     return (
-      <div className={`main-grid`}>
-
+      <div className={`grid-manager`}>
+        <Grid890 />
       </div>
     );
   }

@@ -10,5 +10,5 @@ export default {
   panorama: require('./panorama/panorama'),
   videoplayer: require('./video-player/video-player.jsx'),
   photoessay: require('./photo-essay/photo-essay.jsx'),
-  grid: require('./grid/grid.jsx')
+  'grid-manager': require('./grid-manager/grid-manager.jsx')
 };
