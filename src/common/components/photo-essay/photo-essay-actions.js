@@ -1,21 +1,28 @@
+import dataModel from '../../data/photo-essays.js';
+
 export const PREV_PHOTO = 'PREV_PHOTO';
 export const NEXT_PHOTO = 'NEXT_PHOTO';
-export const TOGGLE_FULLSCREEN = 'TOGGLE_FULLSCREEN';
+export const SET_PHOTO_ESSAY = 'SET_PHOTO_ESSAY';
 
-export function setPrevPhoto() {
+
+export function setPrevPhoto(id) {
   return {
-    type: PREV_PHOTO
+    type: PREV_PHOTO,
+    id
   };
 }
 
-export function setNextPhoto() {
+export function setNextPhoto(id) {
   return {
-    type: NEXT_PHOTO
+    type: NEXT_PHOTO,
+    id
   };
 }
 
-export function toggleFullscreen() {
+export function setPhotoEssay(id, data) {
   return {
-    type: TOGGLE_FULLSCREEN
-  };
+    type: SET_PHOTO_ESSAY,
+    id,
+    data: dataModel[id]
+  }
 }

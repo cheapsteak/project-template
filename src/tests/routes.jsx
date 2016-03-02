@@ -1,21 +1,40 @@
 import React from 'react';
 import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
+import FullBrowserWrapper from './fullbrowser-wrapper/fullbrowser-wrapper.jsx';
+import FullBrowserWrapperMaximized from './fullbrowser-wrapper-maximized/fullbrowser-wrapper-maximized.jsx';
 
 export default <Route>
   {
     Object.keys(componentsManifest).map(function (componentName) {
-      const Component = componentsManifest[componentName].component || componentsManifest[componentName];
-      const props = componentsManifest[componentName].props;
+      const componentData = componentsManifest[componentName];
+      const Component = componentData.component || componentData;
+      const props = componentData.props;
 
-      return <Route
-        path={componentName}
-        component={() =>
-          <Component {...props} />
-        }
-        key={componentName}
-      >
-      </Route>
+      return (
+        <Route 
+            key={componentName}
+        >
+          <Route
+            path={componentName}
+            component={() =>
+              <Component {...props} />
+            }
+          >
+          </Route>
+          <Route
+            path={'chapter'}
+            component={componentsManifest.chapter}
+            key={'chapter-abcde'}
+          >
+            <IndexRoute component={FullBrowserWrapper} />
+            <Route
+              path="photo-essay/:id"
+              component={FullBrowserWrapperMaximized}>
+            </Route>
+          </Route>
+        </Route>
+      )
     })
   }
 </Route>
