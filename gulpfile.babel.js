@@ -53,8 +53,8 @@ const paths = {
     ]
   },
   "assets":{
-    "source":"./src/assets/**/*.*",
-    "watch":"./src/assets/**/*.*",
+    "source":["./src/assets/**/*.*", "./src/assets/**/.*"],
+    "watch":["./src/assets/**/*.*", "./src/assets/**/.*"],
     "destination":"./build/"
   },
   "inject":{
