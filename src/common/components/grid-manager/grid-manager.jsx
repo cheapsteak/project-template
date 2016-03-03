@@ -1,6 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import Grid890 from './grid-890/index.jsx';
+import Grid890 from '../grid/grid-890/grid-890.jsx';
 
 export default class GridManager extends React.Component {
   constructor(props) {

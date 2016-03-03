@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from 'common/components/grid-manager/grid-890';
+import Grid890 from 'common/components/grid/grid-890/grid-890.jsx';
 
 export default function () {
 
@@ -9,6 +9,6 @@ export default function () {
   container.style.backgroundColor = '#000';
 
   return (
-    <Grid/>
+    <Grid890/>
   )
 }
