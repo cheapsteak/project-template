@@ -7,8 +7,6 @@ const states = {
   READY: 'ready'
 };
 
-const gridItemsMargin = 20;
-
 export default class Grid extends React.Component {
   constructor(props) {
     super(props);
@@ -18,18 +16,6 @@ export default class Grid extends React.Component {
     }
   }
 
-  handleWindowResize = () => {
-    this.updateLayout();
-  };
-
-  updateLayout = () => {
-    const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth * 0.6;
-    const twoThirdHeight = containerWidth * 0.4 - gridItemsMargin;
-
-    this.setState({baseHeight, twoThirdHeight});
-  };
-
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
@@ -38,18 +24,22 @@ export default class Grid extends React.Component {
       itemSelector: '.grid-item',
       transitionDuration: "0"
     });
-    this.updateLayout();
     setTimeout(() => this.packery.layout());
 
     this.packery.on('layoutComplete', () => {
       this.setState({status: states.READY});
     });
-
-    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillUnmount() {
     this.packery.destroy();
-    window.removeEventListener('resize', this.handleWindowResize);
+  }
+
+  render() {
+    return (
+      <div className={`grid-content ${this.state.status}`}>
+        {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
+      </div>
+    );
   }
 }
