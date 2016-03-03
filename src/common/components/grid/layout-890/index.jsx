@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import GridBase from '../grid.jsx';
+import ParallaxCell from '../parallax-cell/parallax-cell.jsx';
 
 const gridItemsMargin = 20;
 

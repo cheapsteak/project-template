@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import GridBase from '../grid.jsx';
+import ParallaxCell from '../parallax-cell/parallax-cell.jsx';
 
 const gridItemsMargin = 20;
 
@@ -34,26 +35,40 @@ export default class Layout1060 extends GridBase {
       <div className={`grid layout-1060 ${this.state.status}`}>
 
         <div className={`grid-item id-1 first-row width-3 right-margin`} style={{height: twoThird}}>
-          <div className={`nested-cube-width-66-extra-10 grey`}></div>
+          <div className={`nested-cube-width-66-extra-10 grey`}>
+            <ParallaxCell title={'welcome'} photo={'../images/test-kid.png'}/>
+          </div>
           <div className={`nested-bar-width-33-height-100-less-10 left-margin red`}></div>
         </div>
 
-        <div className={`grid-item id-2 width-3 first-row orange`} style={{height: full}}></div>
+        <div className={`grid-item id-2 width-3 first-row orange`} style={{height: full}}>
+          <ParallaxCell title={'science'} photo={'../images/test-kid.png'}/>
+        </div>
 
         <div className={`grid-item id-3 width-3 right-margin`} style={{height: twoThird}}>
-          <div className={`full-size light-blue`}></div>
+          <div className={`full-size light-blue`}>
+            <ParallaxCell title={'literacy & writing'} photo={'../images/test-kid.png'}/>
+          </div>
         </div>
 
         <div className={`grid-item id-4 width-3`} style={{height: twoThird}}>
-          <div className={`full-size light-blue`}></div>
+          <div className={`full-size light-blue`}>
+            <ParallaxCell title={'math'} photo={'../images/test-kid.png'}/>
+          </div>
         </div>
 
-        <div className={`grid-item id-5 width-3 right-margin light-blue`} style={{height: full}}></div>
+        <div className={`grid-item id-5 width-3 right-margin light-blue`} style={{height: full}}>
+          <ParallaxCell title={'electives'} photo={'../images/test-kid.png'}/>
+        </div>
 
-        <div className={`grid-item id-6 width-3 grey`} style={{height: full}}></div>
+        <div className={`grid-item id-6 width-3 grey`} style={{height: full}}>
+          <ParallaxCell title={'computer science'} photo={'../images/test-kid.png'}/>
+        </div>
 
         <div className={`grid-item id-7 width-3`} style={{height: twoThird+10}}>
-          <div className={`nested-cube-width-66-extra-10 grey`}></div>
+          <div className={`nested-cube-width-66-extra-10 grey`}>
+            <ParallaxCell title={'parental investment'} photo={'../images/test-kid.png'}/>
+          </div>
           <div className={`nested-cube-33-width-extra-10 left-margin dark-blue`}></div>
           <div className={`nested-cube-33-width-extra-10 top-margin left-margin dark-blue`}></div>
         </div>

@@ -22,7 +22,6 @@
     "fastclick": "^1.0.6",
     "gsap-promise": "^1.4.1",
     "history": "^2.0.0",
-    "isotope-layout": "^2.2.2",
     "packery": "git+https://github.com/namniak/packery.git",
     "parallax": "github:wagerfield/parallax",
     "photo-sphere-viewer": "github:namniak/Photo-Sphere-Viewer",
