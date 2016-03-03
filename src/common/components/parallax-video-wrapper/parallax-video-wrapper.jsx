@@ -10,19 +10,6 @@ const classes = {
 };
 
 export default class ParallaxVideoWrapper extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      className: '',
-      videoAnimateInFn: () => {
-        console.log('default videoAnimateInFn');
-      },
-      videoAnimateOutFn: () => {
-        console.log('default videoAnimateOutFn');
-      }
-    }
-  }
 
   static propTypes = {
     inHomePage: React.PropTypes.bool,
@@ -32,31 +19,14 @@ export default class ParallaxVideoWrapper extends React.Component {
     fgVideoPath: React.PropTypes.string.isRequired
   };
 
-  animateInHomePage = () => {
-    animate.set([this.bgVideo, this.fgCanvas, this.content], {x: window.innerWidth});
-    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {x: 0, ease: Expo.easeOut}, 0.1);
-    console.log('animateInHomePage');
-  };
-  animateOutHomePage = () => {
-    console.log('animateOutHomePage');
-  };
-
-  animateInContentPage = () => {
-    animate.set([this.bgVideo, this.fgCanvas, this.content], {autoAlpha: 0});
-    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {autoAlpha: 1}, 0.2);
-    console.log('animateInContentPage');
-  };
-  animateOutContentPage = () => {
-    console.log('animateOutContentPage');
-  };
-
-  animateInNarrativeVideo = () => {
-    animate.set([this.bgVideo, this.fgCanvas, this.content], {autoAlpha: 0});
-    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {autoAlpha: 1}, 0.2);
-    console.log('animateInNarrativeVideo');
-  };
-  animateOutNarrativeVideo = () => {
-    console.log('animateOutNarrativeVideo');
+  state = {
+    className: '',
+    videoAnimateInFn: () => {
+      console.log('default videoAnimateInFn');
+    },
+    videoAnimateOutFn: () => {
+      console.log('default videoAnimateOutFn');
+    }
   };
 
   componentDidMount() {
@@ -85,6 +55,33 @@ export default class ParallaxVideoWrapper extends React.Component {
       });
     }
   }
+
+  animateInHomePage = () => {
+    animate.set([this.bgVideo, this.fgCanvas, this.content], {x: window.innerWidth});
+    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {x: 0, ease: Expo.easeOut}, 0.1);
+    console.log('animateInHomePage');
+  };
+  animateOutHomePage = () => {
+    console.log('animateOutHomePage');
+  };
+
+  animateInContentPage = () => {
+    animate.set([this.bgVideo, this.fgCanvas, this.content], {autoAlpha: 0});
+    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {autoAlpha: 1}, 0.2);
+    console.log('animateInContentPage');
+  };
+  animateOutContentPage = () => {
+    console.log('animateOutContentPage');
+  };
+
+  animateInNarrativeVideo = () => {
+    animate.set([this.bgVideo, this.fgCanvas, this.content], {autoAlpha: 0});
+    animate.staggerTo([this.bgVideo, this.fgCanvas, this.content], 0.5, {autoAlpha: 1}, 0.2);
+    console.log('animateInNarrativeVideo');
+  };
+  animateOutNarrativeVideo = () => {
+    console.log('animateOutNarrativeVideo');
+  };
 
   render() {
     return (
