@@ -7,17 +7,11 @@ const states = {
   READY: 'ready'
 };
 
+
 export default class Grid extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   static propTypes = {
     screenWidth: React.PropTypes.number
-  };
-
-  calculateSizes = () => {
-    // this is overridden in derived classes
   };
 
   componentWillReceiveProps(newProps) {
@@ -48,4 +42,8 @@ export default class Grid extends React.Component {
   componentWillUnmount() {
     this.packery.destroy();
   }
+
+  calculateSizes = () => {
+    // this is overridden in derived classes
+  };
 }

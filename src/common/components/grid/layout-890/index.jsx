@@ -5,15 +5,13 @@ import ParallaxCell from '../parallax-cell/parallax-cell.jsx';
 
 const gridItemsMargin = 20;
 
-export default class Layout890 extends GridBase {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      baseHeight: 0,
-      twoThirdHeight: 0
-    }
-  }
+export default class Layout890 extends GridBase {
+
+  state = {
+    baseHeight: 0,
+    twoThirdHeight: 0
+  };
 
   calculateSizes = () => {
     const containerWidth = this.containerEl.offsetWidth;
