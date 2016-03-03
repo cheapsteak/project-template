@@ -1,5 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import HotSpot from 'common/components/timeline-hotspot/timeline-hotspot.jsx';
+import TransitionGroup from 'react-addons-transition-group';
 
 export default class Timeline extends React.Component {
 
@@ -11,11 +13,16 @@ export default class Timeline extends React.Component {
     items: React.PropTypes.array
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
   constructor(props) {
     super(props)
 
     this.state = {
-      currentTime: props.currentTime
+      currentTime: props.currentTime,
+      items: props.items
     }
   }
 
@@ -41,6 +48,10 @@ export default class Timeline extends React.Component {
     this.changeCurrentTime(time);
   };
 
+  goToRoute = (route) => {
+    this.context.router.push(route)
+  };
+
   secondsToMinutes (totalSeconds) {
     const totalSecondsFloat = parseFloat(totalSeconds);
     let minutes = Math.floor(totalSecondsFloat / 60);
@@ -59,33 +70,38 @@ export default class Timeline extends React.Component {
     return time;
   }
 
+
+  isWithinVariance(srcNumber, targetNumber, variance) {
+    return srcNumber >= targetNumber - variance && srcNumber <= targetNumber;
+  }
+
   render () {
     const { width, height, duration, items, style } = this.props;
+    const progress = duration ? (this.state.currentTime/duration * 100) : 0;
+
     return (
       <div className="timeline" style={style}>
         <div className="timeline-container" onClick={this.handleContainerClick}>
           <div
             className="timeline-cover"
-            style={{ width: (this.state.currentTime/duration * 100) + '%' }}
+            style={{ width: `${progress}%` }}
             data-time={this.secondsToMinutes(this.state.currentTime)}
           >
           </div>
           { 
-            items.map(plot => {
+            this.state.items.map(plot => {
               const style = { left: (plot.time / duration * 100) + '%' }; 
               const className = this.state.currentTime === plot.time ? ' selected' : '';
-
+              const isActive = this.isWithinVariance(this.state.currentTime, plot.time, 0.3)
+    
               return (
-                <div
+                <HotSpot
                   key={plot.id}
                   style={style}
-                  className={`plot${className}`}
-                  onClick={this.handlePlotClick.bind(null, plot.time)}
-                >
-                  <span className="image-wrapper">
-                    <img src={plot.img} />
-                  </span>
-                </div>
+                  image={plot.img}
+                  onClick={plot.route && this.goToRoute.bind(this, plot.route)}
+                  withinCurrentTime={isActive}
+                />
               )
             })
           }
