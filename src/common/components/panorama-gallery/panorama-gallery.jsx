@@ -10,18 +10,6 @@ const states = {
 };
 
 export default class PanoramaGallery extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      status: states.LOADING,
-      index: props.index
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({index: nextProps.index});
-  }
 
   static propTypes = {
     index: React.PropTypes.number,
@@ -36,6 +24,19 @@ export default class PanoramaGallery extends React.Component {
     next: () => console.log('go next')
   };
 
+  state = {
+    status: states.LOADING,
+    index: this.props.index
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({index: nextProps.index});
+  }
+
+  componentDidMount() {
+    this.containerEl = findDOMNode(this);
+  }
+
   handlePrevClick = () => {
     this.props.prev();
   };
@@ -43,10 +44,6 @@ export default class PanoramaGallery extends React.Component {
   handleNextClick = () => {
     this.props.next();
   };
-
-  componentDidMount() {
-    this.containerEl = findDOMNode(this);
-  }
 
   render() {
     const index = this.state.index;

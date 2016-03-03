@@ -5,23 +5,9 @@ import Grid1060 from '../grid/layout-1060/index.jsx';
 
 
 export default class GridManager extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      screenWidth: 0
-    }
-  }
-
-  componentWillReceiveProps(newProps) {
-  }
-
-  static propTypes = {};
-
-  static defaultProps = {};
-
-  handleWindowResize = () => {
-    this.setState({screenWidth: window.innerWidth});
+  state = {
+    screenWidth: 0
   };
 
   componentDidMount() {
@@ -33,8 +19,11 @@ export default class GridManager extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  render() {
+  handleWindowResize = () => {
+    this.setState({screenWidth: window.innerWidth});
+  };
 
+  render() {
     var currLayout;
     var windowWidth = this.state.screenWidth || window.innerWidth;
 

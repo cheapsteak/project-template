@@ -11,17 +11,6 @@ const states = {
 };
 
 export default class ParallaxVideo extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      status: states.LOADING,
-      fgVideoWidth: null,
-      fgVideoHeight: null
-    }
-  }
-
-  loadedVideos = 0;
 
   static propTypes = {
     bgVideoPath: React.PropTypes.string.isRequired,
@@ -44,6 +33,30 @@ export default class ParallaxVideo extends React.Component {
       console.log('default animateOut');
     }
   };
+
+  state = {
+    status: states.LOADING,
+    fgVideoWidth: null,
+    fgVideoHeight: null
+  };
+
+  loadedVideos = 0;
+
+  componentDidMount() {
+    this.containerEl = findDOMNode(this);
+    this.bgVideo = findDOMNode(this.refs.bgVideo);
+    this.fgCanvas = findDOMNode(this.refs.fgCanvas);
+
+    this.parallax = new Parallax(this.refs.scene, this.props.parallaxOpts);
+
+    this.createFgVideoSource();
+    this.setEvents();
+  }
+
+  componentWillUnmount() {
+    this.fgVideo = null;
+    window.removeEventListener('resize', this.positionElements);
+  }
 
   positionElements = () => {
     BackgroundCover(this.bgVideo, this.containerEl);
@@ -117,22 +130,6 @@ export default class ParallaxVideo extends React.Component {
 
     window.addEventListener('resize', this.positionElements);
   };
-
-  componentDidMount() {
-    this.containerEl = findDOMNode(this);
-    this.bgVideo = findDOMNode(this.refs.bgVideo);
-    this.fgCanvas = findDOMNode(this.refs.fgCanvas);
-
-    this.parallax = new Parallax(this.refs.scene, this.props.parallaxOpts);
-
-    this.createFgVideoSource();
-    this.setEvents();
-  }
-
-  componentWillUnmount() {
-    this.fgVideo = null;
-    window.removeEventListener('resize', this.positionElements);
-  }
 
   render() {
     return (

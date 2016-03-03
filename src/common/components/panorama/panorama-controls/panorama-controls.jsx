@@ -4,13 +4,6 @@ import FullBrowserSvg from '../../../../assets/photo-essay-fullscreen-button.svg
 
 
 export default class PanoramaControls extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sliderPos: 0
-    }
-  }
 
   static propTypes = {
     zoomLevel: React.PropTypes.number,
@@ -26,13 +19,22 @@ export default class PanoramaControls extends React.Component {
     onZoomUpdate: (zoomLevel) => console.log('onZoomUpdate: zoomLevel:', zoomLevel)
   };
 
+  state = {
+    sliderPos: 0
+  };
+
+  isDraggingSlider = false;
+
   componentWillReceiveProps(newProps) {
     if (newProps.zoomLevel !== this.props.zoomLevel) {
       this.setIndicatorPos(newProps.zoomLevel);
     }
   }
 
-  isDraggingSlider = false;
+  componentDidMount() {
+    this.containerEl = findDOMNode(this);
+    this.setIndicatorPos();
+  }
 
   doDrag = (coordX) => {
     if (this.isDraggingSlider) {
@@ -82,11 +84,6 @@ export default class PanoramaControls extends React.Component {
   hide = () => {
     this.containerEl.style.visibility = 'hidden';
   };
-
-  componentDidMount() {
-    this.containerEl = findDOMNode(this);
-    this.setIndicatorPos();
-  }
 
   render() {
     return (
