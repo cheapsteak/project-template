@@ -30,7 +30,7 @@ export default class TimelineHotspot extends React.Component {
  
   componentWillReceiveProps(nextProps) {
     if(nextProps.withinCurrentTime) {
-      this.timeOutIds.map(id => clearTimeout(id)).filter(Boolean);
+      this.clearAnimations();
       this.timeOutIds.push(setTimeout(this.animateCardIn, 300));
       this.timeOutIds.push(setTimeout(this.animateCardOut, 3000));
     } else if(!this.state.hasUserInteraction){
@@ -39,18 +39,23 @@ export default class TimelineHotspot extends React.Component {
     }
   }
 
+  clearAnimations = () => {
+    this.timeOutIds.forEach(id => clearTimeout(id));
+    this.timeOutIds = [];
+  };
+
   handleClick = (e) => {
     this.props.onClick && this.props.onClick();
   };
 
   handleMouseEnter = (e) => {
-    this.timeOutIds.map(id => clearTimeout(id)).filter(Boolean);
+    this.clearAnimations();
     this.setState({hasUserInteraction: true});
     this.animateCardIn();
   };
 
   handleMouseLeave = (e) => {
-    this.timeOutIds.map(id => clearTimeout(id)).filter(Boolean);
+    this.clearAnimations();
     this.setState({hasUserInteraction: false});
     this.timeOutIds.push(setTimeout(this.animateCardOut, 300));
   };
