@@ -1,0 +1,17 @@
+@import "../grid";
+
+.grid.layout-1060 {
+
+  .width-1 {
+    width: calc(100% / 6 - 15px);
+  }
+
+  .width-2 {
+    width: calc(100% / 3 + 5px);
+  }
+
+  .width-3 {
+    width: calc(50% - 10px);
+  }
+
+}
