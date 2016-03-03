@@ -31,6 +31,9 @@ export default class VideoPlayer extends React.Component {
 
   handleMetadataLoaded = () => {
     this.setState({isVideoLoaded: true});
+    console.log(this.props);
+        
+    this.video.currentTime = this.props.startTime;
   };
 
   handleTimeUpdate = (e) => {
