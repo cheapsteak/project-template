@@ -6,16 +6,13 @@
   cursor: default;
   
   .dot {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .dot {
     background: url('../timeline-circle.png') no-repeat center;
     width: 10px;
     height: 10px;
     cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
