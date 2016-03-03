@@ -2,9 +2,6 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 
 export default class PanoramaCompass extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   static propTypes = {
     long: React.PropTypes.number,
