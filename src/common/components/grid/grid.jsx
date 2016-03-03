@@ -33,7 +33,8 @@ export default class Grid extends React.Component {
     this.packery = new Packery(this.containerEl, {
       initLayout: false,
       itemSelector: '.grid-item',
-      transitionDuration: 0
+      transitionDuration: 0,
+      percentPosition: true
     });
     setTimeout(() => this.packery.layout());  // KEEP timeout, otherwise doesn't work!
 
