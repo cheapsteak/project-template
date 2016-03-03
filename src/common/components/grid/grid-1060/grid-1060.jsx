@@ -11,7 +11,7 @@ export default class Grid890 extends GridBase {
 
   render() {
     return (
-      <div className={`grid grid-890 ${this.state.status}`}>
+      <div className={`grid grid-1060 ${this.state.status}`}>
 
         <div className={`grid-item first-row width-2 right-padding`} style={{height: this.state.baseHeight}}>
           <div className={`nested-bar-width-100-height-33 red`}></div>

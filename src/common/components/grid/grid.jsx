@@ -18,9 +18,6 @@ export default class Grid extends React.Component {
     }
   }
 
-  static propTypes = {};
-  static defaultProps = {};
-
   handleWindowResize = () => {
     this.updateLayout();
   };
@@ -39,7 +36,7 @@ export default class Grid extends React.Component {
     this.packery = new Packery(this.containerEl, {
       initLayout: false,
       itemSelector: '.grid-item',
-      transitionDuration: 0.4
+      transitionDuration: "0"
     });
     this.updateLayout();
     setTimeout(() => this.packery.layout());
