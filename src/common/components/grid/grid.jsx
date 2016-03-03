@@ -10,9 +10,20 @@ const states = {
 export default class Grid extends React.Component {
   constructor(props) {
     super(props);
+  }
 
-    this.state = {
-      status: states.LOADING
+  static propTypes = {
+    screenWidth: React.PropTypes.number
+  };
+
+  calculateSizes = () => {
+    // this is overridden in derived classes
+  };
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.screenWidth !== this.screenWidth) {
+      this.calculateSizes();
+      this.screenWidth = newProps.screenWidth;
     }
   }
 
@@ -22,24 +33,18 @@ export default class Grid extends React.Component {
     this.packery = new Packery(this.containerEl, {
       initLayout: false,
       itemSelector: '.grid-item',
-      transitionDuration: "0"
+      transitionDuration: 0
     });
-    setTimeout(() => this.packery.layout());
+    setTimeout(() => this.packery.layout());  // KEEP timeout, otherwise doesn't work!
 
     this.packery.on('layoutComplete', () => {
       this.setState({status: states.READY});
     });
+
+    this.calculateSizes();
   }
 
   componentWillUnmount() {
     this.packery.destroy();
-  }
-
-  render() {
-    return (
-      <div className={`grid-content ${this.state.status}`}>
-        {React.cloneElement(this.props.children || <div />, {ref: 'child'})}
-      </div>
-    );
   }
 }

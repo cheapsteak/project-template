@@ -6,15 +6,22 @@ $grid-dark-blue: #131f2f;
 
 $grid-item-offset: 20px;
 $half-size: calc(50% - #{$grid-item-offset/2});
+
 $one-third-size: calc(100% / 3 - #{$grid-item-offset});
+$one-third-size-extra-10: calc(100% / 3 - #{$grid-item-offset/2});
+
 $two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
+$two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
 
 .grid {
   width: 100%;
+  opacity: 0;
+  visibility: hidden;
 
-  &.loading {
-    opacity: 0;
-    visibility: hidden;
+  &.ready {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s;
   }
 
   // ------- sizes
@@ -46,6 +53,10 @@ $two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
       width: $half-size;
       height: $one-third-size;
     }
+    .nested-cube-33-width-extra-10 {
+      width: $one-third-size-extra-10;
+      height: $half-size;
+    }
     .nested-cube-50 {
       width: $half-size;
       height: $half-size;
@@ -58,9 +69,17 @@ $two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
       width: $two-third-size;
       height: 100%;
     }
+    .nested-cube-width-66-extra-10 {
+      width: $two-third-size-extra-10;
+      height: 100%;
+    }
 
     .nested-bar-width-33-height-100 {
       width: calc(100% / 3);
+      height: 100%;
+    }
+    .nested-bar-width-33-height-100-less-10 {
+      width: $one-third-size-extra-10;
       height: 100%;
     }
     .nested-bar-width-50-height-66 {
