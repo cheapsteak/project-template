@@ -4,14 +4,7 @@ import animate from 'gsap-promise';
 import _ from 'lodash';
 import TransitionGroup from 'react-transition-group-plus';
 
-// todo: move to timeline-hover-card.jsx
-const animationStates = {
-  cardOut: { display: 'none', opacity: 0, x: '-50%', y: -220, height: '208px' },
-  cardIn: { display: 'block', opacity: 1, y: -240 }
-}
-
 export default class TimelineHotspot extends React.Component {
-
 
   state = {
     hasUserInteraction: false,
