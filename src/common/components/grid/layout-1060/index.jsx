@@ -28,13 +28,14 @@ export default class Layout1060 extends GridBase {
     const full = this.state.baseHeight;
     const oneThird = this.state.oneThirdHeight;
     const twoThird = this.state.twoThirdHeight;
+    const mouseCoordinates = this.props.mouseCoordinates;
 
     return (
       <div className={`grid layout-1060 ${this.state.status}`}>
 
         <div className={`grid-item id-1 first-row width-3 right-margin`} style={{height: twoThird}}>
           <div className={`nested-cube-width-66-extra-10 grey`}>
-            <ParallaxCell title={'welcome'} photo={'../images/test-kid.png'}/>
+            <ParallaxCell title={'welcome'} photo={'../images/test-kid.png'} mouseCoordinates={mouseCoordinates}/>
           </div>
           <div className={`nested-bar-width-33-height-100-less-10 left-margin red`}></div>
         </div>
