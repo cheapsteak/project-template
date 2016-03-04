@@ -12,6 +12,7 @@ export default class Grid extends React.Component {
 
   static propTypes = {
     screenWidth: React.PropTypes.number,
+    scrollTop: React.PropTypes.number,
     mouseCoordinates: React.PropTypes.objectOf(React.PropTypes.number)
   };
 

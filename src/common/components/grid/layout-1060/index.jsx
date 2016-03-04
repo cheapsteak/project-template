@@ -25,10 +25,11 @@ export default class Layout1060 extends GridBase {
   };
 
   render() {
-    const full = this.state.baseHeight;
+    const baseHeight = this.state.baseHeight;
     const oneThird = this.state.oneThirdHeight;
     const twoThird = this.state.twoThirdHeight;
     const mouseCoordinates = this.props.mouseCoordinates;
+    const scrollTop = this.props.scrollTop;
 
     return (
       <div className={`grid layout-1060 ${this.state.status}`}>
@@ -38,18 +39,20 @@ export default class Layout1060 extends GridBase {
             <GridTile
               title={'welcome'}
               photo={'../images/test-kid.png'}
-              baseHeight={this.state.baseHeight}
+              baseHeight={baseHeight}
+              scrollTop={scrollTop}
               mouseCoordinates={mouseCoordinates}
             />
           </div>
           <div className={`nested-bar-width-33-height-100-less-10 left-margin red`}></div>
         </div>
 
-        <div className={`grid-item id-2 width-3 first-row orange`} style={{height: full}}>
+        <div className={`grid-item id-2 width-3 first-row sand`} style={{height: baseHeight}}>
           <GridTile
             title={'science'}
             photo={'../images/test-kid.png'}
-            baseHeight={this.state.baseHeight}
+            baseHeight={baseHeight}
+            scrollTop={scrollTop}
             mouseCoordinates={mouseCoordinates}
           />
         </div>
@@ -59,7 +62,8 @@ export default class Layout1060 extends GridBase {
             <GridTile
               title={'literacy & writing'}
               photo={'../images/test-kid.png'}
-              baseHeight={this.state.baseHeight}
+              baseHeight={baseHeight}
+              scrollTop={scrollTop}
               mouseCoordinates={mouseCoordinates}
             />
           </div>
@@ -70,26 +74,29 @@ export default class Layout1060 extends GridBase {
             <GridTile
               title={'math'}
               photo={'../images/test-kid.png'}
-              baseHeight={this.state.baseHeight}
+              baseHeight={baseHeight}
+              scrollTop={scrollTop}
               mouseCoordinates={mouseCoordinates}
             />
           </div>
         </div>
 
-        <div className={`grid-item id-5 width-3 right-margin light-blue`} style={{height: full}}>
+        <div className={`grid-item id-5 width-3 right-margin light-blue`} style={{height: baseHeight}}>
           <GridTile
             title={'electives'}
             photo={'../images/test-kid.png'}
-            baseHeight={this.state.baseHeight}
+            baseHeight={baseHeight}
+            scrollTop={scrollTop}
             mouseCoordinates={mouseCoordinates}
           />
         </div>
 
-        <div className={`grid-item id-6 width-3 grey`} style={{height: full}}>
+        <div className={`grid-item id-6 width-3 grey`} style={{height: baseHeight}}>
           <GridTile
             title={'computer science'}
             photo={'../images/test-kid.png'}
-            baseHeight={this.state.baseHeight}
+            baseHeight={baseHeight}
+            scrollTop={scrollTop}
             mouseCoordinates={mouseCoordinates}
           />
         </div>
@@ -98,7 +105,8 @@ export default class Layout1060 extends GridBase {
           <div className={`nested-cube-width-66-extra-10 grey`}>
             <GridTile
               title={'parental investment'}
-              baseHeight={this.state.baseHeight}
+              baseHeight={baseHeight}
+              scrollTop={scrollTop}
               mouseCoordinates={mouseCoordinates}
             />
           </div>
@@ -110,12 +118,13 @@ export default class Layout1060 extends GridBase {
           <div className={`full-size dark-blue`}></div>
         </div>
 
-        <div className={`grid-item id-9 width-2 left-padding`} style={{height: full+5}}>
+        <div className={`grid-item id-9 width-2 left-padding`} style={{height: baseHeight+5}}>
           <div className={`full-size grey`}>
             <GridTile
               title={'history'}
               photo={'../images/test-kid.png'}
-              baseHeight={this.state.baseHeight}
+              baseHeight={baseHeight}
+              scrollTop={scrollTop}
               mouseCoordinates={mouseCoordinates}
             />
           </div>
@@ -130,7 +139,8 @@ export default class Layout1060 extends GridBase {
         <div className={`grid-item id-11 width-2-less-15 grey`} style={{height: twoThird+7}}>
           <GridTile
             title={'character development'}
-            baseHeight={this.state.baseHeight}
+            baseHeight={baseHeight}
+            scrollTop={scrollTop}
             mouseCoordinates={mouseCoordinates}
           />
         </div>

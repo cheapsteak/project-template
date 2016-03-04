@@ -1,4 +1,4 @@
-.grid-cell {
+.grid-tile {
   width: 100%;
   height: 100%;
   color: #fff;
@@ -7,6 +7,38 @@
   cursor: pointer;
   overflow: hidden;
   position: relative;
+
+  &:hover {
+
+    .overlay {
+      opacity: 0.8;
+      //visibility: visible;
+      transition: opacity 0.3s;
+      //transition-delay: 0.1s;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    //visibility: hidden;
+    transition: opacity 0.2s;
+    z-index: 1000;
+  }
+
+  .noise-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .noise {
+      width: 100%;
+      height: 100%;
+      transform: scale(1.1, 1.1);
+    }
+  }
 
   .text-container {
     position: relative;

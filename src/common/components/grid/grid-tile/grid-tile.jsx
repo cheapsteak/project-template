@@ -14,6 +14,7 @@ export default class GridTile extends React.Component {
     subtitle: React.PropTypes.string,
     photo: React.PropTypes.string,
     baseHeight: React.PropTypes.number,
+    scrollTop: React.PropTypes.number,
     mouseCoordinates: React.PropTypes.objectOf(React.PropTypes.number)
   };
 
@@ -31,7 +32,6 @@ export default class GridTile extends React.Component {
       this.setDepthBasedOnMouseProximity(newProps.mouseCoordinates);
     }
 
-    // detect when tile size (position of the centre) changes
     if (newProps.baseHeight) {
       this.detectPosition();
     }
@@ -48,7 +48,7 @@ export default class GridTile extends React.Component {
   }
 
   detectPosition = () => {
-    const x = this.containerEl.getBoundingClientRect().left + this.containerEl.offsetWidth * 0.5;
+    const x = (this.containerEl.getBoundingClientRect().left + this.containerEl.offsetWidth * 0.5);
     const y = this.containerEl.getBoundingClientRect().top + this.containerEl.offsetHeight * 0.5;
     this.position = {x, y};
     //console.log(this.position);
@@ -67,9 +67,10 @@ export default class GridTile extends React.Component {
       const sizeAdjuster = tileAverageSize / this.props.baseHeight;
 
       const baseDepth = (distance / screenAverageSize - 1);
-      const maxDepth = Math.min(Math.abs(baseDepth), 1);
+      const maxDepth = Math.min(Math.abs(baseDepth), 1) / 4;
       //console.log(maxDepth);
 
+      if (this.refs.noiseLayer) this.refs.noiseLayer.setAttribute('data-depth', -maxDepth / 3);
       if (this.refs.textLayer) this.refs.textLayer.setAttribute('data-depth', maxDepth / 3);
       if (this.refs.imageLayer) this.refs.imageLayer.setAttribute('data-depth', maxDepth);
     }
@@ -85,14 +86,18 @@ export default class GridTile extends React.Component {
     ) : null;
 
     return (
-      <div className={`grid-cell`}>
-        <div ref="textLayer" className={`layer`} data-depth="0.3">
+      <div className={`grid-tile`}>
+        <div ref="noiseLayer" className={`layer noise-layer`} data-depth="0.2">
+          <div className={`noise`}></div>
+        </div>
+        <div ref="textLayer" className={`layer`} data-depth="0.5">
           <div className={`text-container`}>
             <div className={`title`}>{this.props.subtitle}</div>
             <div className={`subtitle`}>{this.props.title}</div>
           </div>
         </div>
         {photoLayer}
+        <div className={`overlay`}></div>
       </div>
     );
   }
