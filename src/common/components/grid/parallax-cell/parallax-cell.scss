@@ -24,15 +24,31 @@
     }
   }
 
+  .layer.image {
+    width: 100%;
+    height: 100%;
+  }
+
   .image-wrapper {
-    position: relative;
-    width: 90%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: inline-block;
-    top: 30px;
+    bottom: -40px;
     left: 25%;
 
     img {
-      width: 100%;
+      width: 90%;
+    }
+
+    &.portrait {
+      height: 90%;
+      left: 15%;
+
+      img {
+        width: auto;
+        height: 100%;
+      }
     }
   }
 }

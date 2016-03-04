@@ -66,7 +66,7 @@ export default class Layout1060 extends GridBase {
 
         <div className={`grid-item id-7 width-3`} style={{height: twoThird+10}}>
           <div className={`nested-cube-width-66-extra-10 grey`}>
-            <ParallaxCell title={'parental investment'} photo={'../images/test-kid.png'}/>
+            <ParallaxCell title={'parental investment'}/>
           </div>
           <div className={`nested-cube-33-width-extra-10 left-margin dark-blue`}></div>
           <div className={`nested-cube-33-width-extra-10 top-margin left-margin dark-blue`}></div>
@@ -74,6 +74,22 @@ export default class Layout1060 extends GridBase {
 
         <div className={`grid-item id-8 width-1 left-margin`} style={{height: oneThird}}>
           <div className={`full-size dark-blue`}></div>
+        </div>
+
+        <div className={`grid-item id-9 width-2 left-padding`} style={{height: full+5}}>
+          <div className={`full-size grey`}>
+            <ParallaxCell title={'history'} photo={'../images/test-kid.png'}/>
+          </div>
+        </div>
+
+        <div className={`grid-item id-10 width-2 right-padding`} style={{height: twoThird+7}}>
+          <div className={`nested-cube-50 dark-blue`}></div>
+          <div className={`nested-cube-50 left-margin dark-blue`}></div>
+          <div className={`nested-bar-width-100-height-50 top-margin red`}></div>
+        </div>
+
+        <div className={`grid-item id-11 width-2-less-15 grey`} style={{height: twoThird+7}}>
+          <ParallaxCell title={'character development'}/>
         </div>
 
       </div>

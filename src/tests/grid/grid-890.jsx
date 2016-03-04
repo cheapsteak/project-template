@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from 'common/components/grid/layout-890/index.jsx';
+import Grid from 'common/components/grid/layout-890';
 
 export default function () {
 

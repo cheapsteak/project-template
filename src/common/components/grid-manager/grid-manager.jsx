@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import Grid890 from '../grid/layout-890/index.jsx';
-import Grid1060 from '../grid/layout-1060/index.jsx';
+import Grid890 from '../grid/layout-890';
+import Grid1060 from '../grid/layout-1060';
 
 
 export default class GridManager extends React.Component {
@@ -31,6 +31,7 @@ export default class GridManager extends React.Component {
 
   handleWindowResize = () => {
     this.setState({screenWidth: window.innerWidth});
+    this.parallax.updateLayers();
   };
 
   handleMouseMove = (e) => {
