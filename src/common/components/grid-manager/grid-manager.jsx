@@ -39,6 +39,7 @@ export default class GridManager extends React.Component {
     const y = e.clientY;
     const mouseCoordinates = {x, y};
     this.setState({mouseCoordinates});
+    this.parallax.updateLayers();
   };
 
   render() {
@@ -46,11 +47,23 @@ export default class GridManager extends React.Component {
     var windowWidth = this.state.screenWidth || window.innerWidth;
 
     if (windowWidth <= 890) {
-      currLayout = <Grid890 screenWidth={windowWidth} mouseCoordinates={this.state.mouseCoordinates}/>;
+      currLayout =
+        <Grid890
+          screenWidth={windowWidth}
+          mouseCoordinates={this.state.mouseCoordinates}
+        />;
     } else if (windowWidth <= 1060) {
-      currLayout = <Grid1060 screenWidth={windowWidth} mouseCoordinates={this.state.mouseCoordinates}/>;
+      currLayout =
+        <Grid1060
+          screenWidth={windowWidth}
+          mouseCoordinates={this.state.mouseCoordinates}
+        />;
     } else {
-      currLayout = <Grid1060 screenWidth={windowWidth}/>;
+      currLayout =
+        <Grid1060
+          screenWidth={windowWidth}
+          mouseCoordinates={this.state.mouseCoordinates}
+        />;
     }
 
     return (
