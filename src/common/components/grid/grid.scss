@@ -2,7 +2,7 @@
 
 $grid-red: #9c291d;
 $grid-grey: #515d62;
-$grid-orange: #a07434;
+$grid-sand: #a07434;
 $grid-light-blue: #4f91b1;
 $grid-dark-blue: #131f2f;
 
@@ -126,19 +126,46 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
 
   // ------- colors
   .red {
-    background-color: $grid-red;
+    background: url('#{$ASSET_PATH}/images/noise-red.png') $grid-red;
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
+    }
   }
   .grey {
-    background-color: $grid-grey;
+    background: $grid-grey;
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
+    }
+    .overlay {
+      background: $grid-grey;
+    }
   }
-  .orange {
-    background-color: $grid-orange;
+  .sand {
+    background: $grid-sand;
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
+    }
+    .overlay {
+      background: $grid-sand;
+    }
   }
   .light-blue {
-    background-color: $grid-light-blue;
+    background: $grid-light-blue;
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
+    }
+    .overlay {
+      background: $grid-light-blue;
+    }
   }
   .dark-blue {
-    background-color: $grid-dark-blue;
+    background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') $grid-dark-blue;
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') repeat;
+    }
+    .overlay {
+      background: $grid-dark-blue;
+    }
   }
 
 }
