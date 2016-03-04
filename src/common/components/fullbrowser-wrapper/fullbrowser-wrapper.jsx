@@ -65,8 +65,6 @@ export default class FullBrowserElement extends React.Component {
     let originalStyle = animateToStyle;
     let animateToElement;
 
-    this.createElement('animateEl', Object.assign({}, originalStyle, {margin:0})) 
-
     if(isFullBrowser) {
       originalStyle = Object.assign(
         {},

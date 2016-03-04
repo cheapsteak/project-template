@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import HotSpot from 'common/components/timeline-hotspot/timeline-hotspot.jsx';
-import TransitionGroup from 'react-addons-transition-group';
+import HotSpot from './timeline-hotspot/timeline-hotspot.jsx';
+import HoverCard from './timeline-hover-card/timeline-hover-card.jsx';
 
 export default class Timeline extends React.Component {
 
@@ -17,8 +17,8 @@ export default class Timeline extends React.Component {
     router: React.PropTypes.object
   };
 
-  constructor(props) {
-    super(props)
+  constructor (props) {
+    super(props);
 
     this.state = {
       currentTime: props.currentTime,
@@ -26,8 +26,8 @@ export default class Timeline extends React.Component {
     }
   }
 
-  componentWillReceiveProps({ currentTime}) {
-    this.setState({ currentTime });
+  componentWillReceiveProps({ currentTime, items }) {
+    this.setState({ currentTime, items });
   }
 
   changeCurrentTime(time) {
@@ -43,13 +43,8 @@ export default class Timeline extends React.Component {
     this.changeCurrentTime(newTime);
   }
 
-  handlePlotClick = (time, e) => {
-    e.stopPropagation();
+  handlePointClick = (time) => {
     this.changeCurrentTime(time);
-  };
-
-  goToRoute = (route) => {
-    this.context.router.push(route)
   };
 
   secondsToMinutes (totalSeconds) {
@@ -89,19 +84,22 @@ export default class Timeline extends React.Component {
           >
           </div>
           { 
-            this.state.items.map(plot => {
-              const style = { left: (plot.time / duration * 100) + '%' }; 
-              const className = this.state.currentTime === plot.time ? ' selected' : '';
-              const isActive = this.isWithinVariance(this.state.currentTime, plot.time, 0.3)
-    
+            /* Check if there is a duration before setting the dots for the case of video metadata currently loading */
+            duration && this.state.items.map(point => {
+              const style = { left: (point.time / duration * 100) + '%' }; 
+              const className = this.state.currentTime === point.time ? ' selected' : '';
+              const isActive = this.isWithinVariance(this.state.currentTime, point.time, 0.3)
+
               return (
                 <HotSpot
-                  key={plot.id}
                   style={style}
-                  image={plot.img}
-                  onClick={plot.route && this.goToRoute.bind(this, plot.route)}
+                  key={point.time}
                   withinCurrentTime={isActive}
-                />
+                  route={point.route}
+                  onClick={this.handlePointClick.bind(this, point.time)}
+                >
+                  <HoverCard src={point.img} />
+                </HotSpot>
               )
             })
           }
