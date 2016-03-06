@@ -23,7 +23,7 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
   &.ready {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s;
+    //transition: opacity 0.3s;
   }
 
   // ------- sizes
@@ -126,13 +126,14 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
 
   // ------- colors
   .red {
-    background: url('#{$ASSET_PATH}/images/noise-red.png') $grid-red;
+    &.filler {
+      background: url('#{$ASSET_PATH}/images/noise-red.png') $grid-red;
+    }
     .noise {
       background: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
     }
   }
   .grey {
-    background: $grid-grey;
     .noise {
       background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     }
@@ -141,7 +142,6 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
     }
   }
   .sand {
-    background: $grid-sand;
     .noise {
       background: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
     }
@@ -150,7 +150,6 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
     }
   }
   .light-blue {
-    background: $grid-light-blue;
     .noise {
       background: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
     }
@@ -159,7 +158,9 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
     }
   }
   .dark-blue {
-    background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') $grid-dark-blue;
+    &.filler {
+      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') $grid-dark-blue;
+    }
     .noise {
       background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') repeat;
     }

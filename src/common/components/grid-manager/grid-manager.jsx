@@ -19,9 +19,8 @@ export default class GridManager extends React.Component {
     this.prevGrid = this.refs.grid;
 
     this.parallax = Parallax(this.refs.scene, {
-      autoEnable: true,
       limitX: 40,
-      limitY: 40
+      limitY: 40,
     });
 
     this.containerEl.addEventListener('scroll', this.handleScroll);
@@ -30,6 +29,7 @@ export default class GridManager extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
+    this.parallax.destroy();
   }
 
   handleScroll = () => {

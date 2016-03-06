@@ -24,11 +24,23 @@ export default class Grid extends React.Component {
     this.containerEl = findDOMNode(this);
     this.initializeLayout();
     this.calculateSizes();
+
+    this.tiles = this.getTiles();
+    this.tiles.forEach((tile, index) => tile.animateIn(index));
   }
 
   componentWillUnmount() {
     this.packery.destroy();
   }
+
+  getTiles = () => {
+    const tiles = [];
+    for (let i = 0; i < 9; i++) {
+      const tile = this.refs['tile' + i];
+      tiles.push(tile);
+    }
+    return tiles;
+  };
 
   initializeLayout = () => {
     this.packery = new Packery(this.containerEl, {

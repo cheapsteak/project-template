@@ -32,12 +32,12 @@ const data = {
   investment: {
     title: 'parental investment',
     subtitle: 'chapter',
-    image: ''
+    image: '../images/test-kid.png'
   },
   development: {
     title: 'character development',
     subtitle: 'chapter',
-    image: ''
+    image: '../images/test-kid.png'
   },
   history: {
     title: 'history',
