@@ -8,6 +8,13 @@
   overflow: hidden;
   position: relative;
 
+  .parallax-layer {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
   &:hover {
 
     .overlay {
@@ -19,6 +26,7 @@
   }
 
   .overlay {
+    top: 0;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -28,16 +36,10 @@
     z-index: 1000;
   }
 
-  .noise-layer {
-    position: absolute;
+  .noise {
     width: 100%;
     height: 100%;
-
-    .noise {
-      width: 100%;
-      height: 100%;
-      transform: scale(1.1, 1.1);
-    }
+    transform: scale(1.1, 1.1);
   }
 
   .text-container {

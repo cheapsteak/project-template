@@ -2,83 +2,70 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Grid890 from '../grid/layout-890';
 import Grid1060 from '../grid/layout-1060';
+import Parallax from '../../utils/parallax';
 
+const breakpoints = [890, 1060];
 
 export default class GridManager extends React.Component {
 
   state = {
-    screenWidth: 0,
-    scrollTop: 0,
-    mouseCoordinates: {x: 0, y: 0}
+    screenWidth: window.innerWidth
   };
+
+  timer = null;
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
+    this.prevGrid = this.refs.grid;
 
-    this.parallax = new Parallax(this.refs.scene, {
-      //limitX: 30,
-      //limitY: 20,
-      //scalarX: 4,
-      //scalarY: 3,
+    this.parallax = Parallax(this.refs.scene, {
+      autoEnable: true,
+      limitX: 40,
+      limitY: 40
     });
 
-    this.containerEl.addEventListener('mousemove', this.handleMouseMove);
+    this.containerEl.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleWindowResize);
-    //this.containerEl.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    this.parallax = null;
-    this.containerEl.removeEventListener('mousemove', this.handleMouseMove);
     window.removeEventListener('resize', this.handleWindowResize);
-    //this.containerEl.removeEventListener('scroll', this.handleScroll);
   }
 
   handleScroll = () => {
-    //this.parallax.disable();
-    const scrollTop = this.containerEl.scrollTop;
-    this.setState({scrollTop});
+    this.parallax.disable();
+    this.parallax.reset();
+
+    if (this.timer !== null) {
+      clearTimeout(this.timer);
+    }
+    this.timer = setTimeout(()=> {
+      this.parallax.enable();
+      console.log('scrolling stopped')
+    }, 150);
   };
 
   handleWindowResize = () => {
-    this.setState({screenWidth: window.innerWidth});
-    this.parallax.updateLayers();
-  };
+    const screenWidth = window.innerWidth;
+    this.setState({screenWidth});
 
-  handleMouseMove = (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    const mouseCoordinates = {x, y};
-    this.setState({mouseCoordinates});
-    this.parallax.updateLayers();
+    // update parallax layers only on grid layout switch
+    if (this.prevGrid !== this.refs.grid) {
+      this.prevGrid = this.refs.grid;
+      this.parallax.updateLayers();
+    }
   };
 
   render() {
     var currLayout;
-    var windowWidth = this.state.screenWidth || window.innerWidth;
-    var scrollTop = this.state.scrollTop;
+    var windowWidth = this.state.screenWidth;
 
-    if (windowWidth <= 890) {
-      currLayout =
-        <Grid890
-          screenWidth={windowWidth}
-          scrollTop={scrollTop}
-          mouseCoordinates={this.state.mouseCoordinates}
-        />;
-    } else if (windowWidth <= 1060) {
-      currLayout =
-        <Grid1060
-          screenWidth={windowWidth}
-          scrollTop={scrollTop}
-          mouseCoordinates={this.state.mouseCoordinates}
-        />;
+    if (windowWidth <= breakpoints[0]) {
+      currLayout = <Grid890 screenWidth={windowWidth}/>;
+    } else if (windowWidth <= breakpoints[1]) {
+      currLayout = <Grid1060 screenWidth={windowWidth}/>;
     } else {
-      currLayout =
-        <Grid1060
-          screenWidth={windowWidth}
-          scrollTop={scrollTop}
-          mouseCoordinates={this.state.mouseCoordinates}
-        />;
+      currLayout = null;
     }
 
     return (
