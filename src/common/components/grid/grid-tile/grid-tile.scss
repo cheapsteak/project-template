@@ -1,3 +1,6 @@
+$parallaxLimitX: 40px;
+$parallaxLimitY: 40px;
+
 .grid-tile {
   width: 100%;
   height: 100%;
@@ -8,17 +11,30 @@
   overflow: hidden;
   position: relative;
 
+  .parallax-layer {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
   &:hover {
 
     .overlay {
       opacity: 0.8;
       //visibility: visible;
-      transition: opacity 0.3s;
-      //transition-delay: 0.1s;
+      transition: opacity 0.4s;
+      transition-delay: 0.2s;
+    }
+
+    .text-container {
+      opacity: 0;
+      transition: opacity 0.8s;
     }
   }
 
   .overlay {
+    top: 0;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -28,16 +44,12 @@
     z-index: 1000;
   }
 
-  .noise-layer {
+  .noise {
     position: absolute;
-    width: 100%;
-    height: 100%;
-
-    .noise {
-      width: 100%;
-      height: 100%;
-      transform: scale(1.1, 1.1);
-    }
+    width: calc(100% + #{$parallaxLimitX*2});
+    height: calc(100% + #{$parallaxLimitY*2});
+    left: -$parallaxLimitX;
+    top: -$parallaxLimitY;
   }
 
   .text-container {
@@ -45,6 +57,7 @@
     top: 30px;
     left: 30px;
     max-width: 200px;
+    transition: opacity 0.8s;
 
     .title {
       opacity: 0.5;

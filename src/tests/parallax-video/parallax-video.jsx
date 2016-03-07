@@ -7,7 +7,7 @@ export default function () {
       bgVideoPath={'../videos/bg-1080.mp4'}
       fgVideoPath={'../videos/fg-1080.mp4'}
     >
-      <div className={`layer`} data-depth="0.3">
+      <div className={`parallax-layer`} data-depth="0.3">
         <div className={`text-container`}>
           <div className={`title`}>Chapter</div>
           <div className={`subtitle`}>Computer Science</div>
