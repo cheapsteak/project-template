@@ -1,0 +1,86 @@
+.grid-tile {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-transform: capitalize;
+  font-weight: 900;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+
+    .overlay {
+      opacity: 0.8;
+      //visibility: visible;
+      transition: opacity 0.3s;
+      //transition-delay: 0.1s;
+    }
+  }
+
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    //visibility: hidden;
+    transition: opacity 0.2s;
+    z-index: 1000;
+  }
+
+  .noise-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    .noise {
+      width: 100%;
+      height: 100%;
+      transform: scale(1.1, 1.1);
+    }
+  }
+
+  .text-container {
+    position: relative;
+    top: 30px;
+    left: 30px;
+    max-width: 200px;
+
+    .title {
+      opacity: 0.5;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      font-size: 35px;
+    }
+  }
+
+  .layer.image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    bottom: -40px;
+    left: 25%;
+
+    img {
+      width: 90%;
+    }
+
+    &.portrait {
+      height: 90%;
+      left: 15%;
+
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+  }
+}

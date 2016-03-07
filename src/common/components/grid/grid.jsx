@@ -11,7 +11,9 @@ const states = {
 export default class Grid extends React.Component {
 
   static propTypes = {
-    screenWidth: React.PropTypes.number
+    screenWidth: React.PropTypes.number,
+    scrollTop: React.PropTypes.number,
+    mouseCoordinates: React.PropTypes.objectOf(React.PropTypes.number)
   };
 
   componentWillReceiveProps(newProps) {
@@ -23,7 +25,15 @@ export default class Grid extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
+    this.initializeLayout();
+    this.calculateSizes();
+  }
 
+  componentWillUnmount() {
+    this.packery.destroy();
+  }
+
+  initializeLayout = () => {
     this.packery = new Packery(this.containerEl, {
       initLayout: false,
       itemSelector: '.grid-item',
@@ -35,13 +45,7 @@ export default class Grid extends React.Component {
     this.packery.on('layoutComplete', () => {
       this.setState({status: states.READY});
     });
-
-    this.calculateSizes();
-  }
-
-  componentWillUnmount() {
-    this.packery.destroy();
-  }
+  };
 
   calculateSizes = () => {
     // this is overridden in derived classes

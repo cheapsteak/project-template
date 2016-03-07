@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import GridBase from '../grid.jsx';
-import ParallaxCell from '../parallax-cell/parallax-cell.jsx';
+import ParallaxCell from '../grid-tile/grid-tile';
 
 const gridItemsMargin = 20;
 
@@ -33,7 +33,7 @@ export default class Layout890 extends GridBase {
           <div className={`nested-bar-width-100-height-33 red`}></div>
           <div className={`nested-cube-height-66 top-margin grey`}></div>
         </div>
-        <div className={`grid-item id-2 first-row width-3 orange`} style={{height: baseHeight}}></div>
+        <div className={`grid-item id-2 first-row width-3 sand`} style={{height: baseHeight}}></div>
 
         <div className={`grid-item id-3 width-3`} style={{height: twoThirdHeight}}>
           <div className={`full-size light-blue`}></div>
