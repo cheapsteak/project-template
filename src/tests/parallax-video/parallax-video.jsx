@@ -2,10 +2,6 @@ import React from 'react';
 import ParallaxVideo from 'common/components/parallax-video/parallax-video';
 
 export default function () {
-  const body = document.getElementsByTagName('body')[0];
-  body.style.width = '100%';
-  body.style.height = '100%';
-  body.style.overflow = 'hidden';
 
   return (
     <ParallaxVideo
