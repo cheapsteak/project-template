@@ -22,8 +22,6 @@ export default class FullBrowserWrapper extends React.Component {
   }
 
   toggleFullBrowser = (callback) => {
-    console.log(this.props.isFullBrowser);
-        
     if(this.props.isFullBrowser) {
       this.animateToTarget(callback);
     } else {

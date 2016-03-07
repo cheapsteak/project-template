@@ -17,8 +17,6 @@ class TestFullbrowserWrapper extends React.Component {
   }
 
   render () {
-
-    console.log(this.props.route.myProp)
     return <FullBrowserWrapper ref="child">
       <PhotoEssay model="test"/>
     </FullBrowserWrapper>
