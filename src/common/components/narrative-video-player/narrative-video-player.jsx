@@ -4,7 +4,7 @@ import PlayButtonSvg from '../../../assets/video-play-button.svg';
 import BackButtonSvg from '../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../assets/video-forward-button.svg';
 
-export default class VideoPlayer extends React.Component {
+export default class NarrativeVideoPlayer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,6 +21,10 @@ export default class VideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.video.currentTime = nextProps.currentTime;
+  }
+
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
@@ -31,9 +35,7 @@ export default class VideoPlayer extends React.Component {
 
   handleMetadataLoaded = () => {
     this.setState({isVideoLoaded: true});
-    console.log(this.props);
-        
-    this.video.currentTime = this.props.startTime;
+    this.video.currentTime = this.props.currentTime;
   };
 
   handleTimeUpdate = (e) => {
@@ -48,19 +50,23 @@ export default class VideoPlayer extends React.Component {
     this.setState({isPlaying: !this.state.isPlaying})
   };
 
-  handleClickPrev = (e) => {
+  handlePrevClick = (e) => {
 
   };
 
-  handleClickNext = (e) => {
+  handleNextClick = (e) => {
 
+  };
+
+  handleFullBrowserClick = (e) => {
+    this.props.onFullBrowserClick && this.props.onFullBrowserClick(this.state.time);
   };
 
   render() {
     const { style } = this.props;
     const tempPauseStyle = this.state.isPlaying ? {fill: 'black'} : undefined;
 
-    return <div className="video-player" style={style}>
+    return <div className="narrative-video-player" style={style}>
       <video
         ref={(node) => this.video = node }
         src={this.props.src}
@@ -71,7 +77,7 @@ export default class VideoPlayer extends React.Component {
       >
       </video>
       <div className="controls">
-        <div className="buttons">
+        <div className="control-group">
           <span
             className="button"
             style={tempPauseStyle}
@@ -82,13 +88,13 @@ export default class VideoPlayer extends React.Component {
           <span
             className="button"
             dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-            onClick={this.handleClickPrev}
+            onClick={this.handlePrevClick}
           >
           </span>
           <span
             className="button"
             dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-            onClick={this.handleClickNext}
+            onClick={this.handleNextClick}
           >
           </span>
         </div>

@@ -1,8 +1,17 @@
 import React from 'react';
 import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
-import FullBrowserWrapper from './fullbrowser-wrapper/fullbrowser-wrapper.jsx';
-import FullBrowserWrapperMaximized from './fullbrowser-wrapper-maximized/fullbrowser-wrapper-maximized.jsx';
+import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx'
+import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import InstructionalVideoPlayer from 'common/components/instructional-video-player/instructional-video-player-redux.jsx';
+
+function fullbrowserWrap(component) {
+  return class TestPhotoEssay extends React.Component {
+    render () {
+      return <div>{component}</div>
+    }
+  };
+}
 
 export default <Route>
   {
@@ -27,10 +36,21 @@ export default <Route>
             component={componentsManifest.chapter}
             key={'chapter-abcde'}
           >
-            <IndexRoute component={FullBrowserWrapper} />
             <Route
-              path="photo-essay/:id"
-              component={FullBrowserWrapperMaximized}>
+              path="instructional-videos/:slug"
+              key={'chapter-abcdef'}
+              component={FullBrowserWrapper}
+              childComponent={InstructionalVideoPlayer}
+              childComponentProps={{ basePath: 'tests/chapter'}}
+            >
+            </Route>
+            <Route
+              path="photo-essays/:slug"
+              key={'chapter-abcdef'}
+              component={FullBrowserWrapper}
+              childComponent={PhotoEssay}
+              childComponentProps={{ basePath: 'tests/chapter'}}
+            >
             </Route>
           </Route>
         </Route>
