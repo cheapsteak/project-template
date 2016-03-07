@@ -32,7 +32,7 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   &.ready {
     opacity: 1;
     visibility: visible;
-    //transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
 
   // ------- sizes
