@@ -24,6 +24,8 @@ import modRewrite from 'connect-modrewrite';
 // eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
 
+console.log(`process.env.NODE_ENV is "${process.env.NODE_ENV}".`);
+
 const CONFIG = require('./config.js');
 const paths = {
   "source":"./src",

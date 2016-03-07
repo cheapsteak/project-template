@@ -1,0 +1,99 @@
+$parallaxLimitX: 40px;
+$parallaxLimitY: 40px;
+
+.grid-tile {
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  text-transform: capitalize;
+  font-weight: 900;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+
+  .parallax-layer {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+
+    .overlay {
+      opacity: 0.8;
+      //visibility: visible;
+      transition: opacity 0.4s;
+      transition-delay: 0.2s;
+    }
+
+    .text-container {
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+  }
+
+  .overlay {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    //visibility: hidden;
+    transition: opacity 0.2s;
+    z-index: 1000;
+  }
+
+  .noise {
+    position: absolute;
+    width: calc(100% + #{$parallaxLimitX*2});
+    height: calc(100% + #{$parallaxLimitY*2});
+    left: -$parallaxLimitX;
+    top: -$parallaxLimitY;
+  }
+
+  .text-container {
+    position: relative;
+    top: 30px;
+    left: 30px;
+    max-width: 200px;
+    transition: opacity 0.8s;
+
+    .title {
+      opacity: 0.5;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      font-size: 35px;
+    }
+  }
+
+  .layer.image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .image-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    bottom: -40px;
+    left: 25%;
+
+    img {
+      width: 90%;
+    }
+
+    &.portrait {
+      height: 90%;
+      left: 15%;
+
+      img {
+        width: auto;
+        height: 100%;
+      }
+    }
+  }
+}

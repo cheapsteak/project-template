@@ -1,0 +1,172 @@
+@import "grid-tile/grid-tile";
+
+$grid-red: #9c291d;
+$grid-grey: #515d62;
+$grid-sand: #a07434;
+$grid-light-blue: #4f91b1;
+$grid-dark-blue: #131f2f;
+
+$grid-item-offset: 20px;
+$half-size: calc(50% - #{$grid-item-offset/2});
+
+$one-third-size: calc(100% / 3 - #{$grid-item-offset});
+$one-third-size-extra-10: calc(100% / 3 - #{$grid-item-offset/2});
+
+$two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
+$two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
+
+.grid {
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+
+  &.ready {
+    opacity: 1;
+    visibility: visible;
+    //transition: opacity 0.3s;
+  }
+
+  // ------- sizes
+  .width-full {
+    width: 100%;
+  }
+  .height-full {
+    height: 100%;
+  }
+  .full-size {
+    width: 100%;
+    height: 100%;
+  }
+
+  .grid-item {
+    float: left;
+    margin-top: $grid-item-offset;
+
+    &.first-row {
+      margin-top: 0;
+    }
+
+    > div {
+      display: inline-block;
+      float: left;
+    }
+
+    .nested-cube-33 {
+      width: $half-size;
+      height: $one-third-size;
+    }
+    .nested-cube-33-width-extra-10 {
+      width: $one-third-size-extra-10;
+      height: $half-size;
+    }
+    .nested-cube-50 {
+      width: $half-size;
+      height: $half-size;
+    }
+    .nested-cube-height-66 {
+      width: 100%;
+      height: $two-third-size;
+    }
+    .nested-cube-width-66 {
+      width: $two-third-size;
+      height: 100%;
+    }
+    .nested-cube-width-66-extra-10 {
+      width: $two-third-size-extra-10;
+      height: 100%;
+    }
+
+    .nested-bar-width-33-height-100 {
+      width: calc(100% / 3);
+      height: 100%;
+    }
+    .nested-bar-width-33-height-100-less-10 {
+      width: $one-third-size-extra-10;
+      height: 100%;
+    }
+    .nested-bar-width-50-height-66 {
+      width: $half-size;
+      height: $two-third-size;
+    }
+    .nested-bar-width-100-height-33 {
+      width: 100%;
+      height: calc(100% / 3);
+    }
+    .nested-bar-width-100-height-50 {
+      width: 100%;
+      height: $half-size;
+    }
+  }
+
+  // ------- offsets
+  .top-padding {
+    padding-top: $grid-item-offset;
+  }
+  .right-padding {
+    padding-right: $grid-item-offset;
+  }
+  .bottom-padding {
+    padding-bottom: $grid-item-offset;
+  }
+  .left-padding {
+    padding-left: $grid-item-offset;
+  }
+  .top-margin {
+    margin-top: $grid-item-offset;
+  }
+  .right-margin {
+    margin-right: $grid-item-offset;
+  }
+  .bottom-margin {
+    margin-bottom: $grid-item-offset;
+  }
+  .left-margin {
+    margin-left: $grid-item-offset;
+  }
+
+  // ------- colors
+  .red {
+    &.filler {
+      background: url('#{$ASSET_PATH}/images/noise-red.png') $grid-red;
+    }
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
+    }
+  }
+  .grey {
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
+    }
+    .overlay {
+      background: $grid-grey;
+    }
+  }
+  .sand {
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
+    }
+    .overlay {
+      background: $grid-sand;
+    }
+  }
+  .light-blue {
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
+    }
+    .overlay {
+      background: $grid-light-blue;
+    }
+  }
+  .dark-blue {
+    &.filler {
+      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') $grid-dark-blue;
+    }
+    .noise {
+      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') repeat;
+    }
+    .overlay {
+      background: $grid-dark-blue;
+    }
+  }
+
+}
