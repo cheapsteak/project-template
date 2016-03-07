@@ -38,13 +38,13 @@ export default class GridTile extends React.Component {
   };
 
   render() {
-    const textDepth = 0.5;
-    const bgDepth = 0.7;
+    const textDepth = 0.6;
+    const bgDepth = 1;
     const imageDepth = 0.8;
 
     return (
       <div className={`grid-tile`}>
-        <div className={`parallax-layer bg`} data-depth={bgDepth} data-vector={`0.4,0.4`}>
+        <div className={`parallax-layer bg`} data-depth={bgDepth} data-vector={`0.4,0.5`}>
           <div className={`noise`}></div>
         </div>
         <div className={`parallax-layer text`} data-depth={textDepth} data-vector={`-0.7, 0.8`}>

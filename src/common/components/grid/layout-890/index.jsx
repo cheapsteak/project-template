@@ -18,7 +18,7 @@ export default class Layout890 extends GridBase {
     const twoThirdHeight = containerWidth * 0.4 - gridItemsMargin;
 
     this.setState({baseHeight, twoThirdHeight});
-    console.log('calculateSizes: Grid-890');
+    //console.log('calculateSizes: Grid-890');
   };
 
   render() {

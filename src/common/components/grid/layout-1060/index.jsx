@@ -20,7 +20,7 @@ export default class Layout1060 extends GridBase {
     const twoThirdHeight = containerWidth / 3 - 17;
 
     this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
-    console.log('calculateSizes: Grid-1060');
+    //console.log('calculateSizes: Grid-1060');
   };
 
   render() {

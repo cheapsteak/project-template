@@ -93,7 +93,7 @@ export default class ParallaxVideoWrapper extends React.Component {
           animateIn={this.state.videoAnimateInFn}
           animateOut={this.state.videoAnimateOutFn}
         >
-          <div className={`layer`} data-depth="0.3">
+          <div className={`parallax-layer`} data-depth="0.3">
             <div ref="content" className={`text-container`}>
               <div className={`title`}>Explore</div>
               <div className={`subtitle`}>Science</div>

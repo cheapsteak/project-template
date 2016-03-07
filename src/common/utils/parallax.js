@@ -1,98 +1,188 @@
-import Tween from 'gsap';
+var Tween = require('gsap');
 
-const defaults = {
-  autoEnable: true,
-  limitX: 50,
-  limitY: 50,
-  duration: 3,
-  easing: Expo.easeOut
-};
-
-export default (scene, opts) => {
+var Parallax = function (scene, opts) {
   var layers;
   var currLayer;
 
+  var defaults = {
+    autoEnable: true,
+    mouseProximityMode: false, // useful for grid items etc. when required individual behaviour of each piece in the scene scope
+    limitX: 50,
+    limitY: 50,
+    duration: 3,
+    easing: Expo.easeOut
+  };
   opts = Object.assign(defaults, opts);
 
   updateLayers();
+
   if (opts.autoEnable) enable();
 
-  document.addEventListener('mouseout', _handleWindowMouseOut);
 
-
+  /**
+   * Reset layers position when mouse leaves window
+   * @private
+   */
   function _handleWindowMouseOut(e) {
-    // reset parallax when mouse left window
     e = e ? e : window.event;
     var from = e.relatedTarget || e.toElement;
-    if (!from || from.nodeName == 'HTML') reset();
+    if (!from || from.nodeName === 'HTML') reset();
   }
 
+  /**
+   *
+   * @private
+   */
   function _handleMouseMove(e) {
-    for (let i = 0; i < layers.length; i++) {
+    for (var i = 0; i < layers.length; i++) {
       currLayer = layers[i];
+      var mouseX = e.clientX;
+      var mouseY = e.clientY;
+      var depth, x, y;
 
-      const vector = _getLayerVector();
-      const distance = _calculateDistance(e.clientX, e.clientY);
-      const depth = _calculateLayerDepth(distance);
+      var vector = _getLayerVector();
 
-      const x = depth * opts.limitX * vector[0];
-      const y = depth * opts.limitY * vector[1];
+      if (opts.mouseProximityMode) {
+        var distance = _calcDistanceToCentre(mouseX, mouseY);
+        depth = _calculateLayerDepth(distance);
+        x = depth * opts.limitX * vector[0];
+        y = depth * opts.limitY * vector[1];
+      } else {
+        depth = currLayer.dataset.depth;
+        var relX = (scene.offsetWidth / 2 - mouseX);
+        var relY = (scene.offsetHeight / 2 - mouseY);
+        x = _normalizeValue(relX, opts.limitX, -opts.limitX) * depth * vector[0];
+        y = _normalizeValue(relY, opts.limitY, -opts.limitY) * depth * vector[1];
+      }
+
       _setLayerPosition(x, y);
     }
   }
 
-  function _getLayerVector() {
-    if (!currLayer.dataset.vector) return [1, 1];
+  /**
+   * Normalize value to a range
+   * @param value
+   * @param min
+   * @param max
+   * @returns {*}
+   * @private
+   */
+  function _normalizeValue(value, min, max) {
+    if (value > max) value = max;
+    else if (value < min) value = min;
+    return value;
+  }
 
-    const vector = currLayer.dataset.vector.split(',');
-    vector.forEach((v) => {
-      if (v > 1) v = 1;
-      else if (v < -1) v = -1;
-    });
+  /**
+   * Extract vectors values from 'data-vector' and normalize them
+   * @returns {number[]}
+   * @private
+   */
+  function _getLayerVector() {
+    var vector = [1, 1];
+    if (currLayer.dataset.vector) {
+      vector = currLayer.dataset.vector.split(',');
+      vector.forEach(function (v) {
+        _normalizeValue(v, -1, 1);
+      });
+    }
     return vector;
   }
 
-  function _calculateDistance(mouseX, mouseY) {
-    const centerX = currLayer.getBoundingClientRect().left + currLayer.offsetWidth * 0.5;
-    const centerY = currLayer.getBoundingClientRect().top + currLayer.offsetHeight * 0.5;
+  /**
+   * Calculate distance between mouse pointer and layer centre for 'mouseProximityMode' mode
+   * @param mouseX
+   * @param mouseY
+   * @returns {number}
+   * @private
+   */
+  function _calcDistanceToCentre(mouseX, mouseY) {
+    var centerX = currLayer.getBoundingClientRect().left + currLayer.offsetWidth * 0.5;
+    var centerY = currLayer.getBoundingClientRect().top + currLayer.offsetHeight * 0.5;
     return Math.sqrt((mouseX - centerX) * (mouseX - centerX) + (mouseY - centerY) * (mouseY - centerY));
   }
 
+  /**
+   * Calculate and normalize layer depth for 'mouseProximityMode' mode
+   * @param distance
+   * @returns {number}
+   * @private
+   */
   function _calculateLayerDepth(distance) {
-    const depth = currLayer.dataset.depth;
-    const windowAverage = (window.innerWidth + window.innerHeight) / 2;
-    const baseDepth = (distance / windowAverage - 1);
+    var depth = currLayer.dataset.depth;
+    var windowAverage = (window.innerWidth + window.innerHeight) / 2;
+    var baseDepth = (distance / windowAverage - 1);
     return Math.min(Math.abs(baseDepth), 1) * depth;
   }
 
-  function _setLayerPosition(x = 0, y = 0, applyToAllLayers) {
-    const target = applyToAllLayers ? layers : currLayer;
-    Tween.to(target, opts.duration, {x: x, y: y, ease: opts.easing, overwrite: 'all'});
+  /**
+   * Tween layer position with specified duration and easing
+   * @param x
+   * @param y
+   * @param applyToAllLayers
+   * @private
+   */
+  function _setLayerPosition(x, y, applyToAllLayers) {
+    var target = applyToAllLayers ? layers : currLayer;
+    Tween.to(target, opts.duration, {
+      x: x || 0,
+      y: y || 0,
+      ease: opts.easing,
+      overwrite: 'all'
+    });
   }
 
+  /**
+   * Update scene's children. It's called automatically only once upon initialization
+   * Needs to be called manually with every DOM update within the scene
+   */
   function updateLayers() {
     layers = scene.querySelectorAll('.parallax-layer');
     if (!layers.length) console.warn('No parallax layers');
-    console.log('parallax.updateLayers');
+  }
+
+  /**
+   * Update move limits along the axes
+   * Needs to be called manually whenever needed (e.g. on scene resize)
+   * @param limitX
+   * @param limitY
+   */
+  function updateLimits(limitX, limitY) {
+    opts.limitX = limitX || opts.limitX;
+    opts.limitY = limitY || opts.limitY;
   }
 
   function enable() {
     scene.addEventListener('mousemove', _handleMouseMove);
+    document.addEventListener('mouseout', _handleWindowMouseOut);
   }
 
   function disable() {
     scene.removeEventListener('mousemove', _handleMouseMove);
+    document.removeEventListener('mouseout', _handleWindowMouseOut);
   }
 
+  /**
+   * Reset all layers position at a time with specified duration and easing
+   */
   function reset() {
     _setLayerPosition(0, 0, true);
   }
 
   function destroy() {
     disable();
-    document.removeEventListener('mouseout', _handleWindowMouseOut);
+    Parallax = null;
   }
 
-  return {updateLayers, enable, disable, reset, destroy}
+  return {
+    updateLayers: updateLayers,
+    updateLimits: updateLimits,
+    enable: enable,
+    disable: disable,
+    reset: reset,
+    destroy: destroy
+  }
 
 };
+
+module.exports = Parallax;

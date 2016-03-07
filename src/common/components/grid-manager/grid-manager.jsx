@@ -19,8 +19,9 @@ export default class GridManager extends React.Component {
     this.prevGrid = this.refs.grid;
 
     this.parallax = Parallax(this.refs.scene, {
+      mouseProximityMode: true,
       limitX: 40,
-      limitY: 40,
+      limitY: 40
     });
 
     this.containerEl.addEventListener('scroll', this.handleScroll);
@@ -41,7 +42,7 @@ export default class GridManager extends React.Component {
     }
     this.timer = setTimeout(()=> {
       this.parallax.enable();
-      console.log('scrolling stopped')
+      //console.log('scrolling stopped')
     }, 150);
   };
 

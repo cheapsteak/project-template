@@ -2,7 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Seriously from 'seriously';
 import chromaEffect from 'seriously/effects/seriously.chroma';
-
+import Parallax from '../../utils/parallax';
 const BackgroundCover = require('background-cover').BackgroundCover;
 
 const states = {
@@ -25,7 +25,7 @@ export default class ParallaxVideo extends React.Component {
   static defaultProps = {
     bgVideoDepth: 0.7,
     fgVideoDepth: 0.5,
-    parallaxOpts: {},
+    parallaxOpts: {duration: 4},
     animateIn: () => {
       console.log('default animateIn');
     },
@@ -55,13 +55,14 @@ export default class ParallaxVideo extends React.Component {
 
   componentWillUnmount() {
     this.fgVideo = null;
+    this.parallax.destroy();
     window.removeEventListener('resize', this.positionElements);
   }
 
   positionElements = () => {
     BackgroundCover(this.bgVideo, this.containerEl);
     BackgroundCover(this.fgCanvas, this.containerEl);
-    this.parallax && this.parallax.limit(window.innerWidth * 0.1, window.innerHeight * 0.1);
+    this.parallax.updateLimits(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
   onVideoReady = () => {
@@ -134,14 +135,14 @@ export default class ParallaxVideo extends React.Component {
   render() {
     return (
       <div className={`parallax-video`}>
-        <div ref="scene" className={`scene ${this.state.status}`}>
-          <div className={`layer`} data-depth={this.props.bgVideoDepth}>
+        <div ref="scene" className={`parallax-scene ${this.state.status}`}>
+          <div className={`parallax-layer`} data-depth={this.props.bgVideoDepth}>
             <video ref="bgVideo" preload="true" loop="true" className={`bg-video ${this.state.status}`}>
               <source src={this.props.bgVideoPath} type="video/mp4"/>
             </video>
           </div>
 
-          <div className={`layer`} data-depth={this.props.fgVideoDepth}>
+          <div className={`parallax-layer`} data-depth={this.props.fgVideoDepth}>
             <canvas
               ref="fgCanvas"
               width={this.state.fgVideoWidth}
