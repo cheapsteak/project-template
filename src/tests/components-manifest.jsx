@@ -10,5 +10,6 @@ export default {
   'parallax-video': require('./parallax-video/parallax-video'),
   'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
   panorama: require('./panorama/panorama'),
-  videoplayer: require('./video-player/video-player.jsx')
+  'narrative-video-player': require('./narrative-video-player/narrative-video-player.jsx'),
+  'instructional-video-player': require('./instructional-video-player/instructional-video-player.jsx')
 };
