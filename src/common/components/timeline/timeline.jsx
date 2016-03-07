@@ -85,23 +85,25 @@ export default class Timeline extends React.Component {
           </div>
           { 
             /* Check if there is a duration before setting the dots for the case of video metadata currently loading */
-            duration && this.state.items.map(point => {
-              const style = { left: (point.time / duration * 100) + '%' }; 
-              const className = this.state.currentTime === point.time ? ' selected' : '';
-              const isActive = this.isWithinVariance(this.state.currentTime, point.time, 0.3)
+            duration 
+              ? this.state.items.map(point => {
+                  const style = { left: (point.time / duration * 100) + '%' }; 
+                  const className = this.state.currentTime === point.time ? ' selected' : '';
+                  const isActive = this.isWithinVariance(this.state.currentTime, point.time, 0.3)
 
-              return (
-                <HotSpot
-                  style={style}
-                  key={point.time}
-                  withinCurrentTime={isActive}
-                  route={point.route}
-                  onClick={this.handlePointClick.bind(this, point.time)}
-                >
-                  <HoverCard src={point.img} />
-                </HotSpot>
-              )
-            })
+                  return (
+                    <HotSpot
+                      style={style}
+                      key={point.time}
+                      withinCurrentTime={isActive}
+                      route={point.route}
+                      onClick={this.handlePointClick.bind(this, point.time)}
+                    >
+                      <HoverCard src={point.img} />
+                    </HotSpot>
+                  )
+                })
+              : undefined
           }
         </div>
       </div>

@@ -12,34 +12,23 @@ class PhotoEssayRedux extends React.Component {
     super(props)
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
 
-    if(!props.photoEssays[props.model]) {
-      this.boundActionCreators.setPhotoEssay(props.model);
+    if(!props.photoEssays[props.modelSlug]) {
+      this.boundActionCreators.setPhotoEssay(props.modelSlug);
     }
   }
 
-  setFullBrowser = (isFullBrowser) => {
-    if(isFullBrowser) {
-      this.props.toggleFullBrowser(PhotoEssay, this.props);
-    }
-  };
-
   handlePrevClick = () => {
-    this.boundActionCreators.setPrevPhoto(this.props.model);
+    this.boundActionCreators.setPrevPhoto(this.props.modelSlug);
   };
 
   handleNextClick = () => {
-    this.boundActionCreators.setNextPhoto(this.props.model);
-  };
-
-  handleFullBrowserClick = () => {
-    this.props.toggleFullBrowser(PhotoEssay, this.props);
+    this.boundActionCreators.setNextPhoto(this.props.modelSlug);
   };
 
   render () {
-    return <PhotoEssay 
+    return <PhotoEssay
       onPrevClick={this.handlePrevClick}
       onNextClick={this.handleNextClick}
-      onFullBrowserClick={this.handleFullBrowserClick}
       {...this.props}
     />
   }

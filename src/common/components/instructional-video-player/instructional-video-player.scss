@@ -1,10 +1,12 @@
-.video-player {
+.instructional-video-player {
   $control-ui-height: 37px;
   position: relative;
   display: inline-block;
 
   video {
     width: 100%;
+    height: 100%;
+    background-color: black;
   }
 
   .controls {
@@ -19,12 +21,11 @@
     justify-content: center;
   }
 
-  .buttons, .timeline {
-
+  .control-group, .timeline {
     height: $control-ui-height;
   }
 
-  .buttons {
+  .control-group {
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 140px;
@@ -38,6 +39,17 @@
       margin: 10px;
       fill: white;
       cursor: pointer;
+    }
+
+    .fullbrowser-button {
+      svg {
+        width: 20px;
+        height: auto;
+        fill: none;
+        stroke: white;
+        stroke-width: 2px;
+        cursor: pointer;
+      }
     }
   }
 
