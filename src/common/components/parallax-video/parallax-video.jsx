@@ -36,8 +36,8 @@ export default class ParallaxVideo extends React.Component {
 
   state = {
     status: states.LOADING,
-    fgVideoWidth: null,
-    fgVideoHeight: null
+    fgVideoWidth: 1920,
+    fgVideoHeight: 1080
   };
 
   loadedVideos = 0;
