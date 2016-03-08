@@ -6,8 +6,9 @@ import Layout1060 from '../grid/layout-1060';
 import Layout1230 from '../grid/layout-1230';
 import Layout1400 from '../grid/layout-1400';
 import Layout1570 from '../grid/layout-1570';
+import Layout1740 from '../grid/layout-1740';
 
-const breakpoints = [890, 1060, 1230, 1400, 1570];
+const breakpoints = [890, 1060, 1230, 1400, 1570, 1740];
 
 export default class GridManager extends React.Component {
 
@@ -73,6 +74,8 @@ export default class GridManager extends React.Component {
       currLayout = <Layout1400 screenWidth={windowWidth}/>;
     } else if (windowWidth <= breakpoints[4]) {
       currLayout = <Layout1570 screenWidth={windowWidth}/>;
+    } else if (windowWidth <= breakpoints[5]) {
+      currLayout = <Layout1740 screenWidth={windowWidth}/>;
     } else {
       currLayout = null;
     }
