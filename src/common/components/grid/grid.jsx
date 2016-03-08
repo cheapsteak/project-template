@@ -26,7 +26,8 @@ export default class Grid extends React.Component {
     this.calculateSizes();
 
     this.tiles = this.getTiles();
-    this.tiles.forEach((tile, index) => tile.animateIn(index));
+    const fillers = document.querySelectorAll('.grid-parallax-scene .filler');
+    this.tiles.forEach((tile, index) => tile.animateIn(index, fillers));
   }
 
   componentWillUnmount() {
