@@ -2,6 +2,7 @@ import React from 'react';
 import ParallaxVideo from 'common/components/parallax-video/parallax-video';
 
 export default function () {
+
   return (
     <ParallaxVideo
       bgVideoPath={'../videos/bg-1080.mp4'}
