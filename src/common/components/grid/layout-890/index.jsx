@@ -100,7 +100,7 @@ export default class Layout890 extends GridBase {
 
         <div className={`grid-item width-3`} style={{height: twoThirdHeight}}>
           <div className={`filler nested-bar-width-33-height-100 red`}></div>
-          <div className={`filler nested-cube-width-66 left-margin grey`}>
+          <div className={`nested-cube-width-66 left-margin grey`}>
             <GridTile
               ref="tile7"
               chapter={`investment`}

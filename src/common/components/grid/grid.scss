@@ -15,8 +15,8 @@ $one-third-size-extra-5: calc(100% / 3 - 15px);
 $one-third-size-extra-10: calc(100% / 3 - #{$grid-item-offset/2});
 
 $two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
+$two-third-size-extra-5: calc(100% * 2 / 3 - 5px);
 $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
-$two-third-size-extra-15: calc(100% * 2 / 3 - 5px);
 
 $sand-noise: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
 $light-blue-noise: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
@@ -47,6 +47,10 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     height: 100%;
   }
 
+  .filler {
+    float: left;
+  }
+
   .grid-item {
     float: left;
     margin-top: $grid-item-offset;
@@ -63,6 +67,10 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     .nested-cube-33 {
       width: $half-size;
       height: $one-third-size;
+    }
+    .nested-cube-33-height-100 {
+      width: $one-third-size-extra-5;
+      height: 100%;
     }
     .nested-cube-width-33-height-33 {
       width: $one-third-size-extra-10;
@@ -83,6 +91,10 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     .nested-cube-50-height-100 {
       width: $half-size;
       height: 100%;
+    }
+    .nested-cube-height-33 {
+      width: 100%;
+      height: $one-third-size-extra-5;
     }
     .nested-cube-height-66 {
       width: 100%;
@@ -106,7 +118,7 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     }
     .nested-cube-width-100-height-66 {
       width: 100%;
-      height: $two-third-size-extra-15;
+      height: $two-third-size-extra-5;
     }
 
     .nested-bar-width-33-height-66 {
@@ -121,6 +133,10 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       width: $one-third-size-extra-10;
       height: 100%;
     }
+    .nested-bar-width-33-height-100-less-5 {
+      width: $one-third-size-extra-10;
+      height: 100%;
+    }
     .nested-bar-width-50-height-66 {
       width: $half-size;
       height: $two-third-size;
@@ -129,9 +145,17 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       width: $two-third-size-extra-10;
       height: 100%;
     }
+    .nested-bar-width-66-height-100-extra-5 {
+      width: $two-third-size-extra-5;
+      height: 100%;
+    }
     .nested-bar-width-100-height-33 {
       width: 100%;
       height: calc(100% / 3);
+    }
+    .nested-bar-width-100-height-33-less-10 {
+      width: 100%;
+      height: $one-third-size-extra-5;
     }
     .nested-bar-width-100-height-50 {
       width: 100%;
@@ -139,7 +163,7 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     }
     .nested-bar-width-100-height-66 {
       width: 100%;
-      height: $two-third-size-extra-15;
+      height: $two-third-size-extra-5;
     }
   }
 
@@ -173,6 +197,9 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   .red {
     &.filler, .noise {
       background: $red-noise;
+    }
+    .overlay {
+      background: $grid-red;
     }
   }
   .grey {
