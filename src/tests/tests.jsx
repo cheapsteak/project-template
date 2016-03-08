@@ -48,11 +48,11 @@ export default function (props) {
   const key = pathname.split('/')[2] || 'root';
   const isIndexPage = key === 'root';
 
-  return <div>
-    <ManifestMenu
-      manifest={componentsManifest}
-      isIndexPage={!isIndexPage}
-    />
+  return <div className="tests-container">
+    { isIndexPage && <ManifestMenu
+          manifest={componentsManifest}
+          isIndexPage={!isIndexPage}
+        />}
     {React.cloneElement(props.children || <div />, { key: key })}
   </div>;
 }

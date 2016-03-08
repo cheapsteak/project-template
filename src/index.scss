@@ -10,6 +10,7 @@ body {
 
 #container {
   background-color: green;
+  height: 100%;
 }
 
 @import 'common/styles/reset';
@@ -29,3 +30,5 @@ body {
 @import 'common/components/grid/grid';
 @import 'common/components/grid/layout-890/index';
 @import 'common/components/grid/layout-1060/index';
+@import 'common/components/grid/layout-1230/index';
+@import 'common/components/grid/layout-1400/index';

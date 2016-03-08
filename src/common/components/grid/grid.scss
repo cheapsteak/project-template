@@ -1,5 +1,7 @@
 @import "grid-tile/grid-tile";
 
+$dark-amount: 5;
+
 $grid-red: #9c291d;
 $grid-grey: #515d62;
 $grid-sand: #a07434;
@@ -8,12 +10,21 @@ $grid-dark-blue: #131f2f;
 
 $grid-item-offset: 20px;
 $half-size: calc(50% - #{$grid-item-offset/2});
+$half-size-less-10: calc(50% - #{$grid-item-offset/2});
 
 $one-third-size: calc(100% / 3 - #{$grid-item-offset});
+$one-third-size-extra-5: calc(100% / 3 - 15px);
 $one-third-size-extra-10: calc(100% / 3 - #{$grid-item-offset/2});
 
 $two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
+$two-third-size-extra-5: calc(100% * 2 / 3 - 5px);
 $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
+
+$sand-noise: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
+$light-blue-noise: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
+$dark-blue-noise: url('#{$ASSET_PATH}/images/noise-dark-blue.png');
+$red-noise: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
+$grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
 
 .grid {
   width: 100%;
@@ -23,7 +34,7 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
   &.ready {
     opacity: 1;
     visibility: visible;
-    //transition: opacity 0.3s;
+    transition: opacity 0.3s;
   }
 
   // ------- sizes
@@ -36,6 +47,10 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
   .full-size {
     width: 100%;
     height: 100%;
+  }
+
+  .filler {
+    float: left;
   }
 
   .grid-item {
@@ -55,6 +70,18 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
       width: $half-size;
       height: $one-third-size;
     }
+    .nested-cube-33-height-100 {
+      width: $one-third-size-extra-5;
+      height: 100%;
+    }
+    .nested-cube-width-33-height-33 {
+      width: $one-third-size-extra-10;
+      height: $one-third-size-extra-10;
+    }
+    .nested-cube-33-height-extra-10 {
+      width: $half-size;
+      height: $one-third-size-extra-10;
+    }
     .nested-cube-33-width-extra-10 {
       width: $one-third-size-extra-10;
       height: $half-size;
@@ -62,6 +89,14 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
     .nested-cube-50 {
       width: $half-size;
       height: $half-size;
+    }
+    .nested-cube-50-height-100 {
+      width: $half-size;
+      height: 100%;
+    }
+    .nested-cube-height-33 {
+      width: 100%;
+      height: $one-third-size-extra-5;
     }
     .nested-cube-height-66 {
       width: 100%;
@@ -75,7 +110,23 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
       width: $two-third-size-extra-10;
       height: 100%;
     }
+    .nested-cube-width-100-height-33 {
+      width: 100%;
+      height: $one-third-size-extra-5;
+    }
+    .nested-cube-width-100-height-50 {
+      width: 100%;
+      height: $half-size-less-10;
+    }
+    .nested-cube-width-100-height-66 {
+      width: 100%;
+      height: $two-third-size-extra-5;
+    }
 
+    .nested-bar-width-33-height-66 {
+      width: $one-third-size-extra-10;
+      height: $two-third-size-extra-10;
+    }
     .nested-bar-width-33-height-100 {
       width: calc(100% / 3);
       height: 100%;
@@ -84,17 +135,37 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
       width: $one-third-size-extra-10;
       height: 100%;
     }
+    .nested-bar-width-33-height-100-less-5 {
+      width: $one-third-size-extra-10;
+      height: 100%;
+    }
     .nested-bar-width-50-height-66 {
       width: $half-size;
       height: $two-third-size;
+    }
+    .nested-bar-width-66-height-100 {
+      width: $two-third-size-extra-10;
+      height: 100%;
+    }
+    .nested-bar-width-66-height-100-extra-5 {
+      width: $two-third-size-extra-5;
+      height: 100%;
     }
     .nested-bar-width-100-height-33 {
       width: 100%;
       height: calc(100% / 3);
     }
+    .nested-bar-width-100-height-33-less-10 {
+      width: 100%;
+      height: $one-third-size-extra-5;
+    }
     .nested-bar-width-100-height-50 {
       width: 100%;
       height: $half-size;
+    }
+    .nested-bar-width-100-height-66 {
+      width: 100%;
+      height: $two-third-size-extra-5;
     }
   }
 
@@ -126,46 +197,68 @@ $two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
 
   // ------- colors
   .red {
-    &.filler {
-      background: url('#{$ASSET_PATH}/images/noise-red.png') $grid-red;
+    &.filler, .noise {
+      background: $red-noise;
     }
-    .noise {
-      background: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
+    .overlay {
+      .left {
+        background: darken($grid-red, $dark-amount);
+      }
+      .right {
+        background: $grid-red;
+      }
     }
   }
   .grey {
-    .noise {
-      background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
+    &.filler, .noise {
+      background: $grey-noise;
     }
     .overlay {
-      background: $grid-grey;
+      .left {
+        background: darken($grid-grey, $dark-amount);
+      }
+      .right {
+        background: $grid-grey;
+      }
     }
   }
   .sand {
-    .noise {
-      background: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
+    &.filler, .noise {
+      background: $sand-noise
     }
     .overlay {
-      background: $grid-sand;
+      .left {
+        background: darken($grid-sand, $dark-amount);
+      }
+      .right {
+        background: $grid-sand;
+      }
     }
   }
   .light-blue {
-    .noise {
-      background: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
+    &.filler, .noise {
+      background: $light-blue-noise
     }
     .overlay {
-      background: $grid-light-blue;
+      .left {
+        background: darken($grid-light-blue, $dark-amount);
+      }
+      .right {
+        background: $grid-light-blue;
+      }
     }
   }
   .dark-blue {
-    &.filler {
-      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') $grid-dark-blue;
-    }
-    .noise {
-      background: url('#{$ASSET_PATH}/images/noise-dark-blue.png') repeat;
+    &.filler, .noise {
+      background: $dark-blue-noise;
     }
     .overlay {
-      background: $grid-dark-blue;
+      .left {
+        background: darken($grid-dark-blue, $dark-amount);
+      }
+      .right {
+        background: $grid-dark-blue;
+      }
     }
   }
 
