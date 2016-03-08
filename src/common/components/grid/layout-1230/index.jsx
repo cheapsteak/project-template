@@ -111,7 +111,7 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-2 left-margin`} style={{height: baseHeight-5}}>
+        <div className={`grid-item width-2 left-margin`} style={{height: baseHeight-6}}>
           <div className={`filler nested-cube-33-height-extra-10 dark-blue`}></div>
           <div className={`filler nested-cube-33-height-extra-10 left-margin grey`}></div>
           <div className={`nested-cube-width-100-height-66 top-margin grey`}>
@@ -122,7 +122,7 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-3 left-padding`} style={{height: baseHeight-10}}>
+        <div className={`grid-item width-3 left-padding`} style={{height: baseHeight}}>
           <div className={`nested-bar-width-66-height-100 red`}>
             <GridTile
               ref="tile8"
@@ -133,13 +133,13 @@ export default class Layout1230 extends GridBase {
           <div className={`filler nested-cube-width-33-height-33 top-margin left-margin grey`}></div>
         </div>
 
-        <div className={`grid-item width-2`} style={{height: twoThird-5}}>
+        <div className={`grid-item width-2`} style={{height: twoThird+5}}>
           <div className={`filler nested-cube-50 light-blue`}></div>
           <div className={`filler nested-cube-50 left-margin dark-blue`}></div>
           <div className={`filler nested-bar-width-100-height-50 top-margin red`}></div>
         </div>
 
-        <div className={`grid-item width-2 left-margin`} style={{height: oneThird-5}}>
+        <div className={`grid-item width-2 left-margin`} style={{height: oneThird, marginTop: 25}}>
           <div className={`filler nested-cube-50-height-100 dark-blue`}></div>
           <div className={`filler nested-cube-50-height-100 left-margin light-blue`}></div>
         </div>

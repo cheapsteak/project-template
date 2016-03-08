@@ -107,7 +107,7 @@ export default class Layout890 extends GridBase {
             />
           </div>
         </div>
-        <div className={`grid-item width-2 left-padding`} style={{height: baseHeight}}>
+        <div className={`grid-item width-2 left-padding`} style={{height: baseHeight+1}}>
           <div className={`full-size grey`}>
             <GridTile
               ref="tile8"
