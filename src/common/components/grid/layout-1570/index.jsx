@@ -27,8 +27,6 @@ export default class Layout1570 extends GridBase {
     const twoThird = this.state.twoThirdHeight;
     const fourParts = baseHeight + oneThird + 20;
 
-    const strayMargin = /*window.innerWidth < 1512 ? -oneThird : */20;
-
     return (
       <div className={`grid layout-1570 ${this.state.status}`}>
 
@@ -94,7 +92,7 @@ export default class Layout1570 extends GridBase {
           />
         </div>
 
-        <div className={`grid-item width-2 left-margin light-blue`} style={{height: fourParts, marginTop: strayMargin}}>
+        <div className={`grid-item width-2 left-margin top-margin light-blue`} style={{height: fourParts}}>
           <GridTile
             ref="tile6"
             chapter={`history`}
