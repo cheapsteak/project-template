@@ -22,12 +22,13 @@ export default class Timeline extends React.Component {
 
     this.state = {
       currentTime: props.currentTime,
-      items: props.items
+      items: props.items,
+      duration: props.duration
     }
   }
 
-  componentWillReceiveProps({ currentTime, items }) {
-    this.setState({ currentTime, items });
+  componentWillReceiveProps({ currentTime, items, duration }) {
+    this.setState({ currentTime, items, duration });
   }
 
   changeCurrentTime(time) {
@@ -71,8 +72,8 @@ export default class Timeline extends React.Component {
   }
 
   render () {
-    const { width, height, duration, items, style } = this.props;
-    const progress = duration ? (this.state.currentTime/duration * 100) : 0;
+    const { width, height, items, style } = this.props;
+    const progress = this.state.duration ? (this.state.currentTime/this.state.duration * 100) : 0;
 
     return (
       <div className="timeline" style={style}>
@@ -85,9 +86,9 @@ export default class Timeline extends React.Component {
           </div>
           { 
             /* Check if there is a duration before setting the dots for the case of video metadata currently loading */
-            duration 
+            this.state.duration 
               ? this.state.items.map(point => {
-                  const style = { left: (point.time / duration * 100) + '%' }; 
+                  const style = { left: (point.time / this.state.duration * 100) + '%' }; 
                   const className = this.state.currentTime === point.time ? ' selected' : '';
                   const isActive = this.isWithinVariance(this.state.currentTime, point.time, 0.3)
 
