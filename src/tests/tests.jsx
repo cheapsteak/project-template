@@ -49,10 +49,10 @@ export default function (props) {
   const isIndexPage = key === 'root';
 
   return <div>
-    <ManifestMenu
-      manifest={componentsManifest}
-      isIndexPage={!isIndexPage}
-    />
+    { isIndexPage && <ManifestMenu
+          manifest={componentsManifest}
+          isIndexPage={!isIndexPage}
+        />}
     {React.cloneElement(props.children || <div />, { key: key })}
   </div>;
 }
