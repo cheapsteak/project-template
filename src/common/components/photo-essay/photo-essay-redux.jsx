@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import store from '../../store.js';
 
-@connect(state => ({ photoEssays: state.photoEssays}) )
+@connect(state => ({ photoEssays: state.photoEssays}), undefined, undefined, { withRef: true })
 class PhotoEssayRedux extends React.Component {
   constructor(props) {
     super(props)
@@ -27,6 +27,7 @@ class PhotoEssayRedux extends React.Component {
 
   render () {
     return <PhotoEssay
+      ref="wrappedInstance"
       onPrevClick={this.handlePrevClick}
       onNextClick={this.handleNextClick}
       {...this.props}

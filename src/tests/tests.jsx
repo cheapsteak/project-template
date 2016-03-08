@@ -48,7 +48,7 @@ export default function (props) {
   const key = pathname.split('/')[2] || 'root';
   const isIndexPage = key === 'root';
 
-  return <div>
+  return <div className="tests-container">
     { isIndexPage && <ManifestMenu
           manifest={componentsManifest}
           isIndexPage={!isIndexPage}
