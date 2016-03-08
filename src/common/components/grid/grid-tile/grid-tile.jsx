@@ -60,7 +60,10 @@ export default class GridTile extends React.Component {
             <img src={this.state.data.image}/>
           </div>
         </div>
-        <div className={`overlay`}></div>
+        <div className={`overlay`}>
+          <div className={`part left`}></div>
+          <div className={`part right`}></div>
+        </div>
       </div>
     );
   }

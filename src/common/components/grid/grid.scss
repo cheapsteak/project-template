@@ -1,5 +1,7 @@
 @import "grid-tile/grid-tile";
 
+$dark-amount: 5;
+
 $grid-red: #9c291d;
 $grid-grey: #515d62;
 $grid-sand: #a07434;
@@ -199,7 +201,12 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       background: $red-noise;
     }
     .overlay {
-      background: $grid-red;
+      .left {
+        background: darken($grid-red, $dark-amount);
+      }
+      .right {
+        background: $grid-red;
+      }
     }
   }
   .grey {
@@ -207,7 +214,12 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       background: $grey-noise;
     }
     .overlay {
-      background: $grid-grey;
+      .left {
+        background: darken($grid-grey, $dark-amount);
+      }
+      .right {
+        background: $grid-grey;
+      }
     }
   }
   .sand {
@@ -215,7 +227,12 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       background: $sand-noise
     }
     .overlay {
-      background: $grid-sand;
+      .left {
+        background: darken($grid-sand, $dark-amount);
+      }
+      .right {
+        background: $grid-sand;
+      }
     }
   }
   .light-blue {
@@ -223,7 +240,12 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       background: $light-blue-noise
     }
     .overlay {
-      background: $grid-light-blue;
+      .left {
+        background: darken($grid-light-blue, $dark-amount);
+      }
+      .right {
+        background: $grid-light-blue;
+      }
     }
   }
   .dark-blue {
@@ -231,7 +253,12 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       background: $dark-blue-noise;
     }
     .overlay {
-      background: $grid-dark-blue;
+      .left {
+        background: darken($grid-dark-blue, $dark-amount);
+      }
+      .right {
+        background: $grid-dark-blue;
+      }
     }
   }
 
