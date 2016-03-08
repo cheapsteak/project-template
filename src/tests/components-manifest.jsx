@@ -17,4 +17,5 @@ export default {
   'grid-layout-1060': require('./grid/grid-1060.jsx'),
   'grid-layout-1230': require('./grid/grid-1230.jsx'),
   'grid-layout-1400': require('./grid/grid-1400.jsx'),
+  'grid-layout-1570': require('./grid/grid-1570.jsx'),
 };

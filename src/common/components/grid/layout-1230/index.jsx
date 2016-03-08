@@ -3,8 +3,6 @@ import { findDOMNode } from 'react-dom';
 import GridBase from '../grid.jsx';
 import GridTile from '../grid-tile/grid-tile';
 
-const gridItemsMargin = 20;
-
 export default class Layout1230 extends GridBase {
 
   state = {
@@ -15,9 +13,9 @@ export default class Layout1230 extends GridBase {
 
   calculateSizes = () => {
     const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth * (3 / 7) - gridItemsMargin / 2;
-    const oneThirdHeight = containerWidth / 7 - gridItemsMargin * (3 / 4);
-    const twoThirdHeight = containerWidth / 3.5 - gridItemsMargin * (3 / 4);
+    const baseHeight = containerWidth * (3 / 7) - 10;
+    const oneThirdHeight = containerWidth / 7 - 15;
+    const twoThirdHeight = containerWidth / 3.5 - 15;
 
     this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
     //console.log('calculateSizes: Grid-1230');

@@ -30,6 +30,7 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   width: 100%;
   opacity: 0;
   visibility: hidden;
+  user-select: none;
 
   &.ready {
     opacity: 1;

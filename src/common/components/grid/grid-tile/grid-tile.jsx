@@ -36,7 +36,7 @@ export default class GridTile extends React.Component {
   animateIn = (index, fillers) => {
     animate.set(fillers, {autoAlpha: 0});
     animate.fromTo(this.containerEl, 0.8, {autoAlpha: 0}, {autoAlpha: 1, delay: 0.15 * index + 0.1});
-    animate.staggerTo(fillers, 0.5, {autoAlpha: 1, delay: 0.4}, 0.1)
+    animate.staggerTo(fillers, 0.8, {autoAlpha: 1, delay: 0.4}, 0.1)
   };
 
   render() {
