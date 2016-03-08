@@ -9,6 +9,9 @@ $grid-light-blue: #4f91b1;
 $grid-dark-blue: #131f2f;
 
 $grid-item-offset: 20px;
+
+$quarter-size: calc(100% / 4 - 15px);
+
 $half-size: calc(50% - #{$grid-item-offset/2});
 $half-size-less-10: calc(50% - #{$grid-item-offset/2});
 
@@ -124,6 +127,10 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       height: $two-third-size-extra-5;
     }
 
+    .nested-bar-width-100-height-25 {
+      width: 100%;
+      height: $quarter-size;
+    }
     .nested-bar-width-33-height-66 {
       width: $one-third-size-extra-10;
       height: $two-third-size-extra-10;
