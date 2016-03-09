@@ -3,10 +3,10 @@
 .grid.layout-890 {
 
   .width-2 {
-    width: 40%;
+    width: calc(40% - 10px);
   }
 
   .width-3 {
-    width: 60%;
+    width: calc(60% - 10px);
   }
 }
