@@ -40,17 +40,23 @@ export default class Chapter extends React.Component {
   render () {
     const { pathname } = this.props.location;
     const key = pathname.split('/')[3] || 'root';
+    const videoStyle = {
+      width: '700px',
+      height: '400px'
+    }
 
     return (
-      <div>
-        <div style={{ marginLeft: '200px', width: '50%'}}>
+      <div style={{ overflow: 'scroll', height: '100%'}}>
+        <div style={{ marginLeft: '100px', width: '50%', padding: '100px 0'}}>
           <VideoPlayer
             id="target-video"
             ref='video'
+            style={videoStyle}
             basePath={`${pathname}`}
             modelSlug="test"
             shouldHideInTheBack={true}
           />
+          <br/><br/><br/><br/><br/><br/>
           <PhotoEssay
             ref='photoessay'
             basePath={`${pathname}`}
