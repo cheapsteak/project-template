@@ -1,5 +1,7 @@
 'use strict';
 require('babel-polyfill');
+require('scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js');
+require('scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js');
 require('./globals.js');
 import stats from 'common/utils/stats';
 import detect from 'common/utils/detect';
