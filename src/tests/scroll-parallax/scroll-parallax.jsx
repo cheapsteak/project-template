@@ -38,24 +38,25 @@ export default class ScrollParallax extends React.Component {
 
       TweenMax.set(el, {
         opacity: 0,
-        //y: 100
+        // y: 100
       });
       const scene = new ScrollMagic.Scene({
         triggerHook: 'onEnter',
         triggerElement: el,
-        duration: window.innerHeight
+        duration: window.innerHeight,
       })
 
       scene.on('enter', (e) => {
         // TweenMax.to(el, 1, {
         //   opacity: 1,
-        //   //y: 0
+        //   y: 0
         // });
       })
       scene.on('leave', (e) => {
         //console.log('leave');
       })
 
+      // have things move at different speeds
       const seed = Math.random();
       scene.on('progress', (e) => {
         el.setAttribute('data-progress', e.progress);
