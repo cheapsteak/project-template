@@ -26,6 +26,10 @@ export default class ScrollParallax extends React.Component {
       return min + (max - min) * progress;
     };
 
+    const getOpacity = function (progress) {
+      return Math.min(3 * progress, 1);
+    };
+
     const scrollScenes = Array.from(el.querySelectorAll('[data-parallax-scroll]')).map((el, i) => {
 
       if (i === 10)  {
@@ -43,10 +47,10 @@ export default class ScrollParallax extends React.Component {
       })
 
       scene.on('enter', (e) => {
-        TweenMax.to(el, 0.5, {
-          opacity: 1,
-          //y: 0
-        });
+        // TweenMax.to(el, 1, {
+        //   opacity: 1,
+        //   //y: 0
+        // });
       })
       scene.on('leave', (e) => {
         //console.log('leave');
@@ -54,8 +58,13 @@ export default class ScrollParallax extends React.Component {
 
       const seed = Math.random();
       scene.on('progress', (e) => {
-        el.setAttribute('data-debug-y', getY(e.progress));
-        TweenMax.to(el, 0.1, {y: seed*seed * getY(e.progress)})
+        el.setAttribute('data-progress', e.progress);
+        // el.setAttribute('data-debug-y', getY(e.progress));
+        el.setAttribute('data-debug-opacity', getOpacity(e.progress));
+        TweenMax.to(el, 0.1, {
+          y: seed*seed * getY(e.progress),
+          opacity: getOpacity(e.progress),
+        })
       })
 
       //scene.addTo(scrollController);
