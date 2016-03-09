@@ -42,6 +42,7 @@ $size-66: calc(100% * 2 / 3);
 $size-66-less-5: calc(100% * 2 / 3 - 5px);
 $size-66-less-10: calc(100% * 2 / 3 - 10px);
 $size-66-less-15: calc(100% * 2 / 3 - 15px);
+$size-66-less-20: calc(100% * 2 / 3 - 20px);
 
 $size-100: 100%;
 $size-100-less-5: calc(100% - 5px);
@@ -145,6 +146,9 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     }
     .width-66-less-15 {
       width: $size-66-less-15;
+    }
+    .width-66-less-20 {
+      width: $size-66-less-20;
     }
 
     .width-100 {
