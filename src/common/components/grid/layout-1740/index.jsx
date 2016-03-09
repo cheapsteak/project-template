@@ -38,10 +38,10 @@ export default class Layout1740 extends GridBase {
         </div>
 
         <div className={`grid-item first-row width-3 left-margin`} style={{height: twoThird}}>
-          <div className={`filler width-66-less-5 height-50 red`}></div>
-          <div className={`filler width-33-less-15 height-50 left-margin light-blue`}></div>
-          <div className={`filler width-33-less-15 height-50 top-margin sand`}></div>
-          <div className={`filler width-66-less-5 height-50 top-margin left-margin dark-blue`}></div>
+          <div className={`filler width-66-less-5 height-50-less-10 red`}></div>
+          <div className={`filler width-33-less-15 height-50-less-10 left-margin light-blue`}></div>
+          <div className={`filler width-33-less-15 height-50-less-10 top-margin sand`}></div>
+          <div className={`filler width-66-less-5 height-50-less-10 top-margin left-margin dark-blue`}></div>
         </div>
 
         <div className={`grid-item first-row width-4 left-margin sand`} style={{height: fourParts}}>
