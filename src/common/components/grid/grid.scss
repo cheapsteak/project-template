@@ -10,19 +10,6 @@ $grid-dark-blue: #131f2f;
 
 $grid-item-offset: 20px;
 
-$quarter-size: calc(100% / 4 - 15px);
-
-$half-size: calc(50% - #{$grid-item-offset/2});
-$half-size-less-10: calc(50% - #{$grid-item-offset/2});
-
-$one-third-size: calc(100% / 3 - #{$grid-item-offset});
-$one-third-size-extra-5: calc(100% / 3 - 15px);
-$one-third-size-extra-10: calc(100% / 3 - #{$grid-item-offset/2});
-
-$two-third-size: calc(100% * 2 / 3 - #{$grid-item-offset});
-$two-third-size-extra-5: calc(100% * 2 / 3 - 5px);
-$two-third-size-extra-10: calc(100% * 2 / 3 - #{$grid-item-offset/2});
-
 $size-25: calc(100% / 4);
 $size-25-less-5: calc(100% / 4 - 5px);
 $size-25-less-10: calc(100% / 4 - 10px);
@@ -67,13 +54,6 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     transition: opacity 0.3s;
   }
 
-  // ------- sizes
-  .width-full {
-    width: 100%;
-  }
-  .height-full {
-    height: 100%;
-  }
   .full-size {
     width: $size-100;
     height: $size-100;
@@ -220,111 +200,6 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
       height: $size-100-less-15;
     }
 
-    .nested-cube-33 {
-      width: $half-size;
-      height: $one-third-size;
-    }
-    .nested-cube-33-height-100 {
-      width: $one-third-size-extra-5;
-      height: 100%;
-    }
-    .nested-cube-width-33-height-33 {
-      width: $one-third-size-extra-10;
-      height: $one-third-size-extra-10;
-    }
-    .nested-cube-33-height-extra-10 {
-      width: $half-size;
-      height: $one-third-size-extra-10;
-    }
-    .nested-cube-33-width-extra-10 {
-      width: $one-third-size-extra-10;
-      height: $half-size;
-    }
-    .nested-cube-50 {
-      width: $half-size;
-      height: $half-size;
-    }
-    .nested-cube-50-height-100 {
-      width: $half-size;
-      height: 100%;
-    }
-    .nested-cube-height-33 {
-      width: 100%;
-      height: $one-third-size-extra-5;
-    }
-    .nested-cube-height-66 {
-      width: 100%;
-      height: $two-third-size;
-    }
-    .nested-cube-width-66 {
-      width: $two-third-size;
-      height: 100%;
-    }
-    .nested-cube-width-66-extra-10 {
-      width: $two-third-size-extra-10;
-      height: 100%;
-    }
-    .nested-cube-width-100-height-33 {
-      width: 100%;
-      height: $one-third-size-extra-5;
-    }
-    .nested-cube-width-100-height-50 {
-      width: 100%;
-      height: $half-size-less-10;
-    }
-    .nested-cube-width-100-height-66 {
-      width: 100%;
-      height: $two-third-size-extra-5;
-    }
-
-    .nested-bar-width-100-height-25 {
-      width: 100%;
-      height: $quarter-size;
-    }
-    .nested-bar-width-33-height-66 {
-      width: $one-third-size-extra-10;
-      height: $two-third-size-extra-10;
-    }
-    .nested-bar-width-33-height-100 {
-      width: calc(100% / 3);
-      height: 100%;
-    }
-    .nested-bar-width-33-height-100-less-10 {
-      width: $one-third-size-extra-10;
-      height: 100%;
-    }
-    .nested-bar-width-33-height-100-less-5 {
-      width: $one-third-size-extra-10;
-      height: 100%;
-    }
-    .nested-bar-width-50-height-66 {
-      width: $half-size;
-      height: $two-third-size;
-    }
-    .nested-bar-width-66-height-100 {
-      width: $two-third-size-extra-10;
-      height: 100%;
-    }
-    .nested-bar-width-66-height-100-extra-5 {
-      width: $two-third-size-extra-5;
-      height: 100%;
-    }
-    .nested-bar-width-100-height-33 {
-      width: 100%;
-      height: calc(100% / 3);
-    }
-    .nested-bar-width-100-height-33-less-10 {
-      width: 100%;
-      height: $one-third-size-extra-5;
-    }
-    .nested-bar-width-100-height-50 {
-      width: 100%;
-      height: $half-size;
-    }
-    .nested-bar-width-100-height-66 {
-      width: 100%;
-      height: $two-third-size-extra-5;
-    }
   }
 
   // ------- offsets

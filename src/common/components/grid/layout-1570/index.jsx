@@ -111,7 +111,7 @@ export default class Layout1570 extends GridBase {
             <div className={`width-100 top-margin dark-blue`} style={{height: two, float: 'left'}}>
               <GridTile
                 ref="tile7"
-                chapter={`math`}
+                chapter={`investment`}
               />
             </div>
           </div>

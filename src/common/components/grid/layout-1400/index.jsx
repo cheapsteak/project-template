@@ -98,7 +98,7 @@ export default class Layout1400 extends GridBase {
             <div className={`filler width-100 height-66-less-5 dark-blue`}></div>
             <div className={`filler width-100 height-33-less-10 top-margin sand`}></div>
           </div>
-          <div className={`width-22 height-full light-blue`}>
+          <div className={`width-22 height-100 light-blue`}>
             <GridTile
               ref="tile7"
               chapter={`history`}
