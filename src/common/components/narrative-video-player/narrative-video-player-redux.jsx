@@ -11,7 +11,6 @@ class NarrativeVideoPlayerRedux extends React.Component {
   constructor(props) {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
-    window.bad = this.boundActionCreators;
   }
 
   render () {

@@ -4,6 +4,7 @@ import BackButtonSvg from '../../../assets/photo-essay-prev-button.svg';
 import NextButtonSvg from '../../../assets/photo-essay-next-button.svg';
 import FullscreenButtonSvg from '../../../assets/photo-essay-fullscreen-button.svg';
 import { Link } from 'react-router';
+import animate from 'gsap-promise';
 
 class PhotoEssay extends React.Component {
   constructor(props) {
@@ -16,10 +17,6 @@ class PhotoEssay extends React.Component {
 
   handleNextClick = () => {
     this.props.onNextClick();
-  };
-
-  handleFullBrowserClick = () => {
-    // this.props.onFullBrowserClick();
   };
 
   render () {

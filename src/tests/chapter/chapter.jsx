@@ -40,18 +40,23 @@ export default class Chapter extends React.Component {
   render () {
     const { pathname } = this.props.location;
     const key = pathname.split('/')[3] || 'root';
-
-    console.log(this.state.target);
-        
+    const videoStyle = {
+      width: '700px',
+      height: '400px'
+    }
 
     return (
-      <div>
-        <div style={{ marginLeft: '200px', width: '50%'}}>
+      <div style={{ overflow: 'scroll', height: '100%'}}>
+        <div style={{ marginLeft: '100px', width: '50%', padding: '100px 0'}}>
           <VideoPlayer
+            id="target-video"
             ref='video'
+            style={videoStyle}
             basePath={`${pathname}`}
             modelSlug="test"
+            shouldHideInTheBack={true}
           />
+          <br/><br/><br/><br/><br/><br/>
           <PhotoEssay
             ref='photoessay'
             basePath={`${pathname}`}
@@ -63,7 +68,7 @@ export default class Chapter extends React.Component {
           className="route-content-wrapper"
           data-route={pathname}
         >
-          { React.cloneElement(this.props.children || <div />, { key: key, target: this.state.target, isFullBrowser: true }) }
+          { React.cloneElement(this.props.children || <div />, { key: key, target: this.state.target }) }
         </TransitionGroup>
       </div>
     )
