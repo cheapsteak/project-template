@@ -10,7 +10,7 @@ var Parallax = function (scene, opts) {
     mouseProximityMode: false, // useful for grid items etc. when required individual behaviour of each piece in the scene scope
     limitX: 50,
     limitY: 50,
-    duration: 3,
+    duration: 2,
     easing: Expo.easeOut
   };
   opts = Object.assign(defaults, opts);
