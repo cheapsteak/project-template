@@ -6,14 +6,6 @@ import FullBrowserButtonSvg from '../../../assets/photo-essay-fullscreen-button.
 import { Link } from 'react-router';
 
 export default class InstructionalVideoPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isPlaying: false
-    };
-  }
-
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
@@ -70,7 +62,6 @@ export default class InstructionalVideoPlayer extends React.Component {
 
   handleTimeUpdate = () => {
     this.props.onVideoTimeChange(this.video.currentTime);
-    this.setState({time: this.video.currentTime});
   };
 
   handleVideoPlayPause = () => {

@@ -19,14 +19,17 @@ function videos(state = {}, action) {
       if (!action.id) return state;
 
       return Object.assign({}, state, { [action.id]: Object.assign({ currentTime: action.time || 0 }, action.data) });
+
     case SET_INSTRUCTIONAL_VIDEO_TIME:
       if (!action.id || typeof action.time !== 'number') return state;
 
       return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { currentTime: action.time }) });
+
     case SET_INSTRUCTIONAL_VIDEO_DURATION:
       if (!action.id || typeof action.time !== 'number') return state;
 
       return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { duration: action.time }) });
+
     default:
       return state;
   }
