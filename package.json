@@ -23,7 +23,7 @@
     "fastclick": "^1.0.6",
     "gsap-promise": "^1.4.1",
     "history": "^2.0.0",
-    "packery": "git+https://github.com/namniak/packery.git",
+    "packery": "github:namniak/packery.git",
     "photo-sphere-viewer": "github:namniak/Photo-Sphere-Viewer",
     "raf": "^3.2.0",
     "react": "^0.14.7",
