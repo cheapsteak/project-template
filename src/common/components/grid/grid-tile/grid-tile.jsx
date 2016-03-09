@@ -23,6 +23,10 @@ export default class GridTile extends React.Component {
     size: sizes.LANDSCAPE
   };
 
+  static contextTypes = {
+    eventBus: React.PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
@@ -32,6 +36,14 @@ export default class GridTile extends React.Component {
       this.setState({data, size});
     });
   }
+
+  handleMouseEnter = () => {
+    this.context.eventBus.emit('mouseEnterTile', this);
+  };
+
+  handleMouseLeave = () => {
+    this.context.eventBus.emit('mouseLeaveTile', this);
+  };
 
   animateIn = (index, fillers) => {
     animate.set(fillers, {autoAlpha: 0});
@@ -45,7 +57,11 @@ export default class GridTile extends React.Component {
     const imageDepth = 0.8;
 
     return (
-      <div className={`grid-tile`}>
+      <div
+        className={`grid-tile`}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
+      >
         <div className={`parallax-layer bg`} data-depth={bgDepth} data-vector={`0.4,0.5`}>
           <div className={`noise`}></div>
         </div>
