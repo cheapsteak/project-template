@@ -9,7 +9,7 @@ export default class App extends React.Component {
 
     return <TransitionGroup
       component="div"
-      className="route-content-wrapper"
+      className="route-content-wrapper full-height"
       data-route={pathname}
     >
       {React.cloneElement(this.props.children || <div />, { key: key })}
