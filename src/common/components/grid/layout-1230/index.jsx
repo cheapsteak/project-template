@@ -3,8 +3,6 @@ import { findDOMNode } from 'react-dom';
 import GridBase from '../grid.jsx';
 import GridTile from '../grid-tile/grid-tile';
 
-const gridItemsMargin = 20;
-
 export default class Layout1230 extends GridBase {
 
   state = {
@@ -15,28 +13,28 @@ export default class Layout1230 extends GridBase {
 
   calculateSizes = () => {
     const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth * (3 / 7) - gridItemsMargin / 2;
-    const oneThirdHeight = containerWidth / 7 - gridItemsMargin * (3 / 4);
-    const twoThirdHeight = containerWidth / 3.5 - gridItemsMargin * (3 / 4);
+    const baseHeight = containerWidth * (3 / 7) - 10;
+    const oneThirdHeight = containerWidth / 7 - 15;
+    const twoThirdHeight = containerWidth / 3.5 - 15;
 
     this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
     //console.log('calculateSizes: Grid-1230');
   };
 
   render() {
-    const baseHeight = this.state.baseHeight;
-    const oneThird = this.state.oneThirdHeight;
-    const twoThird = this.state.twoThirdHeight;
+    const one = this.state.oneThirdHeight;
+    const two = this.state.twoThirdHeight;
+    const three = this.state.baseHeight;
 
     return (
       <div className={`grid layout-1230 ${this.state.status}`}>
 
-        <div className={`grid-item first-row width-3`} style={{height: twoThird}}>
-          <div className={`width-11 right-padding`} style={{height: twoThird}}>
-            <div className={`filler nested-cube-width-100-height-50 light-blue`}></div>
-            <div className={`filler nested-cube-width-100-height-50 top-margin sand`}></div>
+        <div className={`grid-item first-row width-3`} style={{height: two}}>
+          <div className={`width-11 right-padding`} style={{height: two}}>
+            <div className={`filler width-100 height-50-less-10 light-blue`}></div>
+            <div className={`filler width-100 height-50-less-10 top-margin sand`}></div>
           </div>
-          <div className={`nested-cube-width-66 grey`}>
+          <div className={`width-66-less-20 height-100 grey`}>
             <GridTile
               ref="tile0"
               chapter={`welcome`}
@@ -44,12 +42,12 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item first-row width-1`} style={{height: baseHeight}}>
-          <div className={`filler nested-cube-width-100-height-33 dark-blue`}></div>
-          <div className={`filler nested-bar-width-100-height-66 top-margin red`}></div>
+        <div className={`grid-item first-row width-1`} style={{height: three}}>
+          <div className={`filler width-100 height-33-less-10 dark-blue`}></div>
+          <div className={`filler width-100 height-66-less-10 top-margin red`}></div>
         </div>
 
-        <div className={`grid-item first-row width-3 left-padding sand`} style={{height: baseHeight}}>
+        <div className={`grid-item first-row width-3 left-padding sand`} style={{height: three}}>
           <div className={`full-size`}>
             <GridTile
               ref="tile1"
@@ -58,7 +56,7 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-3 right-padding light-blue`} style={{height: twoThird}}>
+        <div className={`grid-item width-3 right-padding light-blue`} style={{height: two}}>
           <div className={`full-size`}>
             <GridTile
               ref="tile2"
@@ -67,7 +65,7 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-3 right-padding dark-blue`} style={{height: twoThird}}>
+        <div className={`grid-item width-3 right-padding dark-blue`} style={{height: two}}>
           <div className={`full-size`}>
             <GridTile
               ref="tile3"
@@ -76,11 +74,11 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-1`} style={{height: twoThird}}>
+        <div className={`grid-item width-1`} style={{height: two}}>
           <div className={`filler full-size light-blue`}></div>
         </div>
 
-        <div className={`grid-item width-3 right-padding grey`} style={{height: baseHeight}}>
+        <div className={`grid-item width-3 right-padding grey`} style={{height: three}}>
           <div className={`full-size`}>
             <GridTile
               ref="tile4"
@@ -89,11 +87,11 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-1`} style={{height: twoThird+1}}>
+        <div className={`grid-item width-1`} style={{height: two+1}}>
           <div className={`filler full-size sand`}></div>
         </div>
 
-        <div className={`grid-item width-3 light-blue`} style={{height: baseHeight}}>
+        <div className={`grid-item width-3 light-blue`} style={{height: three}}>
           <div className={`full-size left-padding`}>
             <GridTile
               ref="tile5"
@@ -102,7 +100,7 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-2 sand`} style={{height: twoThird}}>
+        <div className={`grid-item width-2 sand`} style={{height: two}}>
           <div className={`full-size`}>
             <GridTile
               ref="tile6"
@@ -111,10 +109,10 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-2 left-margin`} style={{height: baseHeight-6}}>
-          <div className={`filler nested-cube-33-height-extra-10 dark-blue`}></div>
-          <div className={`filler nested-cube-33-height-extra-10 left-margin grey`}></div>
-          <div className={`nested-cube-width-100-height-66 top-margin grey`}>
+        <div className={`grid-item width-2 left-margin`} style={{height: three-6}}>
+          <div className={`filler width-50-less-10 height-33-less-10 dark-blue`}></div>
+          <div className={`filler width-50-less-10 height-33-less-10 left-margin grey`}></div>
+          <div className={`width-100 height-66-less-5 top-margin grey`}>
             <GridTile
               ref="tile7"
               chapter={`development`}
@@ -122,26 +120,26 @@ export default class Layout1230 extends GridBase {
           </div>
         </div>
 
-        <div className={`grid-item width-3 left-padding`} style={{height: baseHeight}}>
-          <div className={`nested-bar-width-66-height-100 red`}>
+        <div className={`grid-item width-3 left-padding`} style={{height: three}}>
+          <div className={`width-66-less-10 height-100 red`}>
             <GridTile
               ref="tile8"
               chapter={`history`}
             />
           </div>
-          <div className={`filler nested-bar-width-33-height-66 left-margin sand`}></div>
-          <div className={`filler nested-cube-width-33-height-33 top-margin left-margin grey`}></div>
+          <div className={`filler width-33-less-10 height-66 left-margin sand`}></div>
+          <div className={`filler width-33-less-10 height-33 top-margin left-margin grey`}></div>
         </div>
 
-        <div className={`grid-item width-2`} style={{height: twoThird+5}}>
-          <div className={`filler nested-cube-50 light-blue`}></div>
-          <div className={`filler nested-cube-50 left-margin dark-blue`}></div>
-          <div className={`filler nested-bar-width-100-height-50 top-margin red`}></div>
+        <div className={`grid-item width-2`} style={{height: two+5}}>
+          <div className={`filler width-50-less-10 height-50-less-10 light-blue`}></div>
+          <div className={`filler width-50-less-10 height-50-less-10 left-margin dark-blue`}></div>
+          <div className={`filler width-100 height-50-less-10 top-margin red`}></div>
         </div>
 
-        <div className={`grid-item width-2 left-margin`} style={{height: oneThird, marginTop: 25}}>
-          <div className={`filler nested-cube-50-height-100 dark-blue`}></div>
-          <div className={`filler nested-cube-50-height-100 left-margin light-blue`}></div>
+        <div className={`grid-item width-2 left-margin`} style={{height: one, marginTop: 25}}>
+          <div className={`filler width-50-less-10 height-100 dark-blue`}></div>
+          <div className={`filler width-50-less-10 height-100 left-margin light-blue`}></div>
         </div>
 
       </div>
