@@ -7,17 +7,14 @@ import ForwardButtonSvg from '../../../assets/video-forward-button.svg';
 import animate from 'gsap-promise';
 
 export default class NarrativeVideoPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.hideControlsTimeoutId = undefined;
-  }
 
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
+
+  hideControlsTimeoutId = undefined;
 
   componentWillReceiveProps(nextProps) {
     if(this.props.isFullControls !== nextProps.isFullControls) {
@@ -32,7 +29,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   componentDidMount() {
     const el = findDOMNode(this);
     const { overlay, controls, exploreBtn } = this.refs;
-    animate.set(el, { padding: 0 });
+
     animate.set(exploreBtn, { x: -1, y: -51, transformOrigin: '0 0' });
     animate.set(overlay, { opacity: 0 });
     animate.set(controls, { bottom: -74 });
@@ -40,8 +37,21 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.props.isPlaying && this.video.play();
 
     if(!this.props.isPlaying) {
-      this.hideControlsTimeoutId = setTimeout(this.props.showFullControls, 300);
+      if(!this.props.isFullControls) {
+        this.props.showFullControls();
+      } else {
+
+        // Potential Issue: When video is not loaded yet, the timeline dots will not appear yet.
+        // This can cause the dots to appear instantly during the animate in (instead of the 
+        // staggered animation)
+        this.animateInControls();
+      }
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
   }
 
   changeVideoTime = (time) => {
@@ -69,6 +79,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     const buttons = Array.prototype.slice.call(el.querySelectorAll('.button'));
     const dots = el.querySelectorAll('.dot');
+    console.log(dots);
         
     const zoomedInRect = el.getBoundingClientRect();
     const zoomedOutVideoMargin = 37;
@@ -118,7 +129,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   handleMetadataLoaded = () => {
-    this.setState({isVideoLoaded: true});
     this.video.currentTime = this.props.currentTime;
   };
 
