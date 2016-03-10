@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
 
+const EventEmitter = require('events').EventEmitter;
+const vent = new EventEmitter();
+
 class ManifestMenu extends React.Component {
   state = {
     isOpen: true
@@ -43,16 +46,28 @@ class ManifestMenu extends React.Component {
   }
 }
 
-export default function (props) {
-  const { pathname } = props.location;
-  const key = pathname.split('/')[2] || 'root';
-  const isIndexPage = key === 'root';
+export default class Tests extends React.Component {
+  static childContextTypes = {
+    eventBus: React.PropTypes.object.isRequired
+  };
 
-  return <div className="tests-container">
-    { isIndexPage && <ManifestMenu
-          manifest={componentsManifest}
-          isIndexPage={!isIndexPage}
-        />}
-    {React.cloneElement(props.children || <div />, { key: key })}
-  </div>;
+  getChildContext() {
+    return {
+      eventBus: vent
+    };
+  }
+  render () {
+    const props = this.props;
+    const { pathname } = props.location;
+    const key = pathname.split('/')[2] || 'root';
+    const isIndexPage = key === 'root';
+
+    return <div className="tests-container">
+      { isIndexPage && <ManifestMenu
+        manifest={componentsManifest}
+        isIndexPage={!isIndexPage}
+      />}
+      {React.cloneElement(props.children || <div />, {key: key})}
+    </div>;
+  }
 }

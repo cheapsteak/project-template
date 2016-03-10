@@ -1,28 +1,30 @@
 export default {
   currentTime: 0,
-  src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4',
+  isPlaying: false,
+  isFullControls: false,
+  src: '/videos/fg-1080-1.mp4',
   timeline: [
     {
       id: 'chapter 1',
-      time: 1,
-      img: '/hover-card.jpg',
-      route: '/tests'
-    },
-    {
-      id: 'chapter 1.2',
       time: 2,
       img: '/hover-card.jpg',
       route: '/tests'
     },
     {
+      id: 'chapter 1.2',
+      time: 4,
+      img: '/hover-card.jpg',
+      route: '/tests'
+    },
+    {
       id: 'chapter 2',
-      time: 3,
+      time: 6,
       img: '/hover-card.jpg',
       route: '/tests'
     },
     {
       id: 'chapter 3',
-      time: 4,
+      time: 8,
       img: '/hover-card.jpg',
       route: '/tests'
     },

@@ -19,24 +19,41 @@ export default class GridManager extends React.Component {
 
   timer = null;
 
+  static contextTypes = {
+    eventBus: React.PropTypes.object.isRequired
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.prevGrid = this.refs.grid;
 
     this.parallax = Parallax(this.refs.scene, {
       mouseProximityMode: true,
-      limitX: 40,
-      limitY: 40
+      limitX: 70,
+      limitY: 70
     });
 
     this.containerEl.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleWindowResize);
+
+    this.context.eventBus.on('mouseEnterTile', this.handleMouseEnterTile);
+    this.context.eventBus.on('mouseLeaveTile', this.handleMouseLeaveTile);
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
+    this.context.eventBus.off('mouseOverTile', this.handleMouseEnterTile);
+    this.context.eventBus.off('mouseOutTile', this.handleMouseLeaveTile);
     this.parallax.destroy();
   }
+
+  handleMouseEnterTile = (tileComponent) => {
+    this.parallax.disableLayers(tileComponent.containerEl.querySelectorAll('.parallax-layer'));
+  };
+
+  handleMouseLeaveTile = (tileComponent) => {
+    this.parallax.enableLayers(tileComponent.containerEl.querySelectorAll('.parallax-layer'));
+  };
 
   handleScroll = () => {
     this.parallax.disable();
