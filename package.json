@@ -9,7 +9,7 @@
   "scripts": {
     "build": "gulp build",
     "build:production": "NODE_ENV=production npm run build",
-    "start": "BABEL_ENV=development gulp",
+    "start": "linklocal && BABEL_ENV=development gulp",
     "postinstall": "linklocal",
     "release": "npm run build:production",
     "deploy:dev": "npm run build:production && rsync -rPz build/ ubuntu@???.jam3.net:/var/www/html/"
