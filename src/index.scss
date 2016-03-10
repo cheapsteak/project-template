@@ -13,6 +13,10 @@ body {
   height: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
 @import 'common/styles/reset';
 @import 'common/styles/vars';
 @import 'common/styles/globals';
@@ -38,3 +42,4 @@ body {
 @import 'common/components/grid/layout-1570/index';
 @import 'common/components/grid/layout-1740/index';
 @import 'common/components/grid/layout-1920/index';
+@import 'chapter/chapter.scss';
