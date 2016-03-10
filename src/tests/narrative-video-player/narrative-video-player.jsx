@@ -6,7 +6,6 @@ export default function () {
     <VideoPlayer
       modelSlug="test"
       basePath=""
-      style={{ width: '700px', marginTop: '50px' }}
     />
   </div>
 }

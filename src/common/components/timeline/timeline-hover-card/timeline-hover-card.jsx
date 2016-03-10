@@ -46,7 +46,8 @@ export default class TimelineHoverCard extends React.Component {
     const { style, src, route } = this.props; 
     return (
         <div
-          className="timeline-hover-card" style={style}
+          className="timeline-hover-card"
+          style={style}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           onClick={this.handleClick}
