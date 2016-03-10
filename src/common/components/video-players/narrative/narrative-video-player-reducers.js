@@ -6,7 +6,7 @@ import {
   HIDE_NARRATIVE_VIDEO_FULL_CONTROLS
 } from './narrative-video-player-actions.js';
 
-import dataModel from '../../data/narrative-video.js';
+import dataModel from '../../../data/narrative-video.js';
 
 function videos(state = dataModel, action) {
   switch (action.type) {

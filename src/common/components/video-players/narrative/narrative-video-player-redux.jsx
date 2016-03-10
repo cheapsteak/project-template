@@ -4,7 +4,7 @@ import NarrativeVideoPlayer from './narrative-video-player.jsx'
 import * as actionCreators from './narrative-video-player-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import store from '../../store.js';
+import store from '../../../store.js';
 import _ from 'lodash';
 
 @connect(state => ({ video: state.narrativeVideo}) )

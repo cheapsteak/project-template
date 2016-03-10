@@ -1,11 +1,11 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from '../../../assets/video-play-button.svg';
-import FullBrowserButtonSvg from '../../../assets/photo-essay-fullscreen-button.svg';
+import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
+import FullBrowserButtonSvg from '../../../../../assets/photo-essay-fullscreen-button.svg';
 import { Link } from 'react-router';
 
-export default class InstructionalVideoPlayer extends React.Component {
+export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,

@@ -1,14 +1,14 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import InstructionalVideoPlayer from './instructional-video-player.jsx'
-import * as actionCreators from './instructional-video-player-actions.js';
+import GridVideoPlayer from './grid-video-player.jsx'
+import * as actionCreators from '../instructional-video-player-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import store from '../../store.js';
+import store from '../../../store.js';
 import _ from 'lodash';
 
 @connect(state => ({ videos: state.instructionalVideos}), null, null, { withRef: true })
-class InstructionalVideoPlayerRedux extends React.Component {
+class GridVideoPlayerRedux extends React.Component {
   constructor(props) {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
@@ -21,7 +21,7 @@ class InstructionalVideoPlayerRedux extends React.Component {
   render () {
     const { videos, modelSlug } = this.props;
     
-    return <InstructionalVideoPlayer
+    return <ChapterVideoPlayer
       ref="wrappedInstance"
       onVideoTimeChange={_.partial(this.boundActionCreators.setVideoTime, modelSlug)}
       onVideoPlay={_.partial(this.boundActionCreators.playVideo, modelSlug)}
@@ -33,4 +33,4 @@ class InstructionalVideoPlayerRedux extends React.Component {
   }
 }
 
-export default InstructionalVideoPlayerRedux;
+export default GridVideoPlayerRedux;

@@ -1,9 +1,9 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from '../../../assets/video-play-button.svg';
-import BackButtonSvg from '../../../assets/video-back-button.svg';
-import ForwardButtonSvg from '../../../assets/video-forward-button.svg';
+import PlayButtonSvg from '../../../../assets/video-play-button.svg';
+import BackButtonSvg from '../../../../assets/video-back-button.svg';
+import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
 import animate from 'gsap-promise';
 
 export default class NarrativeVideoPlayer extends React.Component {
@@ -79,8 +79,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     const buttons = Array.prototype.slice.call(el.querySelectorAll('.button'));
     const dots = el.querySelectorAll('.dot');
-    console.log(dots);
-        
+
     const zoomedInRect = el.getBoundingClientRect();
     const zoomedOutVideoMargin = 37;
     const zoomedOutRect = {
