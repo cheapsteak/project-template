@@ -5,6 +5,7 @@ import PlayButtonSvg from '../../../../assets/video-play-button.svg';
 import BackButtonSvg from '../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
 import animate from 'gsap-promise';
+import _ from 'lodash';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -30,7 +31,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const el = findDOMNode(this);
     const { overlay, controls, exploreBtn } = this.refs;
 
-    animate.set(exploreBtn, { x: -1, y: -51, transformOrigin: '0 0' });
+    animate.set(exploreBtn, { y: -51 });
     animate.set(overlay, { opacity: 0 });
     animate.set(controls, { bottom: -74 });
 
@@ -81,7 +82,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const dots = el.querySelectorAll('.dot');
 
     const zoomedInRect = el.getBoundingClientRect();
-    const zoomedOutVideoMargin = 37;
+    const zoomedOutVideoMargin = 40;
     const zoomedOutRect = {
       width: zoomedInRect.width - zoomedOutVideoMargin * 2,
       height: zoomedInRect.height - zoomedOutVideoMargin * 2
@@ -148,11 +149,21 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handlePrevClick = (e) => {
+    const currentTime = this.props.currentTime;
+    const times = this.props.timeline.map(point => point.time).reverse();
+    const newTime =  _.find(times, (time) => time < currentTime) || 0;
 
+    this.video.currentTime = newTime;
   };
 
   handleNextClick = (e) => {
+    const currentTime = this.video.currentTime;
+    const times = this.props.timeline.map(point => point.time);
 
+    // newTime === video.duration will cause a replay
+    const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001; 
+
+    this.video.currentTime = newTime;
   };
 
   handleMouseEnterControls = (e) => {
