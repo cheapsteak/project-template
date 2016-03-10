@@ -2,6 +2,7 @@ var Tween = require('gsap');
 
 var Parallax = function (scene, opts) {
   var layers;
+  var layersObjArray = [];
   var currLayer;
 
   var defaults = {
@@ -9,7 +10,7 @@ var Parallax = function (scene, opts) {
     mouseProximityMode: false, // useful for grid items etc. when required individual behaviour of each piece in the scene scope
     limitX: 50,
     limitY: 50,
-    duration: 3,
+    duration: 2,
     easing: Expo.easeOut
   };
   opts = Object.assign(defaults, opts);
@@ -55,7 +56,7 @@ var Parallax = function (scene, opts) {
         y = _normalizeValue(relY, opts.limitY, -opts.limitY) * depth * vector[1];
       }
 
-      _setLayerPosition(x, y);
+      if (layersObjArray[i].enabled) _setLayerPosition(x, y);
     }
   }
 
@@ -64,7 +65,7 @@ var Parallax = function (scene, opts) {
    * @param value
    * @param min
    * @param max
-   * @returns {*}
+   * @returns {number}
    * @private
    */
   function _normalizeValue(value, min, max) {
@@ -133,11 +134,39 @@ var Parallax = function (scene, opts) {
   }
 
   /**
+   *
+   * @private
+   */
+  function _setLayersObjArray() {
+    for (var i = 0; i < layers.length; i++) {
+      layersObjArray[i] = {dom: layers[i], enabled: true};
+    }
+  }
+
+  /**
+   *
+   * @param layersArr
+   * @param disabled
+   * @private
+   */
+  function _toggleLayerActiveState(layersArr, disabled) {
+    for (var i = 0; i < layersArr.length; i++) {
+      layersObjArray.filter(function (l) {
+        return l.dom === layersArr[i];
+      }).map(function (l) {
+        l.enabled = !disabled;
+      });
+    }
+  }
+
+  /**
    * Update scene's children. It's called automatically only once upon initialization
    * Needs to be called manually with every DOM update within the scene
    */
   function updateLayers() {
     layers = scene.querySelectorAll('.parallax-layer');
+    _setLayersObjArray();
+
     if (!layers.length) console.warn('No parallax layers');
   }
 
@@ -163,6 +192,22 @@ var Parallax = function (scene, opts) {
   }
 
   /**
+   * Enable parallax on specific layers passed as array of DOM elements
+   * @param layersArr
+   */
+  function enableLayers(layersArr) {
+    _toggleLayerActiveState(layersArr);
+  }
+
+  /**
+   * Disable parallax on specific layers passed as array of DOM elements
+   * @param layersArr
+   */
+  function disableLayers(layersArr) {
+    _toggleLayerActiveState(layersArr, true);
+  }
+
+  /**
    * Reset all layers position at a time with specified duration and easing
    */
   function reset() {
@@ -179,6 +224,8 @@ var Parallax = function (scene, opts) {
     updateLimits: updateLimits,
     enable: enable,
     disable: disable,
+    enableLayers: enableLayers,
+    disableLayers: disableLayers,
     reset: reset,
     destroy: destroy
   }

@@ -12,7 +12,7 @@ export default {
   panorama: require('./panorama/panorama'),
   'narrative-video-player': require('./narrative-video-player/narrative-video-player.jsx'),
   'instructional-video-player': require('./instructional-video-player/instructional-video-player.jsx'),
-  'grid-manager': require('./grid/grid-manager.jsx'),
+  'grid-manager': require('common/components/grid-manager/grid-manager.jsx'),
   'grid-layout-890': require('./grid/grid-890.jsx'),
   'grid-layout-1060': require('./grid/grid-1060.jsx'),
   'grid-layout-1230': require('./grid/grid-1230.jsx'),
@@ -20,6 +20,5 @@ export default {
   'grid-layout-1570': require('./grid/grid-1570.jsx'),
   'grid-layout-1740': require('./grid/grid-1740.jsx'),
   'grid-layout-1920': require('./grid/grid-1920.jsx'),
-  
   'scroll-parallax': require('./scroll-parallax/scroll-parallax.jsx'),
 };
