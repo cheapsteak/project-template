@@ -1,5 +1,5 @@
-$parallaxLimitX: 40px;
-$parallaxLimitY: 40px;
+$parallaxLimitX: 70px;
+$parallaxLimitY: 70px;
 
 .grid-tile {
   width: 100%;
@@ -15,21 +15,8 @@ $parallaxLimitY: 40px;
     position: absolute;
     width: 100%;
     height: 100%;
-  }
-
-  &:hover {
-
-    .overlay {
-      opacity: 0.8;
-      //visibility: visible;
-      transition: opacity 0.4s;
-      transition-delay: 0.2s;
-    }
-
-    .text-container {
-      opacity: 0;
-      transition: opacity 0.8s;
-    }
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
 
   .overlay {
@@ -38,15 +25,40 @@ $parallaxLimitY: 40px;
     width: 100%;
     height: 100%;
     opacity: 0;
-    //visibility: hidden;
-    transition: opacity 0.2s;
+    visibility: hidden;
     z-index: 1000;
 
-    .part {
+    .slide {
+      position: relative;
       display: inline-block;
       width: 50%;
       height: 100%;
-      float: left;
+      background-color: #fff;
+      opacity: 0.15;
+    }
+
+    .cta-container {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      font-size: 25px;
+
+      &.right {
+        left: 50%;
+      }
+
+      .cta {
+        display: inline-block;
+        position: relative;
+        text-align: center;
+        cursor: pointer;
+      }
     }
   }
 
@@ -75,18 +87,13 @@ $parallaxLimitY: 40px;
     }
   }
 
-  .layer.image {
-    width: 100%;
-    height: 100%;
-  }
-
-  .image-wrapper {
+  .image-container {
     position: absolute;
     width: 100%;
     height: 100%;
     display: inline-block;
     bottom: -40px;
-    left: 25%;
+    left: 30%;
 
     img {
       width: 90%;
@@ -94,7 +101,7 @@ $parallaxLimitY: 40px;
 
     &.portrait {
       height: 90%;
-      left: 0%;
+      left: 0;
 
       img {
         width: auto;
