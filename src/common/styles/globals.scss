@@ -9,3 +9,8 @@ html, body {
   margin: 0;
   overflow: hidden;
 }
+
+.gpu {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}

@@ -29,8 +29,8 @@ export default class GridManager extends React.Component {
 
     this.parallax = Parallax(this.refs.scene, {
       mouseProximityMode: true,
-      limitX: 40,
-      limitY: 40
+      limitX: 70,
+      limitY: 70
     });
 
     this.containerEl.addEventListener('scroll', this.handleScroll);

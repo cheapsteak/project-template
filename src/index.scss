@@ -14,6 +14,8 @@ body {
 }
 
 @import 'common/styles/reset';
+@import 'common/styles/vars';
+@import 'common/styles/globals';
 @import 'tests/tests';
 @import 'common/components/timeline/timeline';
 @import 'common/components/timeline/timeline-hotspot/timeline-hotspot';

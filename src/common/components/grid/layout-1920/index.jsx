@@ -18,7 +18,7 @@ export default class Layout1920 extends GridBase {
     const twoThirdHeight = containerWidth * 2 / 11 - 19;
 
     this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
-    //console.log('calculateSizes: Grid-1740');
+    //console.log('calculateSizes: Grid-1920');
   };
 
   render() {
