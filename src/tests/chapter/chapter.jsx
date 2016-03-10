@@ -2,7 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux';
-import VideoPlayer from 'common/components/instructional-video-player/instructional-video-player-redux';
+import VideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux';
 
 export default class Chapter extends React.Component {
 

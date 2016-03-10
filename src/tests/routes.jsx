@@ -3,7 +3,7 @@ import { Route, IndexRoute, IndexRedirect } from 'react-router';
 import componentsManifest from './components-manifest.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx'
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
-import InstructionalVideoPlayer from 'common/components/instructional-video-player/instructional-video-player-redux.jsx';
+import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
 function fullbrowserWrap(component) {
   return class TestPhotoEssay extends React.Component {
@@ -40,7 +40,7 @@ export default <Route>
               path="instructional-videos/:slug"
               key={'chapter-abcdef'}
               component={FullBrowserWrapper}
-              childComponent={InstructionalVideoPlayer}
+              childComponent={ChapterVideoPlayer}
               childComponentProps={{ basePath: 'tests/chapter'}}
             >
             </Route>
