@@ -4,7 +4,7 @@ import GridVideoPlayer from './grid-video-player.jsx'
 import * as actionCreators from '../instructional-video-player-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import store from '../../../store.js';
+import store from 'common/store.js';
 import _ from 'lodash';
 
 @connect(state => ({ videos: state.instructionalVideos}), null, null, { withRef: true })
