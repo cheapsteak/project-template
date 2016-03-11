@@ -61,7 +61,7 @@ export default class ParallaxVideo extends React.Component {
 
   positionElements = () => {
     BackgroundCover(this.bgVideo, this.containerEl);
-    BackgroundCover(this.fgCanvas, this.containerEl);
+    BackgroundCover(this.fgCanvas, this.containerEl, 0.5, 0);
     this.parallax.updateLimits(window.innerWidth * 0.1, window.innerHeight * 0.1);
   };
 
@@ -69,7 +69,6 @@ export default class ParallaxVideo extends React.Component {
     this.loadedVideos++;
 
     if (this.loadedVideos == 2) {
-      this.positionElements();
       this.setState({
         status: states.LOADED,
         fgVideoWidth: this.fgVideo.videoWidth,
@@ -79,6 +78,7 @@ export default class ParallaxVideo extends React.Component {
       this.fgVideo.play();
       this.props.animateIn();
       this.createAlphaVideo();
+      this.positionElements();
     }
   };
 
@@ -95,7 +95,12 @@ export default class ParallaxVideo extends React.Component {
     const chroma = this.seriously.effect('chroma');
 
     chroma.source = this.fgVideo;
-    //chroma.screen = '#29fe2f';
+    //chroma.screen = '#0ef24b';
+    //chroma.weight = 0.4;
+    //chroma.balance = 0.8;
+    //chroma.clipBlack = 0.3;
+    //chroma.clipWhite = 0.8;
+
     target.source = chroma;
 
     this.seriously.go();
@@ -142,7 +147,7 @@ export default class ParallaxVideo extends React.Component {
             </video>
           </div>
 
-          <div className={`parallax-layer`} data-depth={this.props.fgVideoDepth}>
+          <div className={`parallax-layer canvas`} data-depth={this.props.fgVideoDepth}>
             <canvas
               ref="fgCanvas"
               width={this.state.fgVideoWidth}
