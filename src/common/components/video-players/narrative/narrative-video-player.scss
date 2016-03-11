@@ -15,6 +15,40 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+
+    .circle-cta {
+      position: absolute;
+      right: 18%;
+      top: calc(50% - 102px);
+      transform: translate(50%, -50%);
+      width: 215px;
+      height: 215px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10;
+
+      .circle-cta-text {
+        position: absolute;
+        left: 32px;
+        top: 40%;
+        width: 50%;
+        text-align: left;
+        color: white;
+      }
+
+      label {
+        display: block;
+        opacity: 0.5;
+        font-size: 14px;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+    }
   }
 
   .video-overlay {

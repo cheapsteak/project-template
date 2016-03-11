@@ -6,6 +6,7 @@ import BackButtonSvg from '../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
 import animate from 'gsap-promise';
 import _ from 'lodash';
+import { Link } from 'react-router';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -18,6 +19,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   hideControlsTimeoutId = undefined;
 
   componentWillReceiveProps(nextProps) {
+    const el = findDOMNode(this);
+
     if(this.props.isFullControls !== nextProps.isFullControls) {
       if(nextProps.isFullControls) {
         this.animateInControls();
@@ -25,16 +28,31 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.animateOutControls();
       }
     }
+
+    if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
+      if(nextProps.circleCTA.text) {
+        const ctaEls = el.querySelectorAll('.stagger-cta');
+console.log('ANIM in');
+    
+        animate.to(this.refs.circleCTA, 0.3, { opacity: 1, y: 0 });
+        animate.staggerFrom(ctaEls, 0.3, { opacity: 0, y: 40 }, 0.2);
+      } else {
+        animate.to(this.refs.circleCTA, 0.3, { opacity: 0, y: 40 });
+      }
+    }
   }
 
   componentDidMount() {
     const el = findDOMNode(this);
-    const { overlay, controls, exploreBtn } = this.refs;
+    const { overlay, controls, exploreBtn, circleCTA } = this.refs;
 
     animate.set(exploreBtn, { y: -51 });
     animate.set(overlay, { opacity: 0 });
     animate.set(controls, { bottom: -74 });
+    animate.set(circleCTA, { opacity: 0, y: 20 });
 
+console.log(circleCTA);
+    
     this.props.isPlaying && this.video.play();
 
     if(!this.props.isPlaying) {
@@ -59,11 +77,27 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.video.currentTime = time;
   };
 
-  handleMouseMove = () => {
+  getCurrentChapter= () => {
+    const { timeline, currentTime } = this.props;
+    const duration = this.video.duration;
 
+    let currentChapter = {};
+
+    timeline.forEach((chapter, i) => {
+      let upperRange = (timeline[i+1] || {}).time || duration;
+      if(chapter.time <= currentTime && chapter.time < upperRange) {
+        currentChapter = chapter;
+      }
+    });
+
+    return currentChapter;
+  };
+
+  handleMouseMove = () => {
     if (!this.isFullControls) {
       this.props.showFullControls();
     }
+
     if(this.props.isPlaying) {
       clearTimeout(this.hideControlsTimeoutId);
       this.hideControlsTimeoutId = setTimeout(() => {
@@ -133,6 +167,15 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleTimeUpdate = () => {
+    const currentChapter = this.getCurrentChapter();
+
+    if(this.props.circleCTA.text !== currentChapter.ctaText) {
+      this.props.setCircleCTA({
+        text: currentChapter.ctaText || '',
+        route: currentChapter.route || ''
+      });
+    }
+
     this.props.onVideoTimeChange(this.video.currentTime);
   };
 
@@ -189,7 +232,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   render() {
-    const { style } = this.props;
+    const { style, circleCTA } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
@@ -214,6 +257,14 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTimeUpdate={this.handleTimeUpdate}
           >
           </video>
+          <div ref="circleCTA" className="circle-cta" to={circleCTA.route}>
+            <Link to={circleCTA.route}>
+              <div className="circle-cta-text">
+                <label className="stagger-cta">Explore</label>
+                <h3 className="stagger-cta">{circleCTA.text}</h3>
+              </div>
+            </Link>
+          </div>
         </div>
         <div
           ref="simpleProgressBar"
