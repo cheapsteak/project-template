@@ -5,7 +5,7 @@ export default function () {
 
   return (
     <ParallaxVideo
-      bgVideoPath={'../videos/bg-1080.mp4'}
+      bgVideoPath={'../videos/parallax-bg.mp4'}
       fgVideoPath={'../videos/parallax-welcome.mp4'}
     >
       <div className={`parallax-layer`} data-depth="0.3">

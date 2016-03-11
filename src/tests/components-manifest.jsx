@@ -12,6 +12,7 @@ export default {
   'parallax-video-science': require('./parallax-video/science'),
   'parallax-video-computer-science': require('./parallax-video/computer-science'),
   'parallax-video-computer-electives': require('./parallax-video/electives'),
+  'parallax-video-math': require('./parallax-video/math'),
   'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
   panorama: require('./panorama/panorama'),
   'narrative-video-player': require('./narrative-video-player/narrative-video-player.jsx'),
