@@ -14,13 +14,25 @@ export default class TimelineHotspot extends React.Component {
   timeOutIds = [];
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.withinCurrentTime) {
-      this.clearAnimations();
-      this.timeOutIds.push(setTimeout(this.showCTA, 300));
-      this.timeOutIds.push(setTimeout(this.hideCTA, 3000));
-    } else if(!this.state.hasUserInteraction){
-      this.clearAnimations();
-      this.timeOutIds.push(setTimeout(this.hideCTA, 300));
+    if(this.props.withinCurrentTime !== nextProps.withinCurrentTime) {
+      if(nextProps.withinCurrentTime) {
+        this.clearAnimations();
+        this.timeOutIds.push(setTimeout(this.showCTA, 100));
+        this.timeOutIds.push(setTimeout(this.hideCTA, 3000));
+      } else if(!this.state.hasUserInteraction){
+        this.clearAnimations();
+        this.timeOutIds.push(setTimeout(this.hideCTA, 300));
+      }
+    }
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(this.state.shouldShowCTA !== nextState.shouldShowCTA) {
+      if(nextState.shouldShowCTA) {
+        this.expandDot();
+      } else {
+        this.collapseDot();
+      }
     }
   }
 
@@ -36,9 +48,7 @@ export default class TimelineHotspot extends React.Component {
 
   handleMouseEnter = (e) => {
     this.clearAnimations();
-    this.timeOutIds.push(setTimeout(() => {
-      this.setState({ shouldShowCTA: true, hasUserInteraction: true });
-    }, 100));
+    this.setState({ shouldShowCTA: true, hasUserInteraction: true });
   };
 
   handleMouseLeave = (e) => {
@@ -47,13 +57,27 @@ export default class TimelineHotspot extends React.Component {
       this.setState({ shouldShowCTA: false, hasUserInteraction: false });
     }, 300));
   };
-  
+
   showCTA = () => {
     this.setState({ shouldShowCTA: true });
   };
 
   hideCTA = () => {
     this.setState({ shouldShowCTA: false });
+  };
+
+  expandDot = () => {
+    const { dot, dotBg } = this.refs;
+
+    animate.to(dot, 0.1, { borderWidth: 5, borderColor: 'rgba(255,255,255,0.45)' });
+    animate.to(dotBg, 0.3, { scale: 1 });
+  };
+
+  collapseDot = () => {
+    const { dot, dotBg } = this.refs;
+
+    animate.to(dot, 0.1, { borderWidth: 3, borderColor: 'rgba(255,255,255,1)' });
+    animate.to(dotBg, 0.3, { scale: 0 });
   };
 
   render() {
@@ -79,6 +103,7 @@ export default class TimelineHotspot extends React.Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         >
+          <span ref="dotBg"></span>
         </div>
       </div>
     )
