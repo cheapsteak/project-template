@@ -1,7 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-const model = require('../../../data/grid');
+import model from '../../../data/grid';
 import animate from 'gsap-promise';
+import objectMerge from 'object-merge';
 
 const sizes = {
   LANDSCAPE: 'landscape',
@@ -16,8 +17,13 @@ const sides = {
 export default class GridTile extends React.Component {
 
   static propTypes = {
-    chapter: React.PropTypes.string
+    chapter: React.PropTypes.string,
+    isFilterEnabled: React.PropTypes.bool
   };
+
+  //static defaultProps = {
+  //  isFilterEnabled: true
+  //};
 
   state = {
     data: {},
@@ -28,9 +34,21 @@ export default class GridTile extends React.Component {
     eventBus: React.PropTypes.object.isRequired
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isFilterEnabled !== this.isFiltered && !this.state.data.hasInstructionalVideo) {
+      nextProps.isFilterEnabled ? this.applyFilter() : this.removeFilter();
+    }
+
+    this.isFilterEnabled = nextProps.isFilterEnabled && !this.state.data.hasInstructionalVideo;
+  }
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
+    this.textLayer = this.refs.textLayer;
+    this.imageLayer = this.refs.imageLayer;
+    this.overlay = this.refs.overlay;
 
+    // timeout is needed here because Packery needs some time for positioning, otherwise items height is 0
     setTimeout(() => {
       const data = model.getDataByChapterId(this.props.chapter);
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
@@ -60,6 +78,10 @@ export default class GridTile extends React.Component {
   };
 
   handleMouseMove = (e) => {
+    if (!this.refs.slide) {
+      return;
+    }
+
     const mouseX = e.clientX - this.containerEl.getBoundingClientRect().left;
     const centerX = this.containerEl.offsetWidth / 2;
     const currSide = (mouseX > centerX) ? sides.RIGHT : sides.LEFT;
@@ -71,39 +93,119 @@ export default class GridTile extends React.Component {
   };
 
   handleMouseEnter = () => {
+    if (this.isFilterEnabled) {
+      return;
+    }
+
     this.context.eventBus.emit('mouseEnterTile', this);
 
     const containerCenterX = this.containerEl.offsetWidth * 0.5;
     const imageOffset = parseInt(getComputedStyle(this.refs.image).getPropertyValue('left'));
     const centerX = (imageOffset - containerCenterX) * (this.state.sizes === sizes.PORTRAIT ? -0.5 : 0.8);
 
-    animate.to(this.refs.textLayer, 0.2, {autoAlpha: 0});
-    animate.to(this.refs.imageLayer, 0.5, {x: centerX, ease: Expo.easeOut});
-    animate.to(this.refs.overlay, 0.3, {autoAlpha: 0.8});
+    animate.to(this.textLayer, 0.2, {autoAlpha: 0});
+    animate.to(this.imageLayer, 0.5, {x: centerX, ease: Expo.easeOut});
+    animate.to(this.overlay, 0.3, {autoAlpha: 0.8});
+
   };
 
   handleMouseLeave = () => {
+    if (this.isFilterEnabled) {
+      return;
+    }
+
     this.prevSide = null;
 
     animate.to([this.refs.ctaContainerLeft, this.refs.ctaContainerRight], 0.2, {autoAlpha: 0});
-    animate.to(this.refs.overlay, 0.2, {autoAlpha: 0, delay: 0.1});
-    animate.to(this.refs.textLayer, 0.2, {autoAlpha: 1, delay: 0.2});
-    animate.to(this.refs.imageLayer, 0.5, {x: 0, ease: Expo.easeOut, delay: 0.2})
+    animate.to(this.overlay, 0.2, {autoAlpha: 0, delay: 0.1});
+    animate.to(this.textLayer, 0.2, {autoAlpha: 1, delay: 0.2});
+    animate.to(this.imageLayer, 0.5, {x: 0, ease: Expo.easeOut, delay: 0.2})
       .then(() => {
         this.context.eventBus.emit('mouseLeaveTile', this);
-      })
+      });
   };
 
-  animateIn = (index, fillers) => {
-    animate.set(fillers, {autoAlpha: 0});
-    animate.fromTo(this.containerEl, 0.8, {autoAlpha: 0}, {autoAlpha: 1, delay: 0.15 * index + 0.1});
-    animate.staggerTo(fillers, 0.8, {autoAlpha: 1, delay: 0.4}, 0.1)
+  animateInLayers = (index) => {
+    const width = this.containerEl.offsetWidth;
+    const height = this.containerEl.offsetHeight;
+    const scaleX = (width + 30) / width;
+    const scaleY = (height + 30) / height;
+
+    animate.set(this.containerEl, {autoAlpha: 0, scaleX: scaleX, scaleY: scaleY});
+    animate.set(this.textLayer, {scale: 1.4, autoAlpha: 1, transformOrigin: 'top left'});
+    animate.set(this.imageLayer, {scale: 1.6, autoAlpha: 1});
+
+    const animationProps = {
+      autoAlpha: 1,
+      scale: 1,
+      delay: (0.1 * index) + 0.3,
+      ease: Expo.easeOut,
+      overwrite: 'all'
+    };
+
+    const extendedProps = objectMerge(animationProps, {
+      autoAlpha: this.isFilterEnabled ? 0.1 : 1,
+      scale: this.isFilterEnabled ? 0.9 : 1
+    });
+
+    animate.to(this.containerEl, 0.4, extendedProps);
+    animate.to(this.textLayer, 1, animationProps);
+    return animate.to(this.imageLayer, 1.2, animationProps);
+  };
+
+  animateInGridFillers = (fillers) => {
+    animate.set(fillers, {autoAlpha: 0, scale: 1.1});
+    return animate.staggerTo(fillers, 1, {autoAlpha: 1, scale: 1, delay: 0.6, ease: Expo.easeOut}, 0.1);
+  };
+
+  animateIn = (tileIndex, fillers) => {
+
+    // timeout is needed here because Packery needs some time for positioning, otherwise items height is 0
+    setTimeout(() => {
+      this.isFilterEnabled = this.props.isFilterEnabled && !this.state.data.hasInstructionalVideo;
+      this.animateInLayers(tileIndex);
+      this.animateInGridFillers(fillers);
+    });
+  };
+
+  applyFilter = () => {
+    console.log('applyFilter')
+    animate.to(this.containerEl, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: Expo.easeOut});
+    //this.context.eventBus.emit('disableParallax', this);
+  };
+
+  removeFilter = () => {
+    console.log('removeFilter')
+    animate.to(this.containerEl, 0.5, {scale: 1, autoAlpha: 1, ease: Expo.easeOut})
+      .then(() => {
+        //this.context.eventBus.emit('disableParallax', this);
+      })
   };
 
   render() {
     const textDepth = 0.6;
     const bgDepth = 1;
     const imageDepth = 0.8;
+
+    const overlay = this.props.isFilterEnabled ?
+      (
+        <div ref="overlay" className={`overlay `}>
+          <div ref="ctaContainerLeft" className={`cta-container left`}>
+            <div className={`cta`}>Watch<br/>Instructional<br/>Video</div>
+          </div>
+        </div>
+      ) :
+      (
+        <div ref="overlay" className={`overlay `}>
+          <div ref="slide" className={`slide gpu`}></div>
+          <div ref="ctaContainerLeft" className={`cta-container left`}>
+            <div className={`cta`}>Watch</div>
+          </div>
+          <div ref="ctaContainerRight" className={`cta-container right`}>
+            <div className={`cta`}>Explore</div>
+          </div>
+        </div>
+      )
 
     return (
       <div
@@ -116,7 +218,7 @@ export default class GridTile extends React.Component {
           ref="bgLayer"
           className={`parallax-layer background`}
           data-depth={bgDepth}
-          data-vector={`-0.6,-0.5`}>
+          data-vector={`0.6,-0.2`}>
           <div className={`noise`}></div>
         </div>
 
@@ -124,7 +226,7 @@ export default class GridTile extends React.Component {
           ref="textLayer"
           className={`parallax-layer text`}
           data-depth={textDepth}
-          data-vector={`0.2, -0.5`}
+          data-vector={`-0.4, -0.4`}
         >
           <div className={`text-container`}>
             <div className={`title`}>{this.state.data.subtitle}</div>
@@ -143,15 +245,7 @@ export default class GridTile extends React.Component {
           </div>
         </div>
 
-        <div ref="overlay" className={`overlay `}>
-          <div ref="slide" className={`slide gpu`}></div>
-          <div ref="ctaContainerLeft" className={`cta-container left`}>
-            <div className={`cta`}>Watch</div>
-          </div>
-          <div ref="ctaContainerRight" className={`cta-container right`}>
-            <div className={`cta`}>Explore</div>
-          </div>
-        </div>
+        {overlay}
       </div>
     );
   }

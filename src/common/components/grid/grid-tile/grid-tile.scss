@@ -9,6 +9,15 @@ $parallaxLimitY: 70px;
   font-weight: 900;
   overflow: hidden;
   position: relative;
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform: translateZ(0px);
+
+  .filler {
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translateZ(0px);
+  }
 
   .parallax-layer {
     top: 0;
@@ -93,7 +102,7 @@ $parallaxLimitY: 70px;
     height: 100%;
     display: inline-block;
     bottom: -40px;
-    left: 30%;
+    left: 25%;
 
     img {
       width: 90%;
