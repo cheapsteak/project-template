@@ -32,7 +32,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
       if(nextProps.circleCTA.text) {
         const ctaEls = el.querySelectorAll('.stagger-cta');
-console.log('ANIM in');
     
         animate.to(this.refs.circleCTA, 0.3, { opacity: 1, y: 0 });
         animate.staggerFrom(ctaEls, 0.3, { opacity: 0, y: 40 }, 0.2);
