@@ -1,4 +1,4 @@
-var Tween = require('gsap');
+var Tween = TweenMax;
 
 var Parallax = function (scene, opts) {
   var layers;
