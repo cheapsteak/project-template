@@ -2,6 +2,8 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import HotSpot from './timeline-hotspot/timeline-hotspot.jsx';
 import HoverCard from './timeline-hover-card/timeline-hover-card.jsx';
+import animate from 'gsap-promise';
+import _ from 'lodash';
 
 export default class Timeline extends React.Component {
 
@@ -17,35 +19,92 @@ export default class Timeline extends React.Component {
     router: React.PropTypes.object
   };
 
-  constructor (props) {
-    super(props);
-
-    this.state = {
-      currentTime: props.currentTime,
-      items: props.items,
-      duration: props.duration
-    }
-  }
-
-  componentWillReceiveProps({ currentTime, items, duration }) {
-    this.setState({ currentTime, items, duration });
-  }
+  state = { hoveredTime: 0, time: 0 };
 
   changeCurrentTime(time) {
-    this.props.onTimeChange
-      ? this.props.onTimeChange(time)
-      : this.setState({ currentTime: time });
+    this.props.onTimeChange(time)
+
+    // Using state to store time instead of using the store's currentTime because
+    // the flow does not update the scrubbing fast enough
+    this.setState({ time: time });
   }
 
-  handleContainerClick = (e) => {
-    const el = findDOMNode(this)
-    const positionX = e.clientX - el.getBoundingClientRect().left;
-    const newTime = positionX / el.offsetWidth * this.props.duration;
-    this.changeCurrentTime(newTime);
+  componentWillReceiveProps(nextProps) {
+    this.setState({ time: nextProps.currentTime });
   }
+
+  changeTimeOnMouseEvent = (e) => {
+    const { hoveredTimeStampContainer } = this.refs;
+    const newTime = this.getCurrentTime(e)
+    this.changeCurrentTime(newTime);
+  };
+
+  getCurrentTime(mouseEvent) {
+    // Gets current time based on the mouses positionX on the timeline
+    const el = findDOMNode(this)
+    const positionX = mouseEvent.clientX - el.getBoundingClientRect().left;
+
+    return positionX >= 0 ? positionX / el.offsetWidth * this.props.duration : 0;
+  }
+
+  handleMouseDown = (e) => {
+    const { hoveredTimeStampContainer } = this.refs;
+    this.changeTimeOnMouseEvent(e);
+    animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
+    this.mouseDown = true;
+  };
+
+  handleMouseEnter = (e) => {
+    const { hoveredTimeStampContainer, hoveredTimeStamp} = this.refs;
+
+    animate.to(hoveredTimeStamp, 0.3, { top: -22});
+    animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
+  };
+
+  handleMouseLeave = (e) => {
+    const { hoveredTimeStampContainer, hoveredTimeStamp} = this.refs;
+    
+    this.mouseDown = false;
+
+    animate.to(hoveredTimeStamp, 0.3, { top: -12 });
+    animate.to(hoveredTimeStampContainer, 0.3, { opacity: 0 });
+  };
+
+  handleMouseMove = (e) => {
+    const el = findDOMNode(this)
+    const { hoveredTimeStampContainer, progressHead } = this.refs;
+    const componentClientRect = el.getBoundingClientRect();
+    const positionX = e.clientX - componentClientRect.left;
+    const mousePositionTime = this.getCurrentTime(e);
+    const styledTime = this.secondsToMinutes(mousePositionTime);
+    const progressHeadX = progressHead.getBoundingClientRect().left;
+    const pointEls = el.querySelectorAll('.timeline-hotspot');
+
+    this.styledCurrentTime !== this.state.hoveredTime && this.setState({ hoveredTime: styledTime });
+
+    animate.set(hoveredTimeStampContainer, { x: e.clientX - componentClientRect.left - hoveredTimeStampContainer.clientWidth/2 });
+
+    if(_.any(pointEls, (point) => this.isWithinVariance(e.clientX, point.getBoundingClientRect().left, 8))
+      || this.isWithinVariance(e.clientX, progressHeadX, 40)
+      || this.isWithinVariance(e.clientX, componentClientRect.left, 15)
+      || this.isWithinVariance(e.clientX, componentClientRect.right, 50)
+      ) {
+      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
+    } else {
+      animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
+    }
+
+    if(this.mouseDown) {
+      this.changeTimeOnMouseEvent(e);
+    }
+  };
 
   handlePointClick = (time) => {
     this.changeCurrentTime(time);
+  };
+
+  handleMouseUp = (e) => {
+    this.mouseDown = false;
   };
 
   secondsToMinutes (totalSeconds) {
@@ -66,31 +125,47 @@ export default class Timeline extends React.Component {
     return time;
   }
 
-
-  isWithinVariance(srcNumber, targetNumber, variance) {
-    return srcNumber >= targetNumber - variance && srcNumber <= targetNumber;
+  isWithinVariance(srcNumber, targetNumber, variance, lowerRangeOnly) {
+    return srcNumber >= targetNumber - variance && srcNumber <= targetNumber + (lowerRangeOnly ? 0 : variance);
   }
 
   render () {
-    const { width, height, items, style } = this.props;
-    const progress = this.state.duration ? (this.state.currentTime/this.state.duration * 100) : 0;
+    const { style, currentTime, duration, items } = this.props;
+    const progress = duration ? (this.state.time/duration * 100) : 0;
 
     return (
       <div className="timeline" style={style}>
-        <div className="timeline-container" onClick={this.handleContainerClick}>
+        <div
+          className="timeline-container"
+          onMouseUp={this.handleMouseUp}
+          onMouseDown={this.handleMouseDown}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+          onMouseMove={this.handleMouseMove}
+        >
+          { /* The element to appears when mouse hovers over the timeline */ }
+          <div
+            ref="hoveredTimeStampContainer"
+            className="hovered-time-stamp"
+          >
+            <span ref="hoveredTimeStamp">{this.state.hoveredTime}</span>
+          </div>
+
+          { /* The progress indicator */}
           <div
             className="timeline-cover"
             style={{ width: `${progress}%` }}
-            data-time={this.secondsToMinutes(this.state.currentTime)}
+            data-time={this.secondsToMinutes(currentTime)}
           >
+            <span ref="progressHead"></span>
           </div>
           { 
             /* Check if there is a duration before setting the dots for the case of video metadata currently loading */
-            this.state.duration 
-              ? this.state.items.map(point => {
-                  const style = { left: (point.time / this.state.duration * 100) + '%' }; 
-                  const className = this.state.currentTime === point.time ? ' selected' : '';
-                  const isActive = this.isWithinVariance(this.state.currentTime, point.time, 0.3)
+            duration 
+              ? items.map(point => {
+                  const style = { left: (point.time / duration * 100) + '%' }; 
+                  const className = currentTime === point.time ? ' selected' : '';
+                  const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
 
                   return (
                     <HotSpot

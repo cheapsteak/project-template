@@ -13,6 +13,10 @@ body {
   height: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
 @import 'common/styles/reset';
 @import 'common/styles/vars';
 @import 'common/styles/globals';
@@ -20,8 +24,9 @@ body {
 @import 'common/components/timeline/timeline';
 @import 'common/components/timeline/timeline-hotspot/timeline-hotspot';
 @import 'common/components/timeline/timeline-hover-card/timeline-hover-card';
-@import 'common/components/narrative-video-player/narrative-video-player';
-@import 'common/components/instructional-video-player/instructional-video-player';
+@import 'common/components/video-players/narrative/narrative-video-player';
+@import 'common/components/video-players/instructional/grid/grid-video-player';
+@import 'common/components/video-players/instructional/chapter/chapter-video-player';
 @import 'common/components/photo-essay/photo-essay';
 @import 'common/components/fullbrowser-wrapper/fullbrowser-wrapper';
 @import 'common/components/panorama-gallery/panorama-gallery';
@@ -37,3 +42,4 @@ body {
 @import 'common/components/grid/layout-1570/index';
 @import 'common/components/grid/layout-1740/index';
 @import 'common/components/grid/layout-1920/index';
+@import 'chapter/chapter.scss';

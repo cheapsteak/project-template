@@ -1,0 +1,40 @@
+.chapter-page {
+  height: 100%;
+  overflow-y: auto;
+  background-color: #826636;
+
+  .page-component {
+    position: relative;
+  }
+
+  .main {
+    position: relative;
+    margin-top: 50px;
+    margin-left: 50px;
+    width: calc(100% - 50px);
+  }
+
+  .nav {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    background-color: rgba(#826636, 0.7);
+
+    display: flex;
+    justify-content: space-between;
+
+    .nav-button {
+      display: flex;
+      background-color: #41474A;
+      height: 50px;
+      align-items: center;
+      color: #A5A8A8;
+    }
+  }
+
+  .header-container {
+    overflow: hidden;
+    height: calc(100vh - 50px);
+  }
+}

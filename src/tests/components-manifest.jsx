@@ -16,7 +16,7 @@ export default {
   'panorama-gallery': require('./panorama-gallery/panorama-gallery'),
   panorama: require('./panorama/panorama'),
   'narrative-video-player': require('./narrative-video-player/narrative-video-player.jsx'),
-  'instructional-video-player': require('./instructional-video-player/instructional-video-player.jsx'),
+  //'instructional-video-player': require('./instructional-video-player/instructional-video-player.jsx'),
   'grid': require('common/components/grid-manager/grid-manager.jsx'),
   //'grid-layout-890': require('./grid/grid-890.jsx'),
   //'grid-layout-1060': require('./grid/grid-1060.jsx'),

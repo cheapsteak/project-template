@@ -1,4 +1,4 @@
-import dataModel from '../../data/instructional-videos.js';
+import dataModel from '../../../data/instructional-videos.js';
 
 export const SET_INSTRUCTIONAL_VIDEO = 'SET_INSTRUCTIONAL_VIDEO';
 export const SET_INSTRUCTIONAL_VIDEO_TIME = 'SET_INSTRUCTIONAL_VIDEO_TIME';

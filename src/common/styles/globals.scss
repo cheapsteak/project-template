@@ -1,4 +1,5 @@
 @import 'vars';
+@import 'fonts';
 
 html, body {
   position: absolute;
@@ -8,6 +9,7 @@ html, body {
   height: 100%;
   margin: 0;
   overflow: hidden;
+  font-family: "akkurat", sans-serif;
 }
 
 .gpu {
