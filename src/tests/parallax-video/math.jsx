@@ -11,7 +11,7 @@ export default function () {
       <div className={`parallax-layer`} data-depth="0.3">
         <div className={`text-container`}>
           <div className={`title`}>Chapter</div>
-          <div className={`subtitle`}>Computer Science</div>
+          <div className={`subtitle`}>Math</div>
           <div className={`description`}>At Success Academy we completely redefined how to teach Science.</div>
         </div>
       </div>
