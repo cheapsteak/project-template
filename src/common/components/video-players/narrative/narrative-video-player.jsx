@@ -26,32 +26,34 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.animateInControls();
       } else {
         this.animateOutControls();
+        this.animateOutCircleCTA();
       }
     }
 
     if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
       if(nextProps.circleCTA.text) {
-        const ctaEls = el.querySelectorAll('.stagger-cta');
-    
-        animate.to(this.refs.circleCTA, 0.3, { opacity: 1, y: 0 });
-        animate.staggerFrom(ctaEls, 0.3, { opacity: 0, y: 40 }, 0.2);
+
+        if(this.props.isFullControls) {
+          this.animateInCircleCTA();
+        }
+
+        this.animateCircleCTAText();
       } else {
-        animate.to(this.refs.circleCTA, 0.3, { opacity: 0, y: 40 });
+        this.animateOutCircleCTA();
       }
     }
   }
 
   componentDidMount() {
     const el = findDOMNode(this);
-    const { overlay, controls, exploreBtn, circleCTA } = this.refs;
+    const { overlay, controls, exploreBtn } = this.refs;
+    const circleCTA = findDOMNode(this.refs.circleCTA);
 
     animate.set(exploreBtn, { y: -51 });
     animate.set(overlay, { opacity: 0 });
     animate.set(controls, { bottom: -74 });
     animate.set(circleCTA, { opacity: 0, y: 20 });
 
-console.log(circleCTA);
-    
     this.props.isPlaying && this.video.play();
 
     if(!this.props.isPlaying) {
@@ -92,26 +94,36 @@ console.log(circleCTA);
     return currentChapter;
   };
 
-  handleMouseMove = () => {
-    if (!this.isFullControls) {
-      this.props.showFullControls();
+  secondsToMinutes (totalSeconds) {
+    const totalSecondsFloat = parseFloat(totalSeconds);
+    let minutes = Math.floor(totalSecondsFloat / 60);
+    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
+
+    if (minutes < 10) {
+      minutes = "0" + minutes;
     }
 
-    if(this.props.isPlaying) {
-      clearTimeout(this.hideControlsTimeoutId);
-      this.hideControlsTimeoutId = setTimeout(() => {
-        this.props.hideFullControls();
-        this.hideControlsTimeoutId = undefined;
-      }, 3000);
+    if (seconds < 10) {
+      seconds = "0" + seconds;
     }
+
+    const time = minutes + ':' + seconds;
+
+    return time;
   }
+
+
+
+  /************************/
+  /*     Animatations     */
+  /************************/
 
   animateInControls = () => {
     const el = findDOMNode(this);
     const { videoWrapper, overlay, controls, exploreBtn, simpleProgressBar } = this.refs;
     const delay = 0.2;
 
-    const buttons = Array.prototype.slice.call(el.querySelectorAll('.button'));
+    const buttons = el.querySelectorAll('.button');
     const dots = el.querySelectorAll('.dot');
 
     const zoomedInRect = el.getBoundingClientRect();
@@ -134,7 +146,7 @@ console.log(circleCTA);
     animate.set(controls, { opacity: 1 });
     animate.to(controls, 0.5, { delay: delay + 0.5, bottom: 0 });
 
-    buttons.forEach((button) => { animate.fromTo(button, 0.3, { y: 20 }, { delay: 1, y: 0})});
+    _.forEach(buttons, (button) => { animate.fromTo(button, 0.3, { y: 20 }, { delay: 1, y: 0})});
     animate.staggerFrom(dots, 0.6, { delay: 1, opacity: 0 }, 0.2);
 
     animate.set(el, {cursor: 'default'});
@@ -160,6 +172,28 @@ console.log(circleCTA);
         animate.to(simpleProgressBar, 0.4, { display: 'block', bottom: 0 });
       });
   }
+
+  animateInCircleCTA = () => {
+    const circleCTA = findDOMNode(this.refs.circleCTA);
+    return animate.to(circleCTA, 0.3, { opacity: 1, y: 0 });
+  };
+
+  animateOutCircleCTA = () => {
+    const circleCTA = findDOMNode(this.refs.circleCTA);
+    animate.to(circleCTA, 0.3, { opacity: 0, y: 40 });
+  };
+
+  animateCircleCTAText = () => {
+    const el = findDOMNode(this);
+    const ctaEls = el.querySelectorAll('.stagger-cta');
+    animate.staggerFromTo(ctaEls, 0.3, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2);
+  }
+
+
+
+  /************************/
+  /*       Handlers       */
+  /************************/
 
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
@@ -212,23 +246,21 @@ console.log(circleCTA);
     clearTimeout(this.hideControlsTimeoutId);
   };
 
-  secondsToMinutes (totalSeconds) {
-    const totalSecondsFloat = parseFloat(totalSeconds);
-    let minutes = Math.floor(totalSecondsFloat / 60);
-    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
-
-    if (minutes < 10) {
-      minutes = "0" + minutes;
+  handleMouseMove = () => {
+    if (!this.isFullControls) {
+      this.props.showFullControls();
     }
 
-    if (seconds < 10) {
-      seconds = "0" + seconds;
+    if(this.props.isPlaying) {
+      clearTimeout(this.hideControlsTimeoutId);
+      this.hideControlsTimeoutId = setTimeout(() => {
+        this.props.hideFullControls();
+        this.hideControlsTimeoutId = undefined;
+      }, 3000);
     }
-
-    const time = minutes + ':' + seconds;
-
-    return time;
   }
+
+
 
   render() {
     const { style, circleCTA } = this.props;
@@ -256,14 +288,12 @@ console.log(circleCTA);
             onTimeUpdate={this.handleTimeUpdate}
           >
           </video>
-          <div ref="circleCTA" className="circle-cta" to={circleCTA.route}>
-            <Link to={circleCTA.route}>
-              <div className="circle-cta-text">
-                <label className="stagger-cta">Explore</label>
-                <h3 className="stagger-cta">{circleCTA.text}</h3>
-              </div>
-            </Link>
-          </div>
+          <Link ref="circleCTA" className="circle-cta" to={circleCTA.route}>
+            <div className="circle-cta-text">
+              <label className="stagger-cta">Explore</label>
+              <h3 className="stagger-cta">{circleCTA.text}</h3>
+            </div>
+          </Link>
         </div>
         <div
           ref="simpleProgressBar"
