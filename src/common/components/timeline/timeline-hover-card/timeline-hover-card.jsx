@@ -1,60 +1,76 @@
 import React from 'react';
+import { Link } from 'react-router';
 import { findDOMNode } from 'react-dom';
 import animate from 'gsap-promise';
 import _ from 'lodash';
-import { Link } from 'react-router';
-
-const animationStates = {
-  out: { display: 'none', opacity: 0, x: '-50%', y: -220, height: '208px' },
-  in: { display: 'block', opacity: 1, y: -240 }
-}
 
 export default class TimelineHoverCard extends React.Component {
 
   componentDidMount() {
     const el = findDOMNode(this);
-    animate.set(el, animationStates.out);
+    const { card, image, line, ctaText, ctaLabel, frontOverlay, backOverlay } = this.refs;
+    const staggerEls = el.querySelectorAll('.stagger-text');
+
+    animate.set(line, { x: '-50%', y: -20, scaleY: 0, transformOrigin: '0 1' });
+    animate.set(card, { display: 'none', x: '-50%', y: -50, height: 0 });
+    animate.set(image, { scale: 1.5 });
+    animate.set(frontOverlay, { y: 50 });
+    animate.set(backOverlay, { y: 50 });
+    _.forEach(staggerEls, (el) => animate.set(el, { display: 'none', x: '-50%', y: 50 }));
   }
 
   componentWillEnter (callback) {
     const el = findDOMNode(this);
-    animate
-      .to(el, 0.5, animationStates.in)
-      .then(callback);
+    const { card, image, line, ctaText, ctaLabel, frontOverlay, backOverlay } = this.refs;
+    const staggerEls = el.querySelectorAll('.stagger-text');
+    const lineAnimTime = 0.3;
+
+    Promise.all([
+      animate.to(line, lineAnimTime, { y: -55, scaleY: 1, transformOrigin: '0 0' }),
+      animate.to(card, 0.5, { delay: lineAnimTime, display: 'block', height: 210, y: -260 }),
+      animate.to(image, 0.75, { delay: lineAnimTime + 0.2, scale: 1 }),
+      animate.to(frontOverlay, 0.5, { delay: lineAnimTime + 0.4, y: 0 }),
+      animate.to(backOverlay, 0.5, { delay: lineAnimTime + 0.2, y: 0 }),
+      animate.staggerTo(staggerEls, 0.5, { delay: lineAnimTime + 0.7, display: 'block', opacity: 1, y: 8 }, 0.2)
+    ])
+    .then(callback)
   }
 
   componentWillLeave (callback) {
     const el = findDOMNode(this);
-    animate
-      .to(el, 0.5, animationStates.out)
-      .then(callback);
+    const { card, image, line, ctaText, ctaLabel, frontOverlay, backOverlay } = this.refs;
+    const staggerEls = el.querySelectorAll('.stagger-text');
+
+    Promise.all([
+      animate.to(line, 0.1, { delay: 0.3, y: -20, scaleY: 0 }),
+      animate.to(card, 0.4, { display: 'none', y: -50, height: 0 }),
+      animate.to(image, 0.4, { scale: 1.2 }),
+      animate.to(frontOverlay, 0.3, { y: 50 }),
+      animate.to(backOverlay, 0.4, { y: 50 }),
+      animate.staggerTo(staggerEls, 0.2, { opacity: 0, y: 50 })
+    ])
+    .then(callback)
   }
 
-  handleMouseEnter = (e) => {
-    this.props.onMouseEnter();
-  };
-
-  handleMouseLeave = (e) => {
-    this.props.onMouseLeave();
-  };
-
-  handleClick = (e) => {
-    this.props.onClick && this.props.onClick();
-  };
-
   render() {
-    const { style, src, route } = this.props; 
     return (
         <div
           className="timeline-hover-card"
-          style={style}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-          onClick={this.handleClick}
+          style={this.props.style}
+          onMouseEnter={this.props.onMouseEnter}
+          onMouseLeave={this.props.onMouseLeave}
+          onClick={this.props.onClick}
         >
-          <Link to={route}>
-              <img ref="image" src={src} />
+          <Link to={this.props.route}>
+            <div ref="card" className="card" >
+              <div ref="image" className="image" style={{ backgroundImage: `url(${this.props.src})` }}></div>
+              <span ref="ctaText" className="cta-text stagger-text">{this.props.ctaText}</span>
+              <span ref="ctaLabel" className="cta-label stagger-text">Explore</span>
+              <div ref="frontOverlay" className="front-label-bg"></div>
+              <div ref="backOverlay" className="back-label-bg"></div>
+            </div>
           </Link>
+          <div ref="line" className="line"></div>
         </div>
     )
   }
