@@ -6,6 +6,7 @@ import BackButtonSvg from '../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
 import animate from 'gsap-promise';
 import _ from 'lodash';
+import { Link } from 'react-router';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -18,11 +19,27 @@ export default class NarrativeVideoPlayer extends React.Component {
   hideControlsTimeoutId = undefined;
 
   componentWillReceiveProps(nextProps) {
+    const el = findDOMNode(this);
+
     if(this.props.isFullControls !== nextProps.isFullControls) {
       if(nextProps.isFullControls) {
         this.animateInControls();
       } else {
         this.animateOutControls();
+        this.animateOutCircleCTA();
+      }
+    }
+
+    if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
+      if(nextProps.circleCTA.text) {
+
+        if(this.props.isFullControls) {
+          this.animateInCircleCTA();
+        }
+
+        this.animateCircleCTAText();
+      } else {
+        this.animateOutCircleCTA();
       }
     }
   }
@@ -30,10 +47,12 @@ export default class NarrativeVideoPlayer extends React.Component {
   componentDidMount() {
     const el = findDOMNode(this);
     const { overlay, controls, exploreBtn } = this.refs;
+    const circleCTA = findDOMNode(this.refs.circleCTA);
 
     animate.set(exploreBtn, { y: -51 });
     animate.set(overlay, { opacity: 0 });
     animate.set(controls, { bottom: -74 });
+    animate.set(circleCTA, { opacity: 0, y: 20 });
 
     this.props.isPlaying && this.video.play();
 
@@ -59,26 +78,52 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.video.currentTime = time;
   };
 
-  handleMouseMove = () => {
+  getCurrentChapter= () => {
+    const { timeline, currentTime } = this.props;
+    const duration = this.video.duration;
 
-    if (!this.isFullControls) {
-      this.props.showFullControls();
+    let currentChapter = {};
+
+    timeline.forEach((chapter, i) => {
+      let upperRange = (timeline[i+1] || {}).time || duration;
+      if(chapter.time <= currentTime && chapter.time < upperRange) {
+        currentChapter = chapter;
+      }
+    });
+
+    return currentChapter;
+  };
+
+  secondsToMinutes (totalSeconds) {
+    const totalSecondsFloat = parseFloat(totalSeconds);
+    let minutes = Math.floor(totalSecondsFloat / 60);
+    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
+
+    if (minutes < 10) {
+      minutes = "0" + minutes;
     }
-    if(this.props.isPlaying) {
-      clearTimeout(this.hideControlsTimeoutId);
-      this.hideControlsTimeoutId = setTimeout(() => {
-        this.props.hideFullControls();
-        this.hideControlsTimeoutId = undefined;
-      }, 3000);
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
     }
+
+    const time = minutes + ':' + seconds;
+
+    return time;
   }
+
+
+
+  /************************/
+  /*     Animatations     */
+  /************************/
 
   animateInControls = () => {
     const el = findDOMNode(this);
     const { videoWrapper, overlay, controls, exploreBtn, simpleProgressBar } = this.refs;
     const delay = 0.2;
 
-    const buttons = Array.prototype.slice.call(el.querySelectorAll('.button'));
+    const buttons = el.querySelectorAll('.button');
     const dots = el.querySelectorAll('.dot');
 
     const zoomedInRect = el.getBoundingClientRect();
@@ -101,7 +146,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     animate.set(controls, { opacity: 1 });
     animate.to(controls, 0.5, { delay: delay + 0.5, bottom: 0 });
 
-    buttons.forEach((button) => { animate.fromTo(button, 0.3, { y: 20 }, { delay: 1, y: 0})});
+    _.forEach(buttons, (button) => { animate.fromTo(button, 0.3, { y: 20 }, { delay: 1, y: 0})});
     animate.staggerFrom(dots, 0.6, { delay: 1, opacity: 0 }, 0.2);
 
     animate.set(el, {cursor: 'default'});
@@ -128,11 +173,42 @@ export default class NarrativeVideoPlayer extends React.Component {
       });
   }
 
+  animateInCircleCTA = () => {
+    const circleCTA = findDOMNode(this.refs.circleCTA);
+    return animate.to(circleCTA, 0.3, { opacity: 1, y: 0 });
+  };
+
+  animateOutCircleCTA = () => {
+    const circleCTA = findDOMNode(this.refs.circleCTA);
+    animate.to(circleCTA, 0.3, { opacity: 0, y: 40 });
+  };
+
+  animateCircleCTAText = () => {
+    const el = findDOMNode(this);
+    const ctaEls = el.querySelectorAll('.stagger-cta');
+    animate.staggerFromTo(ctaEls, 0.3, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2);
+  }
+
+
+
+  /************************/
+  /*       Handlers       */
+  /************************/
+
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
   };
 
   handleTimeUpdate = () => {
+    const currentChapter = this.getCurrentChapter();
+
+    if(this.props.circleCTA.text !== currentChapter.ctaText) {
+      this.props.setCircleCTA({
+        text: currentChapter.ctaText || '',
+        route: currentChapter.route || ''
+      });
+    }
+
     this.props.onVideoTimeChange(this.video.currentTime);
   };
 
@@ -170,26 +246,24 @@ export default class NarrativeVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
   };
 
-  secondsToMinutes (totalSeconds) {
-    const totalSecondsFloat = parseFloat(totalSeconds);
-    let minutes = Math.floor(totalSecondsFloat / 60);
-    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
-
-    if (minutes < 10) {
-      minutes = "0" + minutes;
+  handleMouseMove = () => {
+    if (!this.isFullControls) {
+      this.props.showFullControls();
     }
 
-    if (seconds < 10) {
-      seconds = "0" + seconds;
+    if(this.props.isPlaying) {
+      clearTimeout(this.hideControlsTimeoutId);
+      this.hideControlsTimeoutId = setTimeout(() => {
+        this.props.hideFullControls();
+        this.hideControlsTimeoutId = undefined;
+      }, 3000);
     }
-
-    const time = minutes + ':' + seconds;
-
-    return time;
   }
 
+
+
   render() {
-    const { style } = this.props;
+    const { style, circleCTA } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
@@ -214,6 +288,12 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTimeUpdate={this.handleTimeUpdate}
           >
           </video>
+          <Link ref="circleCTA" className="circle-cta" to={circleCTA.route}>
+            <div className="circle-cta-text">
+              <label className="stagger-cta">Explore</label>
+              <h3 className="stagger-cta">{circleCTA.text}</h3>
+            </div>
+          </Link>
         </div>
         <div
           ref="simpleProgressBar"

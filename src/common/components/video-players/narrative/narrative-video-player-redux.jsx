@@ -23,6 +23,7 @@ class NarrativeVideoPlayerRedux extends React.Component {
       onVideoPause={this.boundActionCreators.pauseVideo}
       showFullControls={this.boundActionCreators.showFullControls}
       hideFullControls={this.boundActionCreators.hideFullControls}
+      setCircleCTA={this.boundActionCreators.setCircleCTA}
       {...this.props}
       {...video}
     />
