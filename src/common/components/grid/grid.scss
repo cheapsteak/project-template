@@ -252,41 +252,41 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
     &.filler, .noise {
       background: $red-noise;
     }
-    .overlay {
-      background: $grid-red;
-    }
+    //.overlay {
+    //  background: $grid-red;
+    //}
   }
   .grey {
     &.filler, .noise {
       background: $grey-noise;
     }
-    .overlay {
-      background: $grid-grey;
-    }
+    //.overlay {
+    //  background: $grid-grey;
+    //}
   }
   .sand {
     &.filler, .noise {
       background: $sand-noise
     }
-    .overlay {
-      background: $grid-sand;
-    }
+    //.overlay {
+    //  background: $grid-sand;
+    //}
   }
   .light-blue {
     &.filler, .noise {
       background: $light-blue-noise
     }
-    .overlay {
-      background: $grid-light-blue;
-    }
+    //.overlay {
+    //  background: $grid-light-blue;
+    //}
   }
   .dark-blue {
     &.filler, .noise {
       background: $dark-blue-noise;
     }
-    .overlay {
-      background: $grid-dark-blue;
-    }
+    //.overlay {
+    //  background: $grid-dark-blue;
+    //}
   }
 
 }
