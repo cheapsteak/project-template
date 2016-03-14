@@ -92,7 +92,7 @@ export default class GridVideoPlayer extends React.Component {
       route = route + `/instructional-videos/${modelSlug}`;
     }
 
-    return <div className="instructional-video-player" style={style}>
+    return <div className="instructional-video-player grid-player" style={style}>
       {
         !isFullBrowser ? 
           <video
