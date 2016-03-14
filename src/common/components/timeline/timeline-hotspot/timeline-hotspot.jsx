@@ -15,12 +15,14 @@ export default class TimelineHotspot extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.withinCurrentTime !== nextProps.withinCurrentTime) {
+      this.clearAnimations();
+
       if(nextProps.withinCurrentTime) {
-        this.clearAnimations();
-        this.timeOutIds.push(setTimeout(this.showCTA, 100));
+        // Show and Hide after xxx ms because it is within currentTime range
+        this.showCTA(); 
         this.timeOutIds.push(setTimeout(this.hideCTA, 3000));
+        // Hide faster because it is not within currentTime range
       } else if(!this.state.hasUserInteraction){
-        this.clearAnimations();
         this.timeOutIds.push(setTimeout(this.hideCTA, 300));
       }
     }

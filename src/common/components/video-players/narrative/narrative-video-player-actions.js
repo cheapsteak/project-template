@@ -3,11 +3,19 @@ export const PLAY_NARRATIVE_VIDEO = 'PLAY_NARRATIVE_VIDEO';
 export const STOP_NARRATIVE_VIDEO = 'STOP_NARRATIVE_VIDEO';
 export const SHOW_NARRATIVE_VIDEO_FULL_CONTROLS = 'SHOW_NARRATIVE_VIDEO_FULL_CONTROLS';
 export const HIDE_NARRATIVE_VIDEO_FULL_CONTROLS = 'HIDE_NARRATIVE_VIDEO_FULL_CONTROLS';
+export const SET_NARRATIVE_VIDEO_CIRCLE_CTA = 'SET_NARRATIVE_VIDEO_CIRCLE_CTA';
 
 export function setVideoTime(time) {
   return {
     type: SET_NARRATIVE_VIDEO_TIME,
     time
+  }
+}
+
+export function setCircleCTA(cta) {
+  return {
+    type: SET_NARRATIVE_VIDEO_CIRCLE_CTA,
+    circleCTA: cta
   }
 }
 
