@@ -175,7 +175,7 @@ export default class Timeline extends React.Component {
                       route={point.route}
                       onClick={this.handlePointClick.bind(this, point.time)}
                     >
-                      <HoverCard src={point.img} />
+                      <HoverCard src={point.img} ctaText={point.ctaText} />
                     </HotSpot>
                   )
                 })
