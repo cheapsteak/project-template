@@ -3,13 +3,17 @@ import {
   PLAY_NARRATIVE_VIDEO,
   STOP_NARRATIVE_VIDEO,
   SHOW_NARRATIVE_VIDEO_FULL_CONTROLS,
-  HIDE_NARRATIVE_VIDEO_FULL_CONTROLS
+  HIDE_NARRATIVE_VIDEO_FULL_CONTROLS,
+  SET_NARRATIVE_VIDEO_CIRCLE_CTA
 } from './narrative-video-player-actions.js';
 
 import dataModel from '../../../data/narrative-video.js';
 
 function videos(state = dataModel, action) {
   switch (action.type) {
+    case SET_NARRATIVE_VIDEO_CIRCLE_CTA:
+      return Object.assign({}, state, { circleCTA: action.circleCTA });
+
     case SHOW_NARRATIVE_VIDEO_FULL_CONTROLS:
       return Object.assign({}, state, { isFullControls: true });
 
