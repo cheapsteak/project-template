@@ -194,6 +194,7 @@ export default class GridVideoPlayer extends React.Component {
             ? <LearnMoreCard
               image={this.props.chapterImage}
               title={this.props.chapterName}
+              route={this.props.chapterRoute}
             />
             : undefined 
           }

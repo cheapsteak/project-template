@@ -95,13 +95,15 @@ export default class LearnMoreCard extends React.Component {
         ref="card"
         className="learn-more-cta"
       >
-        <img src={this.props.image} />
-        <div ref="frontOverlay" className="bottom-overlay-front">
-          <div ref="button" className="learn-more-button">+</div>
-          <label ref="label">Learn More</label>
-          <h3 ref="title">{this.props.title}</h3>
-        </div>
-        <div ref="backOverlay" className="bottom-overlay-back"></div>
+        <Link to={this.props.route}>
+          <img src={this.props.image} />
+          <div ref="frontOverlay" className="bottom-overlay-front">
+            <div ref="button" className="learn-more-button">+</div>
+            <label ref="label">Learn More</label>
+            <h3 ref="title">{this.props.title}</h3>
+          </div>
+          <div ref="backOverlay" className="bottom-overlay-back"></div>
+          </Link>
       </div>
     )
   }

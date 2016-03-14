@@ -108,7 +108,11 @@
     }
 
     .learn-more-cta {
-
+      cursor: pointer;
+      a {
+        width: 100%;
+        height: 100%;
+      }
       .bottom-overlay-front, .bottom-overlay-back {
         position: absolute;
         width: 100%;
