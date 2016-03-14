@@ -23,9 +23,9 @@ export default class ParallaxVideo extends React.Component {
   };
 
   static defaultProps = {
-    bgVideoDepth: 0.7,
-    fgVideoDepth: 0.5,
-    parallaxOpts: {duration: 4},
+    bgVideoDepth: 1,
+    fgVideoDepth: 0.7,
+    parallaxOpts: {duration: 3},
     animateIn: () => {
       console.log('default animateIn');
     },
@@ -62,7 +62,7 @@ export default class ParallaxVideo extends React.Component {
   positionElements = () => {
     BackgroundCover(this.bgVideo, this.containerEl);
     BackgroundCover(this.fgCanvas, this.containerEl, 0.5, 0);
-    this.parallax.updateLimits(window.innerWidth * 0.1, window.innerHeight * 0.1);
+    this.parallax.updateLimits(window.innerWidth * 0.15, window.innerHeight * 0.15);
   };
 
   onVideoReady = () => {

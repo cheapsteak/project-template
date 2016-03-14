@@ -9,6 +9,7 @@ export default {
   'parallax-video-wrapper': require('./parallax-video-wrapper/parallax-video-wrapper'),
   'parallax-video-history': require('./parallax-video/history'),
   'parallax-video-welcome': require('./parallax-video/welcome'),
+  'parallax-video-welcome-2': require('./parallax-video/welcome-2'),
   'parallax-video-science': require('./parallax-video/science'),
   'parallax-video-computer-science': require('./parallax-video/computer-science'),
   'parallax-video-electives': require('./parallax-video/electives'),
