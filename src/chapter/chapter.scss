@@ -12,6 +12,8 @@
     margin-top: 50px;
     margin-left: 50px;
     width: calc(100% - 50px);
+
+    background-color: white;
   }
 
   .nav {
@@ -33,8 +35,9 @@
     }
   }
 
-  .header-container {
+  .chapter-header {
     overflow: hidden;
     height: calc(100vh - 50px);
+    background-color: #E2D3AC;
   }
 }
