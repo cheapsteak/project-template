@@ -13,6 +13,7 @@ export default {
       ctaText: 'Science',
       time: 2,
       img: '/hover-card.jpg',
+      ctaText: 'Science',
       route: '/tests/narrative-video-player#Science'
     },
     {
@@ -20,6 +21,7 @@ export default {
       time: 4,
       ctaText: 'Math',
       img: '/hover-card.jpg',
+      ctaText: 'Math',
       route: '/tests/narrative-video-player#Math'
     },
     {
@@ -27,6 +29,7 @@ export default {
       time: 6,
       ctaText: 'Computer Science',
       img: '/hover-card.jpg',
+      ctaText: 'Computer Science',
       route: '/tests/narrative-video-player#CompSci'
     },
     {
@@ -34,6 +37,7 @@ export default {
       time: 8,
       ctaText: 'Art',
       img: '/hover-card.jpg',
+      ctaText: 'Art',
       route: '/tests/narrative-video-player#Art'
     },
   ]

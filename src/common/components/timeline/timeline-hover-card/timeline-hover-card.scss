@@ -1,13 +1,68 @@
 .timeline-hover-card {
   position: absolute;
-  text-align: center;
-  overflow: hidden;
-  cursor: pointer;
 
-  img {
-    // position: relative;
-    // // left: 50%;
-    // top: 50%;
-    // transform: translate(0%, -50%);
+  .card {
+    position: absolute;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    width: 120px;
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  .line {
+    position: absolute;
+    width: 2px;
+    height: 35px;
+    background-color: white;
+    z-index: 1;
+  }
+
+  .cta-text, .cta-label {
+    font-weight: bold;
+    color: white;
+  }
+
+  .cta-text {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    font-size: 19px;
+    transform: translate(-50%, 50%);
+    z-index: 1;
+  }
+
+  .cta-label {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    font-size: 13px;
+    transform: translate(-50%, 50%);
+    z-index: 3;
+  }
+
+  .front-label-bg, .back-label-bg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2
+  }
+
+  .front-label-bg {
+    background-color: rgba(144,114,68, 0.8);
+    height: 30px;
+  }
+
+  .back-label-bg {
+    background-color: rgba(144,114,68, 0.5);
+    height: 40px
   }
 }
