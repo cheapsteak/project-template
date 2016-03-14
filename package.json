@@ -56,6 +56,7 @@
     "browserify-hmr": "^0.3.1",
     "browsernizr": "^2.0.1",
     "chapter": "file:./src/chapter",
+    "svgs": "file:./src/assets/svgs",
     "colors": "^1.1.2",
     "common": "file:./src/common",
     "connect-modrewrite": "^0.8.5",
