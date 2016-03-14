@@ -93,7 +93,7 @@ export default class LearnMoreCard extends React.Component {
     return (
       <div
         ref="card"
-        className="learn-more-cta"
+        className="learn-more-card"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />
