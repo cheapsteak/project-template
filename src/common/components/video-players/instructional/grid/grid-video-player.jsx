@@ -2,8 +2,10 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
-import FullBrowserButtonSvg from '../../../../../assets/photo-essay-fullscreen-button.svg';
+import BackButtonSvg from '../../../../../assets/video-back-button.svg';
+import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
 import { Link } from 'react-router';
+import animate from 'gsap-promise';
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -12,44 +14,26 @@ export default class GridVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
-  videoId = 'target-video';
-  cloneId = 'clone-video';
+  componentDidMount() {
+    const { learnMore, videoReplay, replayButton } = this.refs;
+    const offsetX = 20;
+    const offsetY = 60;
 
-  componentWillEnterFullBrowser = () => {
-    const container = findDOMNode(this);
-    const video = document.querySelector(`#${this.videoId}`);
-    const videoParent = video.parentNode;
-    const clone = video.cloneNode();
-    const isPlaying = !video.paused;
+    animate.set(learnMore, { 
+      x: window.innerWidth/2 - learnMore.offsetWidth - offsetX,
+      y: window.innerHeight/2 - learnMore.offsetHeight/2 - offsetY
+    });
 
-    clone['data-reactid'] = new Date().getTime();
-    clone.id = this.cloneId;
+    animate.set(videoReplay, {
+      x: window.innerWidth/2 + offsetX,
+      y: window.innerHeight/2 - videoReplay.offsetHeight/2 - offsetY
+    });
 
-    videoParent.removeChild(video)
-    videoParent.insertBefore(clone, videoParent.firstChild);
-    container.insertBefore(video, container.firstChild);
-
-    this.video = video;
-
-    isPlaying && video.play();
-
-    return Promise.resolve();
-  };
-
-  componentWillLeaveFullBrowser = () => { 
-    const container = findDOMNode(this);
-    const clone = document.querySelector('#clone-video');
-    const cloneParent = clone.parentNode;
-    const video = document.querySelector(`#${this.videoId}`);
-    const isPlaying = !video.paused;
-
-    cloneParent.removeChild(clone)
-    cloneParent.insertBefore(video, cloneParent.firstChild);
-
-    isPlaying && video.play();
-
-    return Promise.resolve();
-  };
+    animate.set(replayButton, {
+      x: window.innerWidth/2 - replayButton.offsetWidth/2,
+      y: window.innerHeight/1.25 - replayButton.offsetHeight/2
+    });
+  }
 
   changeVideoTime = (time) => {
     this.video.currentTime = time;
@@ -82,60 +66,71 @@ export default class GridVideoPlayer extends React.Component {
 
   };
 
+  handleEnded = (e) => {
+    this.handleVideoPlayPause();
+    this.animateInEndOverlay();
+  };
+
+  animateInEndOverlay = () => {
+  };
+
   render() {
-    const { style, modelSlug, basePath, isFullBrowser } = this.props;
+    const { style, modelSlug } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
-
-    let route = `${basePath}`;
-
-    if(!this.props.isFullBrowser) {
-      route = route + `/instructional-videos/${modelSlug}`;
-    }
-
-    return <div className="instructional-video-player grid-player" style={style}>
-      {
-        !isFullBrowser ? 
-          <video
-            id={this.videoId}
-            preload="metadata"
-            ref={(node) => this.video = node }
-            src={this.props.src}
-            onLoadedMetadata={this.handleMetadataLoaded}
-            onEnded={this.handleVideoPlayPause}
-            onTimeUpdate={this.handleTimeUpdate}
-          >
-          </video>
-          : undefined
-      }
-      <div className="controls" ref="controls">
-        <div className="control-group">
-          <span
-            className="button"
-            style={tempPauseStyle}
-            dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
-            onClick={this.handleVideoPlayPause}
-          >
-          </span>
-          <Link className="button fullbrowser-button" to={route}>
+    
+    // console.log('PROPS:', this.props);
+        
+    return (
+      <div className="instructional-video-player grid-player" style={style}>
+        <video
+          id={this.videoId}
+          preload="metadata"
+          ref={(node) => this.video = node }
+          src={this.props.src}
+          onLoadedMetadata={this.handleMetadataLoaded}
+          onEnded={this.handleEnded}
+          onTimeUpdate={this.handleTimeUpdate}
+        >
+        </video>
+        <div className="controls" ref="controls">
+          <div className="control-group">
             <span
-              dangerouslySetInnerHTML={{__html: FullBrowserButtonSvg}}
+              className="button"
+              style={tempPauseStyle}
+              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              onClick={this.handleVideoPlayPause}
             >
             </span>
-          </Link>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+              onClick={this.handlePrevClick}
+            >
+            </span>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+              onClick={this.handleNextClick}
+            >
+            </span>
+          </div>
+          <Timeline
+            currentTime={this.props.currentTime || 0}
+            duration={this.props.duration || 0}
+            onTimeChange={this.changeVideoTime}
+            items={[]}
+          />
         </div>
-        {
-          /* 
-            The duration is put into the store and pass down to the component
-            to account for the work around with moving around the video node 
-          */
-        }
-        <Timeline
-          currentTime={this.props.currentTime || 0}
-          duration={this.props.duration || 0}
-          onTimeChange={this.changeVideoTime}
-          items={[]}
-        />
+        <div className="end-overlay">
+          <div ref="learnMore" className="learn-more-cta">
+            <h3>Science</h3>
+          </div>
+          <div ref="videoReplay" className="next-video-cta">
+            <h2>Parental Investment</h2>
+          </div>
+          <div ref="replayButton" className="replay-button"></div>
+        </div>
       </div>
-    </div>
+    )
   }
 }
