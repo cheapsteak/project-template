@@ -23,10 +23,6 @@ export default class GridTile extends React.Component {
     isFilterEnabled: React.PropTypes.bool
   };
 
-  //static defaultProps = {
-  //  isFilterEnabled: true
-  //};
-
   state = {
     data: {},
     size: sizes.LANDSCAPE
@@ -191,31 +187,16 @@ export default class GridTile extends React.Component {
   };
 
   animateIn = (tileIndex, fillers) => {
-
-    setTimeout(() => {
-      return animate.all([
-        this.animateInLayers(tileIndex),
-        this.animateInGridFillers(fillers)
-      ]).then(() => {
-        console.log('wdd')
-      })
-    });
+    this.animateInLayers(tileIndex);
+    if (fillers) this.animateInGridFillers(fillers)
   };
 
   applyFilter = () => {
-    return
-    console.log('applyFilter')
     animate.to(this.containerEl, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: Expo.easeOut});
-    //this.context.eventBus.emit('disableParallax', this);
   };
 
   removeFilter = () => {
-    return
-    console.log('removeFilter')
     animate.to(this.containerEl, 0.5, {scale: 1, autoAlpha: 1, ease: Expo.easeOut})
-      .then(() => {
-        //this.context.eventBus.emit('disableParallax', this);
-      })
   };
 
   render() {
