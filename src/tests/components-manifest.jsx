@@ -10,6 +10,7 @@ export default {
   'parallax-video-history': require('./parallax-video/history'),
   'parallax-video-welcome': require('./parallax-video/welcome'),
   'parallax-video-welcome-2': require('./parallax-video/welcome-2'),
+  'parallax-video-character-development': require('./parallax-video/character-development'),
   'parallax-video-science': require('./parallax-video/science'),
   'parallax-video-computer-science': require('./parallax-video/computer-science'),
   'parallax-video-electives': require('./parallax-video/electives'),
