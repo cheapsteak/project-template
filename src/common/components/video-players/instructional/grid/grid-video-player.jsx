@@ -2,8 +2,52 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
-import FullBrowserButtonSvg from '../../../../../assets/photo-essay-fullscreen-button.svg';
+import BackButtonSvg from '../../../../../assets/video-back-button.svg';
+import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
 import { Link } from 'react-router';
+import animate from 'gsap-promise';
+import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
+import TransitionGroup from 'react-transition-group-plus';
+
+const animationStates = (els) => {
+  const tileOffsetX = 20;
+  const tileOffsetY = 60;
+  const centerX = window.innerWidth/2;
+  const centerY = window.innerHeight/2;
+  const outOffsetY = 100;
+    
+  return {
+    out: {
+      endingOverlay: {
+        display: 'none',
+        opacity: 0
+      },
+      nextVideo: {
+        opacity: 0,
+        x: centerX + tileOffsetX,
+        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY + outOffsetY
+      },
+      replayButton: {
+        x: centerX - els.replayButton.offsetWidth/2,
+        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2 + outOffsetY
+      },
+    },
+    idle: {
+      endingOverlay: {
+        display: 'block',
+        opacity: 1
+      },
+      nextVideo: {
+        delay: 0.3,
+        opacity: 1,
+        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY
+      },
+      replayButton: {
+        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2
+      }
+    }
+  };
+};
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -12,44 +56,27 @@ export default class GridVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
-  videoId = 'target-video';
-  cloneId = 'clone-video';
+  state = {
+    showEndingCTA: false
+  }
 
-  componentWillEnterFullBrowser = () => {
-    const container = findDOMNode(this);
-    const video = document.querySelector(`#${this.videoId}`);
-    const videoParent = video.parentNode;
-    const clone = video.cloneNode();
-    const isPlaying = !video.paused;
+  componentDidMount() {
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+    this.animationStates = animationStates(this.refs);
 
-    clone['data-reactid'] = new Date().getTime();
-    clone.id = this.cloneId;
+    animate.set(endingOverlay, this.animationStates.out.endingOverlay);
+    animate.set(nextVideo, this.animationStates.out.nextVideo);
+    animate.set(replayButton, this.animationStates.out.replayButton);
+  }
 
-    videoParent.removeChild(video)
-    videoParent.insertBefore(clone, videoParent.firstChild);
-    container.insertBefore(video, container.firstChild);
-
-    this.video = video;
-
-    isPlaying && video.play();
-
-    return Promise.resolve();
-  };
-
-  componentWillLeaveFullBrowser = () => { 
-    const container = findDOMNode(this);
-    const clone = document.querySelector('#clone-video');
-    const cloneParent = clone.parentNode;
-    const video = document.querySelector(`#${this.videoId}`);
-    const isPlaying = !video.paused;
-
-    cloneParent.removeChild(clone)
-    cloneParent.insertBefore(video, cloneParent.firstChild);
-
-    isPlaying && video.play();
-
-    return Promise.resolve();
-  };
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.duration && nextProps.currentTime === nextProps.duration) {
+      this.animateInEndOverlay();
+    } else if(this.props.currentTime === this.props.duration
+      && nextProps.currentTime !== nextProps.duration) {
+      this.animateOutEndOverlay();
+    }
+  }
 
   changeVideoTime = (time) => {
     this.video.currentTime = time;
@@ -82,60 +109,102 @@ export default class GridVideoPlayer extends React.Component {
 
   };
 
+  handleEnded = (e) => {
+    this.handleVideoPlayPause();
+    this.animateInEndOverlay();
+  };
+
+  animateInEndOverlay = () => {
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+
+    animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+      .then(() => this.setState({ showEndingCTA: true }));
+
+    // To be moved out and become a stateless component
+    animate.to(nextVideo, 0.3, this.animationStates.idle.nextVideo);
+    animate.to(replayButton, 0.3, this.animationStates.idle.replayButton);
+  };
+
+  animateOutEndOverlay = () => {
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+
+    animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay)
+      .then(() => this.setState({ showEndingCTA: false }));
+
+    // To be moved out and become a stateless component
+    animate.to(nextVideo, 0.3, this.animationStates.out.nextVideo);
+    animate.to(replayButton, 0.3, this.animationStates.out.replayButton);
+  };
+
   render() {
-    const { style, modelSlug, basePath, isFullBrowser } = this.props;
+    const { style, modelSlug } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
 
-    let route = `${basePath}`;
-
-    if(!this.props.isFullBrowser) {
-      route = route + `/instructional-videos/${modelSlug}`;
-    }
-
-    return <div className="instructional-video-player" style={style}>
-      {
-        !isFullBrowser ? 
-          <video
-            id={this.videoId}
-            preload="metadata"
-            ref={(node) => this.video = node }
-            src={this.props.src}
-            onLoadedMetadata={this.handleMetadataLoaded}
-            onEnded={this.handleVideoPlayPause}
-            onTimeUpdate={this.handleTimeUpdate}
-          >
-          </video>
-          : undefined
-      }
-      <div className="controls" ref="controls">
-        <div className="control-group">
-          <span
-            className="button"
-            style={tempPauseStyle}
-            dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
-            onClick={this.handleVideoPlayPause}
-          >
-          </span>
-          <Link className="button fullbrowser-button" to={route}>
+    return (
+      <div className="instructional-video-player grid-player" style={style}>
+        <video
+          id={this.videoId}
+          preload="metadata"
+          ref={(node) => this.video = node }
+          src={this.props.src}
+          onLoadedMetadata={this.handleMetadataLoaded}
+          onEnded={this.handleEnded}
+          onTimeUpdate={this.handleTimeUpdate}
+        >
+        </video>
+        <div className="controls" ref="controls">
+          <div className="control-group">
             <span
-              dangerouslySetInnerHTML={{__html: FullBrowserButtonSvg}}
+              className="button"
+              style={tempPauseStyle}
+              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              onClick={this.handleVideoPlayPause}
             >
             </span>
-          </Link>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+              onClick={this.handlePrevClick}
+            >
+            </span>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+              onClick={this.handleNextClick}
+            >
+            </span>
+          </div>
+          <Timeline
+            currentTime={this.props.currentTime || 0}
+            duration={this.props.duration || 0}
+            onTimeChange={this.changeVideoTime}
+            items={[]}
+          />
         </div>
-        {
-          /* 
-            The duration is put into the store and pass down to the component
-            to account for the work around with moving around the video node 
-          */
-        }
-        <Timeline
-          currentTime={this.props.currentTime || 0}
-          duration={this.props.duration || 0}
-          onTimeChange={this.changeVideoTime}
-          items={[]}
-        />
+        <div
+          ref="endingOverlay"
+          className="end-overlay"
+        >
+          <TransitionGroup
+            component="div"
+            className="route-content-wrapper full-height"
+          >
+          {
+            this.state.showEndingCTA
+            ? <LearnMoreCard
+              image={this.props.chapterImage}
+              title={this.props.chapterName}
+              route={this.props.chapterRoute}
+            />
+            : undefined 
+          }
+          </TransitionGroup>
+          <div ref="nextVideo" className="next-video-cta">
+            <h2>Parental Investment</h2>
+          </div>
+          <div ref="replayButton" className="replay-button"></div>
+        </div>
       </div>
-    </div>
+    )
   }
 }

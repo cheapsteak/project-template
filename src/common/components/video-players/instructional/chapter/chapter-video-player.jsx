@@ -92,7 +92,7 @@ export default class ChapterVideoPlayer extends React.Component {
       route = route + `/instructional-videos/${modelSlug}`;
     }
 
-    return <div className="instructional-video-player" style={style}>
+    return <div className="instructional-video-player chapter-player" style={style}>
       {
         !isFullBrowser ? 
           <video
