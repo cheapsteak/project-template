@@ -1,41 +1,41 @@
 @font-face {
   font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat.woff') format('woff'); 
+  src: url($ASSET_PATH + '/fonts/akkurat-normal.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat-italic.woff') format('woff'); 
+  font-family: 'akkurat-italic';
+  src: url($ASSET_PATH + '/fonts/akkurat-normal-italic.woff') format('woff');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat-light.woff') format('woff'); 
-  font-weight: light;
+  font-family: 'akkurat-light';
+  src: url($ASSET_PATH + '/fonts/akkurat-light.woff') format('woff');
+  font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat-light-italic.woff') format('woff'); 
-  font-weight: light;
+  font-family: 'akkurat-light-italic';
+  src: url($ASSET_PATH + '/fonts/akkurat-light-italic.woff') format('woff');
+  font-weight: 100;
   font-style: italic;
 }
 
 @font-face {
-  font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat-bold.woff') format('woff'); 
+  font-family: 'akkurat-bold';
+  src: url($ASSET_PATH + '/fonts/akkurat-bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'akkurat';
-  src: url($ASSET_PATH + '/fonts/akkurat-bold-italic.woff') format('woff'); 
+  font-family: 'akkurat-bold-italic';
+  src: url($ASSET_PATH + '/fonts/akkurat-bold-italic.woff') format('woff');
   font-weight: bold;
   font-style: italic;
 }
