@@ -42,8 +42,6 @@ export default class GridManager extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
-    this.context.eventBus.off('mouseOverTile', this.handleMouseEnterTile);
-    this.context.eventBus.off('mouseOutTile', this.handleMouseLeaveTile);
     this.parallax.destroy();
   }
 

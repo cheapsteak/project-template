@@ -1,5 +1,6 @@
 @import 'vars';
 @import 'fonts';
+@import 'breakpoints';
 
 html, body {
   position: absolute;
@@ -12,7 +13,21 @@ html, body {
   font-family: "akkurat", sans-serif;
 }
 
-.gpu {
+@mixin gpu {
   backface-visibility: hidden;
   perspective: 1000px;
+}
+
+@mixin autoAlpha-0 {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@mixin autoAlpha-1 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gpu {
+  @include gpu;
 }

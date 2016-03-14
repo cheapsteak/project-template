@@ -50,10 +50,13 @@ var Parallax = function (scene, opts) {
         y = depth * opts.limitY * vector[1];
       } else {
         depth = currLayer.dataset.depth;
-        var relX = (scene.offsetWidth / 2 - mouseX);
-        var relY = (scene.offsetHeight / 2 - mouseY);
-        x = _normalizeValue(relX, opts.limitX, -opts.limitX) * depth * vector[0];
-        y = _normalizeValue(relY, opts.limitY, -opts.limitY) * depth * vector[1];
+        //var relX = (scene.offsetWidth / 2 - mouseX);
+        //y = (scene.offsetHeight / 2 - mouseY);
+        //x = _normalizeValue(relX, opts.limitX, -opts.limitX) * depth * vector[0];
+        //y = _normalizeValue(relY, opts.limitY, -opts.limitY) * depth * vector[1];
+
+        y = mouseY / scene.offsetHeight * opts.limitY * vector[1] * depth;
+        x = mouseX / scene.offsetWidth * opts.limitX * vector[0] * depth;
       }
 
       if (layersObjArray[i].enabled) _setLayerPosition(x, y);
