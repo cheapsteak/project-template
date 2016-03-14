@@ -6,6 +6,48 @@ import BackButtonSvg from '../../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
+import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
+import TransitionGroup from 'react-transition-group-plus';
+
+const animationStates = (els) => {
+  const tileOffsetX = 20;
+  const tileOffsetY = 60;
+  const centerX = window.innerWidth/2;
+  const centerY = window.innerHeight/2;
+  const outOffsetY = 100;
+    
+  return {
+    out: {
+      endingOverlay: {
+        display: 'none',
+        opacity: 0
+      },
+      nextVideo: {
+        opacity: 0,
+        x: centerX + tileOffsetX,
+        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY + outOffsetY
+      },
+      replayButton: {
+        x: centerX - els.replayButton.offsetWidth/2,
+        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2 + outOffsetY
+      },
+    },
+    idle: {
+      endingOverlay: {
+        display: 'block',
+        opacity: 1
+      },
+      nextVideo: {
+        delay: 0.3,
+        opacity: 1,
+        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY
+      },
+      replayButton: {
+        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2
+      }
+    }
+  };
+};
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -14,25 +56,26 @@ export default class GridVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  state = {
+    showEndingCTA: false
+  }
+
   componentDidMount() {
-    const { learnMore, videoReplay, replayButton } = this.refs;
-    const offsetX = 20;
-    const offsetY = 60;
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+    this.animationStates = animationStates(this.refs);
 
-    animate.set(learnMore, { 
-      x: window.innerWidth/2 - learnMore.offsetWidth - offsetX,
-      y: window.innerHeight/2 - learnMore.offsetHeight/2 - offsetY
-    });
+    animate.set(endingOverlay, this.animationStates.out.endingOverlay);
+    animate.set(nextVideo, this.animationStates.out.nextVideo);
+    animate.set(replayButton, this.animationStates.out.replayButton);
+  }
 
-    animate.set(videoReplay, {
-      x: window.innerWidth/2 + offsetX,
-      y: window.innerHeight/2 - videoReplay.offsetHeight/2 - offsetY
-    });
-
-    animate.set(replayButton, {
-      x: window.innerWidth/2 - replayButton.offsetWidth/2,
-      y: window.innerHeight/1.25 - replayButton.offsetHeight/2
-    });
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.duration && nextProps.currentTime === nextProps.duration) {
+      this.animateInEndOverlay();
+    } else if(this.props.currentTime === this.props.duration
+      && nextProps.currentTime !== nextProps.duration) {
+      this.animateOutEndOverlay();
+    }
   }
 
   changeVideoTime = (time) => {
@@ -72,14 +115,31 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateInEndOverlay = () => {
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+
+    animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+      .then(() => this.setState({ showEndingCTA: true }));
+
+    // To be moved out and become a stateless component
+    animate.to(nextVideo, 0.3, this.animationStates.idle.nextVideo);
+    animate.to(replayButton, 0.3, this.animationStates.idle.replayButton);
+  };
+
+  animateOutEndOverlay = () => {
+    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+
+    animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay)
+      .then(() => this.setState({ showEndingCTA: false }));
+
+    // To be moved out and become a stateless component
+    animate.to(nextVideo, 0.3, this.animationStates.out.nextVideo);
+    animate.to(replayButton, 0.3, this.animationStates.out.replayButton);
   };
 
   render() {
     const { style, modelSlug } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
-    
-    // console.log('PROPS:', this.props);
-        
+
     return (
       <div className="instructional-video-player grid-player" style={style}>
         <video
@@ -121,11 +181,24 @@ export default class GridVideoPlayer extends React.Component {
             items={[]}
           />
         </div>
-        <div className="end-overlay">
-          <div ref="learnMore" className="learn-more-cta">
-            <h3>Science</h3>
-          </div>
-          <div ref="videoReplay" className="next-video-cta">
+        <div
+          ref="endingOverlay"
+          className="end-overlay"
+        >
+          <TransitionGroup
+            component="div"
+            className="route-content-wrapper full-height"
+          >
+          {
+            this.state.showEndingCTA
+            ? <LearnMoreCard
+              image={this.props.chapterImage}
+              title={this.props.chapterName}
+            />
+            : undefined 
+          }
+          </TransitionGroup>
+          <div ref="nextVideo" className="next-video-cta">
             <h2>Parental Investment</h2>
           </div>
           <div ref="replayButton" className="replay-button"></div>
