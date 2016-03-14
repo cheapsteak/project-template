@@ -25,7 +25,7 @@ export default class ParallaxVideo extends React.Component {
   static defaultProps = {
     bgVideoDepth: 1,
     fgVideoDepth: 0.7,
-    parallaxOpts: {duration: 3},
+    parallaxOpts: {duration: 2},
     animateIn: () => {
       console.log('default animateIn');
     },
