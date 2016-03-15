@@ -102,11 +102,11 @@ export default class GridTile extends React.Component {
   };
 
   handleMouseEnter = () => {
-    this.context.eventBus.emit('mouseEnterTile', this);
-
     if (this.filterApplied) {
       return;
     }
+
+    this.context.eventBus.emit('mouseEnterTile', this);
 
     const filter = 'grayscale(100%)';
     const ctaItems = this.refs.rightCtaIcon
@@ -204,11 +204,13 @@ export default class GridTile extends React.Component {
   };
 
   applyFilter = () => {
+    this.context.eventBus.emit('mouseEnterTile', this);
     this.filterApplied = true;
     animate.to(this.refs.contentWrapper, 0.3, {scale: 0.9, autoAlpha: 0.1, pointerEvents: 'none', ease: Expo.easeOut});
   };
 
   removeFilter = () => {
+    this.context.eventBus.emit('mouseLeaveTile', this);
     if (this.filterApplied) {
       animate.to(this.refs.contentWrapper, 0.3, {scale: 1, autoAlpha: 1, pointerEvents: 'auto', ease: Expo.easeOut});
       this.filterApplied = false;

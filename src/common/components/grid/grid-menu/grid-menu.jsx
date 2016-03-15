@@ -37,7 +37,12 @@ export default class GridMenu extends React.Component {
   }
 
   animateIn = (duration, delay) => {
-    animate.to(this.containerEl, duration || 0.5, {y: '0%', ease: Expo.easeOut, delay: delay || 0});
+    delay = delay || 0;
+    const ctaItems = [this.refs.returnIcon, this.refs.returnText, this.refs.filterIcon, this.refs.filterText, this.refs.closeIcon, this.refs.closeText];
+
+    animate.set(ctaItems, {y: 20, autoAlpha: 0});
+    animate.to(this.containerEl, duration || 0.5, {y: '0%', ease: Expo.easeOut, delay: delay});
+    animate.staggerTo(ctaItems, 0.05, {y: 0, autoAlpha: 1, delay: delay + 0.2, ease: Expo.easeOut}, 0.1)
   };
 
   handleFilterClick = () => {
@@ -73,8 +78,12 @@ export default class GridMenu extends React.Component {
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
         >
-          <div className={`icon return`} dangerouslySetInnerHTML={{ __html: IconReturn }}></div>
-          <p>Return to Documentary</p>
+          <div
+            ref="returnIcon"
+            className={`icon return`}
+            dangerouslySetInnerHTML={{ __html: IconReturn }}
+          ></div>
+          <p ref="returnText">Return to Documentary</p>
         </div>
 
         <div
@@ -82,8 +91,12 @@ export default class GridMenu extends React.Component {
           className={`filter tab ${filterState}`}
           onClick={this.handleFilterClick}
         >
-          <div className={`icon filter`} dangerouslySetInnerHTML={{ __html: IconFilter }}></div>
-          <p>See Instructional Videos</p>
+          <div
+            ref="filterIcon"
+            className={`icon filter`}
+            dangerouslySetInnerHTML={{ __html: IconFilter }}
+          ></div>
+          <p ref="filterText">See Instructional Videos</p>
         </div>
 
         <div
@@ -91,8 +104,12 @@ export default class GridMenu extends React.Component {
           className={`close tab ${closeState}`}
           onClick={this.handleCloseClick}
         >
-          <div className={`icon close`} dangerouslySetInnerHTML={{ __html: IconClose }}></div>
-          <p>Close</p>
+          <div
+            ref="closeIcon"
+            className={`icon close`}
+            dangerouslySetInnerHTML={{ __html: IconClose }}
+          ></div>
+          <p ref="closeText">Close</p>
         </div>
 
       </div>
