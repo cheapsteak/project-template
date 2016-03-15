@@ -5,18 +5,11 @@ import animate from 'gsap-promise';
 
 
 function calculateAnimationStates(els) {
-  const tileOffsetX = 20;
-  const tileOffsetY = 60;
-  const outOffsetY = 100;
-  const centerX = els.card.parentNode.offsetWidth/2;
-  const centerY = els.card.parentNode.offsetHeight/2;
-
   return {
     out: {
       card: {
         opacity: 0,
-        x: centerX - els.card.offsetWidth - tileOffsetX,
-        y: centerY - els.card.offsetHeight/2 - tileOffsetY + outOffsetY
+        y: 110
       },
       frontOverlay: {
         y: els.frontOverlay.offsetHeight
@@ -33,7 +26,7 @@ function calculateAnimationStates(els) {
       card: {
         delay: 0.3,
         opacity: 1,
-        y: centerY - els.card.offsetHeight/2 - tileOffsetY
+        y: 0
       },
       frontOverlay: {
         delay: 0.7,
