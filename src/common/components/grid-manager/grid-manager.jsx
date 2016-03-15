@@ -1,5 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
+import animate from 'gsap-promise';
 import Parallax from '../../utils/parallax';
 import Layout890 from '../grid/layout-890';
 import Layout1060 from '../grid/layout-1060';
@@ -37,6 +38,9 @@ export default class GridManager extends React.Component {
 
     this.containerEl.addEventListener('scroll', this.handleScroll);
     window.addEventListener('resize', this.handleWindowResize);
+
+    animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.2, paddingTop: 120});
+    this.refs.menu.animateIn(0.6, 1.15);
 
     this.context.eventBus.on('mouseEnterTile', this.handleMouseEnterTile);
     this.context.eventBus.on('mouseLeaveTile', this.handleMouseLeaveTile);
@@ -145,7 +149,7 @@ export default class GridManager extends React.Component {
         <div ref="scene" className={`grid-parallax-scene`}>
           {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
         </div>
-        <GridMenu />
+        <GridMenu ref="menu"/>
       </div>
     );
   }

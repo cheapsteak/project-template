@@ -33,7 +33,12 @@ export default class GridMenu extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
+    animate.set(this.containerEl, {y: '-130%'});
   }
+
+  animateIn = (duration, delay) => {
+    animate.to(this.containerEl, duration || 0.5, {y: '0%', ease: Expo.easeOut, delay: delay || 0});
+  };
 
   handleFilterClick = () => {
     const isFilterActive = !this.state.isFilterActive;
