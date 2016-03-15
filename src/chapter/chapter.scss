@@ -5,12 +5,21 @@
 
   .page-component {
     position: relative;
+    font-size: 1.285714285714vw;
   }
 
   .main {
     position: relative;
     margin-top: 50px;
     margin-left: 50px;
+    @media (min-width: $break-large) {
+      margin-top: (50/1400)px;
+      margin-left: (50/1400)px;
+    }
+    @media (min-width: $break-xlarge) {
+      margin-top: 70px;
+      margin-left: 70px;
+    }
     width: calc(100% - 50px);
 
     background-color: white;

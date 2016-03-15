@@ -1,5 +1,6 @@
 import React from 'react';
 import ParallaxVideoWrapper from 'common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
+import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
 export default class Chapter extends React.Component {
 
@@ -19,7 +20,13 @@ export default class Chapter extends React.Component {
           }
         </div>
 
-        <div className="page-component">Instructional Video</div>
+        <div className="page-component">
+          Instructional Video
+          <InstructionalVideo
+            modelSlug="test"
+            basePath=""
+          />
+        </div>
 
         <div className="page-component">360</div>
         <div className="page-component">photo essay</div>
