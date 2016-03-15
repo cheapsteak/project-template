@@ -299,7 +299,7 @@ export default class GridVideoPlayer extends React.Component {
               <NextVideoCard
                 key={'nextVideoId'}
                 title={this.props.nextVideo.chapterName}
-                route={this.props.nextVideo.chapterRoute}
+                route={this.props.nextVideo.videoRoute}
                 video={this.props.nextVideo.src}
                 timeLeft={this.state.nextVideoTimeLeft}
               />

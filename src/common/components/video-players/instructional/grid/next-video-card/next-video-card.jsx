@@ -104,9 +104,6 @@ export default class NextVideoCard extends React.Component {
   }
 
   render() {
-
-    // TODO: Figure out data structure for instructional videos and remove hardcoded values
-
     return (
       <div
         ref="card"
@@ -114,17 +111,17 @@ export default class NextVideoCard extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Link to={'/tests/chapter'}>
+        <Link to={this.props.route}>
           <video
             ref={ node => this.video = node }
-            src={'/videos/parallax-history.mp4'}
+            src={this.props.video}
           >
           </video>
           <span ref="topUI">
             <div ref="button" className="next-video-button">></div>
             <label>Up Next</label>
           </span>
-          <h2 ref="title">{'Parental Investment'}</h2>
+          <h2 ref="title">{this.props.title}</h2>
           <div ref="button" className="spinner-button">
             <div className="spinner-shadow"></div>
             <span dangerouslySetInnerHTML={{ __html: PlayButton }}></span>

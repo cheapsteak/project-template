@@ -1,5 +1,5 @@
 import dataModel from '../../../data/instructional-videos.js';
-import handleError from 'common/actions/handleError.js';
+import { handleError } from 'common/actions/handleError.js';
 import _ from 'lodash';
 
 export const SET_INSTRUCTIONAL_VIDEO = 'SET_INSTRUCTIONAL_VIDEO';
@@ -18,7 +18,7 @@ export function setVideo(id) {
     action = {
       type: SET_INSTRUCTIONAL_VIDEO,
       currentVideo: dataModel[currentVideoIdx],
-      nextVideo: dataModel[currentVideoIdx < dataModel.length ? currentVideoIdx : 0]
+      nextVideo: dataModel[currentVideoIdx + 1 < dataModel.length ? currentVideoIdx + 1 : 0]
     };
   } 
 

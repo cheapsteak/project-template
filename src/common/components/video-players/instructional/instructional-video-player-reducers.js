@@ -7,7 +7,7 @@ import {
   INSTRUCTIONAL_VIDEO_ERROR
 } from './instructional-video-player-actions.js';
 
-import ERROR from 'common/actions/handleError.js';
+import { ERROR } from 'common/actions/handleError.js';
 
 import dataModel from '../../../data/instructional-videos.js';
 import _ from 'lodash';
