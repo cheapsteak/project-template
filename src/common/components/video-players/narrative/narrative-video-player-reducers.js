@@ -19,7 +19,7 @@ function videos(state = dataModel, action) {
 
     case HIDE_NARRATIVE_VIDEO_FULL_CONTROLS:
       return Object.assign({}, state, { isFullControls: false });
-    
+
     case PLAY_NARRATIVE_VIDEO:
       return Object.assign({}, state, { isPlaying: true });
 

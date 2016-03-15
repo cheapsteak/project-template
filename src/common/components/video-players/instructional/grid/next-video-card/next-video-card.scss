@@ -4,6 +4,8 @@
   height: 440px;
   overflow: hidden;
   cursor: pointer;
+  left: calc(50% + 20px);
+  top: calc(50% - 280px);
 
   .next-video-button {
     position: absolute;
