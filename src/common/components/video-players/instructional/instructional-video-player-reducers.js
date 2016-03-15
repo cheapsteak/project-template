@@ -3,32 +3,67 @@ import {
   SET_INSTRUCTIONAL_VIDEO_TIME,
   SET_INSTRUCTIONAL_VIDEO_DURATION,
   PLAY_INSTRUCTIONAL_VIDEO,
-  STOP_INSTRUCTIONAL_VIDEO
+  STOP_INSTRUCTIONAL_VIDEO,
+  INSTRUCTIONAL_VIDEO_ERROR
 } from './instructional-video-player-actions.js';
 
-function videos(state = {}, action) {
-  switch (action.type) {
+import { ERROR } from 'common/actions/handleError.js';
 
+import dataModel from '../../../data/instructional-videos.js';
+import _ from 'lodash';
+
+const defState = {
+  currentVideo: dataModel[0],
+  nextVideo: dataModel[1]
+};
+
+const defVideoValues = {
+  currentTime: 0,
+  duration: undefined,
+  isPlaying: false
+};
+
+function video(state = {}, action) {
+  switch(action.type) {
     case PLAY_INSTRUCTIONAL_VIDEO:
-      return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { isPlaying: true })});
+      return Object.assign({}, state, { isPlaying: true });
 
     case STOP_INSTRUCTIONAL_VIDEO:
-      return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { isPlaying: false })});
+      return Object.assign({}, state, { isPlaying: false });
 
     case SET_INSTRUCTIONAL_VIDEO:
-      if (!action.id) return state;
-
-      return Object.assign({}, state, { [action.id]: Object.assign({ currentTime: action.time || 0 }, action.data) });
+      return Object.assign({}, defVideoValues, action.video);
 
     case SET_INSTRUCTIONAL_VIDEO_TIME:
-      if (!action.id || typeof action.time !== 'number') return state;
-
-      return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { currentTime: action.time }) });
+      return Object.assign({}, state, { currentTime: action.currentTime });
 
     case SET_INSTRUCTIONAL_VIDEO_DURATION:
-      if (!action.id || typeof action.time !== 'number') return state;
+      return Object.assign({}, state, { duration: action.duration });
+    default:
+      return state;
+  }
+}
 
-      return Object.assign({}, state, { [action.id]: Object.assign({}, state[action.id], { duration: action.time }) });
+function videos(state = defState, action) {
+  switch (action.type) {
+    case SET_INSTRUCTIONAL_VIDEO:
+      return Object.assign({}, state, { 
+        currentVideo: video(state.currentVideo, { type: action.type, video: action.currentVideo }),
+        nextVideo: video(state.currentVideo, { type: action.type, video: action.nextVideo })
+      });
+
+    case PLAY_INSTRUCTIONAL_VIDEO:
+    case STOP_INSTRUCTIONAL_VIDEO:
+    case SET_INSTRUCTIONAL_VIDEO_TIME:
+    case SET_INSTRUCTIONAL_VIDEO_DURATION:
+      return Object.assign({}, state, { 
+        currentVideo: video(state.currentVideo, action)
+      });
+
+    case ERROR:
+      console.warn('Failed to set video', action.error);
+      console.trace();
+      return state;
 
     default:
       return state;
