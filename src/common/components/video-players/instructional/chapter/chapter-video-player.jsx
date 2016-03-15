@@ -9,6 +9,7 @@ export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
+    className: React.PropTypes.string,
     poster: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
@@ -93,7 +94,7 @@ export default class ChapterVideoPlayer extends React.Component {
       route = route + `/instructional-videos/${modelSlug}`;
     }
 
-    return <div className="instructional-video-player chapter-player" style={style}>
+    return <div className={`instructional-video-player chapter-player ${this.props.className}`} style={style}>
       {
         !isFullBrowser ? 
           <video

@@ -73,6 +73,7 @@ export default class GridVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
+    className: React.PropTypes.string,
     poster: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
@@ -222,7 +223,7 @@ export default class GridVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className="instructional-video-player grid-player"
+        className={`instructional-video-player grid-player ${this.props.className}`}
         style={style}
       >
         <div
