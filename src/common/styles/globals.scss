@@ -13,6 +13,10 @@ html, body {
   font-family: "akkurat", sans-serif;
 }
 
+svg {
+  fill: #fff;
+}
+
 @mixin gpu {
   backface-visibility: hidden;
   perspective: 1000px;

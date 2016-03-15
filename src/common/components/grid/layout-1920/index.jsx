@@ -34,6 +34,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile0"
             chapter={`welcome`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -41,6 +42,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile1"
             chapter={`science`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -55,6 +57,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile2"
             chapter={`literacy`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -69,6 +72,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile3"
             chapter={`electives`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -76,6 +80,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile4"
             chapter={`math`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -83,6 +88,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile5"
             chapter={`investment`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -90,6 +96,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile6"
             chapter={`computer`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -97,6 +104,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile7"
             chapter={`history`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -110,6 +118,7 @@ export default class Layout1920 extends GridBase {
           <GridTile
             ref="tile8"
             chapter={`development`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 

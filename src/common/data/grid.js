@@ -5,7 +5,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   science: {
     title: 'science',
@@ -13,7 +13,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   literacy: {
     title: 'literacy & writing',
@@ -21,7 +21,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   math: {
     title: 'math',
@@ -29,7 +29,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   electives: {
     title: 'electives',
@@ -37,7 +37,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   computer: {
     title: 'computer science',
@@ -45,7 +45,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   investment: {
     title: 'parental investment',
@@ -53,7 +53,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   development: {
     title: 'character development',
@@ -61,7 +61,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   history: {
     title: 'history',
@@ -69,7 +69,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: 'tests/instructional-grid-player'
   }
 };
 

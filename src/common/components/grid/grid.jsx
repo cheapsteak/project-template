@@ -10,7 +10,8 @@ const states = {
 export default class Grid extends React.Component {
 
   static propTypes = {
-    screenWidth: React.PropTypes.number
+    screenWidth: React.PropTypes.number,
+    isFiltered: React.PropTypes.bool
   };
 
   componentWillReceiveProps(newProps) {
@@ -27,7 +28,9 @@ export default class Grid extends React.Component {
 
     this.tiles = this.getTiles();
     const fillers = document.querySelectorAll('.grid-parallax-scene .filler');
-    this.tiles.forEach((tile, index) => tile.animateIn(index, fillers));
+    this.tiles.forEach((tile, index) => {
+      tile.animateIn(index, index === 0 ? fillers : null)
+    });
   }
 
   componentWillUnmount() {

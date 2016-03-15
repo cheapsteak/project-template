@@ -34,6 +34,7 @@ export default class Layout1060 extends GridBase {
             <GridTile
               ref="tile0"
               chapter={`welcome`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
           <div className={`filler width-33-less-10 height-100 left-margin red`}></div>
@@ -43,6 +44,7 @@ export default class Layout1060 extends GridBase {
           <GridTile
             ref="tile1"
             chapter={`science`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -51,6 +53,7 @@ export default class Layout1060 extends GridBase {
             <GridTile
               ref="tile2"
               chapter={`literacy`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
         </div>
@@ -60,6 +63,7 @@ export default class Layout1060 extends GridBase {
             <GridTile
               ref="tile3"
               chapter={`math`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
         </div>
@@ -68,6 +72,7 @@ export default class Layout1060 extends GridBase {
           <GridTile
             ref="tile4"
             chapter={`electives`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -75,6 +80,7 @@ export default class Layout1060 extends GridBase {
           <GridTile
             ref="tile5"
             chapter={`computer`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -83,6 +89,7 @@ export default class Layout1060 extends GridBase {
             <GridTile
               ref="tile6"
               chapter={`investment`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
           <div className={`filler width-33-less-10 height-50-less-10 left-margin dark-blue`}></div>
@@ -98,6 +105,7 @@ export default class Layout1060 extends GridBase {
             <GridTile
               ref="tile7"
               chapter={`history`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
         </div>
@@ -112,6 +120,7 @@ export default class Layout1060 extends GridBase {
           <GridTile
             ref="tile8"
             chapter={`development`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
