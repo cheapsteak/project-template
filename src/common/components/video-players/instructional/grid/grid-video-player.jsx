@@ -10,7 +10,7 @@ import TransitionGroup from 'react-transition-group-plus';
 import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
 import NextVideoCard from './next-video-card/next-video-card.jsx';
 
-const animationStates = (els) => {
+function calculateAnimationStates (els) {
   const tileOffsetX = 20;
   const tileOffsetY = 60;
   const centerX = window.innerWidth/2;
@@ -56,7 +56,7 @@ export default class GridVideoPlayer extends React.Component {
 
   componentDidMount() {
     const { endingOverlay, replayButton } = this.refs;
-    this.animationStates = animationStates(this.refs);
+    this.animationStates = calculateAnimationStates(this.refs);
 
     animate.set(endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(replayButton, this.animationStates.out.replayButton);

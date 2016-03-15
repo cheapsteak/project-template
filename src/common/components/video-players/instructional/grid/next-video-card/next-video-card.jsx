@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import PlayButton from '../../../../../../assets/next-video-play.svg';
 
-const animationStates = (els) => {
+function calculateAnimationStates(els) {
   const tileOffsetX = 20;
   const tileOffsetY = 60;
   const outOffsetY = 100;
@@ -66,7 +66,7 @@ export default class NextVideoCard extends React.Component {
   componentDidMount() {
     const { card, topUI, button, buttonShadow, title, counterText } = this.refs;
 
-    this.animationStates = animationStates(this.refs);
+    this.animationStates = calculateAnimationStates(this.refs);
 
     animate.set(card, this.animationStates.out.card);
     animate.set(topUI, this.animationStates.out.topUI);
