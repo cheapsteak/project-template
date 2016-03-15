@@ -1,20 +1,18 @@
-export default {
-  test: {
-    currentTime: 0,
-    duration: 0,
-    isPlaying: false,
+export default [
+  {
+    id: 'test',
     src: '/videos/bg-720.mp4',
-    chapterName: 'Science',
-    chapterRoute: '/tests/chapter',
-    chapterImage: '/learn-more.jpg',
-    nextChapterModelSlug: 'math',
+    videoRoute: '/tests/grid-player/test',
+    chapterName: 'Test',
+    chapterCardImage: '/learn-more.jpg',
+    chapterRoute: '/tests/chapter'
   },
-  math: {
-    currentTime: 0,
-    duration: 0,
-    isPlaying: false,
-    src: '/videos/bg-720.mp4',
-    chapterRoute: '',
-    nextChapterModelSlug: 'test',
+  {
+    id:'math',
+    src: '/videos/parallax-character-development.mp4',
+    videoRoute: '/tests/grid-player/math',
+    chapterName: 'Math',
+    chapterCardImage: '/learn-more.jpg',
+    chapterRoute: '/tests/chapter'
   }
-}
+]

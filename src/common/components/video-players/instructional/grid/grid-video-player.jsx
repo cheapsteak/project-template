@@ -124,10 +124,14 @@ export default class GridVideoPlayer extends React.Component {
         this.clearCountdown();
         this.animateOutEndOverlay()
         .then(this.animateInControls);
-        // ();
       }
     }
-    // this.animateInEndOverlay()
+
+    // if(this.props.isPlaying) {
+    //   this.video.play();
+    // } else {
+    //   this.video.pause();
+    // }
   }
 
   componentWillUnmount() {
@@ -289,14 +293,14 @@ export default class GridVideoPlayer extends React.Component {
                 key={'currentId'}
                 title={this.props.chapterName}
                 route={this.props.chapterRoute}
-                image={this.props.chapterImage}
+                image={this.props.chapterCardImage}
               />
               ,
               <NextVideoCard
                 key={'nextVideoId'}
-                title={this.props.nextVideoTitle}
-                route={this.props.nextVideoRoute}
-                video={this.props.nextVideoSrc}
+                title={this.props.nextVideo.chapterName}
+                route={this.props.nextVideo.videoRoute}
+                video={this.props.nextVideo.src}
                 timeLeft={this.state.nextVideoTimeLeft}
               />
             ]

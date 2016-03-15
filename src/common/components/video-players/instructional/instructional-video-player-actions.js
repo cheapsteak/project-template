@@ -1,4 +1,6 @@
 import dataModel from '../../../data/instructional-videos.js';
+import { handleError } from 'common/actions/handleError.js';
+import _ from 'lodash';
 
 export const SET_INSTRUCTIONAL_VIDEO = 'SET_INSTRUCTIONAL_VIDEO';
 export const SET_INSTRUCTIONAL_VIDEO_TIME = 'SET_INSTRUCTIONAL_VIDEO_TIME';
@@ -6,41 +8,45 @@ export const SET_INSTRUCTIONAL_VIDEO_DURATION = 'SET_INSTRUCTIONAL_VIDEO_DURATIO
 export const PLAY_INSTRUCTIONAL_VIDEO = 'PLAY_INSTRUCTIONAL_VIDEO';
 export const STOP_INSTRUCTIONAL_VIDEO = 'STOP_INSTRUCTIONAL_VIDEO';
 
+export function setVideo(id) {
+  const currentVideoIdx = _.findIndex(dataModel, { id });
+  let action;
 
-export function setVideo(id, data) {
-  return {
-    type: SET_INSTRUCTIONAL_VIDEO,
-    id,
-    data: dataModel[id]
-  }
+  if(currentVideoIdx === -1) {
+    action = handleError(`Cannot find video with model id: ${id}`);
+  } else {
+    action = {
+      type: SET_INSTRUCTIONAL_VIDEO,
+      currentVideo: dataModel[currentVideoIdx],
+      nextVideo: dataModel[currentVideoIdx + 1 < dataModel.length ? currentVideoIdx + 1 : 0]
+    };
+  } 
+
+  return action;
 }
 
-export function setVideoTime(id, time) {
+export function setVideoTime(currentTime) {
   return {
     type: SET_INSTRUCTIONAL_VIDEO_TIME,
-    id,
-    time
+    currentTime
   }
 }
 
-export function setVideoDuration(id, time) {
+export function setVideoDuration(duration) {
   return {
     type: SET_INSTRUCTIONAL_VIDEO_DURATION,
-    id,
-    time
+    duration
   }
 }
 
-export function playVideo(id) {
+export function playVideo() {
   return {
-    type: PLAY_INSTRUCTIONAL_VIDEO,
-    id
+    type: PLAY_INSTRUCTIONAL_VIDEO
   }
 }
 
-export function pauseVideo(id) {
+export function pauseVideo() {
   return {
-    type: STOP_INSTRUCTIONAL_VIDEO,
-    id
+    type: STOP_INSTRUCTIONAL_VIDEO
   }
 }

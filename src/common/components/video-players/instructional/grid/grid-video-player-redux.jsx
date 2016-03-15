@@ -19,16 +19,18 @@ class GridVideoPlayerRedux extends React.Component {
   }
 
   render () {
-    const { videos, modelSlug } = this.props;
-    
+    const { videos, modelSlug, className } = this.props;
+
     return <GridVideoPlayer
       ref="wrappedInstance"
-      onVideoTimeChange={_.partial(this.boundActionCreators.setVideoTime, modelSlug)}
-      onVideoPlay={_.partial(this.boundActionCreators.playVideo, modelSlug)}
-      onVideoPause={_.partial(this.boundActionCreators.pauseVideo, modelSlug)}
-      onVideoMetadataLoaded={_.partial(this.boundActionCreators.setVideoDuration, modelSlug)}
+      className={className}
+      onVideoTimeChange={this.boundActionCreators.setVideoTime}
+      onVideoPlay={this.boundActionCreators.playVideo}
+      onVideoPause={this.boundActionCreators.pauseVideo}
+      onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
+      nextVideo={videos.nextVideo}
       {...this.props}
-      {...videos[this.props.modelSlug]}
+      {...videos.currentVideo}
     />
   }
 }

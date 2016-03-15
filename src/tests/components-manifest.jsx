@@ -33,5 +33,7 @@ export default {
     props: {
       modelSlug: 'test'
     }
-  }
+  },
+  'grid-player/test': require('./grid-player/grid-player.jsx'),
+  'grid-player/math': require('./grid-player/grid-player.jsx')
 };
