@@ -73,6 +73,7 @@ export default class GridVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
+    poster: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
 
@@ -236,6 +237,7 @@ export default class GridVideoPlayer extends React.Component {
             onLoadedMetadata={this.handleMetadataLoaded}
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
+            poster={this.props.poster}
           >
           </video>
         </div>
