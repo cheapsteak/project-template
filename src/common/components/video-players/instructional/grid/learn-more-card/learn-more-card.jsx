@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import animate from 'gsap-promise';
 
 
-const animationStates = (els) => {
+function calculateAnimationStates(els) {
   const tileOffsetX = 20;
   const tileOffsetY = 60;
   const outOffsetY = 100;
@@ -57,7 +57,7 @@ export default class LearnMoreCard extends React.Component {
   componentDidMount() {
     const { card, frontOverlay, backOverlay, button, label, title } = this.refs;
 
-    this.animationStates = animationStates(this.refs);
+    this.animationStates = calculateAnimationStates(this.refs);
 
     animate.set(card, this.animationStates.out.card);
     animate.set(backOverlay, this.animationStates.out.backOverlay);
@@ -93,7 +93,7 @@ export default class LearnMoreCard extends React.Component {
     return (
       <div
         ref="card"
-        className="learn-more-cta"
+        className="learn-more-card"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />
