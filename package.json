@@ -7,8 +7,8 @@
     "email": "garnwraly@gmail.com"
   },
   "scripts": {
-    "build": "gulp build",
-    "build:dev": "rm -rf build && BABEL_ENV=production npm run build",
+    "build": "rm -rf build && gulp build",
+    "build:dev": "BABEL_ENV=production npm run build",
     "build:production": "NODE_ENV=production npm run build",
     "start": "linklocal && BABEL_ENV=development gulp",
     "postinstall": "linklocal",
