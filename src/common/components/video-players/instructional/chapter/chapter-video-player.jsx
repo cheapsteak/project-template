@@ -9,6 +9,7 @@ export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
+    poster: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
 
@@ -103,6 +104,7 @@ export default class ChapterVideoPlayer extends React.Component {
             onLoadedMetadata={this.handleMetadataLoaded}
             onEnded={this.handleVideoPlayPause}
             onTimeUpdate={this.handleTimeUpdate}
+            poster={this.props.poster}
           >
           </video>
           : undefined
