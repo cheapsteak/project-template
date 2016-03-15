@@ -1,0 +1,180 @@
+.instructional-video-player {
+  $control-ui-height: 80px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  video {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    @media (min-aspect-ratio: 16/9) {
+      & {
+        height: 300%;
+        top: -100%;
+      }
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+      & {
+        width: 300%;
+        left: -100%;
+      }
+    }
+
+    @supports (object-fit: cover) {
+      & {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: bottom;
+    width: 100%;
+    height: $control-ui-height;
+    background-color: rgba(143, 143, 143, 0.5);
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .control-group, .timeline {
+    height: $control-ui-height/2;
+  }
+
+  .control-group {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 140px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #8F8F8F;
+
+    .button {
+      flex: 1;
+      margin: 10px;
+      fill: white;
+      cursor: pointer;
+    }
+
+    .fullbrowser-button {
+      svg {
+        width: 20px;
+        height: auto;
+        fill: none;
+        stroke: white;
+        stroke-width: 2px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .timeline {
+    flex: 1;
+  }
+
+  .end-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+
+    img {
+      opacity: 0.6;
+    }
+
+    .learn-more-cta, .next-video-cta {
+      position: absolute;
+      width: 350px;
+      height: 440px;
+      overflow: hidden;
+      background-color: #444;
+    }
+
+    .learn-more-cta {
+      cursor: pointer;
+      a {
+        width: 100%;
+        height: 100%;
+      }
+      .bottom-overlay-front, .bottom-overlay-back {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(100,100,100, 0.8);
+      }
+
+      .bottom-overlay-front {
+        height: 140px;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(100,100,100, 0.8);
+
+        .learn-more-button, label {
+          margin-bottom: 6px;
+        }
+
+        label {
+          color: #8C8C8C;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        h3 {
+          color: white;
+          font-weight: 600;
+          font-size: 30px;
+          margin-bottom: 18px;
+        }
+
+        .learn-more-button {
+          font-size: 16px;
+          color: #8F8F8F;
+          width: 28px;
+          height: 28px;
+          line-height: 30px;
+          border-radius: 50%;
+          text-align: center;
+          font-weight: bold;
+          background-color: #2B2B2B;
+        }
+      }
+
+      .bottom-overlay-back {
+        height: 160px;
+        background-color: rgba(100,100,100, 0.6);
+      }
+    }
+
+    .next-video-cta {
+      border: 1px dashed red;
+    }
+
+    .replay-button {
+      border: 1px dashed red;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+}

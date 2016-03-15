@@ -3,6 +3,18 @@ export default {
     currentTime: 0,
     duration: 0,
     isPlaying: false,
-    src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_1mb.mp4'
+    src: '/videos/bg-720.mp4',
+    chapterName: 'Science',
+    chapterRoute: '/tests/chapter',
+    chapterImage: '/learn-more.jpg',
+    nextChapterModelSlug: 'math',
+  },
+  math: {
+    currentTime: 0,
+    duration: 0,
+    isPlaying: false,
+    src: '/videos/bg-720.mp4',
+    chapterRoute: '',
+    nextChapterModelSlug: 'test',
   }
 }
