@@ -4,46 +4,66 @@ import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
 import BackButtonSvg from '../../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
+import ReplayArrowSvg from '../../../../../assets/replay-arrow.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
 import TransitionGroup from 'react-transition-group-plus';
+import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
+import NextVideoCard from './next-video-card/next-video-card.jsx';
 
-const animationStates = (els) => {
-  const tileOffsetX = 20;
-  const tileOffsetY = 60;
-  const centerX = window.innerWidth/2;
-  const centerY = window.innerHeight/2;
-  const outOffsetY = 100;
-    
+function calculateAnimationStates (els) {
+  const zoomedInRect = els.root.getBoundingClientRect();
+  const zoomedOutVideoMargin = 40;
+  const zoomedOutRect = {
+    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
+    height: zoomedInRect.height - zoomedOutVideoMargin * 2
+  }
+
   return {
     out: {
+      videoWrapper: {
+        delay: 0.3,
+        scaleX: 1,
+        scaleY: 1
+      },
       endingOverlay: {
+        delay: 0.1,
         display: 'none',
         opacity: 0
       },
-      nextVideo: {
-        opacity: 0,
-        x: centerX + tileOffsetX,
-        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY + outOffsetY
-      },
       replayButton: {
-        x: centerX - els.replayButton.offsetWidth/2,
-        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2 + outOffsetY
+        opacity: 0,
+        y: 100
       },
+      replayLabel: {
+        opacity: 0,
+        y: 100
+      },
+      controls: {
+        y: els.controls.offsetHeight
+      }
     },
     idle: {
+      videoWrapper: {
+        scaleX: zoomedOutRect.width/zoomedInRect.width,
+        scaleY: zoomedOutRect.height/zoomedInRect.height
+      },
       endingOverlay: {
         display: 'block',
         opacity: 1
       },
-      nextVideo: {
-        delay: 0.3,
-        opacity: 1,
-        y: centerY - els.nextVideo.offsetHeight/2 - tileOffsetY
-      },
       replayButton: {
-        y: window.innerHeight/1.25 - els.replayButton.offsetHeight/2
+        delay: 0.8,
+        opacity: 1,
+        y: 0
+      },
+      replayLabel: {
+        delay: 1.4,
+        opacity: 1,
+        y: 0
+      },
+      controls: {
+        y: 0
       }
     }
   };
@@ -53,34 +73,67 @@ export default class GridVideoPlayer extends React.Component {
   static propTypes = {
     style: React.PropTypes.object,
     src: React.PropTypes.string,
+    poster: React.PropTypes.string,
     timeline: React.PropTypes.array
   };
 
+  nextVideoIntervalId = undefined;
+  hideControlsTimeoutId = undefined;
+
   state = {
-    showEndingCTA: false
+    showEndingCTA: false,
+    nextVideoTimeLeft: 15,
+  };
+
+  componentWillMount() {
+    this.props.onVideoTimeChange(0);
   }
 
   componentDidMount() {
-    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
-    this.animationStates = animationStates(this.refs);
-
+    const { endingOverlay, replayButton, replayLabel } = this.refs;
+    this.animationStates = calculateAnimationStates(this.refs);
     animate.set(endingOverlay, this.animationStates.out.endingOverlay);
-    animate.set(nextVideo, this.animationStates.out.nextVideo);
     animate.set(replayButton, this.animationStates.out.replayButton);
+    animate.set(replayLabel, this.animationStates.out.replayLabel);
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.duration && nextProps.currentTime === nextProps.duration) {
-      this.animateInEndOverlay();
-    } else if(this.props.currentTime === this.props.duration
-      && nextProps.currentTime !== nextProps.duration) {
-      this.animateOutEndOverlay();
+    if(this.props.duration && nextProps.duration) {
+      if(this.props.currentTime !== this.props.duration && 
+        nextProps.currentTime === nextProps.duration) {
+        this.animateInEndOverlay();
+        this.animateOutControls();
+        this.clearCountdown();
+        this.nextVideoIntervalId = setInterval(() => {
+          if(this.state.nextVideoTimeLeft > 0) {
+            this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 }) 
+          } else {
+            this.clearCountdown();
+            /*
+            
+              GO TO NEXT VIDEO
+              
+              this.context.router.push(this.props.nextVideoRoute);
+
+             */
+          }
+        }, 1000);
+      } else if (this.props.currentTime === this.props.duration
+        && nextProps.currentTime !== nextProps.duration) {
+        this.clearCountdown();
+        this.animateOutEndOverlay()
+        .then(this.animateInControls);
+        // ();
+      }
     }
+    // this.animateInEndOverlay()
   }
 
-  changeVideoTime = (time) => {
-    this.video.currentTime = time;
-  };
+  componentWillUnmount() {
+    clearInterval(this.nextVideoIntervalId);
+    this.video.pause();
+    this.props.onVideoPause();
+  }
 
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
@@ -109,31 +162,57 @@ export default class GridVideoPlayer extends React.Component {
 
   };
 
+  handleReplayClick = (e) => {
+    this.changeVideoTime(0);
+
+    // Delay the replay by x time due to animations
+    setTimeout(this.handleVideoPlayPause, 1000);
+  };
+
   handleEnded = (e) => {
     this.handleVideoPlayPause();
-    this.animateInEndOverlay();
+  };
+
+  changeVideoTime = (time) => {
+    this.video.currentTime = time;
+  };
+
+  animateInControls = () => {
+    return animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls);
+  };
+
+  animateOutControls = () => {
+    return animate.to(this.refs.controls, 0.3, this.animationStates.out.controls);
   };
 
   animateInEndOverlay = () => {
-    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
 
-    animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
-      .then(() => this.setState({ showEndingCTA: true }));
-
-    // To be moved out and become a stateless component
-    animate.to(nextVideo, 0.3, this.animationStates.idle.nextVideo);
-    animate.to(replayButton, 0.3, this.animationStates.idle.replayButton);
+    return Promise.all([
+      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+        .then(() => this.setState({ showEndingCTA: true })),
+      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel)
+    ]);
   };
 
   animateOutEndOverlay = () => {
-    const { endingOverlay, learnMore, nextVideo, replayButton, frontOverlay, backOverlay } = this.refs;
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
 
-    animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay)
-      .then(() => this.setState({ showEndingCTA: false }));
+    this.setState({ showEndingCTA: false });
+    return Promise.all([
+      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
+    ]);
+  };
 
-    // To be moved out and become a stateless component
-    animate.to(nextVideo, 0.3, this.animationStates.out.nextVideo);
-    animate.to(replayButton, 0.3, this.animationStates.out.replayButton);
+  clearCountdown = () => {
+    clearInterval(this.nextVideoIntervalId);
+    this.nextVideoIntervalId = undefined;
+    this.setState({ nextVideoTimeLeft: 15 });
   };
 
   render() {
@@ -141,18 +220,31 @@ export default class GridVideoPlayer extends React.Component {
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
 
     return (
-      <div className="instructional-video-player grid-player" style={style}>
-        <video
-          id={this.videoId}
-          preload="metadata"
-          ref={(node) => this.video = node }
-          src={this.props.src}
-          onLoadedMetadata={this.handleMetadataLoaded}
-          onEnded={this.handleEnded}
-          onTimeUpdate={this.handleTimeUpdate}
+      <div
+        ref="root"
+        className="instructional-video-player grid-player"
+        style={style}
+      >
+        <div
+          ref="videoWrapper"
+          className="video-wrapper"
         >
-        </video>
-        <div className="controls" ref="controls">
+          <video
+            id={this.videoId}
+            preload="metadata"
+            ref={(node) => this.video = node }
+            src={this.props.src}
+            onLoadedMetadata={this.handleMetadataLoaded}
+            onEnded={this.handleEnded}
+            onTimeUpdate={this.handleTimeUpdate}
+            poster={this.props.poster}
+          >
+          </video>
+        </div>
+        <div
+         ref="controls"
+         className="controls"
+        >
           <div className="control-group">
             <span
               className="button"
@@ -191,18 +283,42 @@ export default class GridVideoPlayer extends React.Component {
           >
           {
             this.state.showEndingCTA
-            ? <LearnMoreCard
-              image={this.props.chapterImage}
-              title={this.props.chapterName}
-              route={this.props.chapterRoute}
-            />
+            ? [ 
+              <LearnMoreCard
+                key={'currentId'}
+                title={this.props.chapterName}
+                route={this.props.chapterRoute}
+                image={this.props.chapterImage}
+              />
+              ,
+              <NextVideoCard
+                key={'nextVideoId'}
+                title={this.props.nextVideoTitle}
+                route={this.props.nextVideoRoute}
+                video={this.props.nextVideoSrc}
+                timeLeft={this.state.nextVideoTimeLeft}
+              />
+            ]
             : undefined 
           }
           </TransitionGroup>
-          <div ref="nextVideo" className="next-video-cta">
-            <h2>Parental Investment</h2>
+          <div
+            className="replay-group"
+          >
+            <div
+              ref="replayButton"
+              className="replay-button"
+              onClick={this.handleReplayClick}
+              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+            >
+            </div>
+            <label
+              ref="replayLabel"
+              className="replay-label"
+            >
+              Replay
+            </label>
           </div>
-          <div ref="replayButton" className="replay-button"></div>
         </div>
       </div>
     )
