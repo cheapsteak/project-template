@@ -1,20 +1,16 @@
-export default {
-  test: {
-    currentTime: 0,
-    duration: 0,
-    isPlaying: false,
+export default [
+  {
+    id: 'test',
     src: '/videos/bg-720.mp4',
-    chapterName: 'Science',
-    chapterRoute: '/tests/chapter',
-    chapterImage: '/learn-more.jpg',
-    nextChapterModelSlug: 'math',
+    chapterName: 'Test',
+    chapterCardImage: '/learn-more.jpg',
+    chapterRoute: '/tests/chapter'
   },
-  math: {
-    currentTime: 0,
-    duration: 0,
-    isPlaying: false,
+  {
+    id:'math',
     src: '/videos/bg-720.mp4',
-    chapterRoute: '',
-    nextChapterModelSlug: 'test',
+    chapterName: 'Test',
+    chapterCardImage: '/learn-more.jpg',
+    chapterRoute: '/tests/chapter'
   }
-}
+]

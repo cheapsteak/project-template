@@ -9,7 +9,7 @@ import {
 
 import dataModel from '../../../data/narrative-video.js';
 
-function videos(state = dataModel, action) {
+function video(state = dataModel, action) {
   switch (action.type) {
     case SET_NARRATIVE_VIDEO_CIRCLE_CTA:
       return Object.assign({}, state, { circleCTA: action.circleCTA });
@@ -27,12 +27,11 @@ function videos(state = dataModel, action) {
       return Object.assign({}, state, { isPlaying: false });
 
     case SET_NARRATIVE_VIDEO_TIME:
-      if (typeof action.time !== 'number') return state;
-
       return Object.assign({}, state, { currentTime: action.time });
+
     default:
       return state;
   }
 }
 
-export default videos;
+export default video;
