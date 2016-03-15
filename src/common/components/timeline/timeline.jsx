@@ -29,6 +29,12 @@ export default class Timeline extends React.Component {
     this.setState({ time: time });
   }
 
+  componentDidMount() {
+    const { hoveredTimeStampDot } = this.refs;
+
+    animate.set(hoveredTimeStampDot, { scale: 0 });
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({ time: nextProps.currentTime });
   }
@@ -55,19 +61,21 @@ export default class Timeline extends React.Component {
   };
 
   handleMouseEnter = (e) => {
-    const { hoveredTimeStampContainer, hoveredTimeStamp} = this.refs;
+    const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
 
     animate.to(hoveredTimeStamp, 0.3, { top: -22});
     animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
+    animate.to(hoveredTimeStampDot, 0.3, { delay: 0.1, scale: 1 });
   };
 
   handleMouseLeave = (e) => {
-    const { hoveredTimeStampContainer, hoveredTimeStamp} = this.refs;
+    const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
     
     this.mouseDown = false;
 
     animate.to(hoveredTimeStamp, 0.3, { top: -12 });
     animate.to(hoveredTimeStampContainer, 0.3, { opacity: 0 });
+    animate.to(hoveredTimeStampDot, 0.3, { scale: 0 });
   };
 
   handleMouseMove = (e) => {
@@ -89,7 +97,7 @@ export default class Timeline extends React.Component {
       || this.isWithinVariance(e.clientX, componentClientRect.left, 15)
       || this.isWithinVariance(e.clientX, componentClientRect.right, 50)
       ) {
-      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
+      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 1 });
     } else {
       animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
     }
@@ -148,7 +156,8 @@ export default class Timeline extends React.Component {
             ref="hoveredTimeStampContainer"
             className="hovered-time-stamp"
           >
-            <span ref="hoveredTimeStamp">{this.state.hoveredTime}</span>
+            <span ref="hoveredTimeStamp" className="hovered-bar">{this.state.hoveredTime}</span>
+            <span ref="hoveredTimeStampDot" className="hovered-dot"></span>
           </div>
 
           { /* The progress indicator */}
