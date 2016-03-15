@@ -1,0 +1,136 @@
+.grid-menu {
+  width: 100%;
+  height: 80px;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  user-select: none;
+
+  .tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    float: left;
+    background-color: red;
+    width: calc(100% / 3);
+    height: 100%;
+    opacity: 0.95;
+    font-weight: bold;
+    font-size: 17px;
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      left: 0;
+      bottom: -20px;
+      width: 100%;
+      height: 20px;
+      opacity: 0.55;
+      background-color: inherit;
+    }
+
+    .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      border-radius: 50%;
+      transition: 0.3s;
+
+      svg {
+        position: relative;
+        width: 13px;
+        height: 13px;
+      }
+
+      &.filter {
+        background-color: rgba(255, 255, 255, 0);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+
+        svg {
+          fill: #5E5E5F;
+          opacity: 0;
+        }
+      }
+
+      &.return, &.close {
+        background-color: rgba(143, 143, 143, 0.5);
+      }
+
+      &.return {
+        svg {
+          left: 2px;
+        }
+      }
+    }
+
+    p {
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+
+    &.filter {
+      background-color: #8f8f8f;
+
+      @mixin hover {
+        p {
+          opacity: 1;
+        }
+
+        .icon {
+          border: 2px solid rgba(255, 255, 255, 1);
+          background-color: rgba(255, 255, 255, 1);
+
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+
+      &:hover {
+        @include hover;
+      }
+
+      &.active {
+        @include hover;
+      }
+    }
+
+    &.return, &.close {
+      background-color: #2b2b2b;
+
+      p {
+        color: #8f8f8f;
+      }
+
+      &:hover {
+        p {
+          opacity: 1;
+        }
+
+        .icon {
+          transform: scale(1.1);
+        }
+      }
+
+      &.active {
+        p {
+          color: #000;
+          opacity: 0.5;
+        }
+
+        .icon {
+          transform: scale(1);
+          background-color: #000;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}

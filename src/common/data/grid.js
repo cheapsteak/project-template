@@ -5,7 +5,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   science: {
     title: 'science',
@@ -29,7 +29,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   electives: {
     title: 'electives',
@@ -61,7 +61,7 @@ const data = {
     image: '../images/kid-test.png',
     chapterUrl: 'tests/chapter',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: 'tests'
+    instructionalVideoUrl: null
   },
   history: {
     title: 'history',

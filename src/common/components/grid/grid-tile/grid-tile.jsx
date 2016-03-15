@@ -2,7 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import model from '../../../data/grid';
 import animate from 'gsap-promise';
-import IconWatch from '../../../../assets/svgs/icon-explore.svg';
+import IconWatch from '../../../../assets/svgs/icon-play.svg';
 import IconExplore from '../../../../assets/svgs/icon-explore.svg';
 import { Link } from 'react-router';
 
@@ -20,7 +20,7 @@ export default class GridTile extends React.Component {
 
   static propTypes = {
     chapter: React.PropTypes.string,
-    isFilterEnabled: React.PropTypes.bool
+    isFiltered: React.PropTypes.bool
   };
 
   state = {
@@ -33,11 +33,11 @@ export default class GridTile extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.isFilterEnabled !== this.isFiltered && !this.state.data.instructionalVideoUrl) {
-      nextProps.isFilterEnabled ? this.applyFilter() : this.removeFilter();
+    const hasInstrVideo = model.getDataByChapterId(this.props.chapter).instructionalVideoUrl;
+    if (nextProps.isFiltered !== this.lastFilteredState && !hasInstrVideo) {
+      nextProps.isFiltered ? this.applyFilter() : this.removeFilter();
+      this.lastFilteredState = nextProps.isFiltered;
     }
-
-    this.isFilterEnabled = nextProps.isFilterEnabled && !this.state.data.instructionalVideoUrl;
   }
 
   componentDidMount() {
@@ -49,11 +49,8 @@ export default class GridTile extends React.Component {
       const data = model.getDataByChapterId(this.props.chapter);
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
       this.setState({data, size});
-      this.isFilterEnabled = this.props.isFilterEnabled && !data.instructionalVideoUrl;
     });
   }
-
-  lastSliderSide;
 
   onSliderSideChange = (currSide) => {
     const isRightSide = (currSide === sides.RIGHT);
@@ -88,7 +85,6 @@ export default class GridTile extends React.Component {
     //const x = e.clientX / this.containerEl.offsetWidth * 30;
     //const y = e.clientY / this.containerEl.offsetHeight * 30;
     //console.log(x, y)
-    //
     //animate.to(this.refs.image, 3, {x, y, ease: Expo.easeOut});
 
     if (currSliderSide !== this.lastSliderSide) {
@@ -108,8 +104,14 @@ export default class GridTile extends React.Component {
   handleMouseEnter = () => {
     this.context.eventBus.emit('mouseEnterTile', this);
 
+    if (this.filterApplied) {
+      return;
+    }
+
     const filter = 'grayscale(100%)';
-    const ctaItems = [this.refs.leftCtaIcon, this.refs.leftCtaText, this.refs.rightCtaIcon, this.refs.rightCtaText];
+    const ctaItems = this.refs.rightCtaIcon
+      ? [this.refs.leftCtaIcon, this.refs.leftCtaText, this.refs.rightCtaIcon, this.refs.rightCtaText]
+      : [this.refs.leftCtaIcon, this.refs.leftCtaText];
 
     animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'});
     animate.to(this.refs.imageLayer, 0.1, {x: 0});
@@ -125,8 +127,15 @@ export default class GridTile extends React.Component {
   };
 
   handleMouseLeave = () => {
+    if (this.filterApplied) {
+      return;
+    }
+
     const filter = 'grayscale(0%)';
-    const ctaItems = [this.refs.rightCtaText, this.refs.rightCtaIcon, this.refs.leftCtaText, this.refs.leftCtaIcon];
+
+    const ctaItems = this.refs.rightCtaIcon
+      ? [this.refs.rightCtaText, this.refs.rightCtaIcon, this.refs.leftCtaText, this.refs.leftCtaIcon]
+      : [this.refs.leftCtaText, this.refs.leftCtaIcon];
 
     animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1);
     animate.to(this.imageContainer, 0.5, {
@@ -142,11 +151,14 @@ export default class GridTile extends React.Component {
         this.context.eventBus.emit('mouseLeaveTile', this);
       });
 
-    animate.to(this.refs.slider, 0.25, {
-      x: this.lastSliderSide === sides.LEFT ? '-100%' : '200%',
-      ease: BezierEasing(0.1, 0.98, 0.9, 0.26),
-      overwrite: 'all'
-    });
+    if (this.refs.slider) {
+      animate.to(this.refs.slider, 0.25, {
+        x: this.lastSliderSide === sides.LEFT ? '-100%' : '200%',
+        ease: BezierEasing(0.1, 0.98, 0.9, 0.26),
+        overwrite: 'all'
+      });
+    }
+
     animate.to(this.textContainer, 0.05, {autoAlpha: 1, delay: 0.7, overwrite: 'all'});
 
     this.lastSliderSide = null;
@@ -158,8 +170,6 @@ export default class GridTile extends React.Component {
     const scaleX = (width + 30) / width;
     const scaleY = (height + 30) / height;
 
-    const containerAlpha = this.isFilterEnabled ? 0.1 : 1;
-    const containerScale = this.isFilterEnabled ? 0.9 : 1;
     const delay = (0.1 * index) + 0.3;
     const ease = Expo.easeOut;
 
@@ -168,8 +178,8 @@ export default class GridTile extends React.Component {
     animate.set(this.imageContainer, {scale: 1.6, autoAlpha: 1});
 
     return animate.all([
-      animate.to(this.containerEl, 0.4, {autoAlpha: containerAlpha, scale: containerScale, delay: delay, ease: ease}),
-      animate.to(this.textContainer, 0.8, {scale: 1, delay: delay, ease: ease}),
+      animate.to(this.containerEl, 0.4, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
+      animate.to(this.textContainer, 1, {scale: 1, delay: delay, ease: ease}),
       animate.to(this.imageContainer, 1.2, {scale: 1, delay: delay, ease: ease})
     ])
   };
@@ -187,16 +197,22 @@ export default class GridTile extends React.Component {
   };
 
   animateIn = (tileIndex, fillers) => {
-    this.animateInLayers(tileIndex);
-    if (fillers) this.animateInGridFillers(fillers)
+    setTimeout(() => {
+      this.animateInLayers(tileIndex);
+      if (fillers) this.animateInGridFillers(fillers);
+    });
   };
 
   applyFilter = () => {
-    animate.to(this.containerEl, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: Expo.easeOut});
+    this.filterApplied = true;
+    animate.to(this.refs.contentWrapper, 0.3, {scale: 0.9, autoAlpha: 0.1, pointerEvents: 'none', ease: Expo.easeOut});
   };
 
   removeFilter = () => {
-    animate.to(this.containerEl, 0.5, {scale: 1, autoAlpha: 1, ease: Expo.easeOut})
+    if (this.filterApplied) {
+      animate.to(this.refs.contentWrapper, 0.3, {scale: 1, autoAlpha: 1, pointerEvents: 'auto', ease: Expo.easeOut});
+      this.filterApplied = false;
+    }
   };
 
   render() {
@@ -204,25 +220,30 @@ export default class GridTile extends React.Component {
     const bgDepth = 1;
     const imageDepth = 0.8;
 
-    const isFiltered = this.props.isFilterEnabled;
+    const isFiltered = this.props.isFiltered;
     const slider = isFiltered ? null : (<div ref="slider" className={`slider`}></div>);
 
     const videoCopy = isFiltered ? 'Watch instructional video' : 'Watch';
     const videoUrl = isFiltered ? this.state.data.instructionalVideoUrl : this.state.data.narrativeVideoUrl;
+    const size = isFiltered ? 'full-size' : '';
     const leftCta = (
-      <div ref="leftCtaContainer" className={`cta-container left`}>
-        <Link className="cta" to={`${videoUrl}`}>
-          <div ref="leftCtaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
-          <p ref="leftCtaText">{videoCopy}</p>
+      <div ref="leftCtaContainer" className={`cta-container left ${size}`}>
+        <Link to={`${videoUrl}`}>
+          <div className="cta">
+            <div ref="leftCtaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
+            <p ref="leftCtaText">{videoCopy}</p>
+          </div>
         </Link>
       </div>
     );
 
     const rightCta = isFiltered ? null : (
       <div ref="rightCtaContainer" className={`cta-container right`}>
-        <Link className="cta" to={`${this.state.data.chapterUrl}`}>
-          <div ref="rightCtaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
-          <p ref="rightCtaText">Explore</p>
+        <Link to={`${this.state.data.chapterUrl}`}>
+          <div className="cta">
+            <div ref="rightCtaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
+            <p ref="rightCtaText">Explore</p>
+          </div>
         </Link>
       </div>
     );
@@ -234,39 +255,41 @@ export default class GridTile extends React.Component {
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}
       >
-        <div
-          className={`parallax-layer background`}
-          data-depth={bgDepth}
-          data-vector={`0.6,-0.2`}>
-          <div className={`noise`}></div>
-        </div>
-
-        <div
-          className={`parallax-layer text`}
-          data-depth={textDepth}
-          data-vector={`-0.4, -0.4`}
-        >
-          <div ref="textContainer" className={`text-container`}>
-            <div className={`title`}>{this.state.data.subtitle}</div>
-            <div className={`subtitle`}>{this.state.data.title}</div>
+        <div ref="contentWrapper" className={`content-wrapper`}>
+          <div
+            className={`parallax-layer background`}
+            data-depth={bgDepth}
+            data-vector={`0.6,-0.2`}>
+            <div className={`noise`}></div>
           </div>
-        </div>
 
-        <div
-          ref="imageLayer"
-          className={`parallax-layer image`}
-          data-depth={imageDepth}
-          data-vector={`-0.5,0.5`}
-        >
-          <div ref="imageContainer" className={`image-container ${this.state.size}`}>
-            <img ref="image" src={this.state.data.image}/>
+          <div
+            className={`parallax-layer text`}
+            data-depth={textDepth}
+            data-vector={`-0.4, -0.4`}
+          >
+            <div ref="textContainer" className={`text-container`}>
+              <div className={`title`}>{this.state.data.subtitle}</div>
+              <div className={`subtitle`}>{this.state.data.title}</div>
+            </div>
           </div>
-        </div>
 
-        <div className={`overlay`}>
-          {slider}
-          {leftCta}
-          {rightCta}
+          <div
+            ref="imageLayer"
+            className={`parallax-layer image`}
+            data-depth={imageDepth}
+            data-vector={`-0.5,0.5`}
+          >
+            <div ref="imageContainer" className={`image-container ${this.state.size}`}>
+              <img ref="image" src={this.state.data.image}/>
+            </div>
+          </div>
+
+          <div className={`overlay`}>
+            {slider}
+            {leftCta}
+            {rightCta}
+          </div>
         </div>
       </div>
     );

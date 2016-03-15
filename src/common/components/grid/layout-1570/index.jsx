@@ -35,6 +35,7 @@ export default class Layout1570 extends GridBase {
             <GridTile
               ref="tile0"
               chapter={`welcome`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
           <div className={`width-100 height-33-less-15`}>
@@ -47,6 +48,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile1"
             chapter={`science`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -59,6 +61,7 @@ export default class Layout1570 extends GridBase {
             <GridTile
               ref="tile2"
               chapter={`electives`}
+              isFiltered={this.props.isFiltered}
             />
           </div>
         </div>
@@ -67,6 +70,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile3"
             chapter={`literacy`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -82,6 +86,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile4"
             chapter={`math`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -89,6 +94,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile5"
             chapter={`computer`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -96,6 +102,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile6"
             chapter={`history`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 
@@ -112,6 +119,7 @@ export default class Layout1570 extends GridBase {
               <GridTile
                 ref="tile7"
                 chapter={`investment`}
+                isFiltered={this.props.isFiltered}
               />
             </div>
           </div>
@@ -121,6 +129,7 @@ export default class Layout1570 extends GridBase {
           <GridTile
             ref="tile8"
             chapter={`development`}
+            isFiltered={this.props.isFiltered}
           />
         </div>
 

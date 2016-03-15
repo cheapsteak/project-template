@@ -12,9 +12,21 @@ $parallaxLimitY: 70px;
   position: relative;
   @include gpu;
 
+  .content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
   a {
     text-decoration: none;
     color: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .parallax-layer {
@@ -43,9 +55,6 @@ $parallaxLimitY: 70px;
     }
 
     .cta-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: absolute;
       top: 0;
       left: 0;
@@ -62,6 +71,14 @@ $parallaxLimitY: 70px;
         font-size: 2.3vw;
       }
 
+      &.left.full-size {
+        width: 100%;
+
+        p {
+          max-width: 15vw;
+        }
+      }
+
       &.right {
         left: 50%;
       }
@@ -71,6 +88,7 @@ $parallaxLimitY: 70px;
         position: relative;
         text-align: center;
         cursor: pointer;
+        text-transform: none;
 
         .icon {
           display: flex;
