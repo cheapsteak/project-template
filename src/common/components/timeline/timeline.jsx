@@ -84,7 +84,7 @@ export default class Timeline extends React.Component {
 
     animate.set(hoveredTimeStampContainer, { x: e.clientX - componentClientRect.left - hoveredTimeStampContainer.clientWidth/2 });
 
-    if(_.any(pointEls, (point) => this.isWithinVariance(e.clientX, point.getBoundingClientRect().left, 8))
+    if(_.some(pointEls, (point) => this.isWithinVariance(e.clientX, point.getBoundingClientRect().left, 8))
       || this.isWithinVariance(e.clientX, progressHeadX, 40)
       || this.isWithinVariance(e.clientX, componentClientRect.left, 15)
       || this.isWithinVariance(e.clientX, componentClientRect.right, 50)
