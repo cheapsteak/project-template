@@ -1,18 +1,12 @@
 export default [
   {
-    id: 'test',
+    slug: 'math-1',
+    chapterSlug: 'math',
     src: '/videos/bg-720.mp4',
-    videoRoute: '/tests/grid-player/test',
-    chapterName: 'Test',
-    chapterCardImage: '/learn-more.jpg',
-    chapterRoute: '/tests/chapter'
   },
   {
-    id:'math',
+    slug: 'science-1',
+    chapterSlug: 'science',
     src: '/videos/parallax-character-development.mp4',
-    videoRoute: '/tests/grid-player/math',
-    chapterName: 'Math',
-    chapterCardImage: '/learn-more.jpg',
-    chapterRoute: '/tests/chapter'
   }
 ]

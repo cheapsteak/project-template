@@ -1,5 +1,7 @@
-export default {
-  test: {
+export default [
+  {
+    slug: 'math-1',
+    chapterSlug: 'math',
     photos: [
       { 
         id: '0',
@@ -18,4 +20,4 @@ export default {
       }
     ]
   }
-}
+]
