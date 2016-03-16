@@ -6,7 +6,7 @@ export default {
     const photoEssaySourceData = data.find(video => video.slug === slug);
     const chapterData = chaptersModel.get(videoSourceData.chapterSlug);
 
-    if(!videoSourceData || !chapterData) {
+    if(!photoEssaySourceData || !chapterData) {
       console.trace('Unable to get model from slug:', slug);
     }
 
