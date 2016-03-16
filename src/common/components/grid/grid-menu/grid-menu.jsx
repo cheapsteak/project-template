@@ -7,16 +7,17 @@ import IconFilter from '../../../../assets/svgs/icon-check.svg';
 import { Link } from 'react-router';
 
 const states = {
+  IDLE: '',
   ACTIVE: 'active',
-  IDLE: ''
+  DEACTIVATED: 'deactivated'
 };
 
 export default class GridMenu extends React.Component {
 
   state = {
-    isFilterActive: false,
-    isReturnActive: false,
-    isCloseActive: false
+    filterTabState: states.IDLE,
+    returnTabState: states.IDLE,
+    closeTabState: states.IDLE
   };
 
   static contextTypes = {
@@ -42,33 +43,52 @@ export default class GridMenu extends React.Component {
 
     animate.set(ctaItems, {y: 20, autoAlpha: 0});
     animate.to(this.containerEl, duration || 0.5, {y: '0%', ease: Expo.easeOut, delay: delay});
-    animate.staggerTo(ctaItems, 0.05, {y: 0, autoAlpha: 1, delay: delay + 0.2, ease: Expo.easeOut}, 0.1)
+    animate.staggerTo(ctaItems, 0.05, {y: 0, autoAlpha: 0.8, delay: delay + 0.2, ease: Expo.easeOut}, 0.1)
+      .then(() => animate.set(ctaItems, {clearProps: 'all'}));
   };
 
   handleFilterClick = () => {
-    const isFilterActive = !this.state.isFilterActive;
-    this.setState({isFilterActive});
+    var filterTabState;
+
+    if (this.state.filterTabState === states.IDLE || this.state.filterTabState === states.DEACTIVATED) {
+      filterTabState = states.ACTIVE
+    } else if (this.state.filterTabState === states.ACTIVE) {
+      filterTabState = states.DEACTIVATED;
+    }
+    this.setState({filterTabState});
     this.context.eventBus.emit('clickFilter', this);
   };
 
+  handleFilterMouseLeave = () => {
+    if (this.state.filterTabState === states.DEACTIVATED) {
+      this.setState({filterTabState: states.IDLE});
+    }
+  };
+
   handleCloseClick = () => {
+    if (this.state.closeTabState === states.ACTIVE) {
+      return;
+    }
+
     console.log('clickClose');
-    const isCloseActive = !this.state.isCloseActive;
-    this.setState({isCloseActive});
+    this.setState({closeTabState: states.ACTIVE});
     this.context.eventBus.emit('clickClose', this);
   };
 
   handleReturnClick = () => {
+    if (this.state.returnTabState === states.ACTIVE) {
+      return;
+    }
+
     console.log('clickReturn');
-    const isReturnActive = !this.state.isReturnActive;
-    this.setState({isReturnActive});
+    this.setState({returnTabState: states.ACTIVE});
     this.context.eventBus.emit('clickReturn', this);
   };
 
   render() {
-    const filterState = this.state.isFilterActive ? states.ACTIVE : states.IDLE;
-    const returnState = this.state.isReturnActive ? states.ACTIVE : states.IDLE;
-    const closeState = this.state.isCloseActive ? states.ACTIVE : states.IDLE;
+    const filterState = this.state.filterTabState;
+    const returnState = this.state.returnTabState;
+    const closeState = this.state.closeTabState;
 
     return (
       <div className={`grid-menu`}>
@@ -90,6 +110,7 @@ export default class GridMenu extends React.Component {
           ref="filterTab"
           className={`filter tab ${filterState}`}
           onClick={this.handleFilterClick}
+          onMouseLeave={this.handleFilterMouseLeave}
         >
           <div
             ref="filterIcon"

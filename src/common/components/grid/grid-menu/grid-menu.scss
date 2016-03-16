@@ -32,6 +32,7 @@
       height: 20px;
       opacity: 0.55;
       background-color: inherit;
+      @include gpu;
     }
 
     .icon {
@@ -52,12 +53,8 @@
       }
 
       &.filter {
-        background-color: rgba(255, 255, 255, 0);
-        border: 2px solid rgba(255, 255, 255, 0.8);
-
         svg {
           fill: #5E5E5F;
-          opacity: 0;
         }
       }
 
@@ -81,15 +78,28 @@
     &.filter {
       background-color: #8f8f8f;
 
-      @mixin hover {
+      @mixin idleState {
+        p {
+          opacity: 0.8;
+        }
+        .icon {
+          background-color: rgba(255, 255, 255, 0);
+          border: 2px solid rgba(255, 255, 255, 0.6);
+          svg {
+            opacity: 0;
+          }
+        }
+      }
+
+      @include idleState;
+
+      @mixin hoverState {
         p {
           opacity: 1;
         }
-
         .icon {
           border: 2px solid rgba(255, 255, 255, 1);
           background-color: rgba(255, 255, 255, 1);
-
           svg {
             opacity: 1;
           }
@@ -97,11 +107,15 @@
       }
 
       &:hover {
-        @include hover;
+        @include hoverState;
       }
 
       &.active {
-        @include hover;
+        @include hoverState;
+      }
+
+      &.deactivated {
+        @include idleState;
       }
     }
 
@@ -116,7 +130,6 @@
         p {
           opacity: 1;
         }
-
         .icon {
           transform: scale(1.1);
         }
@@ -127,7 +140,6 @@
           color: #000;
           opacity: 0.5;
         }
-
         .icon {
           transform: scale(1);
           background-color: #000;
