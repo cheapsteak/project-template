@@ -127,7 +127,14 @@ var Parallax = function (scene, opts) {
    * @private
    */
   function _setLayerPosition(x, y, applyToAllLayers) {
-    var target = applyToAllLayers ? layers : currLayer;
+    var enabledLayers = [];
+    layersObjArray.filter(function (layersObj) {
+      return layersObj.enabled;
+    }).map(function (layersObj) {
+      enabledLayers.push(layersObj.dom)
+    });
+
+    var target = applyToAllLayers ? enabledLayers : currLayer;
     Tween.to(target, opts.duration, {
       x: x || 0,
       y: y || 0,
