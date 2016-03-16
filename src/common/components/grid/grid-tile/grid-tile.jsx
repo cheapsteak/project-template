@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import model from '../../../data/grid';
+import Tween from 'gsap';
 import animate from 'gsap-promise';
 import IconWatch from '../../../../assets/svgs/icon-play.svg';
 import IconExplore from '../../../../assets/svgs/icon-explore.svg';
@@ -98,7 +99,9 @@ export default class GridTile extends React.Component {
     const imageWidth = this.refs.image.offsetWidth;
     const imageOffset = parseInt(getComputedStyle(this.imageContainer).getPropertyValue('left'));
     const adjuster = (containerWidth - imageWidth) * 0.5;
-    return (imageOffset + adjuster - containerCenterX);
+    const imageLayerOffsetX = window.getComputedStyle(this.refs.imageLayer).getPropertyValue('transform').split(',')[4] || 0;
+
+    return (imageOffset + adjuster - containerCenterX - imageLayerOffsetX);
   };
 
   handleMouseEnter = () => {
@@ -107,14 +110,14 @@ export default class GridTile extends React.Component {
     }
 
     this.context.eventBus.emit('mouseEnterTile', this);
+    Tween.killTweensOf(this.refs.imageLayer);
 
-    const filter = 'grayscale(100%)';
+    //const filter = 'grayscale(100%)';
     const ctaItems = this.refs.rightCtaIcon
       ? [this.refs.leftCtaIcon, this.refs.leftCtaText, this.refs.rightCtaIcon, this.refs.rightCtaText]
       : [this.refs.leftCtaIcon, this.refs.leftCtaText];
 
     animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'});
-    animate.to(this.refs.imageLayer, 0.1, {x: 0});
     animate.to(this.imageContainer, 0.5, {
       autoAlpha: 0.1,
       x: this.getImageCenterPos(),
@@ -122,7 +125,7 @@ export default class GridTile extends React.Component {
       ease: Expo.easeOut,
       overwrite: 'all'
     });
-    animate.to(this.imageContainer, 0.5, {'-webkit-filter': filter, filter: filter, delay: 0.3, ease: Expo.easeOut});
+    //animate.to(this.imageContainer, 0.5, {'-webkit-filter': filter, filter: filter, delay: 0.3, ease: Expo.easeOut});
     animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1);
   };
 
@@ -131,18 +134,19 @@ export default class GridTile extends React.Component {
       return;
     }
 
-    const filter = 'grayscale(0%)';
+    //const filter = 'grayscale(0%)';
 
     const ctaItems = this.refs.rightCtaIcon
       ? [this.refs.rightCtaText, this.refs.rightCtaIcon, this.refs.leftCtaText, this.refs.leftCtaIcon]
       : [this.refs.leftCtaText, this.refs.leftCtaIcon];
 
     animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1);
+
     animate.to(this.imageContainer, 0.5, {
         autoAlpha: 1,
         x: 0,
-        '-webkit-filter': filter,
-        filter: filter,
+        //'-webkit-filter': filter,
+        //filter: filter,
         ease: Expo.easeInOut,
         delay: 0.4,
         overwrite: 'all'
@@ -204,7 +208,7 @@ export default class GridTile extends React.Component {
   };
 
   applyFilter = () => {
-    this.context.eventBus.emit('mouseEnterTile', this);
+    setTimeout(() => this.context.eventBus.emit('mouseEnterTile', this));
     this.filterApplied = true;
     animate.to(this.refs.contentWrapper, 0.3, {scale: 0.9, autoAlpha: 0.1, pointerEvents: 'none', ease: Expo.easeOut});
   };
@@ -232,7 +236,7 @@ export default class GridTile extends React.Component {
       <div ref="leftCtaContainer" className={`cta-container left ${size}`}>
         <Link to={`${videoUrl}`}>
           <div className="cta">
-            <div ref="leftCtaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
+            <div ref="leftCtaIcon" className={`icon watch`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
             <p ref="leftCtaText">{videoCopy}</p>
           </div>
         </Link>
@@ -280,7 +284,7 @@ export default class GridTile extends React.Component {
             ref="imageLayer"
             className={`parallax-layer image`}
             data-depth={imageDepth}
-            data-vector={`-0.5,0.5`}
+            data-vector={`0.8,0.5`}
           >
             <div ref="imageContainer" className={`image-container ${this.state.size}`}>
               <img ref="image" src={this.state.data.image}/>

@@ -1,9 +1,9 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import animate from 'gsap-promise';
-import IconReturn from '../../../../assets/svgs/icon-play.svg';
-import IconClose from '../../../../assets/svgs/icon-close.svg';
-import IconFilter from '../../../../assets/svgs/icon-check.svg';
+import IconReturn from 'svgs/icon-play.svg';
+import IconClose from 'svgs/icon-close.svg';
+import IconFilter from 'svgs/icon-check.svg';
 import { Link } from 'react-router';
 
 const states = {
@@ -70,9 +70,7 @@ export default class GridMenu extends React.Component {
       return;
     }
 
-    console.log('clickClose');
     this.setState({closeTabState: states.ACTIVE});
-    this.context.eventBus.emit('clickClose', this);
   };
 
   handleReturnClick = () => {
@@ -80,9 +78,7 @@ export default class GridMenu extends React.Component {
       return;
     }
 
-    console.log('clickReturn');
     this.setState({returnTabState: states.ACTIVE});
-    this.context.eventBus.emit('clickReturn', this);
   };
 
   render() {
@@ -93,10 +89,11 @@ export default class GridMenu extends React.Component {
     return (
       <div className={`grid-menu`}>
 
-        <div
+        <Link
           ref="returnTab"
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
+          to={`tests/narrative-video-player`}
         >
           <div
             ref="returnIcon"
@@ -104,7 +101,7 @@ export default class GridMenu extends React.Component {
             dangerouslySetInnerHTML={{ __html: IconReturn }}
           ></div>
           <p ref="returnText">Return to Documentary</p>
-        </div>
+        </Link>
 
         <div
           ref="filterTab"
@@ -120,10 +117,11 @@ export default class GridMenu extends React.Component {
           <p ref="filterText">See Instructional Videos</p>
         </div>
 
-        <div
+        <Link
           ref="closeTab"
           className={`close tab ${closeState}`}
           onClick={this.handleCloseClick}
+          to={`/tests`}
         >
           <div
             ref="closeIcon"
@@ -131,7 +129,7 @@ export default class GridMenu extends React.Component {
             dangerouslySetInnerHTML={{ __html: IconClose }}
           ></div>
           <p ref="closeText">Close</p>
-        </div>
+        </Link>
 
       </div>
     );

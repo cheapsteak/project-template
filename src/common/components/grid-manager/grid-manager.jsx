@@ -9,7 +9,7 @@ import Layout1400 from '../grid/layout-1400';
 import Layout1570 from '../grid/layout-1570';
 import Layout1740 from '../grid/layout-1740';
 import Layout1920 from '../grid/layout-1920';
-import GridMenu from '../grid/grid-menu/grid-menu';
+import GridMenu from './grid-menu/grid-menu';
 
 const breakpoints = [890, 1060, 1230, 1400, 1570, 1740, 1920];
 
