@@ -87,11 +87,7 @@ export default class ChapterVideoPlayer extends React.Component {
   render() {
     const { style, modelSlug, basePath, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
-    let route = isFullBrowser 
-      ? fullBrowserRoute 
-      : fullBrowserExitRoute 
-        ? fullBrowserExitRoute
-        : '/';
+    const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
     return <div className={`instructional-video-player chapter-player ${this.props.className}`} style={style}>
       {

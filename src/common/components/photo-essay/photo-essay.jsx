@@ -24,23 +24,8 @@ class PhotoEssay extends React.Component {
     const photo = photos && photos[index] || {};
     let currentPhotoNumber = 0;
     let maxPhotoNumber = 0;
-    let route;
+    const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
-
-    if(isFullBrowser) {
-      route = fullBrowserRoute;
-    } else {
-      route = fullBrowserExitRoute;
-    }
-
-    if(!route) {
-      route = '/';
-    }
-
-    // console.log(fullBrowserRoute, fullBrowserExitRoute);
-        
-    console.log(route);
-        
     return (
       <div className="photo-essay" style={style}>
         <div className="image-wrapper">
