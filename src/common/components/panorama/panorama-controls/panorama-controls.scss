@@ -54,16 +54,19 @@ $buttonWidth: $controlsHeight*0.8;
     }
   }
 
-  .zoom-controls {
+  .zoom-controls-wrapper {
     display: flex;
     position: relative;
     width: calc(100% - #{$controlsHeight});
     height: 100%;
     font-weight: bold;
     font-size: 20px;
-    //overflow: hidden;
 
-    .zoom-controls-wrapper {
+    &.mask {
+      overflow: hidden;
+    }
+
+    .zoom-controls {
       width: 100%;
       height: 100%;
       background-color: rgba(43, 43, 43, 0.7);
@@ -81,6 +84,7 @@ $buttonWidth: $controlsHeight*0.8;
         width: 1px;
         height: 16px;
         background-color: rgba(255, 255, 255, 1);
+        @include gpu;
       }
     }
 
@@ -128,6 +132,7 @@ $buttonWidth: $controlsHeight*0.8;
           font-size: 12px;
           transition: color 0.3s;
           pointer-events: none;
+          @include gpu;
         }
 
         @mixin hover {
@@ -217,7 +222,7 @@ $buttonWidth: $controlsHeight*0.8;
       width: $controlsHeight;
     }
 
-    .zoom-controls {
+    .zoom-controls-wrapper {
       width: 100%;
 
       .slider {
