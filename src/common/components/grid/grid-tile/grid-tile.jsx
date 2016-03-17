@@ -1,7 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import model from '../../../data/grid';
-import Tween from 'gsap';
 import animate from 'gsap-promise';
 import IconWatch from '../../../../assets/svgs/icon-play.svg';
 import IconExplore from '../../../../assets/svgs/icon-explore.svg';
@@ -110,7 +109,7 @@ export default class GridTile extends React.Component {
     }
 
     this.context.eventBus.emit('mouseEnterTile', this);
-    Tween.killTweensOf(this.refs.imageLayer);
+    TweenMax.killTweensOf(this.refs.imageLayer);
 
     //const filter = 'grayscale(100%)';
     const ctaItems = this.refs.rightCtaIcon
