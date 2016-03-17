@@ -42,12 +42,11 @@ export default class TimelineHoverCard extends React.Component {
     const staggerEls = el.querySelectorAll('.stagger-text');
 
     Promise.all([
-      animate.to(line, 0.1, { delay: 0.3, y: -20, scaleY: 0 }),
+      animate.to(line, 0.1, { delay: 0.2, y: -20, scaleY: 0, transformOrigin: '0 1' }),
       animate.to(card, 0.4, { display: 'none', y: -50, height: 0 }),
-      animate.to(image, 0.4, { scale: 1.2 }),
       animate.to(frontOverlay, 0.3, { y: 50 }),
       animate.to(backOverlay, 0.4, { y: 50 }),
-      animate.staggerTo(staggerEls, 0.2, { opacity: 0, y: 50 })
+      animate.staggerTo(staggerEls, 0.1, { opacity: 0, y: 50 }, 0.1)
     ])
     .then(callback)
   }
@@ -65,7 +64,13 @@ export default class TimelineHoverCard extends React.Component {
             <div ref="card" className="card" >
               <div ref="image" className="image" style={{ backgroundImage: `url(${this.props.src})` }}></div>
               <span ref="ctaText" className="cta-text stagger-text">{this.props.ctaText}</span>
-              <span ref="ctaLabel" className="cta-label stagger-text">Explore</span>
+              {
+              /*
+                To be demo'ed to client and decide if they want to remove it                
+
+                <span ref="ctaLabel" className="cta-label stagger-text">Explore</span>
+              */
+              }
               <div ref="frontOverlay" className="front-label-bg"></div>
               <div ref="backOverlay" className="back-label-bg"></div>
             </div>
