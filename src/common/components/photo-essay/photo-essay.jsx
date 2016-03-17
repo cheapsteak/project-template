@@ -20,23 +20,27 @@ class PhotoEssay extends React.Component {
   };
 
   render () {
-    const { modelSlug, style, photoEssays, basePath } = this.props;
-    const photoEssay = photoEssays[modelSlug];
-    let photo = {};
+    const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute } = this.props;
+    const photo = photos && photos[index] || {};
     let currentPhotoNumber = 0;
     let maxPhotoNumber = 0;
-    let route = `${basePath}`;
+    let route;
 
-    if(photoEssay) {
-      photo = photoEssay.photos[photoEssay.index];
-      currentPhotoNumber = photoEssay.index + 1;
-      maxPhotoNumber = photoEssay.photos.length;
+
+    if(isFullBrowser) {
+      route = fullBrowserRoute;
+    } else {
+      route = fullBrowserExitRoute;
     }
 
-    if(!this.props.isFullBrowser) {
-      route = route + `/photo-essays/${modelSlug}`;
+    if(!route) {
+      route = '/';
     }
 
+    // console.log(fullBrowserRoute, fullBrowserExitRoute);
+        
+    console.log(route);
+        
     return (
       <div className="photo-essay" style={style}>
         <div className="image-wrapper">

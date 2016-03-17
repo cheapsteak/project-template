@@ -98,7 +98,7 @@ export default class FullBrowserWrapper extends React.Component {
           ref="child"
           {...childProps}
           isFullBrowser={true}
-          modelSlug={this.props.params.slug} />
+          slug={this.props.params.slug} />
       </div>
     )
   }

@@ -6,23 +6,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import store from '../../store.js';
 
-@connect(state => ({ photoEssays: state.photoEssays}), undefined, undefined, { withRef: true })
+@connect(state => ({ photoEssay: state.photoEssay}), undefined, undefined, { withRef: true })
 class PhotoEssayRedux extends React.Component {
   constructor(props) {
     super(props)
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
 
-    if(!props.photoEssays[props.modelSlug]) {
-      this.boundActionCreators.setPhotoEssay(props.modelSlug);
+    if(!props.photoEssay[props.slug]) {
+      this.boundActionCreators.setPhotoEssay(props.slug);
     }
   }
 
   handlePrevClick = () => {
-    this.boundActionCreators.setPrevPhoto(this.props.modelSlug);
+    this.boundActionCreators.setPrevPhoto(this.props.slug);
   };
 
   handleNextClick = () => {
-    this.boundActionCreators.setNextPhoto(this.props.modelSlug);
+    this.boundActionCreators.setNextPhoto(this.props.slug);
   };
 
   render () {
@@ -31,6 +31,7 @@ class PhotoEssayRedux extends React.Component {
       onPrevClick={this.handlePrevClick}
       onNextClick={this.handleNextClick}
       {...this.props}
+      {...this.props.photoEssay}
     />
   }
 }

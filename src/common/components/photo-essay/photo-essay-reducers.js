@@ -1,6 +1,6 @@
 import { PREV_PHOTO, NEXT_PHOTO, SET_PHOTO_ESSAY } from './photo-essay-actions.js';
 
-function photoEssay(state, action) {
+function photoEssay(state = {}, action) {
   switch (action.type) {
     case SET_PHOTO_ESSAY:
       return Object.assign({ index: 0 }, action.data);
@@ -13,8 +13,4 @@ function photoEssay(state, action) {
   }
 }
 
-function photoEssays(state = {}, action) {
-  return Object.assign({}, state, { [action.id]: photoEssay(state[action.id], action) });
-};
-
-export default photoEssays;
+export default photoEssay;
