@@ -1,7 +1,13 @@
+@import 'chapter-columns';
+
 .chapter-page {
   height: 100%;
   overflow-y: auto;
   background-color: #826636;
+
+  h2 {
+
+  }
 
   .page-component {
     position: relative;
@@ -10,16 +16,10 @@
 
   .main {
     position: relative;
-    margin-top: 50px;
-    margin-left: 50px;
-    @media (min-width: $break-large) {
-      margin-top: (50/1400)px;
-      margin-left: (50/1400)px;
-    }
-    @media (min-width: $break-xlarge) {
-      margin-top: 70px;
-      margin-left: 70px;
-    }
+
+    @include scale('margin-top', 50px, (50/1400)vw, 70px);
+    @include scale('margin-left', 50px, (50/1400)vw, 70px);
+
     width: calc(100% - 50px);
 
     background-color: white;

@@ -21,10 +21,10 @@ export default class Chapter extends React.Component {
         </div>
 
         <div className="page-component">
-          Instructional Video
+          <h2>Instructional Video</h2>
           <InstructionalVideo
+            className="col-4 margin-auto-horizontal"
             modelSlug="test"
-            basePath=""
           />
         </div>
 
