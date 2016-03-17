@@ -12,15 +12,20 @@ $buttonWidth: $controlsHeight*0.8;
   height: $controlsHeight;
   z-index: 1000;
 
-  &:after {
-    content: "";
+  .bottom-bar-wrapper {
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
     position: absolute;
     left: 0;
     bottom: -40px;
-    width: 100%;
-    height: 40px;
-    background-color: rgba(43, 43, 43, 1);
     z-index: -1;
+  }
+
+  .bottom-bar {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(43, 43, 43, 1);
   }
 
   .button {
@@ -56,7 +61,13 @@ $buttonWidth: $controlsHeight*0.8;
     height: 100%;
     font-weight: bold;
     font-size: 20px;
-    background-color: rgba(43, 43, 43, 0.7);
+    //overflow: hidden;
+
+    .zoom-controls-wrapper {
+      width: 100%;
+      height: 100%;
+      background-color: rgba(43, 43, 43, 0.7);
+    }
 
     .zoom-progress {
       position: absolute;
@@ -141,7 +152,7 @@ $buttonWidth: $controlsHeight*0.8;
 
         &:active {
           @include hover;
-          
+
           .circle {
             transform: scale(1.1);
           }
@@ -164,14 +175,60 @@ $buttonWidth: $controlsHeight*0.8;
     }
   }
 
-  .full-browser {
+  .full-browser-button-wrapper {
+    position: relative;
     width: $controlsHeight;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .full-browser.button {
+    width: 100%;
     height: 100%;
     background-color: rgba(43, 43, 43, 0.9);
 
     svg {
       width: 30px;
       height: 25px;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    &:hover {
+      svg {
+        opacity: 1
+      }
+    }
+
+    &:active {
+      svg {
+        opacity: 0.5
+      }
+    }
+  }
+
+  &.full-browser-mode {
+    width: 100%;
+    left: 0;
+    bottom: 40px;
+    margin-left: 0;
+
+    .button {
+      width: $controlsHeight;
+    }
+
+    .zoom-controls {
+      width: 100%;
+
+      .slider {
+        position: relative;
+        margin-left: $controlsHeight*1.4;
+        width: calc(100% - #{$controlsHeight *2.8});
+      }
+    }
+
+    .full-browser-button-wrapper {
+      display: none;
     }
   }
 }

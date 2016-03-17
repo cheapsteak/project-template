@@ -23,7 +23,8 @@ export default class PanoramaControls extends React.Component {
   state = {
     sliderPos: 0,
     progressWidth: null,
-    isDraggingSlider: false
+    isDraggingSlider: false,
+    isFullBrowser: false
   };
 
   componentWillReceiveProps(newProps) {
@@ -78,6 +79,8 @@ export default class PanoramaControls extends React.Component {
   };
 
   handleFullBrowserClick = () => {
+    this.setState({isFullBrowser: true});
+    setTimeout(() => this.setIndicatorPos());
     console.log('go full-browser')
   };
 
@@ -90,46 +93,56 @@ export default class PanoramaControls extends React.Component {
   };
 
   render() {
+    const fullBrowserMode = this.state.isFullBrowser ? 'full-browser-mode' : '';
+
     return (
-      <div className={`panorama-controls`}>
+      <div className={`panorama-controls ${fullBrowserMode}`}>
+
         <div className={`zoom-controls`}>
-
-          <div
-            className={`zoom-progress`}
-            style={{width: this.state.progressWidth}}
-          >
-            <div className={`zoom-line`}></div>
-          </div>
-
-          <div className={`zoom-out button`} onClick={this.handleZoomOut}>-</div>
-          <div className={`zoom-in button`} onClick={this.handleZoomIn}>+</div>
-
-          <div ref="slider" className={`slider`}>
+          <div className={`zoom-controls-wrapper`}>
             <div
-              ref="indicator"
-              className={`slider-indicator button`}
-              style={{
+              className={`zoom-progress`}
+              style={{width: this.state.progressWidth}}
+            >
+              <div className={`zoom-line`}></div>
+            </div>
+
+            <div className={`zoom-out button`} onClick={this.handleZoomOut}>-</div>
+            <div className={`zoom-in button`} onClick={this.handleZoomIn}>+</div>
+
+            <div ref="slider" className={`slider`}>
+              <div
+                ref="indicator"
+                className={`slider-indicator button`}
+                style={{
                 transform: 'translateX(' + this.state.sliderPos + 'px)',
                 WebkitTransform: 'translateX(' + this.state.sliderPos + 'px)'
               }}
-              onMouseDown={this.handleSliderDrag}
-              onTouchStart={this.handleSliderDrag}
-            >
-              <div className={`arrow left`} dangerouslySetInnerHTML={{ __html: IconArrowLeft }}></div>
-              <div className={`circle`}></div>
-              <div className={`arrow right`} dangerouslySetInnerHTML={{ __html: IconArrowRight }}></div>
-              <div className={`zoom-value`}>
-                {parseFloat(this.props.zoomLevel + 1).toPrecision(2)}x
+                onMouseDown={this.handleSliderDrag}
+                onTouchStart={this.handleSliderDrag}
+              >
+                <div className={`arrow left`} dangerouslySetInnerHTML={{ __html: IconArrowLeft }}></div>
+                <div className={`circle`}></div>
+                <div className={`arrow right`} dangerouslySetInnerHTML={{ __html: IconArrowRight }}></div>
+                <div className={`zoom-value`}>
+                  {parseFloat(this.props.zoomLevel + 1).toPrecision(2)}x
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div
-          className={`full-browser button`}
-          onClick={this.handleFullBrowserClick}
-          dangerouslySetInnerHTML={{ __html: FullBrowserSvg }}
-        ></div>
+        <div className={`full-browser-button-wrapper`}>
+          <div
+            className={`full-browser button`}
+            onClick={this.handleFullBrowserClick}
+            dangerouslySetInnerHTML={{ __html: FullBrowserSvg }}
+          ></div>
+        </div>
+
+        <div className={`bottom-bar-wrapper`}>
+          <div className={`bottom-bar`}></div>
+        </div>
       </div>
     );
   }
