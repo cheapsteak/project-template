@@ -31,9 +31,19 @@ export default {
   'instructional-grid-player': {
     component: require('common/components/video-players/instructional/grid/grid-video-player-redux.jsx'),
     props: {
-      modelSlug: 'test'
+      slug: 'math-1'
     }
   },
-  'grid-player/test': require('./grid-player/grid-player.jsx'),
-  'grid-player/math': require('./grid-player/grid-player.jsx')
+  'grid-player/math-1': {
+    component: require('common/components/video-players/instructional/grid/grid-video-player-redux.jsx'),
+    props: {
+      slug: 'math-1'
+    }
+  },
+  'grid-player/science-1': {
+    component: require('common/components/video-players/instructional/grid/grid-video-player-redux.jsx'),
+    props: {
+      slug: 'math-1'
+    }
+  },
 };

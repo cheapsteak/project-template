@@ -13,13 +13,13 @@ class GridVideoPlayerRedux extends React.Component {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
 
-    if(!props.videos[props.modelSlug]) {
-      this.boundActionCreators.setVideo(props.modelSlug);
+    if(!props.videos[props.slug]) {
+      this.boundActionCreators.setVideo(props.slug);
     }
   }
 
   render () {
-    const { videos, modelSlug, className } = this.props;
+    const { videos, className } = this.props;
 
     return <GridVideoPlayer
       ref="wrappedInstance"

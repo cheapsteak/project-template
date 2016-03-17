@@ -1,4 +1,5 @@
-import dataModel from '../../../data/instructional-videos.js';
+// import dataModel from '../../../data/instructional-videos.js';
+import model from 'common/models/instructional-videos-model.js';
 import { handleError } from 'common/actions/handleError.js';
 import _ from 'lodash';
 
@@ -8,17 +9,17 @@ export const SET_INSTRUCTIONAL_VIDEO_DURATION = 'SET_INSTRUCTIONAL_VIDEO_DURATIO
 export const PLAY_INSTRUCTIONAL_VIDEO = 'PLAY_INSTRUCTIONAL_VIDEO';
 export const STOP_INSTRUCTIONAL_VIDEO = 'STOP_INSTRUCTIONAL_VIDEO';
 
-export function setVideo(id) {
-  const currentVideoIdx = _.findIndex(dataModel, { id });
+export function setVideo(slug) {
+  const currentVideo = model.get(slug);
   let action;
 
-  if(currentVideoIdx === -1) {
-    action = handleError(`Cannot find video with model id: ${id}`);
+  if(!currentVideo) {
+    action = handleError(`Cannot find video with model slug: ${slug}`);
   } else {
     action = {
       type: SET_INSTRUCTIONAL_VIDEO,
-      currentVideo: dataModel[currentVideoIdx],
-      nextVideo: dataModel[currentVideoIdx + 1 < dataModel.length ? currentVideoIdx + 1 : 0]
+      currentVideo: currentVideo,
+      nextVideo: model.getNext(slug)
     };
   } 
 

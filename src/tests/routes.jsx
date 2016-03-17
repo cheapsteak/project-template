@@ -41,7 +41,6 @@ export default <Route>
               key={'chapter-abcdef'}
               component={FullBrowserWrapper}
               childComponent={ChapterVideoPlayer}
-              childComponentProps={{ basePath: 'tests/chapter'}}
             >
             </Route>
             <Route
@@ -49,7 +48,6 @@ export default <Route>
               key={'chapter-abcdef'}
               component={FullBrowserWrapper}
               childComponent={PhotoEssay}
-              childComponentProps={{ basePath: 'tests/chapter'}}
             >
             </Route>
           </Route>
