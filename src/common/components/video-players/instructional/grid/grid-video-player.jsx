@@ -126,12 +126,6 @@ export default class GridVideoPlayer extends React.Component {
         .then(this.animateInControls);
       }
     }
-
-    // if(this.props.isPlaying) {
-    //   this.video.play();
-    // } else {
-    //   this.video.pause();
-    // }
   }
 
   componentWillUnmount() {
@@ -308,7 +302,7 @@ export default class GridVideoPlayer extends React.Component {
           }
           </TransitionGroup>
           <div
-            className="replay-group"
+            className="replay-group replay-group-grid"
           >
             <div
               ref="replayButton"
