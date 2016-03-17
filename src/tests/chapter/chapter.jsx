@@ -52,15 +52,13 @@ export default class Chapter extends React.Component {
             id="target-video"
             ref='video'
             style={videoStyle}
-            basePath={`${pathname}`}
-            modelSlug="test"
+            slug="math-1"
             shouldHideInTheBack={true}
           />
           <br/><br/><br/><br/><br/><br/>
           <PhotoEssay
             ref='photoessay'
-            basePath={`${pathname}`}
-            modelSlug="test"
+            slug="math-1"
           />
         </div>
         <TransitionGroup

@@ -9,12 +9,9 @@ import {
 
 import { ERROR } from 'common/actions/handleError.js';
 
-import dataModel from '../../../data/instructional-videos.js';
-import _ from 'lodash';
-
 const defState = {
-  currentVideo: dataModel[0],
-  nextVideo: dataModel[1]
+  currentVideo: undefined,
+  nextVideo: undefined
 };
 
 const defVideoValues = {

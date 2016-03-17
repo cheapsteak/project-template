@@ -10,12 +10,22 @@ export default {
       console.trace('Unable to get model from slug:', slug);
     }
 
-    const chapterRoute =  `/chapters/${chapterData.slug}/`; 
+    const chapterRoute =  `/chapters/${chapterData.slug}/`;
 
     return {
       ...videoSourceData,
       fullBrowserRoute: chapterRoute,
-      fullBrowserExitRoute: `${chapterRoute}/instructional-videos/${videoSourceData.slug}`
+      fullBrowserExitRoute: `${chapterRoute}instructional-videos${videoSourceData.slug}`,
+      gridRoute: `/grid/instructional-videos${videoSourceData.slug}`
     };
+  },
+
+  getNext (currentSlug) {
+    const videoSourceData = data.find(video => video.slug === currentSlug);
+    const chapterData = chaptersModel.get(videoSourceData.chapterSlug);
+    const idx = data.indexOf(videoSourceData);
+    const nextVideo = data[(idx + 1) % data.length];
+
+    return this.get(nextVideo.slug);
   }
 };
