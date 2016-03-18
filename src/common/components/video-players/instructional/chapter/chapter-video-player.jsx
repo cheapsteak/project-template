@@ -3,7 +3,63 @@ import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
 import FullBrowserButtonSvg from '../../../../../assets/photo-essay-fullscreen-button.svg';
+import ReplayArrowSvg from '../../../../../assets/replay-arrow.svg';
 import { Link } from 'react-router';
+import animate from 'gsap-promise';
+
+function calculateAnimationStates (els) {
+  const zoomedInRect = els.root.getBoundingClientRect();
+  const zoomedOutVideoMargin = 40;
+  const zoomedOutRect = {
+    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
+    height: zoomedInRect.height - zoomedOutVideoMargin * 2
+  }
+
+  return {
+    out: {
+      videoWrapper: {
+        delay: 0.3,
+        scaleX: 1,
+        scaleY: 1
+      },
+      endingOverlay: {
+        delay: 0.1,
+        display: 'none',
+        opacity: 0
+      },
+      replayButton: {
+        opacity: 0
+      },
+      replayLabel: {
+        opacity: 0
+      },
+      controls: {
+        y: els.controls.offsetHeight
+      }
+    },
+    idle: {
+      videoWrapper: {
+        scaleX: zoomedOutRect.width/zoomedInRect.width,
+        scaleY: zoomedOutRect.height/zoomedInRect.height
+      },
+      endingOverlay: {
+        display: 'block',
+        opacity: 1
+      },
+      replayButton: {
+        delay: 0.8,
+        opacity: 1
+      },
+      replayLabel: {
+        delay: 0.8,
+        opacity: 1
+      },
+      controls: {
+        y: 0
+      }
+    }
+  };
+};
 
 export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
@@ -16,9 +72,36 @@ export default class ChapterVideoPlayer extends React.Component {
 
   videoId = 'target-video';
   cloneId = 'clone-video';
+  hideControlsTimeoutId = undefined;
+
+  componentWillMount() {
+    // this.props.onVideoTimeChange(0);
+  }
+
+  componentDidMount() {
+    const { endingOverlay, replayButton, replayLabel } = this.refs;
+    this.animationStates = calculateAnimationStates(this.refs);
+    animate.set(endingOverlay, this.animationStates.out.endingOverlay);
+    animate.set(replayButton, this.animationStates.out.replayButton);
+    animate.set(replayLabel, this.animationStates.out.replayLabel);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props.duration && nextProps.duration) {
+      if(this.props.currentTime !== this.props.duration && 
+        nextProps.currentTime === nextProps.duration) {
+        this.animateInEndOverlay();
+        this.animateOutControls();
+      } else if (this.props.currentTime === this.props.duration
+        && nextProps.currentTime !== nextProps.duration) {
+        this.animateOutEndOverlay()
+        .then(this.animateInControls);
+      }
+    }
+  }
 
   componentWillEnterFullBrowser = () => {
-    const container = findDOMNode(this);
+    const container = this.refs.videoWrapper;
     const video = document.querySelector(`#${this.videoId}`);
     const videoParent = video.parentNode;
     const clone = video.cloneNode();
@@ -76,12 +159,41 @@ export default class ChapterVideoPlayer extends React.Component {
     }
   };
 
-  handlePrevClick = (e) => {
+  handleReplayClick = (e) => {
+    this.changeVideoTime(0);
 
+    // Delay the replay by x time due to animations
+    setTimeout(this.handleVideoPlayPause, 500);
   };
 
-  handleNextClick = (e) => {
+  animateInControls = () => {
+    return animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls);
+  };
 
+  animateOutControls = () => {
+    return animate.to(this.refs.controls, 0.3, this.animationStates.out.controls);
+  };
+
+  animateInEndOverlay = () => {
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
+
+    return Promise.all([
+      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay),
+      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel)
+    ]);
+  };
+
+  animateOutEndOverlay = () => {
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
+
+    return Promise.all([
+      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
+    ]);
   };
 
   render() {
@@ -89,51 +201,84 @@ export default class ChapterVideoPlayer extends React.Component {
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
     const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
-    return <div className={`instructional-video-player chapter-player ${this.props.className}`} style={style}>
-      {
-        !isFullBrowser ? 
-          <video
-            id={this.videoId}
-            preload="metadata"
-            ref={(node) => this.video = node }
-            src={this.props.src}
-            onLoadedMetadata={this.handleMetadataLoaded}
-            onEnded={this.handleVideoPlayPause}
-            onTimeUpdate={this.handleTimeUpdate}
-            poster={this.props.poster}
-          >
-          </video>
-          : undefined
-      }
-      <div className="controls" ref="controls">
-        <div className="control-group">
-          <span
-            className="button"
-            style={tempPauseStyle}
-            dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
-            onClick={this.handleVideoPlayPause}
-          >
-          </span>
-          <Link className="button fullbrowser-button" to={route}>
+    return (
+      <div
+        ref="root"
+        className={`instructional-video-player chapter-player ${this.props.className}`}
+        style={style}
+      >
+        <div
+          ref="videoWrapper"
+          className="video-wrapper"
+        >
+        {
+          !isFullBrowser ?  
+            <video
+              id={this.videoId}
+              preload="metadata"
+              ref={(node) => this.video = node }
+              src={this.props.src}
+              onLoadedMetadata={this.handleMetadataLoaded}
+              onEnded={this.handleVideoPlayPause}
+              onTimeUpdate={this.handleTimeUpdate}
+              poster={this.props.poster}
+            >
+            </video>
+            : undefined
+        }
+        </div>
+        <div className="controls" ref="controls">
+          <div className="control-group">
             <span
-              dangerouslySetInnerHTML={{__html: FullBrowserButtonSvg}}
+              className="button"
+              style={tempPauseStyle}
+              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              onClick={this.handleVideoPlayPause}
             >
             </span>
-          </Link>
+            <Link className="button fullbrowser-button" to={route}>
+              <span
+                dangerouslySetInnerHTML={{__html: FullBrowserButtonSvg}}
+              >
+              </span>
+            </Link>
+          </div>
+          {
+            /* 
+              The duration is put into the store and pass down to the component
+              to account for the work around with moving around the video node 
+            */
+          }
+          <Timeline
+            currentTime={this.props.currentTime || 0}
+            duration={this.props.duration || 0}
+            onTimeChange={this.changeVideoTime}
+            items={[]}
+          />
         </div>
-        {
-          /* 
-            The duration is put into the store and pass down to the component
-            to account for the work around with moving around the video node 
-          */
-        }
-        <Timeline
-          currentTime={this.props.currentTime || 0}
-          duration={this.props.duration || 0}
-          onTimeChange={this.changeVideoTime}
-          items={[]}
-        />
+        <div
+          ref="endingOverlay"
+          className="end-overlay"
+        >
+          <div
+            className="replay-group replay-group-chapter"
+          >
+            <div
+              ref="replayButton"
+              className="replay-button"
+              onClick={this.handleReplayClick}
+              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+            >
+            </div>
+            <label
+              ref="replayLabel"
+              className="replay-label"
+            >
+              Replay
+            </label>
+          </div>
+        </div>
       </div>
-    </div>
+    )
   }
 }
