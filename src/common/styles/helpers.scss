@@ -2,11 +2,13 @@
 // @include scale('margin-top', 50px, (50/1400)vw, 70px);
 
 @mixin scale($prop, $lte-1400, $gt-1400, $gte-1920) {
-  #{$prop}: $lte-1400;
-  @media (min-width: $break-large) {
+  @media (max-width: $break-large) {
+    #{$prop}: $lte-1400;
+  }
+  @media (min-width: $break-large + 1) {
     #{$prop}: $gt-1400;
   }
-  @media (min-width: $break-xlarge) {
+  @media (min-width: $break-xlarge + 1) {
     #{$prop}: $gte-1920;
   }
 }
