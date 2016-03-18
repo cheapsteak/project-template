@@ -74,4 +74,3 @@ var filePath = settings.ASSET_PATH + 'fancy/fancy-graphic.png';
 ```bash
 $ npm run build:production
 ```
-
