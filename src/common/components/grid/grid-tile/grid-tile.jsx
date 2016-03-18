@@ -1,10 +1,10 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import model from '../../../data/grid';
 import animate from 'gsap-promise';
 import IconWatch from '../../../../assets/svgs/icon-play.svg';
 import IconExplore from '../../../../assets/svgs/icon-explore.svg';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 const sizes = {
   LANDSCAPE: 'landscape',
@@ -228,7 +228,7 @@ export default class GridTile extends React.Component {
     const isFiltered = this.props.isFiltered;
     const slider = isFiltered ? null : (<div ref="slider" className={`slider`}></div>);
 
-    const videoCopy = isFiltered ? 'Watch instructional video' : 'Watch';
+    const videoCopy = isFiltered ? 'See inside the classroom' : 'Watch';
     const videoUrl = isFiltered ? this.state.data.instructionalVideoUrl : this.state.data.narrativeVideoUrl;
     const size = isFiltered ? 'full-size' : '';
     const leftCta = (

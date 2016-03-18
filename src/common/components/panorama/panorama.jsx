@@ -1,5 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import PhotoSphere from 'photo-sphere-viewer';
 import THREE from 'three';
 import raf from 'raf';
@@ -24,7 +24,7 @@ const zoomRangeNum = maxZoomNum + minZoomNum;
 export default class Panorama extends React.Component {
 
   static propTypes = {
-    src: React.PropTypes.string.isRequired,
+    src: React.PropTypes.string,
     initLong: React.PropTypes.number,
     initLat: React.PropTypes.number
   };
@@ -108,7 +108,6 @@ export default class Panorama extends React.Component {
           _this.setState({rotation});
         }
       }
-      //console.log('raf loop');
       raf(tick);
     });
   };
@@ -142,6 +141,10 @@ export default class Panorama extends React.Component {
       var rotation = {x: long, y: lat};
       this.setState({long, lat, rotation});
     });
+
+    this.panorama.on('size-updated', function (width, height) {
+      console.log(width, height)
+    });
   };
 
   handleAccelerometerClick = () => {
@@ -161,8 +164,12 @@ export default class Panorama extends React.Component {
   };
 
   render() {
+    const {isFullBrowser, fullBrowserRoute, fullBrowserExitRoute} = this.props;
+    const route = (!isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
+
     return (
       <div className={`panorama ${this.state.status}`}>
+
         <PanoramaCompass
           ref="compass"
           long={this.state.rotation.x}
@@ -175,6 +182,7 @@ export default class Panorama extends React.Component {
           zoomIn={this.zoomIn}
           zoomOut={this.zoomOut}
           onZoomUpdate={this.onZoomUpdate}
+          fullBrowserRoute={route}
         />
 
         <div className={`accelerometer button ${this.state.status}`} onClick={this.handleAccelerometerClick}>AC</div>
