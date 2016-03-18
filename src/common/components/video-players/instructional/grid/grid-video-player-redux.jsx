@@ -28,6 +28,7 @@ class GridVideoPlayerRedux extends React.Component {
       onVideoPlay={this.boundActionCreators.playVideo}
       onVideoPause={this.boundActionCreators.pauseVideo}
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
+      prevVideo={videos.prevVideo}
       nextVideo={videos.nextVideo}
       {...this.props}
       {...videos.currentVideo}

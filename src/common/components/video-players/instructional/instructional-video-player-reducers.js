@@ -46,6 +46,7 @@ function videos(state = defState, action) {
     case SET_INSTRUCTIONAL_VIDEO:
       return Object.assign({}, state, { 
         currentVideo: video(state.currentVideo, { type: action.type, video: action.currentVideo }),
+        prevVideo: video(state.currentVideo, { type: action.type, video: action.prevVideo }),
         nextVideo: video(state.currentVideo, { type: action.type, video: action.nextVideo })
       });
 

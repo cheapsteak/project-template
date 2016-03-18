@@ -10,6 +10,7 @@ import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
 import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
 import NextVideoCard from './next-video-card/next-video-card.jsx';
+import HoverCard from './grid-hover-card/grid-hover-card.jsx';
 
 function calculateAnimationStates (els) {
   const zoomedInRect = els.root.getBoundingClientRect();
@@ -84,6 +85,7 @@ export default class GridVideoPlayer extends React.Component {
   state = {
     showEndingCTA: false,
     nextVideoTimeLeft: 15,
+    showHoverCard: 'next'
   };
 
   componentWillMount() {
@@ -126,12 +128,6 @@ export default class GridVideoPlayer extends React.Component {
         .then(this.animateInControls);
       }
     }
-
-    // if(this.props.isPlaying) {
-    //   this.video.play();
-    // } else {
-    //   this.video.pause();
-    // }
   }
 
   componentWillUnmount() {
@@ -159,13 +155,17 @@ export default class GridVideoPlayer extends React.Component {
     }
   };
 
-  handlePrevClick = (e) => {
+  handleMouseEnterPrevButton = () => {
+    this.state.showHoverCard !== 'prev' && this.setState({ showHoverCard: 'prev' });
+  }
 
-  };
+  handleMouseEnterNextButton = () => {
+    this.state.showHoverCard !== 'next' && this.setState({ showHoverCard: 'next' });
+  }
 
-  handleNextClick = (e) => {
-
-  };
+  handleMouseLeaveNextPrevButtons = () => {
+    this.setState({ showHoverCard: undefined });
+  }
 
   handleReplayClick = (e) => {
     this.changeVideoTime(0);
@@ -221,9 +221,12 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   render() {
-    const { style, modelSlug } = this.props;
+    const { style, modelSlug, prevVideo, nextVideo } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
-
+    const prevVideoRoute = prevVideo ? prevVideo.gridRoute : '/';
+    const nextVideoRoute = nextVideo ? nextVideo.gridRoute : '/';
+window.aaa = this;
+    
     return (
       <div
         ref="root"
@@ -258,18 +261,58 @@ export default class GridVideoPlayer extends React.Component {
               onClick={this.handleVideoPlayPause}
             >
             </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-              onClick={this.handlePrevClick}
+            <div
+              className="button-wrapper"
+              onMouseEnter={this.handleMouseEnterPrevButton}
+              onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-              onClick={this.handleNextClick}
+              <Link to={prevVideoRoute}>
+                <span
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+                  onClick={this.handlePrevClick}
+                >
+                </span>
+              </Link>
+              <TransitionGroup>
+                  {
+                    this.state.showHoverCard === 'prev' && prevVideo
+                    ? <HoverCard
+                        key="prev-card"
+                        src={prevVideo.hoverCardImage}
+                        ctaText={prevVideo.title}
+                        label="Previous"
+                      />
+                    : undefined
+                  }
+              </TransitionGroup>
+            </div>
+            <div
+              className="button-wrapper"
+              onMouseEnter={this.handleMouseEnterNextButton}
+              onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-            </span>
+              <Link to={nextVideoRoute}>
+                <span
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+                  onClick={this.handleNextClick}
+                >
+                </span>
+              </Link>
+              <TransitionGroup>
+                {
+                  this.state.showHoverCard === 'next' && nextVideo
+                  ? <HoverCard
+                      key="next-card"
+                      src={nextVideo.hoverCardImage}
+                      ctaText={nextVideo.title}
+                      label="Next"
+                    />
+                  : undefined
+                }
+              </TransitionGroup>
+            </div>
           </div>
           <Timeline
             currentTime={this.props.currentTime || 0}
@@ -291,16 +334,16 @@ export default class GridVideoPlayer extends React.Component {
             ? [ 
               <LearnMoreCard
                 key={'currentId'}
-                title={this.props.chapterName}
+                title={this.props.title}
                 route={this.props.chapterRoute}
-                image={this.props.chapterCardImage}
+                image={this.props.endingCardImage}
               />
               ,
               <NextVideoCard
                 key={'nextVideoId'}
-                title={this.props.nextVideo.chapterName}
-                route={this.props.nextVideo.videoRoute}
-                video={this.props.nextVideo.src}
+                title={nextVideo.title}
+                route={nextVideoRoute}
+                video={nextVideo.src}
                 timeLeft={this.state.nextVideoTimeLeft}
               />
             ]

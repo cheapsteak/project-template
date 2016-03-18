@@ -19,6 +19,7 @@ export function setVideo(slug) {
     action = {
       type: SET_INSTRUCTIONAL_VIDEO,
       currentVideo: currentVideo,
+      prevVideo: model.getPrev(slug),
       nextVideo: model.getNext(slug)
     };
   } 

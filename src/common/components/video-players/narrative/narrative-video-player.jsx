@@ -4,6 +4,7 @@ import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from '../../../../assets/video-play-button.svg';
 import BackButtonSvg from '../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
+import IconExplore from '../../../../assets/svgs/icon-explore.svg';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
@@ -278,7 +279,10 @@ export default class NarrativeVideoPlayer extends React.Component {
           className="video-wrapper"
         >
           <div ref="overlay" className="video-overlay"></div>
-          <button ref="exploreBtn" className="explore-button">Explore</button>
+          <button ref="exploreBtn" className="explore-button">
+            <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
+            <div>Explore</div>
+          </button>
           <video
             ref={(node) => this.video = node }
             src={this.props.src}
