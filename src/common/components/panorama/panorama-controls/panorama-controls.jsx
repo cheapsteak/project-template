@@ -41,14 +41,6 @@ export default class PanoramaControls extends React.Component {
     this.setIndicatorPos();
   }
 
-  componentWillEnterFullBrowser = () => {
-    alert('enter')
-  };
-
-  componentWillLeaveFullBrowser = () => {
-    alert('leave')
-  };
-
   doDrag = (coordX) => {
     if (this.state.isDraggingSlider) {
       const pos = coordX - this.refs.slider.getBoundingClientRect().left;
