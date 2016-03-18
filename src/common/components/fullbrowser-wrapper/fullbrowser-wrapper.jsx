@@ -42,6 +42,14 @@ export default class FullBrowserWrapper extends React.Component {
     return this.animateToFullBrowser();
   };
 
+  componentDidEnter = () => {
+    const component = unwrapComponent(this.refs.child);
+
+    if(component.componentDidEnterFullBrowser) {
+      component.componentDidEnterFullBrowser();
+    }
+  }
+
   componentWillLeave = async (callback) => {
     await this.componentWillLeaveFullBrowser();
     callback()
@@ -58,6 +66,14 @@ export default class FullBrowserWrapper extends React.Component {
 
     return Promise.resolve();
   };
+
+  componentDidLeave = () => {
+    const component = unwrapComponent(this.refs.child);
+
+    if(component.componentDidLeaveFullBrowser) {
+      component.componentDidLeaveFullBrowser();
+    }
+  }
 
   animateToFullBrowser = () => {
     const el = findDOMNode(this);
