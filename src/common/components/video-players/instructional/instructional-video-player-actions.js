@@ -8,6 +8,7 @@ export const SET_INSTRUCTIONAL_VIDEO_TIME = 'SET_INSTRUCTIONAL_VIDEO_TIME';
 export const SET_INSTRUCTIONAL_VIDEO_DURATION = 'SET_INSTRUCTIONAL_VIDEO_DURATION';
 export const PLAY_INSTRUCTIONAL_VIDEO = 'PLAY_INSTRUCTIONAL_VIDEO';
 export const STOP_INSTRUCTIONAL_VIDEO = 'STOP_INSTRUCTIONAL_VIDEO';
+export const SET_INSTRUCTIONAL_VIDEO_OPTIONS = 'SET_INSTRUCTIONAL_VIDEO_OPTIONS';
 
 export function setVideo(slug) {
   const currentVideo = model.get(slug);
@@ -38,6 +39,13 @@ export function setVideoDuration(duration) {
   return {
     type: SET_INSTRUCTIONAL_VIDEO_DURATION,
     duration
+  }
+}
+
+export function setVideoOptions(options) {
+  return {
+    type: SET_INSTRUCTIONAL_VIDEO_OPTIONS,
+    options
   }
 }
 

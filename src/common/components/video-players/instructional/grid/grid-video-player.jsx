@@ -22,6 +22,9 @@ function calculateAnimationStates (els) {
 
   return {
     out: {
+      simpleProgressBar: {
+        y: els.simpleProgressBar.offsetHeight
+      },
       videoWrapper: {
         delay: 0.3,
         scaleX: 1,
@@ -45,6 +48,9 @@ function calculateAnimationStates (els) {
       }
     },
     idle: {
+      simpleProgressBar: {
+        y: 0
+      },
       videoWrapper: {
         scaleX: zoomedOutRect.width/zoomedInRect.width,
         scaleY: zoomedOutRect.height/zoomedInRect.height
@@ -80,12 +86,12 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   nextVideoIntervalId = undefined;
-  hideControlsTimeoutId = undefined;
+  showFullControls = undefined;
 
   state = {
     showEndingCTA: false,
     nextVideoTimeLeft: 15,
-    showHoverCard: 'next'
+    showHoverCard: undefined
   };
 
   componentWillMount() {
@@ -93,19 +99,36 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const { endingOverlay, replayButton, replayLabel } = this.refs;
+    const { endingOverlay, videoWrapper, replayButton, replayLabel, simpleProgressBar, controls } = this.refs;
     this.animationStates = calculateAnimationStates(this.refs);
     animate.set(endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(replayButton, this.animationStates.out.replayButton);
     animate.set(replayLabel, this.animationStates.out.replayLabel);
+console.log(this.props);
+    
+    if(!this.props.isPlaying) {
+      animate.set(videoWrapper, this.animationStates.idle.videoWrapper);
+
+      if(!this.props.isFullControls) {
+        this.props.showFullControls();
+      } else {
+
+        // Potential Issue: When video is not loaded yet, the timeline dots will not appear yet.
+        // This can cause the dots to appear instantly during the animate in (instead of the 
+        // staggered animation)
+        this.animateInControls();
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
+    const { endingOverlay, videoWrapper, replayButton, replayLabel, simpleProgressBar, controls } = this.refs;
+
     if(this.props.duration && nextProps.duration) {
       if(this.props.currentTime !== this.props.duration && 
         nextProps.currentTime === nextProps.duration) {
         this.animateInEndOverlay();
-        this.animateOutControls();
+        this.props.hideFullControls();
         this.clearCountdown();
         this.nextVideoIntervalId = setInterval(() => {
           if(this.state.nextVideoTimeLeft > 0) {
@@ -124,8 +147,15 @@ export default class GridVideoPlayer extends React.Component {
       } else if (this.props.currentTime === this.props.duration
         && nextProps.currentTime !== nextProps.duration) {
         this.clearCountdown();
-        this.animateOutEndOverlay()
-        .then(this.animateInControls);
+        this.animateOutEndOverlay();
+      }
+    }
+
+    if(this.props.isFullControls !== nextProps.isFullControls) {
+      if(nextProps.isFullControls) {
+        this.animateInControls();
+      } else {
+        this.animateOutControls();
       }
     }
   }
@@ -191,9 +221,10 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateInEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
 
     return Promise.all([
+      animate.to(simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
         .then(() => this.setState({ showEndingCTA: true })),
@@ -203,10 +234,11 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateOutEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
 
     this.setState({ showEndingCTA: false });
     return Promise.all([
+      animate.to(simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
@@ -223,10 +255,10 @@ export default class GridVideoPlayer extends React.Component {
   render() {
     const { style, modelSlug, prevVideo, nextVideo } = this.props;
     const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
+    const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const prevVideoRoute = prevVideo ? prevVideo.gridRoute : '/';
     const nextVideoRoute = nextVideo ? nextVideo.gridRoute : '/';
-window.aaa = this;
-    
+
     return (
       <div
         ref="root"
@@ -248,6 +280,12 @@ window.aaa = this;
             poster={this.props.poster}
           >
           </video>
+        </div>
+        <div
+          ref="simpleProgressBar"
+          className="simple-progress-bar"
+        >
+          <span style={{ width: progressWidth }}></span>
         </div>
         <div
          ref="controls"
