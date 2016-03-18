@@ -104,13 +104,6 @@
     opacity: 0;
 
     .replay-group {
-      $group-width: 80px;
-      $group-height: 95px;
-      width: $group-width;
-      height: $group-height;
-      position: absolute;
-      top: calc(80% - #{$group-height * 0.5});
-      left: calc(50% - #{$group-width * 0.5});
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -118,8 +111,6 @@
     }
 
     .replay-button {
-      width: 55px;
-      height: 55px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -135,9 +126,70 @@
 
     .replay-label {
       position:block;
-      font-size: 24px;
       font-weight: bold;
-      color: #8F8F8F;
+    }
+
+    .replay-group-chapter {
+      $group-width: 35%;
+      $group-height: 30%;
+      position: absolute;
+      width: $group-width;
+      min-width: 220px;
+      height: $group-height;
+      top: calc(50% - #{$group-height * 0.5});
+      left: calc(50% - #{$group-width * 0.5});
+
+      .replay-button {
+        position: relative;
+        width: 30%;
+        height: 0;
+        padding: 15% 0;
+        background-color: #F2F2F2;
+        box-shadow: 0px 0px 12px 12px rgba(0,0,0,0.15);
+
+        svg {
+          flex: 1;
+          max-width: 30%;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          transform: translate(-50%, -50%);
+          top: 50%;
+          left: 50%;
+          width: 140%;
+          height: 140%;
+          background-color: #FFFFFF;
+          opacity: 0.05;
+          border-radius: 50%;
+        }
+      }
+
+      .replay-label {
+        font-size: 28px;
+        color: #F2F2F2;
+      }
+    }
+
+    .replay-group-grid {
+      $group-width: 80px;
+      $group-height: 95px;
+      position: absolute;
+      width: $group-width;
+      height: $group-height;
+      top: calc(80% - #{$group-height * 0.5});
+      left: calc(50% - #{$group-width * 0.5});
+
+      .replay-button {
+        width: 55px;
+        height: 55px;
+      }
+
+      .replay-label {
+        font-size: 24px;
+        color: #8F8F8F;
+      }
     }
   }
 }
