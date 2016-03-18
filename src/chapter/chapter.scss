@@ -5,8 +5,12 @@
   overflow-y: auto;
   background-color: #826636;
 
-  h2 {
-
+  .component-title {
+    @extend .col-4;
+    @extend .margin-auto-horizontal;
+    @include scale('font-size', 50px, #{(50/1400*100)}vw, 70px);
+    @include scale('margin-top', 100px, 100px, #{(100/1400*100)}vw);
+    @include scale('margin-bottom', 40px, 40px, #{(400/1400*100)}vw);
   }
 
   .page-component {

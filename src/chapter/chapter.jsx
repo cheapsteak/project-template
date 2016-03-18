@@ -21,7 +21,7 @@ export default class Chapter extends React.Component {
         </div>
 
         <div className="page-component">
-          <h2>Instructional Video</h2>
+          <h2 className="component-title">Instructional Video</h2>
           <InstructionalVideo
             className="col-4 margin-auto-horizontal"
             modelSlug="test"
@@ -29,9 +29,13 @@ export default class Chapter extends React.Component {
         </div>
 
         <div className="page-component">360</div>
-        <div className="page-component">photo essay</div>
         <div className="page-component">
-          Articles
+          <h2 className="component-title">
+            photo essay
+          </h2>
+        </div>
+        <div className="page-component">
+          <h2>Articles</h2>
           <article>article 1</article>
           <article>article 2</article>
         </div>
