@@ -1,5 +1,5 @@
 import React from 'react';
-import Panorama from 'common/components/panorama/panorama.jsx';
+import Panorama from 'common/components/panorama/panorama-redux.jsx';
 
 export default class PanoramaTest extends React.Component {
 
@@ -15,7 +15,12 @@ export default class PanoramaTest extends React.Component {
     return (
       <div>
         <div style={{height: 600}}>
-          <Panorama src={this.state.value}/>
+          <Panorama
+            slug={`math-1`}
+            fullBrowserRoute={`/tests/chapter/panorama/math-1`}
+            fullBrowserExitRoute={`/tests/chapter`}
+            src={this.state.value}
+          />
         </div>
         <input type="text"
                onChange={this.handleChange}

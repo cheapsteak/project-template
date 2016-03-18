@@ -4,6 +4,7 @@ import FullBrowserSvg from 'svgs/icon-fullscreen.svg';
 import IconArrowLeft from 'svgs/icon-zoom-arrow-left.svg';
 import IconArrowRight from 'svgs/icon-zoom-arrow-right.svg';
 import animate from 'gsap-promise';
+import {Link} from 'react-router';
 
 export default class PanoramaControls extends React.Component {
 
@@ -39,6 +40,14 @@ export default class PanoramaControls extends React.Component {
     this.containerEl = findDOMNode(this);
     this.setIndicatorPos();
   }
+
+  componentWillEnterFullBrowser = () => {
+    alert('enter')
+  };
+
+  componentWillLeaveFullBrowser = () => {
+    alert('leave')
+  };
 
   doDrag = (coordX) => {
     if (this.state.isDraggingSlider) {
@@ -182,12 +191,13 @@ export default class PanoramaControls extends React.Component {
         </div>
 
         <div className={`full-browser-button-wrapper`}>
-          <div
+          <Link
             ref="fullBrowserButton"
             className={`full-browser button`}
             onClick={this.handleFullBrowserClick}
             dangerouslySetInnerHTML={{ __html: FullBrowserSvg }}
-          ></div>
+            to={this.props.fullBrowserRoute}
+          ></Link>
         </div>
 
         <div ref="bottomBarWrapper" className={`bottom-bar-wrapper`}>
