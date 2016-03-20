@@ -5,6 +5,7 @@ import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
 import BackButtonSvg from '../../../../../assets/video-back-button.svg';
 import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
 import ReplayArrowSvg from '../../../../../assets/replay-arrow.svg';
+import CloseSvg from '../../../../../assets/video-player-close.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
@@ -46,6 +47,12 @@ function calculateAnimationStates (els) {
         opacity: 0,
         y: 100
       },
+      closeButton: {
+        y: -els.closeButton.offsetHeight
+      },
+      moreAboutCTA: {
+        opacity: 0
+      },
       controls: {
         y: els.controls.offsetHeight,
         display: 'none'
@@ -61,11 +68,11 @@ function calculateAnimationStates (els) {
         scaleY: zoomedOutRect.height/zoomedInRect.height
       },
       overlay: {
-        opacity: 1
+        opacity: 0.4
       },
       endingOverlay: {
         display: 'block',
-        opacity: 1
+        opacity: 0.99
       },
       replayButton: {
         delay: 0.8,
@@ -73,13 +80,26 @@ function calculateAnimationStates (els) {
         y: 0
       },
       replayLabel: {
-        delay: 1.4,
+        delay: 1.2,
         opacity: 1,
         y: 0
+      },
+      closeButton: {
+        delay: 0.5,
+        y: -1
+      },
+      moreAboutCTA: {
+        delay: 0.3,
+        opacity: 1
       },
       controls: {
         y: 0,
         display: 'flex'
+      }
+    },
+    end: {
+      overlay: {
+        opacity: 1
       }
     }
   };
@@ -265,7 +285,9 @@ export default class GridVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
       animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+      animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.idle.moreAboutCTA)
     ]);
   };
 
@@ -274,6 +296,7 @@ export default class GridVideoPlayer extends React.Component {
       return !this.videoEnded
         ? [
             animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+            animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
             animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
           ]
         : [ Promise.resolve() ];
@@ -284,42 +307,42 @@ export default class GridVideoPlayer extends React.Component {
     return Promise.all([
       ...conditionalAnimates(),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
     ]);
   };
 
   animateInEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
-
     this.stopAnimations();
 
     return Promise.all([
-      animate.to(simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel),
-      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
+      animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
         .then(() => this.setState({ showEndingCTA: true }))
     ]);
   };
 
   animateOutEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
-
     this.setState({ showEndingCTA: false });
-
-
     this.stopAnimations();
-
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
-      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
@@ -357,6 +380,62 @@ export default class GridVideoPlayer extends React.Component {
             poster={this.props.poster}
           >
           </video>
+          <div
+            ref="endingOverlay"
+            className="end-overlay"
+          >
+            <TransitionGroup
+              component="div"
+              className="route-content-wrapper full-height"
+            >
+            {
+              this.state.showEndingCTA
+              ? [ 
+                <LearnMoreCard
+                  key={'currentId'}
+                  title={this.props.title}
+                  route={this.props.chapterRoute}
+                  image={this.props.endingCardImage}
+                />
+                ,
+                <NextVideoCard
+                  key={'nextVideoId'}
+                  title={nextVideo.title}
+                  route={nextVideoRoute}
+                  video={nextVideo.src}
+                  timeLeft={this.state.nextVideoTimeLeft}
+                />
+              ]
+              : undefined 
+            }
+            </TransitionGroup>
+            <div
+              className="replay-group"
+            >
+              <div
+                ref="replayButton"
+                className="replay-button"
+                onClick={this.handleReplayClick}
+                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+              >
+              </div>
+              <label
+                ref="replayLabel"
+                className="replay-label"
+              >
+                Replay
+              </label>
+            </div>
+          </div>
+          <button ref="closeButton" className="close-button">
+            <span dangerouslySetInnerHTML={{ __html: CloseSvg }}></span>
+            <div>Close</div>
+          </button>
+          <Link to={this.props.chapterRoute || '/'}>
+            <div ref="moreAboutCTA" className="more-about-cta">
+              <span className="circle-button">+</span>{`More About ${this.props.title}`}
+            </div>
+          </Link>
           <div ref="overlay" className="video-overlay"></div>
         </div>
         <div
@@ -438,53 +517,7 @@ export default class GridVideoPlayer extends React.Component {
             items={[]}
           />
         </div>
-        <div
-          ref="endingOverlay"
-          className="end-overlay"
-        >
-          <TransitionGroup
-            component="div"
-            className="route-content-wrapper full-height"
-          >
-          {
-            this.state.showEndingCTA
-            ? [ 
-              <LearnMoreCard
-                key={'currentId'}
-                title={this.props.title}
-                route={this.props.chapterRoute}
-                image={this.props.endingCardImage}
-              />
-              ,
-              <NextVideoCard
-                key={'nextVideoId'}
-                title={nextVideo.title}
-                route={nextVideoRoute}
-                video={nextVideo.src}
-                timeLeft={this.state.nextVideoTimeLeft}
-              />
-            ]
-            : undefined 
-          }
-          </TransitionGroup>
-          <div
-            className="replay-group"
-          >
-            <div
-              ref="replayButton"
-              className="replay-button"
-              onClick={this.handleReplayClick}
-              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-            >
-            </div>
-            <label
-              ref="replayLabel"
-              className="replay-label"
-            >
-              Replay
-            </label>
-          </div>
-        </div>
+        
       </div>
     )
   }
