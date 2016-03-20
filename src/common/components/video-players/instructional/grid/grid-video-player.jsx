@@ -30,6 +30,9 @@ function calculateAnimationStates (els) {
         scaleX: 1,
         scaleY: 1
       },
+      overlay: {
+        opacity: 0
+      },
       endingOverlay: {
         delay: 0.1,
         display: 'none',
@@ -44,16 +47,21 @@ function calculateAnimationStates (els) {
         y: 100
       },
       controls: {
-        y: els.controls.offsetHeight
+        y: els.controls.offsetHeight,
+        display: 'none'
       }
     },
     idle: {
       simpleProgressBar: {
+        delay: 0.5,
         y: 0
       },
       videoWrapper: {
         scaleX: zoomedOutRect.width/zoomedInRect.width,
         scaleY: zoomedOutRect.height/zoomedInRect.height
+      },
+      overlay: {
+        opacity: 1
       },
       endingOverlay: {
         display: 'block',
@@ -70,7 +78,8 @@ function calculateAnimationStates (els) {
         y: 0
       },
       controls: {
-        y: 0
+        y: 0,
+        display: 'flex'
       }
     }
   };
@@ -86,7 +95,7 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   nextVideoIntervalId = undefined;
-  showFullControls = undefined;
+  hideControlsTimeoutId = undefined;
 
   state = {
     showEndingCTA: false,
@@ -104,12 +113,11 @@ export default class GridVideoPlayer extends React.Component {
     animate.set(endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(replayButton, this.animationStates.out.replayButton);
     animate.set(replayLabel, this.animationStates.out.replayLabel);
-console.log(this.props);
-    
+
     if(!this.props.isPlaying) {
       animate.set(videoWrapper, this.animationStates.idle.videoWrapper);
 
-      if(!this.props.isFullControls) {
+      if(!this.props.useFullControls) {
         this.props.showFullControls();
       } else {
 
@@ -124,6 +132,7 @@ console.log(this.props);
   componentWillReceiveProps(nextProps) {
     const { endingOverlay, videoWrapper, replayButton, replayLabel, simpleProgressBar, controls } = this.refs;
 
+    // Video Finished
     if(this.props.duration && nextProps.duration) {
       if(this.props.currentTime !== this.props.duration && 
         nextProps.currentTime === nextProps.duration) {
@@ -146,13 +155,15 @@ console.log(this.props);
         }, 1000);
       } else if (this.props.currentTime === this.props.duration
         && nextProps.currentTime !== nextProps.duration) {
+        // Video going to replay
         this.clearCountdown();
         this.animateOutEndOverlay();
+        this.props.hideFullControls();
       }
     }
 
-    if(this.props.isFullControls !== nextProps.isFullControls) {
-      if(nextProps.isFullControls) {
+    if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
+      if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
         this.animateOutControls();
@@ -166,6 +177,10 @@ console.log(this.props);
     this.props.onVideoPause();
   }
 
+  get videoEnded () {
+    return this.video.currentTime === this.video.duration;
+  }
+
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
@@ -176,6 +191,9 @@ console.log(this.props);
   };
 
   handleVideoPlayPause = () => {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
+
     if(this.props.isPlaying) {
       this.video.pause();
       this.props.onVideoPause();
@@ -197,53 +215,35 @@ console.log(this.props);
     this.setState({ showHoverCard: undefined });
   }
 
+  handleControlsMouseEnter = () => {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
+  };
+
   handleReplayClick = (e) => {
     this.changeVideoTime(0);
-
-    // Delay the replay by x time due to animations
     setTimeout(this.handleVideoPlayPause, 1000);
   };
 
   handleEnded = (e) => {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
+    this.props.hideFullControls();
     this.handleVideoPlayPause();
+  };
+
+  handleComponentMouseMove = () => {
+    if(!this.props.useFullControls && !this.videoEnded) {
+      this.props.showFullControls();
+    }
+
+    if(this.props.isPlaying) {
+      this.setHideControlsTimeout();
+    }
   };
 
   changeVideoTime = (time) => {
     this.video.currentTime = time;
-  };
-
-  animateInControls = () => {
-    return animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls);
-  };
-
-  animateOutControls = () => {
-    return animate.to(this.refs.controls, 0.3, this.animationStates.out.controls);
-  };
-
-  animateInEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
-
-    return Promise.all([
-      animate.to(simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
-      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
-        .then(() => this.setState({ showEndingCTA: true })),
-      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel)
-    ]);
-  };
-
-  animateOutEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
-
-    this.setState({ showEndingCTA: false });
-    return Promise.all([
-      animate.to(simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
-      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
-    ]);
   };
 
   clearCountdown = () => {
@@ -251,6 +251,82 @@ console.log(this.props);
     this.nextVideoIntervalId = undefined;
     this.setState({ nextVideoTimeLeft: 15 });
   };
+
+  setHideControlsTimeout = () => {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = setTimeout(() => {
+      this.props.hideFullControls();
+      this.hideControlsTimeoutId = undefined;
+    }, 3000);
+  }
+
+  animateInControls = () => {
+    return Promise.all([
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
+      animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+    ]);
+  };
+
+  animateOutControls = () => {
+    const conditionalAnimates = () => {
+      return !this.videoEnded
+        ? [
+            animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+            animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
+          ]
+        : [ Promise.resolve() ];
+    }
+
+    this.stopAnimations();
+
+    return Promise.all([
+      ...conditionalAnimates(),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+    ]);
+  };
+
+  animateInEndOverlay = () => {
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
+
+    this.stopAnimations();
+
+    return Promise.all([
+      animate.to(simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+        .then(() => this.setState({ showEndingCTA: true }))
+    ]);
+  };
+
+  animateOutEndOverlay = () => {
+    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls, simpleProgressBar } = this.refs;
+
+    this.setState({ showEndingCTA: false });
+
+
+    this.stopAnimations();
+
+    return Promise.all([
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
+      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
+    ]);
+  };
+
+  stopAnimations = () => {
+    TweenMax.killTweensOf(_.map(this.refs, val => val));
+  }
+
 
   render() {
     const { style, modelSlug, prevVideo, nextVideo } = this.props;
@@ -264,6 +340,7 @@ console.log(this.props);
         ref="root"
         className={`instructional-video-player grid-player ${this.props.className}`}
         style={style}
+        onMouseMove={this.handleComponentMouseMove}
       >
         <div
           ref="videoWrapper"
@@ -280,6 +357,7 @@ console.log(this.props);
             poster={this.props.poster}
           >
           </video>
+          <div ref="overlay" className="video-overlay"></div>
         </div>
         <div
           ref="simpleProgressBar"
@@ -290,6 +368,7 @@ console.log(this.props);
         <div
          ref="controls"
          className="controls"
+         onMouseEnter={this.handleControlsMouseEnter}
         >
           <div className="control-group">
             <span

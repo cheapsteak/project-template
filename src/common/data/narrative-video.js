@@ -1,7 +1,7 @@
 export default {
   currentTime: 0,
   isPlaying: false,
-  isFullControls: false,
+  useFullControls: false,
   src: '/videos/fg-1080-1.mp4',
   circleCTA: {
     text: '',

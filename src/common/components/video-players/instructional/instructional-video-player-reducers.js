@@ -19,7 +19,7 @@ const defVideoValues = {
   currentTime: 0,
   duration: undefined,
   isPlaying: false,
-  isFullControls: true
+  useFullControls: true
 };
 
 function video(state = {}, action) {

@@ -22,8 +22,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
 
-    if(this.props.isFullControls !== nextProps.isFullControls) {
-      if(nextProps.isFullControls) {
+    if(this.props.useFullControls !== nextProps.useFullControls) {
+      if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
         this.animateOutControls();
@@ -34,7 +34,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
       if(nextProps.circleCTA.text) {
 
-        if(this.props.isFullControls) {
+        if(this.props.useFullControls) {
           this.animateInCircleCTA();
         }
 
@@ -58,14 +58,8 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.props.isPlaying && this.video.play();
 
     if(!this.props.isPlaying) {
-      if(!this.props.isFullControls) {
+      if(!this.props.useFullControls) {
         this.props.showFullControls();
-      } else {
-
-        // Potential Issue: When video is not loaded yet, the timeline dots will not appear yet.
-        // This can cause the dots to appear instantly during the animate in (instead of the 
-        // staggered animation)
-        this.animateInControls();
       }
     }
   }
@@ -247,12 +241,14 @@ export default class NarrativeVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
   };
 
-  handleMouseMove = () => {
-    if (!this.isFullControls) {
-      this.props.showFullControls();
-    }
-
+  handleComponentMouseMove = () => {
+    console.log(this.props.useFullControls);
+        
     if(this.props.isPlaying) {
+      if(!this.props.useFullControls) {
+        this.props.showFullControls();
+      }
+
       clearTimeout(this.hideControlsTimeoutId);
       this.hideControlsTimeoutId = setTimeout(() => {
         this.props.hideFullControls();
@@ -272,7 +268,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       <div
         className="narrative-video-player"
         style={style}
-        onMouseMove={this.handleMouseMove}
+        onMouseMove={this.handleComponentMouseMove}
       >
         <div
           ref="videoWrapper"
