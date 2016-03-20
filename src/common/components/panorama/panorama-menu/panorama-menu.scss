@@ -1,0 +1,19 @@
+$width: 560px;
+$pos: calc(50% - 4px);
+
+.panorama-menu {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -$width/2;
+  width: $width;
+  height: 70Px;
+  z-index: 1000;
+  background-color: #000;
+
+  .item {
+
+  }
+
+}
+

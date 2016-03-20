@@ -13,9 +13,7 @@ export default {
     const chapterRoute = `/chapters/${chapterData.slug}/`;
 
     return {
-      ...panoramaSourceData,
-      fullBrowserRoute: chapterRoute,
-      fullBrowserExitRoute: `${chapterRoute}panorama/${panoramaSourceData.slug}`
+      ...panoramaSourceData
     };
   }
 };
