@@ -231,7 +231,6 @@ export default class ChapterVideoPlayer extends React.Component {
           <div className="control-group">
             <span
               className="button"
-              style={tempPauseStyle}
               dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
