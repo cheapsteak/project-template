@@ -5,11 +5,26 @@ import animate from 'gsap-promise';
 import PlayButton from '../../../../../../assets/next-video-play.svg';
 
 function calculateAnimationStates(els) {
+  const zoomedInRect = els.card.parentNode.getBoundingClientRect();
+  const zoomedOutVideoMargin = 40;
+  const zoomedOutRect = {
+    width: zoomedInRect.width + zoomedOutVideoMargin * 2,
+    height: zoomedInRect.height + zoomedOutVideoMargin * 2
+  }
+
+  const scaledRatio = {
+    x: zoomedOutRect.width/zoomedInRect.width,
+    y: zoomedOutRect.height/zoomedInRect.height
+  }
+
   return {
     out: {
       card: {
         opacity: 0,
-        y: 100
+        x: 20 * scaledRatio.x,
+        y: 100,
+        scaleX: scaledRatio.x,
+        scaleY: scaledRatio.y
       },
       topUI: {
         opacity: 0
@@ -30,7 +45,10 @@ function calculateAnimationStates(els) {
       card: {
         delay: 0.3,
         opacity: 1,
-        y: 0
+        x: 20 * scaledRatio.x,
+        y: 0,
+        scaleX: scaledRatio.x,
+        scaleY: scaledRatio.y
       },
       topUI: {
         delay: 0.5,

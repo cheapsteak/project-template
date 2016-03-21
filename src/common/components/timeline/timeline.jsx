@@ -97,7 +97,7 @@ export default class Timeline extends React.Component {
       || this.isWithinVariance(e.clientX, componentClientRect.left, 15)
       || this.isWithinVariance(e.clientX, componentClientRect.right, 50)
       ) {
-      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 1 });
+      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
     } else {
       animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
     }

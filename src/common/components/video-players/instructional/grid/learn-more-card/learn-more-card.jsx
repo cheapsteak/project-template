@@ -5,11 +5,25 @@ import animate from 'gsap-promise';
 
 
 function calculateAnimationStates(els) {
+  const zoomedInRect = els.card.parentNode.getBoundingClientRect();
+  const zoomedOutVideoMargin = 40;
+  const zoomedOutRect = {
+    width: zoomedInRect.width + zoomedOutVideoMargin * 2,
+    height: zoomedInRect.height + zoomedOutVideoMargin * 2
+  }
+  const scaledRatio = {
+    x: zoomedOutRect.width/zoomedInRect.width,
+    y: zoomedOutRect.height/zoomedInRect.height
+  }
+
   return {
     out: {
       card: {
         opacity: 0,
-        y: 110
+        x: -20 * scaledRatio.x,
+        y: 110,
+        scaleX: scaledRatio.x,
+        scaleY: scaledRatio.y
       },
       frontOverlay: {
         y: els.frontOverlay.offsetHeight
@@ -26,7 +40,10 @@ function calculateAnimationStates(els) {
       card: {
         delay: 0.3,
         opacity: 1,
-        y: 0
+        x: -20 * scaledRatio.x,
+        y: 0,
+        scaleX: scaledRatio.x,
+        scaleY: scaledRatio.y
       },
       frontOverlay: {
         delay: 0.7,

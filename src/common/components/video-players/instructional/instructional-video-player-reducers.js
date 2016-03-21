@@ -4,6 +4,7 @@ import {
   SET_INSTRUCTIONAL_VIDEO_DURATION,
   PLAY_INSTRUCTIONAL_VIDEO,
   STOP_INSTRUCTIONAL_VIDEO,
+  SET_INSTRUCTIONAL_VIDEO_OPTIONS,
   INSTRUCTIONAL_VIDEO_ERROR
 } from './instructional-video-player-actions.js';
 
@@ -17,7 +18,8 @@ const defState = {
 const defVideoValues = {
   currentTime: 0,
   duration: undefined,
-  isPlaying: false
+  isPlaying: false,
+  useFullControls: true
 };
 
 function video(state = {}, action) {
@@ -30,6 +32,9 @@ function video(state = {}, action) {
 
     case SET_INSTRUCTIONAL_VIDEO:
       return Object.assign({}, defVideoValues, action.video);
+
+    case SET_INSTRUCTIONAL_VIDEO_OPTIONS:
+      return Object.assign({}, state, action.options);
 
     case SET_INSTRUCTIONAL_VIDEO_TIME:
       return Object.assign({}, state, { currentTime: action.currentTime });
@@ -46,12 +51,14 @@ function videos(state = defState, action) {
     case SET_INSTRUCTIONAL_VIDEO:
       return Object.assign({}, state, { 
         currentVideo: video(state.currentVideo, { type: action.type, video: action.currentVideo }),
+        prevVideo: video(state.currentVideo, { type: action.type, video: action.prevVideo }),
         nextVideo: video(state.currentVideo, { type: action.type, video: action.nextVideo })
       });
 
     case PLAY_INSTRUCTIONAL_VIDEO:
     case STOP_INSTRUCTIONAL_VIDEO:
     case SET_INSTRUCTIONAL_VIDEO_TIME:
+    case SET_INSTRUCTIONAL_VIDEO_OPTIONS:
     case SET_INSTRUCTIONAL_VIDEO_DURATION:
       return Object.assign({}, state, { 
         currentVideo: video(state.currentVideo, action)
