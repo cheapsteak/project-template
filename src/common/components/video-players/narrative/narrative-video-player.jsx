@@ -33,10 +33,10 @@ function calculateAnimationStates (els) {
         scaleY: 1
       },
       overlay: {
+        display: 'none',
         opacity: 0
       },
       endingOverlay: {
-        delay: 0.1,
         display: 'none',
         opacity: 0
       },
@@ -70,12 +70,13 @@ function calculateAnimationStates (els) {
         scaleY: zoomedOutRect.height/zoomedInRect.height
       },
       overlay: {
+        display: 'block',
         delay: 0.3,
         opacity: 0.25
       },
       endingOverlay: {
         display: 'block',
-        opacity: 0.99
+        opacity: 1
       },
       replayButton: {
         delay: 0.8,
@@ -155,10 +156,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const el = findDOMNode(this);
-    const { overlay, controls, exploreButton } = this.refs;
-    const circleCTA = findDOMNode(this.refs.circleCTA);
-
     this.animationStates = calculateAnimationStates(this.refs);
 
     animate.set(this.refs.exploreButton, this.animationStates.out.exploreButton);
@@ -229,6 +226,9 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   animateInControls = () => {
+    this.stopAnimations();
+    console.log('ANIMATE IN');
+
     const buttons = this.refs.component.querySelectorAll('.button');
     const dots = this.refs.component.querySelectorAll('.dot');
 
@@ -246,6 +246,11 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   animateOutControls = () => {
+    this.stopAnimations();
+
+    console.log('ANIMATE OUT');
+        
+
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
@@ -286,6 +291,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   animateOutEndOverlay = () => {
     this.setState({ showEndingCTA: false });
     this.stopAnimations();
+
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -300,7 +306,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   stopAnimations = () => {
-    TweenMax.killTweensOf(_.map(this.refs, val => val));
+    TweenMax.killTweensOf(_.map(this.refs, val => val), true);
   };
 
 
@@ -309,7 +315,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleMetadataLoaded = () => {
-    animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA);
     this.video.currentTime = this.props.currentTime;
     this.props.setVideoInfo({ 
       duration: this.video.duration
@@ -334,7 +339,6 @@ export default class NarrativeVideoPlayer extends React.Component {
       this.video.pause();
       this.props.onVideoPause();
       clearTimeout(this.hideControlsTimeoutId);
-      this.props.showFullControls();
     } else {
       this.video.play();
       this.props.onVideoPlay();
@@ -363,23 +367,37 @@ export default class NarrativeVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
   };
 
-  handleComponentMouseMove = () => {
-    if(this.props.isPlaying) {
-      if(!this.props.useFullControls) {
-        this.props.showFullControls();
-      }
+  handleComponentMouseMove = (e) => {
+    const mouseCoords = {
+      x: e.clientX,
+      y: e.clientY
+    };
 
-      clearTimeout(this.hideControlsTimeoutId);
-      this.hideControlsTimeoutId = setTimeout(() => {
-        this.props.hideFullControls();
-        this.hideControlsTimeoutId = undefined;
-      }, 3000);
+    if(!this.props.useFullControls && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
+      this.props.showFullControls();
     }
+
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = setTimeout(() => {
+      this.props.hideFullControls();
+      this.hideControlsTimeoutId = undefined;
+    }, 1500);
+
+    this.lastMouseCoord = mouseCoords;
   };
 
   handleReplayClick = (e) => {
     this.changeVideoTime(0);
     setTimeout(this.handleVideoPlayPause, 1000);
+  };
+
+  handleOverlayClick = (e) => {
+    if(e.target.id === 'videoOverlay') {
+        this.props.hideFullControls();
+        this.props.onVideoPlay();
+        this.video.play();
+        clearTimeout(this.hideControlsTimeoutId);
+    }
   };
 
 
@@ -398,7 +416,13 @@ export default class NarrativeVideoPlayer extends React.Component {
           ref="videoWrapper"
           className="video-wrapper"
         >
-          <div ref="overlay" className="video-overlay"></div>
+          <div
+            id="videoOverlay"
+            ref="overlay"
+            className="video-overlay"
+            onClick={this.handleOverlayClick}
+          >
+          </div>
           <button ref="exploreButton" className="explore-button">
             <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
             <div>Explore</div>
