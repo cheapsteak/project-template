@@ -35,7 +35,7 @@ export default class Chapter extends React.Component {
           <div className="panorama-container">
             <Panorama
               slug={`math-1`}
-              src={'../images/pan-11.jpg'}
+              src={'../images/pan-44.jpg'}
             />
           </div>
         </div>
