@@ -1,7 +1,7 @@
 'use strict';
 require('babel-polyfill');
 require('./globals.js');
-import stats from 'common/utils/stats';
+//import stats from 'common/utils/stats';
 import detect from 'common/utils/detect';
 
 import { render } from 'react-dom';

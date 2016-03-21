@@ -134,6 +134,7 @@ export default class Panorama extends React.Component {
         onUpdate: () => this.panorama.resize(this.containerEl.offsetWidth, this.containerEl.offsetHeight)
       })
       .then(() => {
+        animate.set(this.containerEl, {clearProps: 'all'});
         this.setState({mode: modes.ENTER_IDLE});
       })
   };
@@ -295,6 +296,14 @@ export default class Panorama extends React.Component {
           isVisible={this.state.cursorIsVisible}
           cursorPos={this.state.cursorPos}
         />
+
+        {
+          // <PanoramaMenu
+          //   modes={{...modes}}
+          //   currMode={this.state.mode}
+          // />
+        }
+
 
         {controls}
         {accelerometerToggle}
