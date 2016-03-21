@@ -2,7 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 
-export default class PanoramaCompass extends React.Component {
+export default class PanoramaMenu extends React.Component {
 
   static propTypes = {};
 
@@ -18,11 +18,16 @@ export default class PanoramaCompass extends React.Component {
     animate.to(this.containerEl, 0.5, {y: '-100%', autoAlpha: 0, ease: Expo.easeOut});
   };
 
-  render() {
+  setCurrentTab = () => {
 
+  };
+
+  render() {
     return (
       <div className={`panorama-menu`}>
-
+        <div className={`item`}>Math Class</div>
+        <div className={`item`}>Soccer Field</div>
+        <div className={`item`}>Hallway</div>
       </div>
     );
   }
