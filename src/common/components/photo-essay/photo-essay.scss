@@ -1,7 +1,7 @@
 .photo-essay {
   position: relative;
-  width: 1200px;
-  height: 670px;
+  width: 100%;
+  height: 100%;
   background-color: black;
 
   .image-wrapper {
@@ -13,9 +13,18 @@
     justify-content: center;
 
     img {
-      width: 100%;
-      height: auto;
       overflow: hidden;
+
+      // temp fix for non support for object-fit
+      width: 100%;
+
+      @supports (object-fit: cover) {
+        & {
+          width: auto;
+          height: auto;
+          object-fit: cover;
+        }
+      }
     }
   }
 

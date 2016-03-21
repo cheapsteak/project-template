@@ -2,7 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-import PlayButton from '../../../../../../assets/next-video-play.svg';
+import PlayButton from 'svgs/next-video-play.svg';
 
 function calculateAnimationStates(els) {
   const zoomedInRect = els.card.parentNode.getBoundingClientRect();

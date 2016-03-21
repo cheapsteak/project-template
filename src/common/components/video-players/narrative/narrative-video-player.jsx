@@ -1,10 +1,11 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from '../../../../assets/video-play-button.svg';
-import BackButtonSvg from '../../../../assets/video-back-button.svg';
-import ForwardButtonSvg from '../../../../assets/video-forward-button.svg';
-import IconExplore from '../../../../assets/svgs/icon-explore.svg';
+import PlayButtonSvg from 'svgs/video-player-play.svg';
+import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import BackButtonSvg from 'svgs/video-back-button.svg';
+import ForwardButtonSvg from 'svgs/video-forward-button.svg';
+import IconExplore from 'svgs/icon-explore.svg';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
@@ -128,21 +129,21 @@ export default class NarrativeVideoPlayer extends React.Component {
       height: zoomedInRect.height - zoomedOutVideoMargin * 2
     }
 
-    animate.to(overlay, 0.8, { delay, opacity: 0.25 });
-    animate.to(exploreBtn, 0.8, { y: -1 });
+    animate.to(overlay, 0.3, { delay, opacity: 0.25 });
+    animate.to(exploreBtn, 0.3, { y: -1 });
 
     // in case anything goes weird with scaling the video wrapper - chang
     // animate.to(el, 0.8, { padding: '37px' });
-    animate.to(videoWrapper, 0.8, {
+    animate.to(videoWrapper, 0.3, {
       scaleX: zoomedOutRect.width/zoomedInRect.width,
       scaleY: zoomedOutRect.height/zoomedInRect.height
     });
 
     animate.set(controls, { opacity: 1 });
-    animate.to(controls, 0.5, { delay: delay + 0.5, bottom: 0 });
+    animate.to(controls, 0.3, { delay: delay, bottom: 0 });
 
-    _.forEach(buttons, (button) => { animate.fromTo(button, 0.3, { y: 20 }, { delay: 1, y: 0})});
-    animate.staggerFrom(dots, 0.6, { delay: 1, opacity: 0 }, 0.2);
+    _.forEach(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})});
+    animate.staggerFrom(dots, 0.3, { delay: 0.5, opacity: 0 }, 0.2);
 
     animate.set(el, {cursor: 'default'});
     animate.set(simpleProgressBar, { display: 'none', bottom: -8  });
@@ -152,16 +153,16 @@ export default class NarrativeVideoPlayer extends React.Component {
     const el = findDOMNode(this);
     const { videoWrapper, overlay, controls, exploreBtn, simpleProgressBar } = this.refs;
 
-    animate.to(overlay, 0.8, { opacity: 0 });
-    animate.to(exploreBtn, 0.8, { y: -51 });
+    animate.to(overlay, 0.3, { opacity: 0 });
+    animate.to(exploreBtn, 0.3, { y: -51 });
 
     // in case anything goes weird with scaling the video wrapper - chang
-    // animate.to(el, 0.8, { padding: '0px' });
+    // animate.to(el, 0.3, { padding: '0px' });
 
-    animate.to(videoWrapper, 0.8, { scaleX: 1, scaleY: 1 });
+    animate.to(videoWrapper, 0.3, { scaleX: 1, scaleY: 1 });
 
     animate.set(controls, { opacity: 0 });
-    animate.to(controls, 0.8, { bottom: -74 })
+    animate.to(controls, 0.3, { bottom: -74 })
       .then(() => {
         animate.set(el, {cursor: 'none'});
         animate.to(simpleProgressBar, 0.4, { display: 'block', bottom: 0 });
@@ -259,7 +260,6 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   render() {
     const { style, circleCTA } = this.props;
-    const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
     return (
@@ -310,8 +310,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           <div className="control-group">
             <span
               className="button"
-              style={tempPauseStyle}
-              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
             </span>

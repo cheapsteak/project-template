@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import BackButtonSvg from '../../../assets/photo-essay-prev-button.svg';
-import NextButtonSvg from '../../../assets/photo-essay-next-button.svg';
-import FullscreenButtonSvg from '../../../assets/photo-essay-fullscreen-button.svg';
+import BackButtonSvg from 'svgs/photo-essay-prev-button.svg';
+import NextButtonSvg from 'svgs/photo-essay-next-button.svg';
+import FullscreenButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 
@@ -20,14 +20,14 @@ class PhotoEssay extends React.Component {
   };
 
   render () {
-    const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute } = this.props;
+    const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className } = this.props;
     const photo = photos && photos[index] || {};
     let currentPhotoNumber = 0;
     let maxPhotoNumber = 0;
     const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
     return (
-      <div className="photo-essay" style={style}>
+      <div className={`photo-essay ${className || ''}`} style={style}>
         <div className="image-wrapper">
           <img src={photo.image} />
         </div>
