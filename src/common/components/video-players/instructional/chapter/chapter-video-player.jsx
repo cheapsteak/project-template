@@ -204,7 +204,7 @@ export default class ChapterVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className={`instructional-video-player chapter-player ${className || ''}`}
+        className={`video-player instructional-video-player chapter-player ${className || ''}`}
         style={style}
       >
         <div

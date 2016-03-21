@@ -1,5 +1,6 @@
 import {
   SET_NARRATIVE_VIDEO_TIME,
+  SET_NARRATIVE_VIDEO_INFO,
   PLAY_NARRATIVE_VIDEO,
   STOP_NARRATIVE_VIDEO,
   SHOW_NARRATIVE_VIDEO_FULL_CONTROLS,
@@ -28,6 +29,9 @@ function video(state = dataModel, action) {
 
     case SET_NARRATIVE_VIDEO_TIME:
       return Object.assign({}, state, { currentTime: action.time });
+
+    case SET_NARRATIVE_VIDEO_INFO:
+      return Object.assign({}, state, action.info);
 
     default:
       return state;

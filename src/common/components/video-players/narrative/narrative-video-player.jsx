@@ -6,9 +6,107 @@ import PauseButtonSvg from 'svgs/video-player-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import IconExplore from 'svgs/icon-explore.svg';
+import ReplayArrowSvg from 'svgs/replay-arrow.svg';
+import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
+import ImageCard from '../components/image-card/image-card.jsx';
+
+
+function calculateAnimationStates (els) {
+  const zoomedInRect = els.component.getBoundingClientRect();
+  const zoomedOutVideoMargin = 40;
+  const zoomedOutRect = {
+    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
+    height: zoomedInRect.height - zoomedOutVideoMargin * 2
+  }
+
+  return {
+    out: {
+      simpleProgressBar: {
+        y: els.simpleProgressBar.offsetHeight
+      },
+      videoWrapper: {
+        delay: 0.3,
+        scaleX: 1,
+        scaleY: 1
+      },
+      overlay: {
+        opacity: 0
+      },
+      endingOverlay: {
+        delay: 0.1,
+        display: 'none',
+        opacity: 0
+      },
+      replayButton: {
+        opacity: 0,
+        y: 100
+      },
+      replayLabel: {
+        opacity: 0,
+        y: 100
+      },
+      exploreButton: {
+        y: -els.exploreButton.offsetHeight
+      },
+      circleCTA: {
+        opacity: 0,
+        y: 50
+      },
+      controls: {
+        y: els.controls.offsetHeight,
+        display: 'none'
+      }
+    },
+    idle: {
+      simpleProgressBar: {
+        delay: 0.5,
+        y: 0
+      },
+      videoWrapper: {
+        scaleX: zoomedOutRect.width/zoomedInRect.width,
+        scaleY: zoomedOutRect.height/zoomedInRect.height
+      },
+      overlay: {
+        delay: 0.3,
+        opacity: 0.25
+      },
+      endingOverlay: {
+        display: 'block',
+        opacity: 0.99
+      },
+      replayButton: {
+        delay: 0.8,
+        opacity: 1,
+        y: 0
+      },
+      replayLabel: {
+        delay: 1.2,
+        opacity: 1,
+        y: 0
+      },
+      exploreButton: {
+        delay: 0.5,
+        y: -1
+      },
+      circleCTA: {
+        opacity: 1,
+        y: 0
+      },
+      controls: {
+        y: 0,
+        display: 'flex'
+      }
+    },
+    end: {
+      overlay: {
+        opacity: 1
+      }
+    }
+  };
+};
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -18,43 +116,58 @@ export default class NarrativeVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  state = {
+    showEndingCTA: false
+  };
+
   hideControlsTimeoutId = undefined;
 
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
 
-    if(this.props.useFullControls !== nextProps.useFullControls) {
+    if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
       if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
         this.animateOutControls();
-        this.animateOutCircleCTA();
       }
     }
 
     if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
       if(nextProps.circleCTA.text) {
-
-        if(this.props.useFullControls) {
-          this.animateInCircleCTA();
-        }
-
         this.animateCircleCTAText();
-      } else {
-        this.animateOutCircleCTA();
+      }
+    }
+
+    // Video Finished
+    if(this.props.duration && nextProps.duration) {
+      if(this.props.currentTime !== this.props.duration && 
+        nextProps.currentTime === nextProps.duration) {
+        this.animateInEndOverlay();
+        this.props.hideFullControls();
+      } else if (this.props.currentTime === this.props.duration
+        && nextProps.currentTime !== nextProps.duration) {
+        // Video going to replay
+        this.animateOutEndOverlay();
+        this.props.hideFullControls();
       }
     }
   }
 
   componentDidMount() {
     const el = findDOMNode(this);
-    const { overlay, controls, exploreBtn } = this.refs;
+    const { overlay, controls, exploreButton } = this.refs;
     const circleCTA = findDOMNode(this.refs.circleCTA);
 
-    animate.set(exploreBtn, { y: -51 });
-    animate.set(overlay, { opacity: 0 });
-    animate.set(controls, { bottom: -74 });
-    animate.set(circleCTA, { opacity: 0, y: 20 });
+    this.animationStates = calculateAnimationStates(this.refs);
+
+    animate.set(this.refs.exploreButton, this.animationStates.out.exploreButton);
+    animate.set(this.refs.overlay, this.animationStates.out.overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates.idle.videoWrapper);
+    animate.set(this.refs.circleCTA, this.animationStates.out.circleCTA);
+    animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
+    animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
+    animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
 
     this.props.isPlaying && this.video.play();
 
@@ -70,14 +183,17 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.hideControlsTimeoutId = undefined;
   }
 
+  get videoEnded () {
+    return this.video.currentTime === this.video.duration;
+  }
+
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
 
-  getCurrentChapter= () => {
+  getCurrentChapter = () => {
     const { timeline, currentTime } = this.props;
     const duration = this.video.duration;
-
     let currentChapter = {};
 
     timeline.forEach((chapter, i) => {
@@ -108,83 +224,84 @@ export default class NarrativeVideoPlayer extends React.Component {
     return time;
   }
 
-
-
   /************************/
   /*     Animatations     */
   /************************/
 
   animateInControls = () => {
-    const el = findDOMNode(this);
-    const { videoWrapper, overlay, controls, exploreBtn, simpleProgressBar } = this.refs;
-    const delay = 0.2;
+    const buttons = this.refs.component.querySelectorAll('.button');
+    const dots = this.refs.component.querySelectorAll('.dot');
 
-    const buttons = el.querySelectorAll('.button');
-    const dots = el.querySelectorAll('.dot');
-
-    const zoomedInRect = el.getBoundingClientRect();
-    const zoomedOutVideoMargin = 40;
-    const zoomedOutRect = {
-      width: zoomedInRect.width - zoomedOutVideoMargin * 2,
-      height: zoomedInRect.height - zoomedOutVideoMargin * 2
-    }
-
-    animate.to(overlay, 0.3, { delay, opacity: 0.25 });
-    animate.to(exploreBtn, 0.3, { y: -1 });
-
-    // in case anything goes weird with scaling the video wrapper - chang
-    // animate.to(el, 0.8, { padding: '37px' });
-    animate.to(videoWrapper, 0.3, {
-      scaleX: zoomedOutRect.width/zoomedInRect.width,
-      scaleY: zoomedOutRect.height/zoomedInRect.height
-    });
-
-    animate.set(controls, { opacity: 1 });
-    animate.to(controls, 0.3, { delay: delay, bottom: 0 });
-
-    _.forEach(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})});
     animate.staggerFrom(dots, 0.3, { delay: 0.5, opacity: 0 }, 0.2);
 
-    animate.set(el, {cursor: 'default'});
-    animate.set(simpleProgressBar, { display: 'none', bottom: -8  });
+    return Promise.all([
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
+      animate.to(this.refs.exploreButton, 0.3, this.animationStates.idle.exploreButton),
+      animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA),
+      animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+      _.map(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})})
+    ]);
   }
 
   animateOutControls = () => {
-    const el = findDOMNode(this);
-    const { videoWrapper, overlay, controls, exploreBtn, simpleProgressBar } = this.refs;
+    const conditionalAnimations = !this.videoEnded && [
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
+    ];
 
-    animate.to(overlay, 0.3, { opacity: 0 });
-    animate.to(exploreBtn, 0.3, { y: -51 });
-
-    // in case anything goes weird with scaling the video wrapper - chang
-    // animate.to(el, 0.3, { padding: '0px' });
-
-    animate.to(videoWrapper, 0.3, { scaleX: 1, scaleY: 1 });
-
-    animate.set(controls, { opacity: 0 });
-    animate.to(controls, 0.3, { bottom: -74 })
-      .then(() => {
-        animate.set(el, {cursor: 'none'});
-        animate.to(simpleProgressBar, 0.4, { display: 'block', bottom: 0 });
-      });
-  }
-
-  animateInCircleCTA = () => {
-    const circleCTA = findDOMNode(this.refs.circleCTA);
-    return animate.to(circleCTA, 0.3, { opacity: 1, y: 0 });
-  };
-
-  animateOutCircleCTA = () => {
-    const circleCTA = findDOMNode(this.refs.circleCTA);
-    animate.to(circleCTA, 0.3, { opacity: 0, y: 40 });
+    return Promise.all([
+      ...conditionalAnimations,
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+    ]);
   };
 
   animateCircleCTAText = () => {
     const el = findDOMNode(this);
     const ctaEls = el.querySelectorAll('.stagger-cta');
-    animate.staggerFromTo(ctaEls, 0.3, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2);
-  }
+    return animate.staggerFromTo(ctaEls, 0.3, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2);
+  };
 
+  animateInEndOverlay = () => {
+    this.stopAnimations();
+
+    return Promise.all([
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+        .then(() => this.setState({ showEndingCTA: true }))
+    ]);
+  };
+
+  animateOutEndOverlay = () => {
+    this.setState({ showEndingCTA: false });
+    this.stopAnimations();
+    return Promise.all([
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
+    ]);
+  };
+
+  stopAnimations = () => {
+    TweenMax.killTweensOf(_.map(this.refs, val => val));
+  };
 
 
   /************************/
@@ -192,7 +309,11 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleMetadataLoaded = () => {
+    animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA);
     this.video.currentTime = this.props.currentTime;
+    this.props.setVideoInfo({ 
+      duration: this.video.duration
+    });
   };
 
   handleTimeUpdate = () => {
@@ -254,8 +375,12 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.hideControlsTimeoutId = undefined;
       }, 3000);
     }
-  }
+  };
 
+  handleReplayClick = (e) => {
+    this.changeVideoTime(0);
+    setTimeout(this.handleVideoPlayPause, 1000);
+  };
 
 
   render() {
@@ -264,7 +389,8 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     return (
       <div
-        className="narrative-video-player"
+        ref="component"
+        className="video-player narrative-video-player"
         style={style}
         onMouseMove={this.handleComponentMouseMove}
       >
@@ -273,7 +399,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           className="video-wrapper"
         >
           <div ref="overlay" className="video-overlay"></div>
-          <button ref="exploreBtn" className="explore-button">
+          <button ref="exploreButton" className="explore-button">
             <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
             <div>Explore</div>
           </button>
@@ -286,12 +412,51 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTimeUpdate={this.handleTimeUpdate}
           >
           </video>
-          <Link ref="circleCTA" className="circle-cta" to={circleCTA.route}>
+          <Link ref={node => this.refs.circleCTA = findDOMNode(node)} className="circle-cta" to={circleCTA.route}>
             <div className="circle-cta-text">
               <label className="stagger-cta">Explore</label>
               <h3 className="stagger-cta">{circleCTA.text}</h3>
             </div>
           </Link>
+          <div
+            ref="endingOverlay"
+            className="end-overlay"
+          >
+            <TransitionGroup
+              component="div"
+              className="route-content-wrapper full-height"
+            >
+            {
+              this.state.showEndingCTA
+              ? <ImageCard
+                  gridButton={true}
+                  key={'currentId'}
+                  label="See All"
+                  title="Chapters"
+                  route="/"
+                  image="/narrative-ending-card.jpg"
+                />
+              : undefined 
+            }
+            </TransitionGroup>
+            <div
+              className="replay-group replay-group-grid"
+            >
+              <div
+                ref="replayButton"
+                className="replay-button"
+                onClick={this.handleReplayClick}
+                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+              >
+              </div>
+              <label
+                ref="replayLabel"
+                className="replay-label"
+              >
+                Replay
+              </label>
+            </div>
+          </div>
         </div>
         <div
           ref="simpleProgressBar"
