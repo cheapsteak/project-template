@@ -48,7 +48,7 @@ export default class PanoramaMenu extends React.Component {
     return animate.all([
       animate.to(this.refs.heading, 0.5, {y: 0, autoAlpha: 1, ease: Expo.easeOut}),
       animate.to(this.refs.container, 0.5, {y: 0, autoAlpha: 1, ease: Expo.easeOut, delay: 0.05}),
-      animate.staggerFromTo(this.items, 0.2, {y: 20, autoAlpha: 0}, {y: 0, autoAlpha: 1, delay: 0.3}, 0.05)
+      animate.staggerFromTo(this.items, 0.2, {y: 20, autoAlpha: 0}, {y: 0, autoAlpha: 1, delay: 0.4}, 0.05)
     ])
   };
 

@@ -119,11 +119,11 @@ export default class PanoramaControls extends React.Component {
         this.setIndicatorPos();
 
         return animate.all([
-            animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.8, {y: '0%', ease: Expo.easeOut}),
-            animate.to(this.refs.bottomBar, 0.8, {y: '0%', ease: Expo.easeOut})
+            animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.6, {y: '0%', ease: Expo.easeOut}),
+            animate.to(this.refs.bottomBar, 0.6, {y: '0%', ease: Expo.easeOut})
               .then(() => this.setState({enableMasking: false})),
-            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.5, {width: 0, ease: Expo.easeOut, delay: 0.7}),
-            animate.staggerFrom(ui, 0.5, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 1}, 0.1)
+            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.5, {width: 0, ease: Expo.easeOut, delay: 0.5}),
+            animate.staggerFrom(ui, 0.5, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 0.8}, 0.1)
           ])
           .then(() => resolve())
       });
@@ -132,12 +132,12 @@ export default class PanoramaControls extends React.Component {
 
   animateOnLeaveIdle = () => {
     return animate
-      .staggerTo([this.refs.zoomLine, this.refs.zoomValue], 0.2, {y: -10, autoAlpha: 0, ease: Expo.easeOut}, 0.1)
+      .staggerTo([this.refs.zoomLine, this.refs.zoomValue], 0.15, {y: -10, autoAlpha: 0, ease: Expo.easeOut}, 0.1)
       .then(() => {
         this.setState({enableMasking: true});
         return animate.all([
-          animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.8, {y: '100%', ease: Expo.easeOut}),
-          animate.to(this.refs.bottomBar, 0.8, {y: '-100%', ease: Expo.easeOut})
+          animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.6, {y: '100%', ease: Expo.easeOut}),
+          animate.to(this.refs.bottomBar, 0.6, {y: '-100%', ease: Expo.easeOut})
         ])
       })
       .then(() => {
@@ -168,8 +168,8 @@ export default class PanoramaControls extends React.Component {
 
   animateOnLeaveFullBrowser = () => {
     return animate.all([
-        animate.to(this.refs.bottomBar, 0.8, {y: '-100%', ease: Expo.easeOut}),
-        animate.to(this.containerEl, 1, {y: '160%', ease: Expo.easeOut})
+        animate.to(this.refs.bottomBar, 0.4, {y: '-100%', ease: Expo.easeOut}),
+        animate.to(this.containerEl, 0.6, {y: '160%', ease: Expo.easeOut})
       ])
       .then(() => {
         this.resetUI();
