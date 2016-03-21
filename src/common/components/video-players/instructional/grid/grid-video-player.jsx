@@ -181,7 +181,6 @@ export default class GridVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
     }
-
     if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
       if(nextProps.useFullControls) {
         this.animateInControls();
@@ -517,7 +516,53 @@ export default class GridVideoPlayer extends React.Component {
             items={[]}
           />
         </div>
-        
+        <div
+          ref="endingOverlay"
+          className="end-overlay"
+        >
+          <TransitionGroup
+            component="div"
+            className="route-content-wrapper full-height"
+          >
+          {
+            this.state.showEndingCTA
+            ? [ 
+              <LearnMoreCard
+                key={'currentId'}
+                title={this.props.chapterName}
+                route={this.props.chapterRoute}
+                image={this.props.chapterCardImage}
+              />
+              ,
+              <NextVideoCard
+                key={'nextVideoId'}
+                title={this.props.nextVideo.chapterName}
+                route={this.props.nextVideo.videoRoute}
+                video={this.props.nextVideo.src}
+                timeLeft={this.state.nextVideoTimeLeft}
+              />
+            ]
+            : undefined 
+          }
+          </TransitionGroup>
+          <div
+            className="replay-group replay-group-grid"
+          >
+            <div
+              ref="replayButton"
+              className="replay-button"
+              onClick={this.handleReplayClick}
+              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+            >
+            </div>
+            <label
+              ref="replayLabel"
+              className="replay-label"
+            >
+              Replay
+            </label>
+          </div>
+        </div>
       </div>
     )
   }

@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux';
 import VideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux';
+import Panorama from 'common/components/panorama/panorama-redux.jsx';
 
 export default class Chapter extends React.Component {
 
@@ -29,6 +30,9 @@ export default class Chapter extends React.Component {
         break;
       case 'instructional-videos':
         target = 'video';
+        break;
+      case 'panorama':
+        target = 'panorama';
         break;
       default:
         break;
@@ -60,6 +64,14 @@ export default class Chapter extends React.Component {
             ref='photoessay'
             slug="math-1"
           />
+          <div style={{ width: 800, height: 500}}>
+            <Panorama
+              ref='panorama'
+              slug={`math-1`}
+              fullBrowserRoute={`/tests/chapter/panorama/math-1`}
+              fullBrowserExitRoute={`/tests/chapter`}
+            />
+          </div>
         </div>
         <TransitionGroup
           component="div"

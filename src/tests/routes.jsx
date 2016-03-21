@@ -4,6 +4,7 @@ import componentsManifest from './components-manifest.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx'
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
+import Panorama from 'common/components/panorama/panorama-redux.jsx';
 
 function fullbrowserWrap(component) {
   return class TestPhotoEssay extends React.Component {
@@ -21,7 +22,7 @@ export default <Route>
       const props = componentData.props;
 
       return (
-        <Route 
+        <Route
             key={componentName}
         >
           <Route
@@ -48,6 +49,13 @@ export default <Route>
               key={'chapter-abcdef'}
               component={FullBrowserWrapper}
               childComponent={PhotoEssay}
+            >
+            </Route>
+            <Route
+              path="panorama/:slug"
+              key={'panorama-dfv'}
+              component={FullBrowserWrapper}
+              childComponent={Panorama}
             >
             </Route>
           </Route>
