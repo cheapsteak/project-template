@@ -39,7 +39,8 @@ export default class Panorama extends React.Component {
   static propTypes = {
     src: React.PropTypes.string.isRequired,
     initLong: React.PropTypes.number,
-    initLat: React.PropTypes.number
+    initLat: React.PropTypes.number,
+    hasMenu: React.PropTypes.bool
   };
 
   static defaultProps = {
@@ -195,8 +196,6 @@ export default class Panorama extends React.Component {
       container: this.containerEl,
       panorama: src,
       time_anim: false,
-      default_long: long,
-      default_lat: lat,
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
       mousewheel: false
@@ -204,6 +203,7 @@ export default class Panorama extends React.Component {
 
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
+      this.panorama.rotate(long, lat);
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
       this.setOrientationControls();
     });
@@ -281,6 +281,14 @@ export default class Panorama extends React.Component {
       </div>
     );
 
+    const menu = this.props.hasMenu ? (
+      <PanoramaMenu
+        modes={{...modes}}
+        currMode={this.state.mode}
+        setPanorama={this.props.setPanorama}
+      />
+    ) : null;
+
     return (
       <div
         className={`panorama ${this.state.status}`}
@@ -297,14 +305,7 @@ export default class Panorama extends React.Component {
           cursorPos={this.state.cursorPos}
         />
 
-        {
-          // <PanoramaMenu
-          //   modes={{...modes}}
-          //   currMode={this.state.mode}
-          // />
-        }
-
-
+        {menu}
         {controls}
         {accelerometerToggle}
         {closeButton}

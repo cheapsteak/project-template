@@ -6,36 +6,57 @@ $width: 560px;
   left: 50%;
   margin-left: -$width/2;
   width: $width;
-  height: 70Px;
+  height: 120px;
   z-index: 1000;
-  background-color: rgba(43, 43, 43, 0.85);
   font-weight: bold;
   font-size: 17px;
+  overflow: hidden;
+  @include gpu;
 
-  .item {
-    display: inline-flex;
-    justify-content: center;
+  .heading {
+    position: relative;
+    display: flex;
     align-items: center;
-    width: calc(100% / 3);
-    height: 100%;
-    cursor: pointer;
-    transition: color 0.3s;
-    color: rgba(255, 255, 255, 0.8);
+    justify-content: center;
+    height: 50px;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(43, 43, 43, 1);
+    z-index: 2000;
+    @include gpu;
+  }
 
-    &:nth-child(2) {
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
+  .items-container {
+    height: 70px;
+    background-color: rgba(43, 43, 43, 0.85);
+    @include gpu;
 
-    &:hover {
-      color: rgba(255, 255, 255, 1);
-    }
+    .item {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(100% / 3);
+      height: 100%;
+      cursor: pointer;
+      transition: color 0.3s;
+      color: rgba(255, 255, 255, 0.8);
 
-    &:active {
-      color: #2b2b2b;
-    }
+      &:nth-child(2) {
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+      }
 
-    &.selected {
-      color: rgba(255, 255, 255, 0.05);
+      &:hover {
+        color: rgba(255, 255, 255, 1);
+      }
+
+      &:active {
+        transition: color 0.1s;
+        color: #2b2b2b;
+      }
+
+      &.selected {
+        color: rgba(255, 255, 255, 0.05);
+      }
     }
   }
 
