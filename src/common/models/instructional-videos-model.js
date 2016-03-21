@@ -10,14 +10,25 @@ export default {
       console.trace('Unable to get model from slug:', slug);
     }
 
-    const chapterRoute =  `/chapters/${chapterData.slug}/`;
+    const chapterRoute =  `/chapters/${chapterData.slug}`;
 
     return {
       ...videoSourceData,
-      fullBrowserRoute: chapterRoute,
-      fullBrowserExitRoute: `${chapterRoute}instructional-videos${videoSourceData.slug}`,
-      gridRoute: `/grid/instructional-videos${videoSourceData.slug}`
+      title: chapterData.title,
+      chapterRoute: chapterRoute,
+      fullBrowserChapterRoute: `${chapterRoute}/instructional-videos/${videoSourceData.slug}`,
+      gridRoute: `/grid/instructional-videos/${videoSourceData.slug}`,
+      route: 'math-1'
     };
+  },
+
+  getPrev (currentSlug) {
+    const videoSourceData = data.find(video => video.slug === currentSlug);
+    const chapterData = chaptersModel.get(videoSourceData.chapterSlug);
+    const idx = data.indexOf(videoSourceData);
+    const prevVideo = data[(idx - 1 >= 0 ? idx : data.length) - 1];
+
+    return this.get(prevVideo.slug);
   },
 
   getNext (currentSlug) {

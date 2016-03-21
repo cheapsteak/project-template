@@ -1,0 +1,29 @@
+// usage example:
+// @include scale('margin-top', 50px, (50/1400)vw, 70px);
+
+@mixin scale($prop, $lte-1400, $gt-1400, $gte-1920) {
+  @media (max-width: $break-large) {
+    #{$prop}: $lte-1400;
+  }
+  @media (min-width: $break-large + 1) {
+    #{$prop}: $gt-1400;
+  }
+  @media (min-width: $break-xlarge + 1) {
+    #{$prop}: $gte-1920;
+  }
+}
+
+.margin-auto-vertical {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.margin-auto-horizontal {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.margin-auto {
+  @extend .margin-auto-horizontal;
+  @extend .margin-auto-vertical;
+}

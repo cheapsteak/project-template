@@ -15,10 +15,10 @@ function video(state = dataModel, action) {
       return Object.assign({}, state, { circleCTA: action.circleCTA });
 
     case SHOW_NARRATIVE_VIDEO_FULL_CONTROLS:
-      return Object.assign({}, state, { isFullControls: true });
+      return Object.assign({}, state, { useFullControls: true });
 
     case HIDE_NARRATIVE_VIDEO_FULL_CONTROLS:
-      return Object.assign({}, state, { isFullControls: false });
+      return Object.assign({}, state, { useFullControls: false });
 
     case PLAY_NARRATIVE_VIDEO:
       return Object.assign({}, state, { isPlaying: true });
