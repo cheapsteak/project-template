@@ -2,7 +2,7 @@ import React from 'react';
 import ParallaxVideoWrapper from 'common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
 import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import Panorama from 'common/components/panorama/panorama.jsx';
-import PhotoEssay from 'common/components/photo-essay/photo-essay.jsx';
+import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 
 export default class Chapter extends React.Component {
 
@@ -26,7 +26,7 @@ export default class Chapter extends React.Component {
           <h2 className="component-title">Instructional Video</h2>
           <InstructionalVideo
             className="col-4 margin-auto-horizontal"
-            modelSlug="test"
+            slug="math-1"
           />
         </div>
 
@@ -40,6 +40,9 @@ export default class Chapter extends React.Component {
           <h2 className="component-title">
             Photo Essay
           </h2>
+          <PhotoEssay
+            slug="math-1"
+          />
         </div>
         <div className="page-component">
           <h2>Articles</h2>
