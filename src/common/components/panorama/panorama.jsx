@@ -192,6 +192,8 @@ export default class Panorama extends React.Component {
   setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
     if (this.panorama) this.panorama.destroy();
 
+    this.setState({status: states.LOADING});
+
     this.panorama = PhotoSphere.PhotoSphereViewer({
       container: this.containerEl,
       panorama: src,
