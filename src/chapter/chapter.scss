@@ -1,17 +1,32 @@
+@import 'chapter-columns';
+
 .chapter-page {
   height: 100%;
   overflow-y: auto;
   background-color: #826636;
 
+  .component-title {
+    @extend .col-4;
+    @extend .margin-auto-horizontal;
+    @include scale('font-size', 50px, #{(50/1400*100)}vw, 70px);
+    @include scale('margin-top', 100px, 100px, #{(100/1400*100)}vw);
+    @include scale('margin-bottom', 40px, 40px, #{(400/1400*100)}vw);
+  }
+
   .page-component {
     position: relative;
+    font-size: 1.285714285714vw;
   }
 
   .main {
     position: relative;
-    margin-top: 50px;
-    margin-left: 50px;
+
+    @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
+    @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
+
     width: calc(100% - 50px);
+
+    background-color: white;
   }
 
   .nav {
@@ -33,8 +48,13 @@
     }
   }
 
-  .header-container {
+  .chapter-header {
     overflow: hidden;
     height: calc(100vh - 50px);
+    background-color: #E2D3AC;
+  }
+
+  .panorama-container {
+    height: 80vh;
   }
 }
