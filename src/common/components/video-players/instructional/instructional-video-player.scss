@@ -97,20 +97,21 @@
     font-weight: bold;
     top: -1px;
     right: -1px;
-    width: 161px;
+    width: 149px;
     height: 56px;
     background-color: #987849;
     z-index: 10;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    padding-right: 10px;
 
     &:focus {
       outline:0;
     }
 
     svg {
-      width: 18px;
+      width: 15px;
       margin-right: 32px;
     }
   }
