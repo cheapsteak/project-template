@@ -1,11 +1,12 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
-import BackButtonSvg from '../../../../../assets/video-back-button.svg';
-import ForwardButtonSvg from '../../../../../assets/video-forward-button.svg';
-import ReplayArrowSvg from '../../../../../assets/replay-arrow.svg';
-import CloseSvg from '../../../../../assets/video-player-close.svg';
+import PlayButtonSvg from 'svgs/video-player-play.svg';
+import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import BackButtonSvg from 'svgs/video-back-button.svg';
+import ForwardButtonSvg from 'svgs/video-forward-button.svg';
+import ReplayArrowSvg from 'svgs/replay-arrow.svg';
+import CloseSvg from 'svgs/video-player-close.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
@@ -352,8 +353,7 @@ export default class GridVideoPlayer extends React.Component {
 
 
   render() {
-    const { style, modelSlug, prevVideo, nextVideo } = this.props;
-    const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
+    const { style, modelSlug, prevVideo, nextVideo, className } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const prevVideoRoute = prevVideo ? prevVideo.gridRoute : '/';
     const nextVideoRoute = nextVideo ? nextVideo.gridRoute : '/';
@@ -361,7 +361,7 @@ export default class GridVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className={`instructional-video-player grid-player ${this.props.className}`}
+        className={`instructional-video-player grid-player ${className || ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
       >
@@ -452,8 +452,7 @@ export default class GridVideoPlayer extends React.Component {
           <div className="control-group">
             <span
               className="button"
-              style={tempPauseStyle}
-              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
             </span>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import BackButtonSvg from '../../../assets/photo-essay-prev-button.svg';
-import NextButtonSvg from '../../../assets/photo-essay-next-button.svg';
-import FullscreenButtonSvg from '../../../assets/photo-essay-fullscreen-button.svg';
+import BackButtonSvg from 'svgs/photo-essay-prev-button.svg';
+import NextButtonSvg from 'svgs/photo-essay-next-button.svg';
+import FullscreenButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 

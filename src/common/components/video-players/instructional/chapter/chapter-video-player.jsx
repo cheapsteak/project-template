@@ -1,9 +1,10 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from '../../../../../assets/video-play-button.svg';
-import FullBrowserButtonSvg from '../../../../../assets/photo-essay-fullscreen-button.svg';
-import ReplayArrowSvg from '../../../../../assets/replay-arrow.svg';
+import PlayButtonSvg from 'svgs/video-player-play.svg';
+import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import FullBrowserButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
+import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 
@@ -197,14 +198,13 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   render() {
-    const { style, modelSlug, basePath, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute } = this.props;
-    const tempPauseStyle = this.props.isPlaying ? {fill: 'black'} : undefined;
+    const { style, modelSlug, basePath, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className } = this.props;
     const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
     return (
       <div
         ref="root"
-        className={`instructional-video-player chapter-player ${this.props.className}`}
+        className={`instructional-video-player chapter-player ${className || ''}`}
         style={style}
       >
         <div
@@ -232,7 +232,7 @@ export default class ChapterVideoPlayer extends React.Component {
             <span
               className="button"
               style={tempPauseStyle}
-              dangerouslySetInnerHTML={{__html: PlayButtonSvg}}
+              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
             </span>
