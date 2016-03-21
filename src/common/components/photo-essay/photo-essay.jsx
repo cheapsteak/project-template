@@ -20,14 +20,14 @@ class PhotoEssay extends React.Component {
   };
 
   render () {
-    const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute } = this.props;
+    const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className } = this.props;
     const photo = photos && photos[index] || {};
     let currentPhotoNumber = 0;
     let maxPhotoNumber = 0;
     const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
     return (
-      <div className="photo-essay" style={style}>
+      <div className={`photo-essay ${className || ''}`} style={style}>
         <div className="image-wrapper">
           <img src={photo.image} />
         </div>
