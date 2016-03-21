@@ -1,28 +1,18 @@
 import React from 'react';
-import * as actionCreators from 'common/components/panorama-gallery/panorama-gallery-actions';
-import store from '../../common/store';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import PanoramaGallery from 'common/components/panorama-gallery/panorama-gallery.jsx';
+import Panorama from 'common/components/panorama/panorama-redux.jsx';
 
-
-@connect(state => ({panorama: state.panoramas}))
-
-class TestPanoramaGallery extends React.Component {
+export default class PanoramaTest extends React.Component {
 
   render() {
-    const { panorama, dispatch } = this.props;
-    const boundActionCreators = bindActionCreators(actionCreators, dispatch);
-
     return (
-      <PanoramaGallery
-        index={panorama.index}
-        panoramas={panorama.panoramas}
-        prev={boundActionCreators.setPrevPanorama}
-        next={boundActionCreators.setNextPanorama}
-      />
+      <div>
+        <div style={{height: 600}}>
+          <Panorama
+            slug={`math`}
+            hasMenu={true}
+          />
+        </div>
+      </div>
     )
   }
 }
-
-export default TestPanoramaGallery;

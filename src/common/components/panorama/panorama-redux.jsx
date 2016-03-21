@@ -20,6 +20,7 @@ class PanoramaRedux extends React.Component {
       ref="wrappedInstance"
       {...data}
       {...this.props}
+      setPanorama={this.boundActionCreators.setPanorama}
     />
   }
 }

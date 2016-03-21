@@ -16,7 +16,7 @@ export default class PanoramaTest extends React.Component {
       <div>
         <div style={{height: 600}}>
           <Panorama
-            slug={`math-1`}
+            slug={`math`}
             src={this.state.value}
           />
         </div>
