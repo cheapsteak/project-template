@@ -2,7 +2,7 @@ export default {
   currentTime: 0,
   isPlaying: false,
   useFullControls: false,
-  src: '/videos/fg-1080-1.mp4',
+  src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4',
   circleCTA: {
     text: '',
     route: ''
@@ -11,14 +11,14 @@ export default {
     {
       id: 'chapter 1',
       ctaText: 'Science',
-      time: 2,
+      time: 15,
       img: '/hover-card.jpg',
       ctaText: 'Science',
       route: '/tests/narrative-video-player#Science'
     },
     {
       id: 'chapter 1.2',
-      time: 4,
+      time: 30,
       ctaText: 'Math',
       img: '/hover-card.jpg',
       ctaText: 'Math',
@@ -26,7 +26,7 @@ export default {
     },
     {
       id: 'chapter 2',
-      time: 6,
+      time: 40,
       ctaText: 'Computer Science',
       img: '/hover-card.jpg',
       ctaText: 'Computer Science',
@@ -34,7 +34,7 @@ export default {
     },
     {
       id: 'chapter 3',
-      time: 8,
+      time: 50,
       ctaText: 'Art',
       img: '/hover-card.jpg',
       ctaText: 'Art',
