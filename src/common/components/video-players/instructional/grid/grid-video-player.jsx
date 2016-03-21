@@ -192,6 +192,7 @@ export default class GridVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.nextVideoIntervalId);
+    clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
     this.props.onVideoPause();
   }
@@ -306,7 +307,7 @@ export default class GridVideoPlayer extends React.Component {
     return Promise.all([
       ...conditionalAnimates(),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
+      animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
     ]);
   };
@@ -531,7 +532,7 @@ export default class GridVideoPlayer extends React.Component {
                 key={'currentId'}
                 title={this.props.chapterName}
                 route={this.props.chapterRoute}
-                image={this.props.chapterCardImage}
+                image={this.props.endingCardImage}
               />
               ,
               <NextVideoCard

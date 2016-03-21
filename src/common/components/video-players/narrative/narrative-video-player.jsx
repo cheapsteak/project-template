@@ -242,8 +242,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleComponentMouseMove = () => {
-    console.log(this.props.useFullControls);
-        
     if(this.props.isPlaying) {
       if(!this.props.useFullControls) {
         this.props.showFullControls();

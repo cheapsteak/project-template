@@ -129,7 +129,7 @@ export default class NextVideoCard extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Link to={this.props.route}>
+        <Link to={this.props.route || '/'}>
           <video
             ref={ node => this.video = node }
             src={this.props.video}
