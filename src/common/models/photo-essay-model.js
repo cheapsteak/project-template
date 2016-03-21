@@ -15,7 +15,7 @@ export default {
     return {
       ...photoEssaySourceData,
       fullBrowserRoute: chapterRoute,
-      fullBrowserExitRoute: `${chapterRoute}photo-essay$/{photoEssaySourceData.slug}`
+      fullBrowserExitRoute: `${chapterRoute}photo-essay/${photoEssaySourceData.slug}`
     };
   }
 };
