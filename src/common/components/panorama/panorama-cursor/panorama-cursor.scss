@@ -1,0 +1,14 @@
+.panorama-cursor {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  z-index: 500;
+  pointer-events: none;
+  display: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+

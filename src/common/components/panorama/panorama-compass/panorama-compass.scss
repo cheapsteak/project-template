@@ -1,28 +1,84 @@
+$offset: 10px;
+$pos: calc(50% - 4px);
+
 .panorama-compass {
   position: absolute;
-  left: 30px;
-  top: 30px;
-  width: 95px;
-  height: 95px;
+  left: 40px;
+  top: 40px;
+  width: 115px;
+  height: 115px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   z-index: 1000;
+  pointer-events: none;
 
-  .compass-indicator {
-    position: relative;
+  p {
+    font-weight: bold;
+    font-size: 11px;
+    color: #fff;
+    position: absolute;
+
+    &.north {
+      top: $offset;
+      left: $pos;
+    }
+    &.east {
+      top: $pos;
+      right: $offset;
+    }
+    &.south {
+      left: calc(50% - 2px);
+      bottom: 6px;
+    }
+    &.west {
+      top: $pos;
+      left: $offset;
+    }
+  }
+
+  .outer-indicator {
+    position: absolute;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    left: -2px;
+    top: -2px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 1);
+  }
+
+  .inner-container {
+    position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -25px;
-    margin-top: -25px;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: -30px;
+    margin-top: -30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
 
-    .indicator-point {
-      width: 10px;
-      height: 10px;
-      background-color: red;
+    .inner-indicator {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 30px solid rgba(255, 255, 255, 0);
+      border-top-color: rgba(255, 255, 255, 0.3);
     }
+
+    .dot {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -4px;
+      margin-top: -4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 1);
+    }
+
   }
 }
 

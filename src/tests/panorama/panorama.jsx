@@ -17,8 +17,6 @@ export default class PanoramaTest extends React.Component {
         <div style={{height: 600}}>
           <Panorama
             slug={`math-1`}
-            fullBrowserRoute={`/tests/chapter/panorama/math-1`}
-            fullBrowserExitRoute={`/tests/chapter`}
             src={this.state.value}
           />
         </div>
