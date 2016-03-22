@@ -22,8 +22,8 @@ class PhotoEssay extends React.Component {
   render () {
     const { style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className } = this.props;
     const photo = photos && photos[index] || {};
-    let currentPhotoNumber = 0;
-    let maxPhotoNumber = 0;
+    let currentPhotoNumber = photos ? index + 1 : 0;
+    let maxPhotoNumber = photos ? photos.length : 0;
     const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
 
     return (

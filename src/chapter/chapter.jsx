@@ -8,7 +8,6 @@ import TransitionGroup from 'react-addons-transition-group';
 export default class Chapter extends React.Component {
 
   render () {
-    console.log(this.props);
     return <section className="chapter-page">
       <div className="main">
         <nav className="nav">
