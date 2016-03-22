@@ -3,63 +3,56 @@ const data = {
     title: 'welcome',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/welcome',
     instructionalVideoUrl: null
   },
   science: {
     title: 'science',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/science',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   literacy: {
     title: 'literacy & writing',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/literacy-and-writing',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   math: {
     title: 'math',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/math',
     instructionalVideoUrl: null
   },
   electives: {
     title: 'electives',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/electives',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   computer: {
     title: 'computer science',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/computer-science',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   investment: {
     title: 'parental investment',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/parental-investment',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   },
   development: {
     title: 'character development',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
+    chapterUrl: 'chapters/character-development',
     narrativeVideoUrl: 'tests/narrative-video-player',
     instructionalVideoUrl: null
   },
@@ -67,8 +60,7 @@ const data = {
     title: 'history',
     subtitle: 'chapter',
     image: '../images/kid-test.png',
-    chapterUrl: 'tests/chapter',
-    narrativeVideoUrl: 'tests/narrative-video-player',
+    chapterUrl: 'chapters/history',
     instructionalVideoUrl: 'tests/instructional-grid-player'
   }
 };

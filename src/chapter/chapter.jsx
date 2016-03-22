@@ -34,8 +34,8 @@ export default class Chapter extends React.Component {
           <h2 className="component-title">360 Virtual Tour</h2>
           <div className="panorama-container">
             <Panorama
-              slug={`math-1`}
-              src={'../images/pan-11.jpg'}
+              slug={`math`}
+              hasMenu={true}
             />
           </div>
         </div>
