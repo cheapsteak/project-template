@@ -46,4 +46,5 @@ export default {
       slug: 'math-1'
     }
   },
+  article: require('./article/article.jsx')
 };
