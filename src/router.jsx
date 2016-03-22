@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import Chapter from 'chapter/chapter.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -23,6 +24,11 @@ export default <Provider store={store}>
 <Router history={appHistory} onUpdate={handleRouteUpdate}>
   <Route path="/" component={App}>
     <Route path="chapters/:chapter_slug" component={Chapter}>
+      <Route
+        path="instructional-videos/:slug"
+        component={FullBrowserWrapper}
+        childComponent={ChapterVideoPlayer}
+      />
       <Route
         path="photo-essay/:slug"
         component={FullBrowserWrapper}
