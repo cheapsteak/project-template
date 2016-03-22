@@ -149,11 +149,6 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.hideControlsTimeoutId = undefined;
         this.animateInEndOverlay();
         this.props.hideFullControls();
-      } else if (this.props.currentTime === this.props.duration
-        && nextProps.currentTime !== nextProps.duration) {
-        // Video going to replay
-        // this.animateOutEndOverlay();
-        // this.props.hideFullControls();
       }
     }
   }
@@ -377,7 +372,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
 
     if(!this.props.useFullControls && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
-      console.log('TRUE SHOW')
       this.props.showFullControls();
     }
 
@@ -394,15 +388,12 @@ export default class NarrativeVideoPlayer extends React.Component {
     e.stopPropagation();
 
     this.changeVideoTime(0);
-    // setTimeout(this.handleVideoPlayPause, 1000);
     this.animateOutEndOverlay();
     this.props.hideFullControls();
     this.video.play();
   };
 
   handleOverlayClick = (e) => {
-    // console.log('CLICK');
-        
     if(e.target.id === 'videoOverlay') {
         this.props.hideFullControls();
         !this.props.isPlaying && this.video.play();
