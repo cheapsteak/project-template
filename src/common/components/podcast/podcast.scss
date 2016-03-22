@@ -1,0 +1,38 @@
+.podcast {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  background: url('#{$ASSET_PATH}/images/podcast-bg.png') #f3f3f3 repeat;
+
+  video {
+    display: none;
+  }
+
+  .text-container {
+    position: absolute;
+    right: 120px;
+    bottom: 120px;
+    z-index: 1;
+    width: 280px;
+
+    h2 {
+      font-size: 40px;
+      color: rgba(43, 43, 43, 1);
+      font-weight: bold;
+    }
+
+    p {
+      margin-top: 30px;
+      font-size: 18px;
+      color: rgba(143, 143, 143, 1);
+      line-height: 140%;
+    }
+  }
+
+  .play-progress-button {
+    position: relative;
+    left: 30%;
+    top: 30%;
+  }
+}
