@@ -13,7 +13,6 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import ImageCard from '../components/image-card/image-card.jsx';
 
-
 function calculateAnimationStates (els) {
   const zoomedInRect = els.component.getBoundingClientRect();
   const zoomedOutVideoMargin = 40;
@@ -33,6 +32,7 @@ function calculateAnimationStates (els) {
         scaleY: 1
       },
       overlay: {
+        delay: 0.1,
         display: 'none',
         opacity: 0
       },
@@ -103,6 +103,7 @@ function calculateAnimationStates (els) {
     },
     end: {
       overlay: {
+        display: 'block',
         opacity: 1
       }
     }
@@ -144,12 +145,9 @@ export default class NarrativeVideoPlayer extends React.Component {
     if(this.props.duration && nextProps.duration) {
       if(this.props.currentTime !== this.props.duration && 
         nextProps.currentTime === nextProps.duration) {
+        clearTimeout(this.hideControlsTimeoutId);
+        this.hideControlsTimeoutId = undefined;
         this.animateInEndOverlay();
-        this.props.hideFullControls();
-      } else if (this.props.currentTime === this.props.duration
-        && nextProps.currentTime !== nextProps.duration) {
-        // Video going to replay
-        this.animateOutEndOverlay();
         this.props.hideFullControls();
       }
     }
@@ -226,12 +224,10 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   animateInControls = () => {
-    this.stopAnimations();
-    console.log('ANIMATE IN');
-
     const buttons = this.refs.component.querySelectorAll('.button');
     const dots = this.refs.component.querySelectorAll('.dot');
 
+    this.stopAnimations();
     animate.staggerFrom(dots, 0.3, { delay: 0.5, opacity: 0 }, 0.2);
 
     return Promise.all([
@@ -248,9 +244,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   animateOutControls = () => {
     this.stopAnimations();
 
-    console.log('ANIMATE OUT');
-        
-
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
@@ -261,7 +254,9 @@ export default class NarrativeVideoPlayer extends React.Component {
       ...conditionalAnimations,
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
@@ -306,7 +301,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   stopAnimations = () => {
-    TweenMax.killTweensOf(_.map(this.refs, val => val), true);
+    TweenMax.killTweensOf(_.values(this.refs));
   };
 
 
@@ -337,11 +332,9 @@ export default class NarrativeVideoPlayer extends React.Component {
   handleVideoPlayPause = () => {
     if(this.props.isPlaying) {
       this.video.pause();
-      this.props.onVideoPause();
       clearTimeout(this.hideControlsTimeoutId);
     } else {
       this.video.play();
-      this.props.onVideoPlay();
     }
   };
 
@@ -373,6 +366,11 @@ export default class NarrativeVideoPlayer extends React.Component {
       y: e.clientY
     };
 
+    if(this.videoEnded) {
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
+
     if(!this.props.useFullControls && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
     }
@@ -387,15 +385,18 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleReplayClick = (e) => {
+    e.stopPropagation();
+
     this.changeVideoTime(0);
-    setTimeout(this.handleVideoPlayPause, 1000);
+    this.animateOutEndOverlay();
+    this.props.hideFullControls();
+    this.video.play();
   };
 
   handleOverlayClick = (e) => {
     if(e.target.id === 'videoOverlay') {
         this.props.hideFullControls();
-        this.props.onVideoPlay();
-        this.video.play();
+        !this.props.isPlaying && this.video.play();
         clearTimeout(this.hideControlsTimeoutId);
     }
   };
@@ -432,8 +433,9 @@ export default class NarrativeVideoPlayer extends React.Component {
             src={this.props.src}
             preload="metadata"
             onLoadedMetadata={this.handleMetadataLoaded}
-            onEnded={this.handleVideoPlayPause}
             onTimeUpdate={this.handleTimeUpdate}
+            onPlay={this.props.onVideoPlay}
+            onPause={this.props.onVideoPause}
           >
           </video>
           <Link ref={node => this.refs.circleCTA = findDOMNode(node)} className="circle-cta" to={circleCTA.route}>
