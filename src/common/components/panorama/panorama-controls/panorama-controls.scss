@@ -57,7 +57,7 @@ $buttonWidth: $controlsHeight*0.8;
   .zoom-controls-wrapper {
     display: flex;
     position: relative;
-    width: calc(100% - #{$controlsHeight});
+    width: calc(100% - 69px);
     height: 100%;
     font-weight: bold;
     font-size: 20px;

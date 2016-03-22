@@ -6,6 +6,7 @@ import raf from 'raf';
 import deviceOrientation from '../../utils/three-device-orientation';
 import animate from 'gsap-promise';
 import detect from '../../utils/detect';
+import TransitionGroup from 'react-addons-transition-group';
 
 import IconClose from 'svgs/icon-close.svg';
 
@@ -13,6 +14,7 @@ import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
 import PanoramaMenu from './panorama-menu/panorama-menu';
 import PanoramaCursor from './panorama-cursor/panorama-cursor';
+import PanoramaLoader from './panorama-loader/panorama-loader';
 
 const states = {
   LOADING: 'loading',
@@ -49,7 +51,7 @@ export default class Panorama extends React.Component {
   };
 
   state = {
-    status: states.LOADING,
+    status: undefined,
     zoomLevel: initZoomLevel,
     long: undefined,
     lat: undefined,
@@ -110,7 +112,7 @@ export default class Panorama extends React.Component {
       zIndex: 1000
     });
 
-    animate.to(this.containerEl, 0.6, {
+    animate.to(this.containerEl, 0.4, {
         width: '100%',
         height: '100%',
         top: 0,
@@ -126,7 +128,7 @@ export default class Panorama extends React.Component {
 
   handleLeaveFullBrowser = () => {
     const clientRect = this.containerEl.parentNode.getBoundingClientRect();
-    animate.to(this.containerEl, 0.6, {
+    animate.to(this.containerEl, 0.4, {
         top: clientRect.top,
         left: clientRect.left,
         width: clientRect.width,
@@ -241,7 +243,8 @@ export default class Panorama extends React.Component {
   };
 
   handleMouseMove = (e) => {
-    const targetClassName = e.target.className;
+    const target = e.target;
+    const targetClassName = target.className;
 
     if (targetClassName !== 'psv-hud') {
       this.setState({cursorIsVisible: false});
@@ -249,7 +252,12 @@ export default class Panorama extends React.Component {
     }
 
     if (!this.state.cursorIsVisible) this.setState({cursorIsVisible: true});
-    this.setState({cursorPos: {x: e.clientX, y: e.clientY}});
+    this.setState({
+      cursorPos: {
+        x: e.clientX - target.getBoundingClientRect().left,
+        y: e.clientY - target.getBoundingClientRect().top
+      }
+    });
   };
 
   render() {
@@ -306,6 +314,12 @@ export default class Panorama extends React.Component {
           isVisible={this.state.cursorIsVisible}
           cursorPos={this.state.cursorPos}
         />
+
+        <TransitionGroup>
+          {
+            this.state.status === states.LOADING && <PanoramaLoader />
+          }
+        </TransitionGroup>
 
         {menu}
         {controls}
