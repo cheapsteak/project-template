@@ -1,0 +1,51 @@
+$size: 140px;
+
+.play-progress-button {
+  width: $size;
+
+  svg {
+    fill: #6d7880;
+    position: absolute;
+
+    //&:first-of-type {
+    //  path {
+    //    stroke-linecap: round !important;
+    //  }
+    //}
+  }
+
+  .icon-container {
+    width: $size;
+    height: $size;
+    position: relative;
+    background-color: #fff;
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 5px 5px 110px rgba(0, 0, 0, 0.15), -5px -5px 110px rgba(0, 0, 0, 0.15);
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -10px;
+      margin-left: -10px;
+
+      &.play {
+        margin-left: -7px;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .label {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    color: #fff;
+  }
+}
