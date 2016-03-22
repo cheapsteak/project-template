@@ -3,6 +3,7 @@ import ParallaxVideoWrapper from 'common/components/parallax-video-wrapper/paral
 import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import TransitionGroup from 'react-addons-transition-group';
 
 export default class Chapter extends React.Component {
 
@@ -44,6 +45,7 @@ export default class Chapter extends React.Component {
             Photo Essay
           </h2>
           <PhotoEssay
+            ref="photoEssay"
             slug="math-1"
           />
         </div>
@@ -54,8 +56,13 @@ export default class Chapter extends React.Component {
         </div>
 
         <div className="podcast">podcast</div>
+        <TransitionGroup
+          component="div"
+          className="route-content-wrapper"
 
-
+        >
+          { React.cloneElement(this.props.children || <div />, {key: this.props.params.slug, target: this.refs.photoEssay}) }
+        </TransitionGroup>
         <footer>footer</footer>
       </div>
     </section>;
