@@ -1,11 +1,10 @@
-.learn-more-card {
+.image-card {
   position: absolute;
   width: 350px;
   height: 440px;
   overflow: hidden;
   background-color: #444444;
   cursor: pointer;
-  left: calc(50% - 350px);
   top: calc(50% - 280px);
 
   a {
@@ -61,6 +60,11 @@
       text-align: center;
       font-weight: bold;
       background-color: #2B2B2B;
+
+      svg {
+        width: 40%;
+        fill: #8F8F8F;
+      }
     }
   }
 

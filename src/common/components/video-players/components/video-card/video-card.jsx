@@ -125,7 +125,7 @@ export default class NextVideoCard extends React.Component {
     return (
       <div
         ref="card"
-        className="next-video-card"
+        className="video-card"
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
