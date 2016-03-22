@@ -301,7 +301,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   stopAnimations = () => {
-    TweenMax.killTweensOf(_.map(this.refs, val => val));
+    TweenMax.killTweensOf(_.values(this.refs));
   };
 
 
