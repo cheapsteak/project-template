@@ -1,5 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import Packery from 'packery';
 
 const states = {
@@ -27,7 +27,7 @@ export default class Grid extends React.Component {
     this.calculateSizes();
 
     this.tiles = this.getTiles();
-    const fillers = document.querySelectorAll('.grid-parallax-scene .filler');
+    const fillers = document.querySelectorAll('.grid-manager .filler');
     this.tiles.forEach((tile, index) => {
       tile.animateIn(index, index === 0 ? fillers : null)
     });

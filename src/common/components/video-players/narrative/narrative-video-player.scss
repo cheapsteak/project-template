@@ -28,7 +28,8 @@
       color: white;
       font-weight: bold;
       cursor: pointer;
-      z-index: 10;
+      opacity: 0;
+      z-index: 100;
 
       .circle-cta-text {
         position: absolute;
@@ -52,12 +53,12 @@
   }
 
   .video-overlay {
-    position: fixed;
+    position: absolute;
     top: -1px;
     left: -1px;
     width: 101%;
     height: 101%;
-    background-color: #000000;
+    background-color: rgba(0,0,0,0.8);
     z-index: 1;
   }
 
@@ -145,6 +146,7 @@
   .controls {
     position: absolute;
     left: 0;
+    bottom: 0;
     display: flex;
     align-items: bottom;
     width: 100%;
@@ -178,5 +180,9 @@
 
   .timeline {
     flex: 1;
+  }
+
+  .image-card {
+    left: calc(50% - 175px);
   }
 }
