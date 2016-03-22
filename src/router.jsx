@@ -5,6 +5,8 @@ import App from './app.jsx';
 import store from 'common/store.js';
 import { Provider } from 'react-redux';
 import Chapter from 'chapter/chapter.jsx';
+import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx';
+import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -20,7 +22,13 @@ const testRoutes = process.env.NODE_ENV !== 'production' ?
 export default <Provider store={store}>
 <Router history={appHistory} onUpdate={handleRouteUpdate}>
   <Route path="/" component={App}>
-    <Route path="chapters/:id" component={Chapter}/>
+    <Route path="chapters/:chapter_slug" component={Chapter}>
+    </Route>
+    <Route
+      path="chapters/:chapter_slug/photo-essay/:slug"
+      component={FullBrowserWrapper}
+      childComponent={PhotoEssay}
+    />
 
   </Route>
 
