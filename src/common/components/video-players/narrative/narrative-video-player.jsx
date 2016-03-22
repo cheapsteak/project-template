@@ -152,8 +152,8 @@ export default class NarrativeVideoPlayer extends React.Component {
       } else if (this.props.currentTime === this.props.duration
         && nextProps.currentTime !== nextProps.duration) {
         // Video going to replay
-        this.animateOutEndOverlay();
-        this.props.hideFullControls();
+        // this.animateOutEndOverlay();
+        // this.props.hideFullControls();
       }
     }
   }
@@ -259,7 +259,9 @@ export default class NarrativeVideoPlayer extends React.Component {
       ...conditionalAnimations,
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
@@ -369,9 +371,13 @@ export default class NarrativeVideoPlayer extends React.Component {
       y: e.clientY
     };
 
-    if(this.videoEnded) return;
+    if(this.videoEnded) {
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
 
     if(!this.props.useFullControls && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
+      console.log('TRUE SHOW')
       this.props.showFullControls();
     }
 
@@ -385,13 +391,18 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleReplayClick = (e) => {
-    console.log('REPLAY CLICK');
-        
+    e.stopPropagation();
+
     this.changeVideoTime(0);
-    setTimeout(this.handleVideoPlayPause, 1000);
+    // setTimeout(this.handleVideoPlayPause, 1000);
+    this.animateOutEndOverlay();
+    this.props.hideFullControls();
+    this.video.play();
   };
 
   handleOverlayClick = (e) => {
+    // console.log('CLICK');
+        
     if(e.target.id === 'videoOverlay') {
         this.props.hideFullControls();
         !this.props.isPlaying && this.video.play();
