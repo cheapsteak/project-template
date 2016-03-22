@@ -3,7 +3,7 @@
 .chapter-page {
   height: 100%;
   overflow-y: auto;
-  background-color: #826636;
+  background-color: #747981;
 
   .component-title {
     @extend .col-4;
@@ -11,6 +11,7 @@
     @include scale('font-size', 50px, #{(50/1400*100)}vw, 70px);
     @include scale('margin-top', 100px, 100px, #{(100/1400*100)}vw);
     @include scale('margin-bottom', 40px, 40px, #{(400/1400*100)}vw);
+    color: #6E767E;
   }
 
   .page-component {
@@ -34,7 +35,7 @@
     z-index: 1;
     top: 0;
     width: 100%;
-    background-color: rgba(#826636, 0.7);
+    background-color: rgba(#747981, 0.7);
 
     display: flex;
     justify-content: space-between;
@@ -51,7 +52,7 @@
   .chapter-header {
     overflow: hidden;
     height: calc(100vh - 50px);
-    background-color: #E2D3AC;
+    background-color: #fff;
   }
 
   .panorama-container {
