@@ -88,8 +88,12 @@ export default class Panorama extends React.Component {
   }
 
   componentWillUnmount() {
-    this.panorama.destroy();
-    this.orientationControls.disconnect();
+    try {
+      this.panorama.destroy();
+      this.orientationControls.disconnect();
+    } catch (e) {
+      console.log('couldnt properly destroy panorama');
+    }
   }
 
   handleCloseClick = () => {
