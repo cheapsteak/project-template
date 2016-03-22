@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from 'common/components/grid/layout-1400';
+import Grid from 'common/components/grid-manager/grid/layout-1400';
 
 export default function () {
 

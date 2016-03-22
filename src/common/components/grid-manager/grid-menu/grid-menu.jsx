@@ -1,10 +1,10 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import IconReturn from 'svgs/icon-play.svg';
 import IconClose from 'svgs/icon-close.svg';
 import IconFilter from 'svgs/icon-check.svg';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 
 const states = {
   IDLE: '',

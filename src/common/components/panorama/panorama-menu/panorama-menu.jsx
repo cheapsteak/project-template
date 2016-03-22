@@ -5,8 +5,8 @@ import animate from 'gsap-promise';
 export default class PanoramaMenu extends React.Component {
 
   static propTypes = {
-    modes: React.PropTypes.objectOf(React.PropTypes.string).isRequired,
-    currMode: React.PropTypes.string.isRequired,
+    modes: React.PropTypes.objectOf(React.PropTypes.string),
+    currMode: React.PropTypes.string,
     setPanorama: React.PropTypes.func
   };
 
