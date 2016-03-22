@@ -1,32 +1,33 @@
 import React from 'react';
 import animate from 'gsap-promise';
 
-function calculateAnimationStates() {
-  return {
-    click: {
-
-    },
-    idle: {
-      text: {
-
-      }
-    },
-    rollover: {
-
-    }
-  }
-}
-
 export default class PillButton extends React.Component {
-  componentDidMount() {
-    this.animationStates = calculateAnimationStates();
-  }
+
+  state = {
+    active: false
+  };
 
   handleClick = (e) => {
-    console.log('Pill Button - Click')
+    this._clicked = 'clicked';
+    this.animateToRollover();
+    this.setState({ active: !this.state.active });
+    this.props.onClick && this.props.onClick();
   };
 
   handleMouseEnter = (e) => {
+    this.animateToIdle();
+  };
+
+  handleMouseLeave = (e) => {
+    if(this._clicked) {
+      this._clicked = undefined;
+      return
+    }
+
+    this.animateToRollover();
+  };
+
+  animateToIdle = () => {
     TweenMax.killTweensOf([
       this.refs.text,
       this.refs.pillButton
@@ -42,7 +43,7 @@ export default class PillButton extends React.Component {
       });
   };
 
-  handleMouseLeave = (e) => {
+  animateToRollover = () => {
     TweenMax.killTweensOf([
       this.refs.text,
       this.refs.pillButton
@@ -56,7 +57,7 @@ export default class PillButton extends React.Component {
         animate.set(this.refs.text, { y: -20 });
         return animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 });
       });
-  };
+  }
 
   render () {
     const { className, style } = this.props;
@@ -74,7 +75,12 @@ export default class PillButton extends React.Component {
           <span></span>
           <span></span>
         </div>
-        <div ref="text" className="pill-button-text">Read More</div>
+        <div
+          ref="text"
+          className="pill-button-text"
+        >
+          { this.state.active ? this.props.activeText : this.props.idleText }
+        </div>
       </div>
     )
   }
