@@ -4,7 +4,7 @@ import Panorama from 'common/components/panorama/panorama-redux.jsx';
 export default class PanoramaTest extends React.Component {
 
   state = {
-    value: '../images/pan-44.jpg'
+    value: '../images/pan-math.jpg'
   };
 
   handleChange = (event) => {
