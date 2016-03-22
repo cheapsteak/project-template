@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router';
+import IconExplore from 'svgs/icon-explore.svg';
 import animate from 'gsap-promise';
 
 
@@ -20,7 +21,6 @@ function calculateAnimationStates(els) {
     out: {
       card: {
         opacity: 0,
-        x: -20 * scaledRatio.x,
         y: 110,
         scaleX: scaledRatio.x,
         scaleY: scaledRatio.y
@@ -40,7 +40,6 @@ function calculateAnimationStates(els) {
       card: {
         delay: 0.3,
         opacity: 1,
-        x: -20 * scaledRatio.x,
         y: 0,
         scaleX: scaledRatio.x,
         scaleY: scaledRatio.y
@@ -103,13 +102,17 @@ export default class LearnMoreCard extends React.Component {
     return (
       <div
         ref="card"
-        className="learn-more-card"
+        className="image-card"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />
           <div ref="frontOverlay" className="bottom-overlay-front">
-            <div ref="button" className="learn-more-button">+</div>
-            <label ref="label">Learn More</label>
+            {
+              this.props.gridButton 
+              ? <span className="learn-more-button" dangerouslySetInnerHTML={{__html: IconExplore }}></span>
+              : <div ref="button" className="learn-more-button">+</div>
+            }
+            <label ref="label">{this.props.label}</label>
             <h3 ref="title">{this.props.title}</h3>
           </div>
           <div ref="backOverlay" className="bottom-overlay-back"></div>

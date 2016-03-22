@@ -1,5 +1,6 @@
 export default {
   currentTime: 0,
+  duration: undefined,
   isPlaying: false,
   useFullControls: false,
   src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4',
@@ -8,6 +9,14 @@ export default {
     route: ''
   },
   timeline: [
+    {
+      id: 'chapter 0.1',
+      ctaText: 'Music',
+      time: 0,
+      img: '/hover-card.jpg',
+      ctaText: 'Music',
+      route: '/tests/narrative-video-player#Music'
+    },
     {
       id: 'chapter 1',
       ctaText: 'Science',

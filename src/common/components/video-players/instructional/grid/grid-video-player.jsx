@@ -10,8 +10,8 @@ import CloseSvg from 'svgs/video-player-close.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
-import LearnMoreCard from './learn-more-card/learn-more-card.jsx';
-import NextVideoCard from './next-video-card/next-video-card.jsx';
+import ImageCard from '../../components/image-card/image-card.jsx';
+import VideoCard from '../../components/video-card/video-card.jsx';
 import HoverCard from './grid-hover-card/grid-hover-card.jsx';
 
 function calculateAnimationStates (els) {
@@ -20,7 +20,7 @@ function calculateAnimationStates (els) {
   const zoomedOutRect = {
     width: zoomedInRect.width - zoomedOutVideoMargin * 2,
     height: zoomedInRect.height - zoomedOutVideoMargin * 2
-  }
+  };
 
   return {
     out: {
@@ -182,6 +182,7 @@ export default class GridVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
     }
+
     if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
       if(nextProps.useFullControls) {
         this.animateInControls();
@@ -234,7 +235,7 @@ export default class GridVideoPlayer extends React.Component {
 
   handleMouseLeaveNextPrevButtons = () => {
     this.setState({ showHoverCard: undefined });
-  }
+  };
 
   handleControlsMouseEnter = () => {
     clearTimeout(this.hideControlsTimeoutId);
@@ -293,20 +294,14 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateOutControls = () => {
-    const conditionalAnimates = () => {
-      return !this.videoEnded
-        ? [
-            animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-            animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
-            animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
-          ]
-        : [ Promise.resolve() ];
-    }
-
-    this.stopAnimations();
+    const conditionalAnimations = !this.videoEnded && [
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
+    ];
 
     return Promise.all([
-      ...conditionalAnimates(),
+      ...conditionalAnimations,
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
@@ -331,8 +326,9 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateOutEndOverlay = () => {
-    this.setState({ showEndingCTA: false });
     this.stopAnimations();
+    this.setState({ showEndingCTA: false });
+
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -361,7 +357,7 @@ export default class GridVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className={`instructional-video-player grid-player ${className || ''}`}
+        className={`video-player instructional-video-player grid-player ${className || ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
       >
@@ -391,14 +387,15 @@ export default class GridVideoPlayer extends React.Component {
             {
               this.state.showEndingCTA
               ? [ 
-                <LearnMoreCard
+                <ImageCard
                   key={'currentId'}
+                  label="Learn More"
                   title={this.props.title}
                   route={this.props.chapterRoute}
                   image={this.props.endingCardImage}
                 />
                 ,
-                <NextVideoCard
+                <VideoCard
                   key={'nextVideoId'}
                   title={nextVideo.title}
                   route={nextVideoRoute}
@@ -515,53 +512,6 @@ export default class GridVideoPlayer extends React.Component {
             onTimeChange={this.changeVideoTime}
             items={[]}
           />
-        </div>
-        <div
-          ref="endingOverlay"
-          className="end-overlay"
-        >
-          <TransitionGroup
-            component="div"
-            className="route-content-wrapper full-height"
-          >
-          {
-            this.state.showEndingCTA
-            ? [ 
-              <LearnMoreCard
-                key={'currentId'}
-                title={this.props.chapterName}
-                route={this.props.chapterRoute}
-                image={this.props.endingCardImage}
-              />
-              ,
-              <NextVideoCard
-                key={'nextVideoId'}
-                title={this.props.nextVideo.chapterName}
-                route={this.props.nextVideo.videoRoute}
-                video={this.props.nextVideo.src}
-                timeLeft={this.state.nextVideoTimeLeft}
-              />
-            ]
-            : undefined 
-          }
-          </TransitionGroup>
-          <div
-            className="replay-group replay-group-grid"
-          >
-            <div
-              ref="replayButton"
-              className="replay-button"
-              onClick={this.handleReplayClick}
-              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-            >
-            </div>
-            <label
-              ref="replayLabel"
-              className="replay-label"
-            >
-              Replay
-            </label>
-          </div>
         </div>
       </div>
     )
