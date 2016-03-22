@@ -23,13 +23,12 @@ export default <Provider store={store}>
 <Router history={appHistory} onUpdate={handleRouteUpdate}>
   <Route path="/" component={App}>
     <Route path="chapters/:chapter_slug" component={Chapter}>
+      <Route
+        path="photo-essay/:slug"
+        component={FullBrowserWrapper}
+        childComponent={PhotoEssay}
+      />
     </Route>
-    <Route
-      path="chapters/:chapter_slug/photo-essay/:slug"
-      component={FullBrowserWrapper}
-      childComponent={PhotoEssay}
-    />
-
   </Route>
 
   {testRoutes}

@@ -198,8 +198,8 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   render() {
-    const { style, modelSlug, basePath, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className } = this.props;
-    const route = (isFullBrowser ? fullBrowserRoute : fullBrowserExitRoute) || '/';
+    const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className } = this.props;
+    const route = (!isFullBrowser ? fullBrowserChapterRoute : chapterRoute) || '/';
 
     return (
       <div

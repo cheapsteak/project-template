@@ -1,14 +1,16 @@
+import config from '../../../config.js';
+
 export default [
   {
     slug: 'math',
     title: 'Math',
-    cardImage: '/learn-more.jpg',
+    cardImage: `${config.ASSET_PATH}/learn-more.jpg`,
     route: '/tests/chapter',
   },
   {
     slug: 'science',
     title: 'Science',
-    cardImage: '/learn-more.jpg',
+    cardImage: `${config.ASSET_PATH}/learn-more.jpg`,
     route: '/tests/chapter'
   }
 ]
