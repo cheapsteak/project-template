@@ -21,12 +21,9 @@
 
   .main {
     position: relative;
-
     @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
     @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
-
     width: calc(100% - 50px);
-
     background-color: white;
   }
 
@@ -57,5 +54,10 @@
 
   .panorama-container {
     height: 80vh;
+  }
+
+  .video-wrapper video {
+    margin-top: -50px;
+    margin-bottom: -50px;
   }
 }
