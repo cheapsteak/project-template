@@ -7,19 +7,28 @@ export default class Article extends React.Component {
 
   preview = true;
 
-  componentDidMount() {
-    // animate.set(this.refs.textWrapper, { height: 200 });
-  }
+  getDistanceFromTop = () => {
+    return this.refs.article.offsetTop - 30;
+  };
+
+  getAvailableScrollDistance = () => {
+    const container = this.props.getTarget();
+    return container.scrollHeight - container.offsetHeight;
+  };
 
   handleClick = async (e) => {
     const clientRect = this.refs.article.getBoundingClientRect();
     const container = this.props.getTarget();
-    const scrollTo = Math.min(this.refs.article.offsetTop - 30, container.scrollHeight - container.offsetHeight)
-
-    await animate.to(container, 0.3, { scrollTop: scrollTo });
+    const scrollTo = Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance());
 
     if(this.preview) {
-      this.expand();
+      if(scrollTo === this.getDistanceFromTop()) {
+        await animate.to(container, 0.3, { scrollTop: scrollTo });
+        await this.expand();
+      } else {
+        await this.expand();
+        await animate.to(container, 0.3, { scrollTop: Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance()) });
+      }
     } else {
       this.collapse();
     }
@@ -29,14 +38,11 @@ export default class Article extends React.Component {
 
   expand = () => {
     const clientRect = this.refs.text.getBoundingClientRect();
-    animate.to(this.refs.textWrapper, 0.3, { height: clientRect.height })
-      .then(this.forceUpdate.bind(this))
+    return animate.to(this.refs.textWrapper, 0.3, { height: clientRect.height })
   };
 
   collapse = () => {
-    animate.to(this.refs.textWrapper, 0.3, { height: 200 })
-      .then(this.forceUpdate.bind(this))
-    
+   return animate.to(this.refs.textWrapper, 0.3, { height: 200 })
   };
 
   render () {
