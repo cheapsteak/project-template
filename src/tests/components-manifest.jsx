@@ -46,6 +46,8 @@ export default {
       slug: 'math-1'
     }
   },
+  article: require('./article/article.jsx'),
   podcast: require('./podcast/podcast.jsx'),
   landing: require('./landing/landing.jsx'),
+  'learn-more-modal': require('./learn-more-modal/learn-more-modal.jsx')
 };
