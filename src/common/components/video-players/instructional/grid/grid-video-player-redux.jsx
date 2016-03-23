@@ -30,6 +30,8 @@ class GridVideoPlayerRedux extends React.Component {
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
       showFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: true })}
       hideFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: false })}
+      mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
+      unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
       prevVideo={videos.prevVideo}
       nextVideo={videos.nextVideo}
       {...videos.currentVideo}

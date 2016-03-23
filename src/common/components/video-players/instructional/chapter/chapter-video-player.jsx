@@ -3,6 +3,8 @@ import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from 'svgs/video-player-play.svg';
 import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import MuteButtonSvg from 'svgs/video-player-mute.svg';
+import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import FullBrowserButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import { Link } from 'react-router';
@@ -99,6 +101,10 @@ export default class ChapterVideoPlayer extends React.Component {
         .then(this.animateInControls);
       }
     }
+
+    if(this.props.isMuted != nextProps.isMuted) {
+      this.video.muted = nextProps.isMuted;
+    }
   }
 
   componentWillEnterFullBrowser = () => {
@@ -167,6 +173,14 @@ export default class ChapterVideoPlayer extends React.Component {
     setTimeout(this.handleVideoPlayPause, 500);
   };
 
+  handleVolumeClick = (e) => {
+    if(this.props.isMuted) {
+      this.props.unmute();
+    } else {
+      this.props.mute();
+    }
+  }
+
   animateInControls = () => {
     return animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls);
   };
@@ -233,6 +247,12 @@ export default class ChapterVideoPlayer extends React.Component {
               className="button"
               dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
+            >
+            </span>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+              onClick={this.handleVolumeClick}
             >
             </span>
             <Link className="button fullbrowser-button" to={route}>

@@ -5,6 +5,8 @@ import PlayButtonSvg from 'svgs/video-player-play.svg';
 import PauseButtonSvg from 'svgs/video-player-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
+import MuteButtonSvg from 'svgs/video-player-mute.svg';
+import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import CloseSvg from 'svgs/video-player-close.svg';
 import { Link } from 'react-router';
@@ -190,6 +192,10 @@ export default class GridVideoPlayer extends React.Component {
         this.animateOutControls();
       }
     }
+
+    if(this.props.isMuted !== nextProps.isMuted) {
+      this.video.muted = nextProps.isMuted;
+    }
   }
 
   componentWillUnmount() {
@@ -261,6 +267,14 @@ export default class GridVideoPlayer extends React.Component {
 
     if(this.props.isPlaying) {
       this.setHideControlsTimeout();
+    }
+  };
+
+  handleVolumeClick = (e) => {
+    if(this.props.isMuted) {
+      this.props.unmute();
+    } else {
+      this.props.mute();
     }
   };
 
@@ -467,16 +481,16 @@ export default class GridVideoPlayer extends React.Component {
                 </span>
               </Link>
               <TransitionGroup>
-                  {
-                    this.state.showHoverCard === 'prev' && prevVideo
-                    ? <HoverCard
-                        key="prev-card"
-                        src={prevVideo.hoverCardImage}
-                        ctaText={prevVideo.title}
-                        label="Previous"
-                      />
-                    : undefined
-                  }
+                {
+                  this.state.showHoverCard === 'prev' && prevVideo
+                  ? <HoverCard
+                      key="prev-card"
+                      src={prevVideo.hoverCardImage}
+                      ctaText={prevVideo.title}
+                      label="Previous"
+                    />
+                  : undefined
+                }
               </TransitionGroup>
             </div>
             <div
@@ -505,6 +519,12 @@ export default class GridVideoPlayer extends React.Component {
                 }
               </TransitionGroup>
             </div>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+              onClick={this.handleVolumeClick}
+            >
+            </span>
           </div>
           <Timeline
             currentTime={this.props.currentTime || 0}

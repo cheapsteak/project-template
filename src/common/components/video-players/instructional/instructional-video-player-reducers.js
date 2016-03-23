@@ -19,6 +19,7 @@ const defVideoValues = {
   currentTime: 0,
   duration: undefined,
   isPlaying: false,
+  isMuted: false,
   useFullControls: true
 };
 
@@ -41,6 +42,7 @@ function video(state = {}, action) {
 
     case SET_INSTRUCTIONAL_VIDEO_DURATION:
       return Object.assign({}, state, { duration: action.duration });
+
     default:
       return state;
   }
