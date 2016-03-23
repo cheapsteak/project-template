@@ -54,10 +54,26 @@
 
   .panorama-container {
     height: 80vh;
+    .parallax-target-wrapper {
+      height: 100%;
+    }
+    .parallax-target {
+      height: calc(100% + 100px);
+      margin-top: -50px;
+      margin-bottom: -50px;
+    }
   }
+}
 
-  .video-wrapper video {
+.photo-essay {
+  overflow: hidden;
+  .image-wrapper {
     margin-top: -50px;
     margin-bottom: -50px;
+    //transition: margin-top 0.3s, margin-bottom 0.3s;
+    .fullbrowser-wrapper & {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   }
 }
