@@ -27,3 +27,18 @@
   @extend .margin-auto-horizontal;
   @extend .margin-auto-vertical;
 }
+
+@mixin gpu {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@mixin autoAlpha-0 {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@mixin autoAlpha-1 {
+  opacity: 1;
+  visibility: visible;
+}

@@ -7,13 +7,15 @@ import IconPause from 'svgs/icon-pause.svg';
 export default class PlayButton extends React.Component {
 
   static propTypes = {
+    className: React.PropTypes.string,
     progress: React.PropTypes.number,
     circleColor: React.PropTypes.string,
     label: React.PropTypes.string,
     onPlay: React.PropTypes.func,
     onPause: React.PropTypes.func,
     onUpdate: React.PropTypes.func,
-    onEnd: React.PropTypes.func
+    onEnd: React.PropTypes.func,
+    isCountDown: React.PropTypes.bool
   };
 
   static defaultProps = {
@@ -25,20 +27,27 @@ export default class PlayButton extends React.Component {
   };
 
   state = {
-    isPlaying: false
+    isPlaying: false,
+    playProgress: undefined,
+    isHovered: false
   };
 
   componentWillReceiveProps(newProps) {
-    if (newProps.progress !== this.progress) {
+    if (newProps.progress !== this.state.playProgress) {
 
       if (newProps.progress) {
-        this.progress = newProps.progress;
+        this.setState({playProgress: newProps.progress});
         this.props.onUpdate(newProps.progress);
       }
 
-      this.colorCircle.animate(newProps.progress, () => {
-        (newProps.progress === 1) && this.handleProgressEnd()
-      });
+
+      if (this.state.isHovered && this.props.isCountDown) {
+
+      } else {
+        this.colorCircle.animate(newProps.progress, () => {
+          (newProps.progress === 1) && this.handleProgressEnd()
+        });
+      }
     }
   }
 
@@ -48,24 +57,22 @@ export default class PlayButton extends React.Component {
     this.colorCircle = new ProgressBar.Circle(this.refs.iconContainer, {
       color: this.props.circleColor,
       strokeWidth: 6,
-      strokeLinecap: 'round',
       duration: 500
     });
 
     this.whiteCircle = new ProgressBar.Circle(this.refs.iconContainer, {
       color: '#fff',
-      strokeWidth: 8,
-      duration: 500
+      strokeWidth: 8
     });
   }
 
   componentWillUnmount() {
     this.colorCircle.destroy();
-    this.whiteCrcle.destroy();
+    this.whiteCircle.destroy();
   }
 
   resetProgress = () => {
-    this.progress = undefined;
+    this.setState({playProgress: undefined});
   };
 
   drawWhiteCircle = (callback) => {
@@ -83,41 +90,63 @@ export default class PlayButton extends React.Component {
   };
 
   handleOnclick = () => {
-    if (!this.progress) {
-      // did not start progress yet (initial play click)
-      this.progress = 0;
+    if (this.props.isCountDown) return;
+
+    this.setState({isHovered: false});
+
+    if (!this.state.playProgress) {
+      this.setState({playProgress: 0});
       this.drawWhiteCircle(this.togglePlay);
     } else {
-      // toggle play/pause
       this.togglePlay();
     }
   };
 
   handleMouseEnter = () => {
-    if (this.progress === undefined) {
-      this.colorCircle.animate(1, {duration: 400, easing: 'easeOut'});
+    if (this.props.isCountDown || this.state.playProgress === undefined) {
+      this.setState({isHovered: true});
+      this.colorCircle.animate(1, {
+        duration: 300 * (1 - this.state.playProgress),
+        easing: 'easeOut'
+      });
     }
   };
 
   handleMouseLeave = () => {
-    if (this.progress === undefined) {
-      this.colorCircle.animate(0, {duration: 400, easing: 'easeOut'});
+    const easing = 'easeInOut';
+    const progress = this.state.playProgress;
+
+    if (this.props.isCountDown) {
+      this.setState({isHovered: false});
+      
+      // animate circle back to progress
+      this.colorCircle.animate(progress, {
+        duration: 400 * (1 - progress),
+        easing: easing
+      });
+    } else if (progress === undefined) {
+      // animate circle back to 0
+      this.colorCircle.animate(0, {duration: 300, easing: easing}, () => {
+        this.setState({isHovered: false});
+      });
     }
   };
 
   handleProgressEnd = () => {
     this.setState({isPlaying: false});
     this.drawWhiteCircle(() => {
-      this.resetProgress();
       this.props.onEnd();
+      this.resetProgress();
     });
   };
 
   render() {
     const icon = this.state.isPlaying ? IconPause : IconPlay;
+    const isRoundLineCap = this.state.isHovered || this.state.playProgress;
+    const componentClassName = (isRoundLineCap ? 'round-line-cap ' : ' ' ) + (this.props.className || '');
 
     return (
-      <div className={`play-progress-button`}>
+      <div className={`progress-play-button ${componentClassName}`}>
         <div
           ref="iconContainer"
           className={`icon-container`}
