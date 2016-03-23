@@ -1,0 +1,42 @@
+.podcast {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  background: url('#{$ASSET_PATH}/images/podcast-bg.png') #f3f3f3 repeat;
+
+  video {
+    display: none;
+  }
+
+  .text-container {
+    position: absolute;
+    top: 50%;
+    right: 10vw;
+    transform: translateY(-50%);
+    @include scale(width, 280px, 20.3vw, 390px);
+
+    h2 {
+      color: rgba(43, 43, 43, 1);
+      font-weight: bold;
+      @include scale(font-size, 40px, 2.9vw, 55px);
+    }
+
+    p {
+      margin-top: 30px;
+      font-size: 18px;
+      color: rgba(143, 143, 143, 1);
+      line-height: 140%;
+      @include scale(font-size, 18px, 1.3vw, 24.7px);
+    }
+  }
+
+  .progress-play-button {
+    position: relative;
+    top: 50%;
+    left: 20vw;
+    transform: translateY(-50%);
+    @include scale(width, 128px, 10vw, 192px);
+    @include scale(height, 128px, 10vw, 192px);
+  }
+}
