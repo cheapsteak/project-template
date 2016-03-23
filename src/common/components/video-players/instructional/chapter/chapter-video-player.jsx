@@ -5,7 +5,8 @@ import PlayButtonSvg from 'svgs/video-player-play.svg';
 import PauseButtonSvg from 'svgs/video-player-pause.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
-import FullBrowserButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
+import EnterFullBrowserButtonSvg from 'svgs/video-player-enter-fullbrowser.svg';
+import ExitFullBrowserButtonSvg from 'svgs/video-player-exit-fullbrowser.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
@@ -257,7 +258,7 @@ export default class ChapterVideoPlayer extends React.Component {
             </span>
             <Link className="button fullbrowser-button" to={route}>
               <span
-                dangerouslySetInnerHTML={{__html: FullBrowserButtonSvg}}
+                dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}
               >
               </span>
             </Link>

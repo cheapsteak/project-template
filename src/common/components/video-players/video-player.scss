@@ -101,8 +101,22 @@
       fill: white;
       cursor: pointer;
 
+      &:first-child {
+        svg {
+          max-width: 12px;
+        }
+      }
+
       svg {
-        width: 20px;
+        display: block;
+        margin: auto;
+        fill: white;
+        max-width: 20px;
+        max-height: 15px;
+
+        * {
+          fill: white;
+        }
       }
     }
   }
