@@ -12,7 +12,13 @@ import {
 
 import dataModel from '../../../data/narrative-video.js';
 
-function video(state = dataModel, action) {
+const defOptions = {
+  isPlaying: false,
+  isMuted: false,
+  useFullControls: false
+}
+
+function video(state = Object.assign({}, defOptions, dataModel), action) {
   switch (action.type) {
     case SET_NARRATIVE_VIDEO_CIRCLE_CTA:
       return Object.assign({}, state, { circleCTA: action.circleCTA });
