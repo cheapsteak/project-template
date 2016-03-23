@@ -6,7 +6,7 @@ import * as modalActions from 'common/actions/learn-more-modal-actions.js';
 const EventEmitter = require('events').EventEmitter;
 const vent = new EventEmitter();
 
-window.xxx = store;
+window.REDUX_STORE = store;
 
 export default class App extends React.Component {
   static childContextTypes = {
