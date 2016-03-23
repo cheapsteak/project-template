@@ -7,15 +7,28 @@ export default class PillButton extends React.Component {
     active: false
   };
 
+  // This is a fix for MouseLeave not firing after click and tween until mouse moves
+  _clicked = undefined;
+
+  componentDidMount() {
+    animate.set(this.refs.verticalBar, { rotation: 90 });
+  }
+
   handleClick = (e) => {
     this._clicked = 'clicked';
-    this.animateToRollover();
+
+    if(!this.state.active) {
+      this.animateToActive();
+    } else {
+      this.animateToIdle();
+    }
+
     this.setState({ active: !this.state.active });
     this.props.onClick && this.props.onClick();
   };
 
   handleMouseEnter = (e) => {
-    this.animateToIdle();
+    this.animateMouseEnter();
   };
 
   handleMouseLeave = (e) => {
@@ -24,8 +37,27 @@ export default class PillButton extends React.Component {
       return
     }
 
-    this.animateToRollover();
+    this.animateMouseLeave();
   };
+
+  animateToActive = () => {
+    TweenMax.killTweensOf([
+      this.refs.text,
+      this.refs.pillButton
+    ]);
+
+    return animate
+      .to(this.refs.text, 0.2, { opacity: 0, y: 20 })
+      .then(() => {
+        animate.set(this.refs.text, { y: -20 });
+        return Promise.all[
+          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#2B2B2B'} }),
+          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
+          animate.to(this.refs.horizontalBar, 0.3, { rotation: 180 }),
+          animate.to(this.refs.verticalBar, 0.3, { rotation: 180 })
+        ];
+      });
+  }
 
   animateToIdle = () => {
     TweenMax.killTweensOf([
@@ -33,29 +65,50 @@ export default class PillButton extends React.Component {
       this.refs.pillButton
     ]);
 
-    animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#121212'} })
-
-    animate
+    return animate
       .to(this.refs.text, 0.2, { opacity: 0, y: -20 })
       .then(() => {
         animate.set(this.refs.text, { y: 20 });
-        return animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 });
+        return Promise.all[
+          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
+          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#121212'} }),
+          animate.to(this.refs.horizontalBar, 0.3, { rotation: 0 }),
+          animate.to(this.refs.verticalBar, 0.3, { rotation: 90 })
+        ];
       });
   };
 
-  animateToRollover = () => {
+  animateMouseEnter = () => {
     TweenMax.killTweensOf([
       this.refs.text,
       this.refs.pillButton
     ]);
 
-    animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#2B2B2B'} })
+    return animate
+      .to(this.refs.text, 0.2, { opacity: 0, y: -20 })
+      .then(() => {
+        animate.set(this.refs.text, { y: 20 });
+        return Promise.all[
+          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
+          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#121212'} })
+        ];
+      });
+  };
 
-    animate
+  animateMouseLeave = () => {
+    TweenMax.killTweensOf([
+      this.refs.text,
+      this.refs.pillButton
+    ]);
+
+    return animate
       .to(this.refs.text, 0.2, { opacity: 0, y: 20 })
       .then(() => {
         animate.set(this.refs.text, { y: -20 });
-        return animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 });
+        return Promise.all[
+          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#2B2B2B'} }),
+          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 })
+        ]
       });
   }
 
@@ -72,8 +125,8 @@ export default class PillButton extends React.Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <div className="plus-circle">
-          <span></span>
-          <span></span>
+          <span ref="horizontalBar"></span>
+          <span ref="verticalBar"></span>
         </div>
         <div
           ref="text"
