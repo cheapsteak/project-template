@@ -19,12 +19,12 @@ export default class LearnMoreModal extends React.Component {
   }
 
   componentWillEnter (callback) {
+    console.log('willenter')
     this.animateIn()
       .then(callback)
   }
 
   componentWillLeave (callback) {
-    console.log('Leave')
     this.animateOut()
       .then(callback);
   }
