@@ -11,15 +11,15 @@
 
   .text-container {
     position: absolute;
-    right: 120px;
-    bottom: 120px;
-    z-index: 1;
-    width: 280px;
+    top: 50%;
+    right: 10vw;
+    transform: translateY(-50%);
+    @include scale(width, 280px, 20.3vw, 390px);
 
     h2 {
-      font-size: 40px;
       color: rgba(43, 43, 43, 1);
       font-weight: bold;
+      @include scale(font-size, 40px, 2.9vw, 55px);
     }
 
     p {
@@ -27,12 +27,16 @@
       font-size: 18px;
       color: rgba(143, 143, 143, 1);
       line-height: 140%;
+      @include scale(font-size, 18px, 1.3vw, 24.7px);
     }
   }
 
-  .play-progress-button {
+  .progress-play-button {
     position: relative;
-    left: 30%;
-    top: 30%;
+    top: 50%;
+    left: 20vw;
+    transform: translateY(-50%);
+    @include scale(width, 128px, 10vw, 192px);
+    @include scale(height, 128px, 10vw, 192px);
   }
 }

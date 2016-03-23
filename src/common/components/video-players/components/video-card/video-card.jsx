@@ -2,7 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-import PlayButton from 'svgs/next-video-play.svg';
+import PlayButton from '../../../play-button/play-button.jsx';
 
 function calculateAnimationStates(els) {
   const zoomedInRect = els.card.parentNode.getBoundingClientRect();
@@ -140,10 +140,15 @@ export default class NextVideoCard extends React.Component {
             <label>Up Next</label>
           </span>
           <h2 ref="title">{this.props.title}</h2>
-          <div ref="button" className="spinner-button">
-            <div className="spinner-shadow"></div>
-            <span dangerouslySetInnerHTML={{ __html: PlayButton }}></span>
+
+          <div className={`spinner-button`}>
+            <div className={`spinner-shadow`}></div>
+            <PlayButton
+              progress={1 - this.props.timeLeft/15}
+              isCountDown={true}
+            />
           </div>
+
           <div
             ref="counterText"
             className="counter-text"

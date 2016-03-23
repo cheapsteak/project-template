@@ -6,7 +6,7 @@ export default class PodcastTest extends React.Component {
     return (
       <div style={{height: 480}}>
         <Podcast
-          src={`../videos/parallax-history.mp4`}
+          src={`http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4`}
         />
       </div>
     )

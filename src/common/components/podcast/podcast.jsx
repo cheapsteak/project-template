@@ -1,12 +1,13 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
-import ProgressButton from '../play-button/play-button';
+import PlayButton from '../play-button/play-button';
 
 export default class GridManager extends React.Component {
 
   static propTypes = {
-    src: React.PropTypes.string.isRequired
+    src: React.PropTypes.string.isRequired,
+    className: React.PropTypes.string
   };
 
   state = {
@@ -44,13 +45,13 @@ export default class GridManager extends React.Component {
   render() {
 
     return (
-      <div className={`podcast`}>
+      <div className={`podcast ${this.props.className || ''}`}>
 
         <video ref="mediaEl" preload={true}>
           <source src={this.props.src}/>
         </video>
 
-        <ProgressButton
+        <PlayButton
           progress={this.state.progress}
           onPlay={this.play}
           onPause={this.pause}
