@@ -23,7 +23,7 @@ export default class LearnMoreModalTest extends React.Component {
   };
 
   state = {
-    showModal: true
+    showModal: false
   };
 
   render () {

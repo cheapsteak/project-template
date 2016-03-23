@@ -31,8 +31,8 @@ export default class LearnMoreModal extends React.Component {
 
   animateIn = () => {
     return Promise.all([
-      animate.to(this.refs.modal, 0.3, { opacity: 1 }),
-      animate.to(this.refs.content, 0.5, { delay: 0.1,  y: 0, opacity: 1 }),
+      animate.to(this.refs.modal, 0.5, { opacity: 1 }),
+      animate.to(this.refs.content, 0.5, { delay: 0.3,  y: 0, opacity: 1 }),
       animate.to(this.refs.closeButton, 0.3, { y: 0 }),
       animate.to(this.refs.closeButtonContent, 0.3, { delay: 0.3, opacity: 1, y: 0 })
     ])
