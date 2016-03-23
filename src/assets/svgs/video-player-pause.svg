@@ -1,7 +1,7 @@
-<svg id="_PLAUSE" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10">
-  <defs>
-    <image id="image" width="3" height="10" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAKAgMAAAAMSQzkAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACVBMVEX///////8AAACO9MPsAAAAAXRSTlPrdz7jlgAAAAFiS0dEAmYLfGQAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAOSURBVAjXY2BgCEGDDAAaVAKh4Ti1bQAAAABJRU5ErkJggg=="/>
-  </defs>
-  <use id="Layer_25_copy_3" data-name="Layer 25 copy 3" xlink:href="#image"/>
-  <use id="Layer_25_copy_4" data-name="Layer 25 copy 4" x="7" xlink:href="#image"/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 10 10" enable-background="new 0 0 10 10" xml:space="preserve">
+<rect fill="#FFFFFF" width="3" height="10"/>
+<rect fill="#FFFFFF" width="3" height="10"/>
+<rect x="7" fill="#FFFFFF" width="3" height="10"/>
+<rect x="7" fill="#FFFFFF" width="3" height="10"/>
 </svg>

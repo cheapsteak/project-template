@@ -3,8 +3,6 @@ import config from '../../../config.js';
 export default {
   currentTime: 0,
   duration: undefined,
-  isPlaying: false,
-  useFullControls: false,
   src: 'http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4',
   circleCTA: {
     text: '',

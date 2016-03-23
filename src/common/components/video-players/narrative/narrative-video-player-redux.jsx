@@ -24,7 +24,9 @@ class NarrativeVideoPlayerRedux extends React.Component {
       showFullControls={this.boundActionCreators.showFullControls}
       hideFullControls={this.boundActionCreators.hideFullControls}
       setCircleCTA={this.boundActionCreators.setCircleCTA}
-      setVideoInfo={this.boundActionCreators.setVideoInfo}
+      onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
+      mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
+      unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
       {...this.props}
       {...video}
     />

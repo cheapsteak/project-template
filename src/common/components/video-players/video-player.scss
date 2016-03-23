@@ -1,4 +1,130 @@
 .video-player {
+  $control-ui-height: 80px;
+  $component-bg-color: #2B2A2A;
+
+  background-color: $component-bg-color;
+
+  video {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    @media (min-aspect-ratio: 16/9) {
+      & {
+        height: 300%;
+        top: -100%;
+      }
+    }
+
+    @media (max-aspect-ratio: 16/9) {
+      & {
+        width: 300%;
+        left: -100%;
+      }
+    }
+
+    @supports (object-fit: cover) {
+      & {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .label-duration {
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 14px;
+    right: 10px;
+  }
+
+  .simple-progress-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+    background-color: $component-bg-color;
+
+    & > span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: #8F8F8F;
+      transition: width 0.1s ease-out;
+    }
+  }
+
+  .controls {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: bottom;
+    width: 100%;
+    height: $control-ui-height;
+    background-color: rgba(143, 143, 143, 0.5);
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .control-group, .timeline {
+    height: $control-ui-height/2;
+  }
+
+  .control-group {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 140px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background-color: #8F8F8F;
+
+    .button {
+      flex: 1;
+      margin: 10px;
+      fill: white;
+      cursor: pointer;
+
+      &:first-child {
+        svg {
+          max-width: 12px;
+        }
+      }
+
+      svg {
+        display: block;
+        margin: auto;
+        fill: white;
+        max-width: 20px;
+        max-height: 15px;
+
+        * {
+          fill: white;
+        }
+      }
+    }
+  }
+
+  .timeline {
+    flex: 1;
+  }
+
   .end-overlay {
     position: absolute;
     left: 0;

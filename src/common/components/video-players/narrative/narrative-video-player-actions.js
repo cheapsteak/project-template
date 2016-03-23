@@ -2,6 +2,8 @@ export const SET_NARRATIVE_VIDEO_TIME = 'SET_NARRATIVE_VIDEO_TIME';
 export const SET_NARRATIVE_VIDEO_INFO = 'SET_NARRATIVE_VIDEO_INFO';
 export const PLAY_NARRATIVE_VIDEO = 'PLAY_NARRATIVE_VIDEO';
 export const STOP_NARRATIVE_VIDEO = 'STOP_NARRATIVE_VIDEO';
+export const SET_NARRATIVE_VIDEO_DURATION = 'SET_NARRATIVE_VIDEO_DURATION';
+export const SET_NARRATIVE_VIDEO_OPTIONS = 'SET_NARRATIVE_VIDEO_OPTIONS';
 export const SHOW_NARRATIVE_VIDEO_FULL_CONTROLS = 'SHOW_NARRATIVE_VIDEO_FULL_CONTROLS';
 export const HIDE_NARRATIVE_VIDEO_FULL_CONTROLS = 'HIDE_NARRATIVE_VIDEO_FULL_CONTROLS';
 export const SET_NARRATIVE_VIDEO_CIRCLE_CTA = 'SET_NARRATIVE_VIDEO_CIRCLE_CTA';
@@ -29,6 +31,13 @@ export function setVideoInfo(info) {
   }
 }
 
+export function setVideoDuration(duration) {
+  return {
+    type: SET_NARRATIVE_VIDEO_DURATION,
+    duration
+  }
+}
+
 export function playVideo() {
   return {
     type: PLAY_NARRATIVE_VIDEO
@@ -50,5 +59,12 @@ export function showFullControls() {
 export function hideFullControls() {
   return {
     type: HIDE_NARRATIVE_VIDEO_FULL_CONTROLS
+  }
+}
+
+export function setVideoOptions(options) {
+  return {
+    type: SET_NARRATIVE_VIDEO_OPTIONS,
+    options
   }
 }
