@@ -15,7 +15,7 @@ export default {
       id: 'chapter 0.1',
       ctaText: 'Music',
       time: 0,
-      img: `${config.ASSET_PATH}/hover-card.jpg`,
+      // img: `${config.ASSET_PATH}/hover-card.jpg`,
       ctaText: 'Music',
       route: '/tests/narrative-video-player#Music'
     },
@@ -23,7 +23,7 @@ export default {
       id: 'chapter 1',
       ctaText: 'Science',
       time: 15,
-      img: `${config.ASSET_PATH}/hover-card.jpg`,
+      // img: `${config.ASSET_PATH}/hover-card.jpg`,
       ctaText: 'Science',
       route: '/tests/narrative-video-player#Science'
     },
@@ -31,7 +31,7 @@ export default {
       id: 'chapter 1.2',
       time: 30,
       ctaText: 'Math',
-      img: `${config.ASSET_PATH}/hover-card.jpg`,
+      // img: `${config.ASSET_PATH}/hover-card.jpg`,
       ctaText: 'Math',
       route: '/tests/narrative-video-player#Math'
     },
@@ -39,7 +39,7 @@ export default {
       id: 'chapter 2',
       time: 40,
       ctaText: 'Computer Science',
-      img: `${config.ASSET_PATH}/hover-card.jpg`,
+      // img: `${config.ASSET_PATH}/hover-card.jpg`,
       ctaText: 'Computer Science',
       route: '/tests/narrative-video-player#CompSci'
     },
@@ -47,7 +47,7 @@ export default {
       id: 'chapter 3',
       time: 50,
       ctaText: 'Art',
-      img: `${config.ASSET_PATH}/hover-card.jpg`,
+      // img: `${config.ASSET_PATH}/hover-card.jpg`,
       ctaText: 'Art',
       route: '/tests/narrative-video-player#Art'
     },
