@@ -7,7 +7,8 @@ const vent = new EventEmitter();
 export default class App extends React.Component {
 
   static childContextTypes = {
-    eventBus: React.PropTypes.object.isRequired
+    eventBus: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object
   };
 
   getChildContext() {

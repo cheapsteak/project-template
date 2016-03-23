@@ -47,4 +47,5 @@ export default {
     }
   },
   podcast: require('./podcast/podcast.jsx'),
+  landing: require('./landing/landing.jsx'),
 };
