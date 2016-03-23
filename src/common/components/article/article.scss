@@ -1,0 +1,18 @@
+.article {
+  background-color: white;
+  color: #8F8F8F;
+
+  .text-wrapper {
+    overflow: hidden;
+    height: 200px;
+  }
+
+  .article-text {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .pill-button {
+    margin-top: 20px;
+  }
+}

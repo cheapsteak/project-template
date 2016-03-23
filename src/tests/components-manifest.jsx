@@ -46,5 +46,6 @@ export default {
       slug: 'math-1'
     }
   },
-  podcast: require('./podcast/podcast.jsx'),
+  article: require('./article/article.jsx'),
+  podcast: require('./podcast/podcast.jsx')
 };
