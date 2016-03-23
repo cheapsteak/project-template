@@ -1,6 +1,6 @@
 // import dataModel from '../../../data/instructional-videos.js';
 import model from 'common/models/instructional-videos-model.js';
-import { handleError } from 'common/actions/handleError.js';
+import { handleError } from 'common/actions/handle-error.js';
 import _ from 'lodash';
 
 export const SET_INSTRUCTIONAL_VIDEO = 'SET_INSTRUCTIONAL_VIDEO';

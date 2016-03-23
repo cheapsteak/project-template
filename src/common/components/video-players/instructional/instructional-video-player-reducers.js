@@ -8,7 +8,7 @@ import {
   INSTRUCTIONAL_VIDEO_ERROR
 } from './instructional-video-player-actions.js';
 
-import { ERROR } from 'common/actions/handleError.js';
+import { ERROR } from 'common/actions/handle-error.js';
 
 const defState = {
   currentVideo: undefined,
