@@ -47,5 +47,6 @@ export default {
     }
   },
   article: require('./article/article.jsx'),
-  podcast: require('./podcast/podcast.jsx')
+  podcast: require('./podcast/podcast.jsx'),
+  'learn-more-modal': require('./learn-more-modal/learn-more-modal.jsx')
 };
