@@ -201,7 +201,7 @@ export default class Panorama extends React.Component {
     this.setState({status: states.LOADING});
 
     this.panorama = PhotoSphere.PhotoSphereViewer({
-      container: this.containerEl,
+      container: this.refs.psvInjectTarget,
       panorama: src,
       time_anim: false,
       min_fov: minZoomNum,
@@ -329,6 +329,11 @@ export default class Panorama extends React.Component {
         {controls}
         {accelerometerToggle}
         {closeButton}
+
+        <div className="parallax-target-wrapper psv-inject-target-wrapper">
+          <div ref="psvInjectTarget" className="parallax-target psv-inject-target">
+          </div>
+        </div>
       </div>
     );
   }
