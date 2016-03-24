@@ -2,6 +2,9 @@ import React from 'react';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 
+const easeType = Quad;
+const duration =  0.15;
+
 export default class RectangularButton extends React.Component {
 
   static propTypes = {
@@ -38,16 +41,16 @@ export default class RectangularButton extends React.Component {
 
   animateOnMouseEnter = () => {
     return Promise.all([
-      animate.to(this.refs.text, 0.3, { y: 20, opacity: 0 })
+      animate.to(this.refs.text, duration, { y: 20, opacity: 0, ease: easeType.easeIn })
         .then(() => {
           animate.set(this.refs.text, { y: -20 });
-          animate.to(this.refs.text, 0.3, { y: 0, opacity: 1 });
+          animate.to(this.refs.text, duration, { y: 0, opacity: 1, ease: easeType.easeIn });
         }),
-      this.props.hoverBackgroundColor && animate.to(this.refs.button, 0.3, { backgroundColor: this.props.hoverBackgroundColor }),
-      this.refs.icon && animate.to(this.refs.icon, 0.3, { delay: 0.1, y: 20, opacity: 0})
+      this.props.hoverBackgroundColor && animate.to(this.refs.button, duration, { backgroundColor: this.props.hoverBackgroundColor, ease: easeType.easeIn }),
+      this.refs.icon && animate.to(this.refs.icon, duration, { delay: 0.1, y: 20, opacity: 0, ease: easeType.easeIn})
                           .then(() => {
                             animate.set(this.refs.icon, { y: -20 });
-                            animate.to(this.refs.icon, 0.15, { y: 0, opacity: 1 });
+                            animate.to(this.refs.icon, duration, { y: 0, opacity: 1, ease: easeType.easeIn });
                           })
 
     ]);
@@ -55,16 +58,16 @@ export default class RectangularButton extends React.Component {
 
   animateOnMouseLeave = () => {
     return Promise.all([
-      animate.to(this.refs.text, 0.3, { y: -20, opacity: 0 })
+      animate.to(this.refs.text, duration, { y: -20, opacity: 0, ease: easeType.easeOut })
         .then(() => {
           animate.set(this.refs.text, { y: 20 });
-          animate.to(this.refs.text, 0.3, { y: 0, opacity: 1 });
+          animate.to(this.refs.text, duration, { y: 0, opacity: 1, ease: easeType.easeOut });
         }),
-      animate.to(this.refs.button, 0.3, { backgroundColor: this.props.backgroundColor || 'rgba(0,0,0,0)' }),
-      this.refs.icon && animate.to(this.refs.icon, 0.3, { delay: 0.1, y: -20, opacity: 0})
+      animate.to(this.refs.button, duration, { backgroundColor: this.props.backgroundColor || 'rgba(0,0,0,0)', ease: easeType.easeOut }),
+      this.refs.icon && animate.to(this.refs.icon, duration, { delay: 0.1, y: -20, opacity: 0, ease: easeType.easeOut})
                           .then(() => {
                             animate.set(this.refs.icon, { y: 20 });
-                            animate.to(this.refs.icon, 0.3, { y: 0, opacity: 1 });
+                            animate.to(this.refs.icon, duration, { y: 0, opacity: 1, ease: easeType.easeOut });
                           })
     ]);
   };
