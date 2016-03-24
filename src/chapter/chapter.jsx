@@ -38,7 +38,8 @@ export default class Chapter extends React.Component {
     };
 
     const parallaxTargetSelectors = [
-      '.photo-essay .image-wrapper'
+      '.photo-essay .image-wrapper',
+      '.panorama-container .parallax-target'
     ];
 
     const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {

@@ -1,5 +1,7 @@
 @import 'chapter-columns';
 
+$parallax-amplitude: 50px;
+
 .chapter-page {
   height: 100%;
   overflow-y: auto;
@@ -56,11 +58,13 @@
     height: 80vh;
     .parallax-target-wrapper {
       height: 100%;
+      overflow: hidden;
     }
     .parallax-target {
-      height: calc(100% + 100px);
-      margin-top: -50px;
-      margin-bottom: -50px;
+      height: calc(100% + #{$parallax-amplitude * 2});
+      margin-top: - $parallax-amplitude;
+      margin-bottom: - $parallax-amplitude;
+      position: relative;
     }
   }
 }
@@ -68,8 +72,8 @@
 .photo-essay {
   overflow: hidden;
   .image-wrapper {
-    margin-top: -50px;
-    margin-bottom: -50px;
+    margin-top: - $parallax-amplitude;
+    margin-bottom: - $parallax-amplitude;
     //transition: margin-top 0.3s, margin-bottom 0.3s;
     .fullbrowser-wrapper & {
       margin-top: 0;

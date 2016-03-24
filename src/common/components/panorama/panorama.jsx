@@ -122,7 +122,7 @@ export default class Panorama extends React.Component {
         top: 0,
         left: 0,
         ease: Expo.easeOut,
-        onUpdate: () => this.panorama.resize(this.containerEl.offsetWidth, this.containerEl.offsetHeight)
+        onUpdate: () => this.panorama.resize(this.refs.psvInjectTarget.offsetWidth, this.refs.psvInjectTarget.offsetHeight)
       })
       .then(() => {
         this.setState({mode: modes.ENTER_FB});
@@ -138,7 +138,7 @@ export default class Panorama extends React.Component {
         width: clientRect.width,
         height: clientRect.height,
         ease: Expo.easeOut,
-        onUpdate: () => this.panorama.resize(this.containerEl.offsetWidth, this.containerEl.offsetHeight)
+        onUpdate: () => this.panorama.resize(this.refs.psvInjectTarget.offsetWidth, this.refs.psvInjectTarget.offsetHeight)
       })
       .then(() => {
         animate.set(this.containerEl, {clearProps: 'all'});
@@ -208,6 +208,8 @@ export default class Panorama extends React.Component {
       max_fov: maxZoomNum,
       mousewheel: false
     });
+
+    window.ppp = this.panorama;
 
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
