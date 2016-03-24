@@ -22,21 +22,6 @@ svg {
   fill: #fff;
 }
 
-@mixin gpu {
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-@mixin autoAlpha-0 {
-  opacity: 0;
-  visibility: hidden;
-}
-
-@mixin autoAlpha-1 {
-  opacity: 1;
-  visibility: visible;
-}
-
 .gpu {
   @include gpu;
 }

@@ -29,6 +29,8 @@ class ChapterVideoPlayerRedux extends React.Component {
       onVideoPause={this.boundActionCreators.pauseVideo}
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
       nextVideo={videos.nextVideo}
+      mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
+      unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
       {...this.props}
       {...videos.currentVideo}
     />

@@ -8,7 +8,7 @@ import {
   INSTRUCTIONAL_VIDEO_ERROR
 } from './instructional-video-player-actions.js';
 
-import { ERROR } from 'common/actions/handleError.js';
+import { ERROR } from 'common/actions/handle-error.js';
 
 const defState = {
   currentVideo: undefined,
@@ -19,6 +19,7 @@ const defVideoValues = {
   currentTime: 0,
   duration: undefined,
   isPlaying: false,
+  isMuted: false,
   useFullControls: true
 };
 
@@ -41,6 +42,7 @@ function video(state = {}, action) {
 
     case SET_INSTRUCTIONAL_VIDEO_DURATION:
       return Object.assign({}, state, { duration: action.duration });
+
     default:
       return state;
   }

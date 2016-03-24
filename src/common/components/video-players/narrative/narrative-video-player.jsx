@@ -7,6 +7,8 @@ import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
+import MuteButtonSvg from 'svgs/video-player-mute.svg';
+import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
@@ -150,6 +152,10 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.animateInEndOverlay();
         this.props.hideFullControls();
       }
+    }
+
+    if(this.props.isMuted !== nextProps.isMuted) {
+      this.video.muted = nextProps.isMuted;
     }
   }
 
@@ -311,9 +317,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
-    this.props.setVideoInfo({ 
-      duration: this.video.duration
-    });
+    this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
   };
 
   handleTimeUpdate = () => {
@@ -377,7 +381,9 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = setTimeout(() => {
-      this.props.hideFullControls();
+      if(this.props.isPlaying) {
+        this.props.hideFullControls();
+      }
       this.hideControlsTimeoutId = undefined;
     }, 1500);
 
@@ -398,6 +404,14 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
         !this.props.isPlaying && this.video.play();
         clearTimeout(this.hideControlsTimeoutId);
+    }
+  };
+
+  handleVolumeClick = (e) => {
+    if(this.props.isMuted) {
+      this.props.unmute();
+    } else {
+      this.props.mute();
     }
   };
 
@@ -500,7 +514,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           <span className="label-duration">{this.secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
             <span
-              className="button"
+              className="button play-button"
               dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
@@ -515,6 +529,12 @@ export default class NarrativeVideoPlayer extends React.Component {
               className="button"
               dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
               onClick={this.handleNextClick}
+            >
+            </span>
+            <span
+              className="button"
+              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+              onClick={this.handleVolumeClick}
             >
             </span>
           </div>

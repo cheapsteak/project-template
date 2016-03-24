@@ -174,7 +174,8 @@ export default class Timeline extends React.Component {
               ? items.map(point => {
                   const style = { left: (point.time / duration * 100) + '%' }; 
                   const className = currentTime === point.time ? ' selected' : '';
-                  const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
+                  // const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
+                  const isActive = false;
 
                   return (
                     <HotSpot
