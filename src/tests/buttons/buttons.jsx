@@ -19,8 +19,7 @@ export default class ButtonsTest extends React.Component {
       text: 'Gray Button',
       color: "#ffffff",
       backgroundColor: "#565d60",
-      hoverBackgroundColor: "#3e4548",
-
+      hoverBackgroundColor: "#3e4548"
     },
     {
       text: 'Red Button',
@@ -33,8 +32,7 @@ export default class ButtonsTest extends React.Component {
       text: 'Navy Button',
       color: "#ffffff",
       backgroundColor: "#152030",
-      hoverBackgroundColor: "#0a1321",
-
+      hoverBackgroundColor: "#0a1321"
     },
     {
       text: 'Teal Button',
@@ -66,7 +64,6 @@ export default class ButtonsTest extends React.Component {
 
     return (
       <div style={this.style}>
-        
         <PillButton 
           style={{margin: 20}}
           idleText="Pill Button Idle"
