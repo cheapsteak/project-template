@@ -417,13 +417,13 @@ export default class NarrativeVideoPlayer extends React.Component {
 
 
   render() {
-    const { style, circleCTA } = this.props;
+    const { style, circleCTA, className } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
     return (
       <div
         ref="component"
-        className="video-player narrative-video-player"
+        className="video-player narrative-video-player ${className || ''}"
         style={style}
         onMouseMove={this.handleComponentMouseMove}
       >
