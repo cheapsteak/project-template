@@ -11,7 +11,6 @@ $parallax-amplitude: 50px;
     @extend .col-4;
     @extend .margin-auto-horizontal;
     @include scale('font-size', 50px, #{(50/1400*100)}vw, 70px);
-    @include scale('margin-top', 100px, 100px, #{(100/1400*100)}vw);
     @include scale('margin-bottom', 40px, 40px, #{(400/1400*100)}vw);
     color: #6E767E;
   }
@@ -19,6 +18,9 @@ $parallax-amplitude: 50px;
   .page-component {
     position: relative;
     font-size: 1.285714285714vw;
+    & + .page-component {
+      @include scale('margin-top', 100px, 100px, #{(100/1400*100)}vw);
+    }
   }
 
   .main {
@@ -72,10 +74,21 @@ $parallax-amplitude: 50px;
       position: relative;
     }
   }
+
+  .podcast {
+    height: 400px;
+    .text-container {
+      width: 20vw;
+      min-width: 280px;
+      right: 8.21vw;
+      margin-top: - $parallax-amplitude * 2;
+    }
+  }
 }
 
 .photo-essay {
   overflow: hidden;
+
   .image-wrapper {
     margin-top: - $parallax-amplitude;
     margin-bottom: - $parallax-amplitude;

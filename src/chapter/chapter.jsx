@@ -3,6 +3,7 @@ import ParallaxVideoWrapper from 'common/components/parallax-video-wrapper/paral
 import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import Podcast from 'common/components/podcast/podcast.jsx';
 import TransitionGroup from 'react-addons-transition-group';
 import unwrapComponent from 'common/utils/unwrap-component.js';
 import { findDOMNode } from 'react-dom';
@@ -29,7 +30,8 @@ export default class Chapter extends React.Component {
 
     const parallaxTargetSelectors = [
       '.photo-essay .image-wrapper',
-      '.panorama-container .parallax-target'
+      '.panorama-container .parallax-target',
+      '.podcast .text-container',
     ];
 
     const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
@@ -128,12 +130,14 @@ export default class Chapter extends React.Component {
           />
         </div>
         <div className="page-component">
-          <h2>Articles</h2>
+          <h2 className="component-title">Articles</h2>
           <article>article 1</article>
           <article>article 2</article>
         </div>
 
-        <div className="podcast">podcast</div>
+        <div className="page-component">
+          <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
+        </div>
         <TransitionGroup
           component="div"
           className="route-content-wrapper"
