@@ -27,6 +27,7 @@
     "fastclick": "^1.0.6",
     "gsap-promise": "^1.4.1",
     "history": "^2.0.0",
+    "howler": "^1.1.29",
     "lodash": "^4.6.1",
     "mobile-detect": "^1.3.0",
     "packery": "github:namniak/packery.git",
