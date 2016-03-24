@@ -514,7 +514,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           <span className="label-duration">{this.secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
             <span
-              className="button"
+              className="button play-button"
               dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >

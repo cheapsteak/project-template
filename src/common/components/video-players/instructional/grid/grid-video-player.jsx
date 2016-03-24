@@ -462,7 +462,7 @@ export default class GridVideoPlayer extends React.Component {
         >
           <div className="control-group">
             <span
-              className="button"
+              className="button play-button"
               dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
               onClick={this.handleVideoPlayPause}
             >
