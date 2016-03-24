@@ -9,16 +9,6 @@ import { findDOMNode } from 'react-dom';
 import ScrollMagic from 'scrollmagic';
 
 export default class Chapter extends React.Component {
-
-  getTarget = (component, slug) => {
-    if (component instanceof InstructionalVideo) {
-      return this.refs.instructionalVideo;
-    }
-    if (component instanceof PhotoEssay) {
-      return this.refs.photoEssay;
-    }
-  };
-
   componentDidMount () {
     const el = findDOMNode(this);
     const scrollController = new ScrollMagic.Controller({
@@ -85,6 +75,15 @@ export default class Chapter extends React.Component {
     });
     scrollController.addScene(scrollScenes);
   }
+
+  getTarget = (component, slug) => {
+    if (component instanceof InstructionalVideo) {
+      return this.refs.instructionalVideo;
+    }
+    if (component instanceof PhotoEssay) {
+      return this.refs.photoEssay;
+    }
+  };
 
   render () {
     return <section className="chapter-page">
