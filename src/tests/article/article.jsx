@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Article from 'common/components/article/article.jsx';
+import config from '../../../config.js';
 
 export default class ArticleTest extends React.Component {
 
@@ -22,7 +23,9 @@ export default class ArticleTest extends React.Component {
         _.range(5).map(i => {
           return <Article
               key={i} 
-              style={{ flex: 1, width: '50%', margin: 100 }}
+              style={{ flex: 1, width: '60%', margin: 100 }}
+              title="Looking Up"
+              bannerImage={`${config.ASSET_PATH}/sample-article-image.jpg`}
               getTarget={this.getTarget}
               aboveFoldSelector="#abovefold"
             >

@@ -9,15 +9,22 @@ export default class Article extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     getTarget: React.PropTypes.func,
-    aboveFoldSelector: React.PropTypes.string
+    scrollTopPadding: React.PropTypes.number,
+    aboveFoldSelector: React.PropTypes.string,
+    collapsed: React.PropTypes.bool,
+    bannerImage: React.PropTypes.string
   };
 
-  preview = true;
+  static defaultProps = {
+    scrollTopPadding: 0,
+    collapsed: true
+  };
+
+  collapsed = true;
   aboveFoldDisplayHeight = 200;
 
   componentDidMount() {
     this.setFoldedDisplayHeight();
-    // animate.set(this.refs.textWrapper, { height: this.aboveFoldDisplayHeight });
     window.addEventListener('resize', this.setFoldedDisplayHeight);
   }
 
@@ -33,11 +40,11 @@ export default class Article extends React.Component {
       this.aboveFoldDisplayHeight = aboveFoldText.getBoundingClientRect().height;
     }
 
-    animate.set(this.refs.textWrapper, { height: this.preview ? this.aboveFoldDisplayHeight : clientRect.height });
+    animate.set(this.refs.textWrapper, { height: this.collapsed ? this.aboveFoldDisplayHeight : clientRect.height });
   }
 
   getDistanceFromTop = () => {
-    return this.refs.article.offsetTop - 30;
+    return this.refs.textWrapper.offsetTop - this.props.scrollTopPadding;
   };
 
   getAvailableScrollDistance = () => {
@@ -50,7 +57,7 @@ export default class Article extends React.Component {
     const container = this.props.getTarget();
     const scrollTo = Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance());
 
-    if(this.preview) {
+    if(this.collapsed) {
       if(scrollTo === this.getDistanceFromTop()) {
         await animate.to(container, 0.3, { scrollTop: scrollTo });
         await this.expand();
@@ -62,7 +69,7 @@ export default class Article extends React.Component {
       this.collapse();
     }
 
-    this.preview = !this.preview;
+    this.collapsed = !this.collapsed;
   };
 
   expand = () => {
@@ -75,7 +82,7 @@ export default class Article extends React.Component {
   };
 
   render () {
-    const { className = '', style } = this.props;
+    const { className = '', style, bannerImage } = this.props;
 
     return (
       <div
@@ -83,18 +90,32 @@ export default class Article extends React.Component {
         className={`article ${className}`}
         style={style}
       >
-        <div ref="textWrapper" className="text-wrapper">
-          <div ref="text" className="article-text">
-            {
-              this.props.children
-            }
+        {
+          bannerImage
+          ? <div className="banner-image">
+              <img src={bannerImage} />
+            </div>
+          : undefined
+        }
+        <div className="article-content-wrapper">
+          <div className="article-title">
+            <h1>{this.props.title}</h1>
+          </div>
+          <div className="article-content">
+            <div ref="textWrapper" className="text-wrapper">
+              <div ref="text" className="article-text">
+                {
+                  this.props.children
+                }
+              </div>
+            </div>
+            <PillButton
+              idleText="Read More"
+              activeText="Read Less"
+              onClick={this.handleClick}
+            />
           </div>
         </div>
-        <PillButton
-          idleText="Read More"
-          activeText="Read Less"
-          onClick={this.handleClick}
-        />
       </div>
     )
   }

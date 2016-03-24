@@ -1,13 +1,39 @@
 .article {
+  width: 100%;
   background-color: white;
   color: #8F8F8F;
+
+  h1 {
+    @include scale('font-size', 30px, #{(30/1400*100)}vw, #{(30/1400*100)}vw);
+    font-weight: bold;
+    line-height: 35px;
+    color: black;
+  }
+
+  img {
+    width: 100%;
+
+  }
+
+  .article-content-wrapper {
+    display: flex;
+    margin-top: 35px;
+  }
+
+  .article-title {
+    flex: 0.33;
+  }
+
+  .article-content {
+    flex: 0.66;
+  }
 
   .text-wrapper {
     overflow: hidden;
   }
 
   .article-text {
-    font-size: 16px;
+    @include scale('font-size', 14px, #{(14/1400*100)}vw, #{(14/1400*100)}vw);
     line-height: 26px;
   }
 
