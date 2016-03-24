@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="10" viewBox="0 0 19 10">
-  <image id="Layer_25_copy" data-name="Layer 25 copy" x="16" width="3" height="10" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAKAgMAAAAMSQzkAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACVBMVEX///////8AAACO9MPsAAAAAXRSTlP0+jbuYwAAAAFiS0dEAmYLfGQAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAAOSURBVAjXY2BgCEGDDAAaVAKh4Ti1bQAAAABJRU5ErkJggg=="/>
-  <path id="Rectangle_1_copy_5" data-name="Rectangle 1 copy 5" class="cls-1" d="M7,9.995L17.994,5,7,0"/>
-  <path id="Rectangle_1_copy_5-2" data-name="Rectangle 1 copy 5" class="cls-1" d="M0,9.995L10.994,5,0,0"/>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 19 10" enable-background="new 0 0 19 10" xml:space="preserve">
+<path fill="none" enable-background="new"/>
+<polygon fill="#FFFFFF" points="16,0 16,4.1 7,0 7,3.2 0,0 0,10 7,6.8 7,10 16,5.9 16,10 19,10 19,0 "/>
 </svg>
