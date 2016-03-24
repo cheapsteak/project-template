@@ -6,6 +6,9 @@ import IconLoader from 'svgs/icon-loader.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
 import Promise from 'bluebird';
+import Preload from 'inject-prefetch';
+import gridData  from 'common/data/grid';
+import videoData  from 'common/data/narrative-video';
 const BackgroundCover = require('background-cover').BackgroundCover;
 
 export default class LandingPage extends React.Component {
@@ -68,8 +71,16 @@ export default class LandingPage extends React.Component {
       this.initAnimateInPromise,
       this.videoLoadPromise
     ]).then(() => {
+      this.preloadNextContent();
       this.animateOnVideoLoaded();
     })
+  };
+
+  preloadNextContent = () => {
+    const gridImages = gridData.getImagesUrls();
+    const video = videoData.src;
+
+    Preload(gridImages.concat(video));
   };
 
   animateIn = (callback) => {
@@ -130,7 +141,7 @@ export default class LandingPage extends React.Component {
 
           <div ref="videoContainer" className={`video-container`}>
             <video ref="video" preload={true} loop={true} muted={true}>
-              <source src={`http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4`}/>
+              <source src={`${ASSET_PATH}/videos/landing-video.mp4`}/>
             </video>
             <div ref="gradient" className={`gradient`}></div>
           </div>

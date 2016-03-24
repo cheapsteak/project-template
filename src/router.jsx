@@ -10,6 +10,7 @@ import LandingPage from './landing/landing.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
+import NarrativeVideoPlayer from 'common/components/video-players/narrative/narrative-video-player-redux.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -27,7 +28,7 @@ export default <Provider store={store}>
   <Route path="/" component={App}>
     <IndexRoute component={LandingPage} />
     <Route path="grid" component={Grid} />
-    <Route path="video" component={Grid} />
+    <Route path="video" component={NarrativeVideoPlayer} />
     <Route path="chapters/:chapter_slug" component={Chapter}>
       <Route
         path="instructional-videos/:slug"

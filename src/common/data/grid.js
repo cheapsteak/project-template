@@ -1,4 +1,5 @@
 import config from '../../../config.js';
+import _ from 'lodash';
 
 const data = {
   welcome: {
@@ -67,10 +68,13 @@ const data = {
   }
 };
 
-export default (() => {
-  const getDataByChapterId = (id) => {
+export default {
+  getDataByChapterId(id) {
     return data[id];
-  };
+  },
 
-  return {getDataByChapterId}
-})();
+  getImagesUrls() {
+    const images = _.mapValues(data, 'image');
+    return _.values(images);
+  }
+};
