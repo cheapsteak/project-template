@@ -94,12 +94,11 @@ export default class Chapter extends React.Component {
           <span className="nav-button">Explore</span>
         </nav>
         <div className="page-component chapter-header">
-          {
-            // <ParallaxVideoWrapper
-            //   bgVideoPath={'../videos/bg-1080.mp4'}
-            //   fgVideoPath={'../videos/fg-1080.mp4'}
-            // />
-          }
+          <video
+            autoPlay
+            loop
+            src="http://successacademy.jam3.net/middleschool/videos/temp-comp.mp4">
+          </video>
         </div>
 
         <div className="page-component">
