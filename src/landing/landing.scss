@@ -1,0 +1,133 @@
+.landing-page {
+  @include absolute-100;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(23, 23, 23, 1);
+  user-select: none;
+  overflow: hidden;
+  @include gpu;
+
+  * {
+    @include gpu;
+  }
+
+  .main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-container {
+    @include absolute-100;
+
+    video {
+      position: absolute;
+      opacity: 0.3;
+    }
+
+    .gradient {
+      @include absolute-100;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(30, 30, 40, 0) 30%, rgba(30, 30, 40, 0.75) 83%);
+    }
+  }
+
+  .cover-bg {
+    @include absolute-100;
+    background-color: #565e61;
+  }
+
+  .content-container {
+    position: relative;
+    display: inline-block;
+    max-width: 600px;
+    cursor: default;
+
+    .subtitle {
+      font-size: 30px;
+      color: rgba(143, 143, 143, 1);
+    }
+
+    .title {
+      font-size: 105px;
+      color: rgba(255, 255, 255, 1);
+      margin-top: 100px;
+    }
+
+    .description {
+      width: 90%;
+      font-size: 20px;
+      color: rgba(143, 143, 143, 1);
+      margin: 40px auto 0;
+    }
+
+    .cta-container {
+      display: inline-block;
+      margin: 80px auto 0;
+
+      .cta {
+        width: 200px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &.watch {
+          background-color: rgba(143, 143, 143, 1);
+        }
+
+        &.explore {
+          margin-top: 10px;
+          background-color: rgba(143, 143, 143, 0);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        svg {
+          width: 16px;
+          height: 16px;
+          margin: 0 25px;
+        }
+
+        p {
+          display: inline-block;
+          color: #fff;
+          font-weight: bold;
+          font-size: 17px;
+        }
+      }
+    }
+  }
+
+  .loader-container {
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    bottom: 90px;
+    text-align: center;
+    transform: translateX(-50%);
+
+    svg {
+      width: 40px;
+      height: 40px;
+      fill: #fff;
+      animation: spin 10s infinite;
+    }
+
+    p {
+      font-size: 12px;
+      margin-top: 5px;
+      color: rgba(143, 143, 143, 1);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+}

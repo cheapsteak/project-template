@@ -4,9 +4,12 @@ import appHistory from 'common/app-history.js';
 import App from './app.jsx';
 import store from 'common/store.js';
 import { Provider } from 'react-redux';
+import Grid from 'common/components/grid-manager/grid-manager.jsx';
 import Chapter from 'chapter/chapter.jsx';
+import LandingPage from './landing/landing.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -22,7 +25,15 @@ const testRoutes = process.env.NODE_ENV !== 'production' ?
 export default <Provider store={store}>
 <Router history={appHistory} onUpdate={handleRouteUpdate}>
   <Route path="/" component={App}>
+    <IndexRoute component={LandingPage} />
+    <Route path="grid" component={Grid} />
+    <Route path="video" component={Grid} />
     <Route path="chapters/:chapter_slug" component={Chapter}>
+      <Route
+        path="instructional-videos/:slug"
+        component={FullBrowserWrapper}
+        childComponent={ChapterVideoPlayer}
+      />
       <Route
         path="photo-essay/:slug"
         component={FullBrowserWrapper}
