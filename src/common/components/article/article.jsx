@@ -5,7 +5,36 @@ import animate from 'gsap-promise';
 
 export default class Article extends React.Component {
 
+  static propTypes = {
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
+    getTarget: React.PropTypes.func,
+    aboveFoldSelector: React.PropTypes.string
+  };
+
   preview = true;
+  aboveFoldDisplayHeight = 200;
+
+  componentDidMount() {
+    this.setFoldedDisplayHeight();
+    // animate.set(this.refs.textWrapper, { height: this.aboveFoldDisplayHeight });
+    window.addEventListener('resize', this.setFoldedDisplayHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setFoldedDisplayHeight);
+  }
+
+  setFoldedDisplayHeight = () => {
+    const aboveFoldText = this.refs.article.querySelector(this.props.aboveFoldSelector);
+    const clientRect = this.refs.text.getBoundingClientRect();
+
+    if(aboveFoldText) {
+      this.aboveFoldDisplayHeight = aboveFoldText.getBoundingClientRect().height;
+    }
+
+    animate.set(this.refs.textWrapper, { height: this.preview ? this.aboveFoldDisplayHeight : clientRect.height });
+  }
 
   getDistanceFromTop = () => {
     return this.refs.article.offsetTop - 30;
@@ -42,22 +71,22 @@ export default class Article extends React.Component {
   };
 
   collapse = () => {
-   return animate.to(this.refs.textWrapper, 0.3, { height: 200 })
+   return animate.to(this.refs.textWrapper, 0.3, { height: this.aboveFoldDisplayHeight })
   };
 
   render () {
-    const { className, style } = this.props;
-    
+    const { className = '', style } = this.props;
+
     return (
       <div
         ref="article"
-        className={`article ${className || ''}`}
+        className={`article ${className}`}
         style={style}
       >
         <div ref="textWrapper" className="text-wrapper">
           <div ref="text" className="article-text">
             {
-              this.props.text
+              this.props.children
             }
           </div>
         </div>
