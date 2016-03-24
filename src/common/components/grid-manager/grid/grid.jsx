@@ -63,10 +63,10 @@ export default class Grid extends React.Component {
   animateIn = () => {
     setTimeout(() => {
       this.tiles.forEach((tile, index) => {
-        const delay = (0.1 * index) + 0.5;
+        const delay = (0.1 * index) + 0.7;
         tile.animateIn(delay)
       });
-      this.animateFillers(0.7);
+      this.animateFillers(0.9);
     });
   };
 

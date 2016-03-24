@@ -87,8 +87,8 @@ export default class LandingPage extends React.Component {
     return animate
       .all([
         animate.staggerTo(staggerEls, 0.6, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1),
-        animate.to(this.refs.videoContainer, 1.2, {autoAlpha: 0}),
-        animate.to(this.containerEl, 1.5, {backgroundColor: 'rgba(0,0,0,0)'})
+        animate.to(this.refs.videoContainer, 1, {autoAlpha: 0}),
+        animate.to(this.containerEl, 0, {backgroundColor: 'rgba(0,0,0,0)'})
       ])
       .then(() => callback && callback())
   };

@@ -116,9 +116,9 @@ export default class GridTile extends React.Component {
     animate.set(this.imageContainer, {scale: 1.6});
 
     return animate.all([
-      animate.to(this.containerEl, 0.4, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
-      animate.to(this.textContainer, 1, {scale: 1, delay: delay, ease: ease}),
-      animate.to(this.imageContainer, 1.2, {scale: 1, delay: delay, ease: ease})
+      animate.to(this.containerEl, 1, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
+      animate.to(this.textContainer, 1.5, {scale: 1, delay: delay, ease: ease}),
+      animate.to(this.imageContainer, 1.7, {scale: 1, delay: delay, ease: ease})
     ])
   };
 
@@ -161,8 +161,8 @@ export default class GridTile extends React.Component {
           <div className={`noise`}></div>
 
           <div ref="textContainer" className={`text-container`}>
-            <div className={`title`}>{this.state.data.subtitle}</div>
-            <div className={`subtitle`}>{this.state.data.title}</div>
+            <div className={`subtitle`}>{this.state.data.subtitle}</div>
+            <div className={`title`}>{this.state.data.title}</div>
           </div>
 
           <div ref="imageContainer" className={`image-container ${this.state.size}`}>

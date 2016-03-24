@@ -26,8 +26,8 @@ export default class GridManager extends React.Component {
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
-    animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.2, paddingTop: 120});
-    this.refs.menu.animateIn(0.6, 1.15);
+    animate.to(this.containerEl, 0.7, {ease: Expo.easeOut, delay: 1.7, paddingTop: 120});
+    this.refs.menu.animateIn(0.7, 1.6);
 
     window.addEventListener('resize', this.handleWindowResize);
     this.context.eventBus.on('clickFilter', this.handleClickFilter);
