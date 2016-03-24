@@ -145,11 +145,23 @@ export default class LandingPage extends React.Component {
             </div>
 
             <div ref="ctaContainer" className={`cta-container`}>
-              <Link ref="ctaWatch" className={`cta watch`} to={`video`}>
+              <Link
+                ref="ctaWatch"
+                className={`cta watch`}
+                to={`video`}
+                onMouseEnter={() => audio.play('button-rollover') }
+                onClick={() => audio.play('button-click')}
+              >
                 <div className={`icon`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
                 <p>Start the Tour</p>
               </Link>
-              <Link ref="ctaExplore" className={`cta explore`} to={`grid`}>
+              <Link
+                ref="ctaExplore"
+                className={`cta explore`}
+                to={`grid`}
+                onMouseEnter={() => audio.play('button-rollover') }
+                onClick={() => audio.play('button-click')}
+              >
                 <div className={`icon`} dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
                 <p>Explore</p>
               </Link>

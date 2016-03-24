@@ -15,6 +15,8 @@ domready(function () {
   var page = document.getElementsByTagName('html')[0];
   page.setAttribute('class', detect.className);
 
+  audio.init();
+
   fastclick(document.body);
   render(router, document.getElementById('container'));
 });
