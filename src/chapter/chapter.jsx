@@ -39,9 +39,10 @@ export default class Chapter extends React.Component {
       }
 
       TweenMax.set(el, {
-        opacity: 0,
+        //opacity: 0,
         // y: 100
       });
+
       const scene = new ScrollMagic.Scene({
         triggerHook: 'onEnter',
         triggerElement: el,
@@ -58,18 +59,15 @@ export default class Chapter extends React.Component {
         //console.log('leave');
       })
 
-      // have things move at different speeds
       scene.on('progress', (e) => {
         el.setAttribute('data-progress', e.progress);
-        // el.setAttribute('data-debug-y', getY(e.progress));
         el.setAttribute('data-debug-opacity', getOpacity(e.progress));
         TweenMax.to(el, 0.1, {
           y: getY(e.progress),
-          opacity: getOpacity(e.progress),
+          //opacity: getOpacity(e.progress),
         })
       })
 
-      //scene.addTo(scrollController);
       //scene.addIndicators();
       return scene;
     });
