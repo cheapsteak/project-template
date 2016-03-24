@@ -1,0 +1,25 @@
+.rectangular-button {
+  display: flex;
+  padding: 17px 20px;
+  font-size: 17px;
+  font-weight: 500;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:focus {
+    outline:0;
+  }
+
+  .button-text {
+    padding-top: 2px;
+  }
+
+  svg {
+    display: block;
+    width: 15px;
+    margin-right: 25px;
+  }
+}
