@@ -5,10 +5,46 @@ import animate from 'gsap-promise';
 
 export default class Article extends React.Component {
 
-  preview = true;
+  static propTypes = {
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
+    getTarget: React.PropTypes.func,
+    scrollTopPadding: React.PropTypes.number,
+    aboveFoldSelector: React.PropTypes.string,
+    collapsed: React.PropTypes.bool,
+    bannerImage: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    scrollTopPadding: 0,
+    collapsed: true
+  };
+
+  collapsed = true;
+  aboveFoldDisplayHeight = 200;
+
+  componentDidMount() {
+    this.setFoldedDisplayHeight();
+    window.addEventListener('resize', this.setFoldedDisplayHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setFoldedDisplayHeight);
+  }
+
+  setFoldedDisplayHeight = () => {
+    const aboveFoldText = this.refs.article.querySelector(this.props.aboveFoldSelector);
+    const clientRect = this.refs.text.getBoundingClientRect();
+
+    if(aboveFoldText) {
+      this.aboveFoldDisplayHeight = aboveFoldText.getBoundingClientRect().height;
+    }
+
+    animate.set(this.refs.textWrapper, { height: this.collapsed ? this.aboveFoldDisplayHeight : clientRect.height });
+  }
 
   getDistanceFromTop = () => {
-    return this.refs.article.offsetTop - 30;
+    return this.refs.textWrapper.offsetTop - this.props.scrollTopPadding;
   };
 
   getAvailableScrollDistance = () => {
@@ -21,7 +57,7 @@ export default class Article extends React.Component {
     const container = this.props.getTarget();
     const scrollTo = Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance());
 
-    if(this.preview) {
+    if(this.collapsed) {
       if(scrollTo === this.getDistanceFromTop()) {
         await animate.to(container, 0.3, { scrollTop: scrollTo });
         await this.expand();
@@ -33,7 +69,7 @@ export default class Article extends React.Component {
       this.collapse();
     }
 
-    this.preview = !this.preview;
+    this.collapsed = !this.collapsed;
   };
 
   expand = () => {
@@ -42,30 +78,44 @@ export default class Article extends React.Component {
   };
 
   collapse = () => {
-   return animate.to(this.refs.textWrapper, 0.3, { height: 200 })
+   return animate.to(this.refs.textWrapper, 0.3, { height: this.aboveFoldDisplayHeight })
   };
 
   render () {
-    const { className, style } = this.props;
-    
+    const { className = '', style, bannerImage } = this.props;
+
     return (
       <div
         ref="article"
-        className={`article ${className || ''}`}
+        className={`article ${className}`}
         style={style}
       >
-        <div ref="textWrapper" className="text-wrapper">
-          <div ref="text" className="article-text">
-            {
-              this.props.text
-            }
+        {
+          bannerImage
+          ? <div className="banner-image">
+              <img src={bannerImage} />
+            </div>
+          : undefined
+        }
+        <div className="article-content-wrapper">
+          <div className="article-title">
+            <h1>{this.props.title}</h1>
+          </div>
+          <div className="article-content">
+            <div ref="textWrapper" className="text-wrapper">
+              <div ref="text" className="article-text">
+                {
+                  this.props.children
+                }
+              </div>
+            </div>
+            <PillButton
+              idleText="Read More"
+              activeText="Read Less"
+              onClick={this.handleClick}
+            />
           </div>
         </div>
-        <PillButton
-          idleText="Read More"
-          activeText="Read Less"
-          onClick={this.handleClick}
-        />
       </div>
     )
   }
