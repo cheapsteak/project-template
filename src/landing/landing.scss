@@ -1,12 +1,10 @@
 .landing-page {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  @include absolute-100;
   font-weight: bold;
   text-align: center;
-  background-color: #000;
+  background-color: rgba(23, 23, 23, 1);
+  user-select: none;
+  overflow: hidden;
   @include gpu;
 
   * {
@@ -19,20 +17,24 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    overflow: hidden;
   }
 
-  video {
-    position: absolute;
-    opacity: 0.2;
+  .video-container {
+    @include absolute-100;
+
+    video {
+      position: absolute;
+      opacity: 0.3;
+    }
+
+    .gradient {
+      @include absolute-100;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(30, 30, 40, 0) 30%, rgba(30, 30, 40, 0.75) 83%);
+    }
   }
 
   .cover-bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    @include absolute-100;
     background-color: #565e61;
   }
 
@@ -40,6 +42,7 @@
     position: relative;
     display: inline-block;
     max-width: 600px;
+    cursor: default;
 
     .subtitle {
       font-size: 30px;

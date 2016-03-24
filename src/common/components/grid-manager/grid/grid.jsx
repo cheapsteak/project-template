@@ -1,6 +1,7 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import Packery from 'packery';
+import animate from 'gsap-promise';
 
 const states = {
   LOADING: 'loading',
@@ -10,16 +11,8 @@ const states = {
 export default class Grid extends React.Component {
 
   static propTypes = {
-    screenWidth: React.PropTypes.number,
     isFiltered: React.PropTypes.bool
   };
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.screenWidth !== this.screenWidth) {
-      this.calculateSizes();
-      this.screenWidth = newProps.screenWidth;
-    }
-  }
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
@@ -27,14 +20,17 @@ export default class Grid extends React.Component {
     this.calculateSizes();
 
     this.tiles = this.getTiles();
-    const fillers = document.querySelectorAll('.grid-manager .filler');
-    this.tiles.forEach((tile, index) => {
-      tile.animateIn(index, index === 0 ? fillers : null)
-    });
+    this.fillers = document.querySelectorAll('.grid-manager .filler');
+    animate.set(this.fillers, {autoAlpha: 0, scale: 1.15});
+
+    this.animateIn();
+
+    window.addEventListener('resize', this.calculateSizes);
   }
 
   componentWillUnmount() {
     this.packery.destroy();
+    window.removeEventListener('resize', this.calculateSizes);
   }
 
   getTiles = () => {
@@ -62,5 +58,22 @@ export default class Grid extends React.Component {
 
   calculateSizes = () => {
     // this is overridden in derived classes
+  };
+
+  animateIn = () => {
+    setTimeout(() => {
+      this.tiles.forEach((tile, index) => {
+        const delay = (0.1 * index) + 0.5;
+        tile.animateIn(delay)
+      });
+      this.animateFillers(0.7);
+    });
+  };
+
+  animateFillers = (delay = 0.5) => {
+    return animate.all([
+      animate.staggerTo(this.fillers, 0.5, {autoAlpha: 1, delay: delay}, 0.1),
+      animate.staggerTo(this.fillers, 1, {scale: 1, delay: delay, ease: Expo.easeOut}, 0.1)
+    ])
   };
 }

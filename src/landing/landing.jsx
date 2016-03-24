@@ -5,6 +5,7 @@ import IconExplore from 'svgs/icon-explore.svg';
 import IconLoader from 'svgs/icon-loader.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
+import Promise from 'bluebird';
 const BackgroundCover = require('background-cover').BackgroundCover;
 
 export default class LandingPage extends React.Component {
@@ -30,54 +31,69 @@ export default class LandingPage extends React.Component {
     animate.set([this.refs.video, this.refs.title], {scale: 1.25});
     animate.set(this.refs.contentContainer, {y: textPos});
 
-    this.refs.video.addEventListener('canplaythrough', () => this.init());
+    this.videoLoadPromise = new Promise((resolve, reject) => {
+      this.refs.video.addEventListener('canplaythrough', () => {
+        this.init();
+        resolve();
+      });
+    });
+
     window.addEventListener('resize', this.positionVideo);
   }
 
   componentWillAppear(callback) {
-    this.animateIn(callback);
+    this.initAnimateInPromise = this.animateIn(callback);
   }
 
   componentWillEnter(callback) {
-    this.animateIn(callback);
+    this.initAnimateInPromise = this.animateIn(callback);
   }
 
   componentWillLeave(callback) {
+    this.refs.video.pause();
     const path = location.pathname.replace(CONFIG.basePath + '/', '');
-    (path === 'grid') ? this.animateOnExploreClick(callback) : this.animateOnWatchClick(callback)
+    (path === 'grid') ? this.animateOutToGrid(callback) : this.animateOutToVideo(callback);
   }
 
   componentWillUnmount() {
-    this.refs.video.removeEventListener('canplaythrough', () => this.init());
-    window.removeEventListener('resize', this.positionElements);
+    this.refs.video.removeEventListener('canplaythrough', this.init);
+    window.removeEventListener('resize', this.positionVideo);
   }
 
   init = () => {
     this.positionVideo();
     this.refs.video.play();
-    this.animateOnVideoLoaded();
+
+    return Promise.all([
+      this.initAnimateInPromise,
+      this.videoLoadPromise
+    ]).then(() => {
+      this.animateOnVideoLoaded();
+    })
   };
 
   animateIn = (callback) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.loaderContainer];
 
     animate.set(staggerEls, {autoAlpha: 0, scale: 1.6});
-    animate.staggerTo(staggerEls, 1.7, {autoAlpha: 1, y: 0, scale: 1.2, ease: Expo.easeOut, delay: 0.3}, 0.3)
+
+    return animate.staggerTo(staggerEls, 1.7, {autoAlpha: 1, y: 0, scale: 1.2, ease: Expo.easeOut, delay: 0.3}, 0.3)
       .then(() => callback && callback())
   };
 
-  animateOnExploreClick = (callback) => {
+  animateOutToGrid = (callback) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
 
-    return animate.all([
+    return animate
+      .all([
         animate.staggerTo(staggerEls, 0.6, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1),
-        animate.to(this.refs.video, 1.2, {autoAlpha: 0}),
+        animate.to(this.refs.videoContainer, 1.2, {autoAlpha: 0}),
         animate.to(this.containerEl, 1.5, {backgroundColor: 'rgba(0,0,0,0)'})
       ])
       .then(() => callback && callback())
   };
 
-  animateOnWatchClick = (callback) => {
+  animateOutToVideo = (callback) => {
     const duration = 1;
     const ease = Expo.easeOut;
 
@@ -103,7 +119,7 @@ export default class LandingPage extends React.Component {
   };
 
   positionVideo = () => {
-    BackgroundCover(this.refs.video, this.containerEl);
+    BackgroundCover(this.refs.video, this.refs.videoContainer);
   };
 
   render() {
@@ -112,9 +128,12 @@ export default class LandingPage extends React.Component {
       <div className={`landing-page ${this.props.className}`}>
         <div ref="mainContainer" className={`main-container`}>
 
-          <video ref="video" preload={true} loop={true}>
-            <source src={`http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4`}/>
-          </video>
+          <div ref="videoContainer" className={`video-container`}>
+            <video ref="video" preload={true} loop={true} muted={true}>
+              <source src={`http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4`}/>
+            </video>
+            <div ref="gradient" className={`gradient`}></div>
+          </div>
 
           <div ref="coverBg" className={`cover-bg`}></div>
 

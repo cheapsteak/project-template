@@ -36,6 +36,8 @@ export default class GridTile extends React.Component {
     this.textContainer = this.refs.textContainer;
     this.imageContainer = this.refs.imageContainer;
 
+    animate.set(this.containerEl, {autoAlpha: 0});
+
     setTimeout(() => {
       const data = model.getDataByChapterId(this.props.chapter);
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
@@ -67,9 +69,17 @@ export default class GridTile extends React.Component {
     const pos = (this.containerEl.offsetWidth - this.refs.image.offsetWidth) * 0.5;
     const ctaItems = [this.refs.ctaIcon, this.refs.ctaText];
 
-    animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'});
-    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.1, ease: Expo.easeOut, overwrite: 'all'});
-    animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1);
+    return animate.all([
+      animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'}),
+      animate.to(this.imageContainer, 0.5, {
+        autoAlpha: 0.1,
+        left: pos,
+        delay: 0.1,
+        ease: Expo.easeOut,
+        overwrite: 'all'
+      }),
+      animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1)
+    ]);
   };
 
   handleMouseLeave = () => {
@@ -78,30 +88,32 @@ export default class GridTile extends React.Component {
     }
 
     const ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
+    const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
 
-    animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1);
-    animate.to(this.imageContainer, 0.5, {
-      autoAlpha: 1,
-      left: this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1),
-      ease: Expo.easeInOut,
-      delay: 0.2,
-      overwrite: 'all'
-    });
-    animate.to(this.textContainer, 0.1, {autoAlpha: 1, delay: 0.4, overwrite: 'all'});
+    return animate.all([
+      animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1),
+      animate.to(this.imageContainer, 0.5, {
+        autoAlpha: 1,
+        left: pos,
+        ease: Expo.easeInOut,
+        delay: 0.2,
+        overwrite: 'all'
+      }),
+      animate.to(this.textContainer, 0.1, {autoAlpha: 1, delay: 0.4, overwrite: 'all'})
+    ]);
   };
 
-  animateInLayers = (index) => {
+  animateIn = (delay) => {
     const width = this.containerEl.offsetWidth;
     const height = this.containerEl.offsetHeight;
     const scaleX = (width + 30) / width;
     const scaleY = (height + 30) / height;
 
-    const delay = (0.1 * index) + 0.3;
     const ease = Expo.easeOut;
 
-    animate.set(this.containerEl, {autoAlpha: 0, scaleX: scaleX, scaleY: scaleY});
-    animate.set(this.textContainer, {scale: 1.3, autoAlpha: 1, transformOrigin: 'top left'});
-    animate.set(this.imageContainer, {scale: 1.6, autoAlpha: 1});
+    animate.set(this.containerEl, {scaleX: scaleX, scaleY: scaleY});
+    animate.set(this.textContainer, {scale: 1.3, transformOrigin: 'top left'});
+    animate.set(this.imageContainer, {scale: 1.6});
 
     return animate.all([
       animate.to(this.containerEl, 0.4, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
@@ -110,34 +122,25 @@ export default class GridTile extends React.Component {
     ])
   };
 
-  animateInGridFillers = (fillers) => {
-    const delay = 0.5;
-    const ease = Expo.easeOut;
-
-    animate.set(fillers, {autoAlpha: 0, scale: 1.15});
-
-    return animate.all([
-      animate.staggerTo(fillers, 0.5, {autoAlpha: 1, delay: delay}, 0.1),
-      animate.staggerTo(fillers, 1, {scale: 1, delay: delay, ease: Expo.easeOut}, 0.1)
-    ])
-  };
-
-  animateIn = (tileIndex, fillers) => {
-    setTimeout(() => {
-      this.animateInLayers(tileIndex);
-      if (fillers) this.animateInGridFillers(fillers);
-    });
-  };
-
   applyFilter = () => {
     this.filterApplied = true;
-    animate.to(this.refs.contentWrapper, 0.3, {scale: 0.9, autoAlpha: 0.1, pointerEvents: 'none', ease: Expo.easeOut});
+    return animate.to(this.refs.contentWrapper, 0.3, {
+      scale: 0.9,
+      autoAlpha: 0.1,
+      pointerEvents: 'none',
+      ease: Expo.easeOut
+    });
   };
 
   removeFilter = () => {
     if (this.filterApplied) {
-      animate.to(this.refs.contentWrapper, 0.3, {scale: 1, autoAlpha: 1, pointerEvents: 'auto', ease: Expo.easeOut});
       this.filterApplied = false;
+      return animate.to(this.refs.contentWrapper, 0.3, {
+        scale: 1,
+        autoAlpha: 1,
+        pointerEvents: 'auto',
+        ease: Expo.easeOut
+      });
     }
   };
 
