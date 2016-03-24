@@ -2,19 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import animate from 'gsap-promise';
 import _ from 'lodash';
-
-function unwrapComponent(component) {
-
-  if (process.env.NODE_ENV !== 'production'
-    && component.constructor.name === 'Connect'
-    && !component.refs.wrappedInstance
-    ) {
-    console.trace('%c This Connect component does not have refs.wrappedInstance, make sure {withRef: true} was used when decorating the class definition', 'color: #ff0000;');
-  }
-  return component.refs.wrappedInstance 
-    ? unwrapComponent(component.refs.wrappedInstance)
-    : component;
-}
+import unwrapComponent from 'common/utils/unwrap-component.js';
 
 export default class FullBrowserWrapper extends React.Component {
 
@@ -59,7 +47,7 @@ export default class FullBrowserWrapper extends React.Component {
     const component = unwrapComponent(this.refs.child);
 
     await this.animateToTarget();
-    
+
     if(component.componentWillLeaveFullBrowser) {
        await component.componentWillLeaveFullBrowser();
     }
@@ -78,8 +66,8 @@ export default class FullBrowserWrapper extends React.Component {
   animateToFullBrowser = () => {
     const el = findDOMNode(this);
     const child = findDOMNode(this.refs.child);
-    const target = this.props.target && findDOMNode(this.props.target);
-    
+    const target = findDOMNode(this.props.getTarget(this.refs.child, this.props.params.slug));
+
     if(target) {
       const clientRects = target.getClientRects()[0];
 
@@ -94,7 +82,7 @@ export default class FullBrowserWrapper extends React.Component {
 
   animateToTarget = (callback) => {
     const child = findDOMNode(this.refs.child);
-    const target = findDOMNode(this.props.target);
+    const target = findDOMNode(this.props.getTarget(this.refs.child, this.props.params.slug));
     const clientRects = target.getClientRects()[0];
 
 

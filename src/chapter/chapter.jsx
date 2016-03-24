@@ -4,8 +4,87 @@ import InstructionalVideo from 'common/components/video-players/instructional/ch
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import TransitionGroup from 'react-addons-transition-group';
+import unwrapComponent from 'common/utils/unwrap-component.js';
+import { findDOMNode } from 'react-dom';
+import ScrollMagic from 'scrollmagic';
 
 export default class Chapter extends React.Component {
+
+  getTarget = (component, slug) => {
+    if (component instanceof InstructionalVideo) {
+      return this.refs.instructionalVideo;
+    }
+    if (component instanceof PhotoEssay) {
+      return this.refs.photoEssay;
+    }
+  };
+
+  componentDidMount () {
+    const el = findDOMNode(this);
+    const scrollController = new ScrollMagic.Controller({
+      //container: el,
+      globalSceneOptions: {},
+      loglevel: 2
+    });
+
+    const getY = function (progress, min=50, max=-50) {
+      //const amplitude = max - min;
+      //return progress * amplitude - amplitude/2;
+      return min + (max - min) * progress;
+    };
+
+    const getOpacity = function (progress) {
+      return Math.min(3 * progress, 1);
+    };
+
+    const parallaxTargetSelectors = [
+      '.photo-essay .image-wrapper',
+      '.panorama-container .parallax-target'
+    ];
+
+    const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
+
+      if (i === 10)  {
+        el.style.color = 'red';
+      }
+
+      TweenMax.set(el, {
+        opacity: 0,
+        // y: 100
+      });
+      const scene = new ScrollMagic.Scene({
+        triggerHook: 'onEnter',
+        triggerElement: el,
+        duration: window.innerHeight,
+      })
+
+      scene.on('enter', (e) => {
+        // TweenMax.to(el, 1, {
+        //   opacity: 1,
+        //   y: 0
+        // });
+      })
+      scene.on('leave', (e) => {
+        //console.log('leave');
+      })
+
+      // have things move at different speeds
+      scene.on('progress', (e) => {
+        el.setAttribute('data-progress', e.progress);
+        // el.setAttribute('data-debug-y', getY(e.progress));
+        el.setAttribute('data-debug-opacity', getOpacity(e.progress));
+        TweenMax.to(el, 0.1, {
+          y: getY(e.progress),
+          opacity: getOpacity(e.progress),
+        })
+      })
+
+      //scene.addTo(scrollController);
+      //scene.addIndicators();
+      return scene;
+    });
+    scrollController.addScene(scrollScenes);
+  }
 
   render () {
     return <section className="chapter-page">
@@ -26,8 +105,11 @@ export default class Chapter extends React.Component {
         <div className="page-component">
           <h2 className="component-title">Instructional Video</h2>
           <InstructionalVideo
-            className="col-4 margin-auto-horizontal"
+            className="col-4 margin-auto-horizontal instructional-video-component"
+            id="instructionalVideo"
+            ref='instructionalVideo'
             slug="math-1"
+            shouldHideInTheBack={true}
           />
         </div>
 
@@ -61,7 +143,7 @@ export default class Chapter extends React.Component {
           className="route-content-wrapper"
 
         >
-          { React.cloneElement(this.props.children || <div />, {key: this.props.params.slug, target: this.refs.photoEssay}) }
+          { React.cloneElement(this.props.children || <div />, {key: this.props.params.slug, getTarget: this.getTarget}) }
         </TransitionGroup>
         <footer>footer</footer>
       </div>

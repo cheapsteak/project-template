@@ -9,6 +9,7 @@ import Chapter from 'chapter/chapter.jsx';
 import LandingPage from './landing/landing.jsx';
 import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowser-wrapper.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
+import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -28,6 +29,11 @@ export default <Provider store={store}>
     <Route path="grid" component={Grid} />
     <Route path="video" component={Grid} />
     <Route path="chapters/:chapter_slug" component={Chapter}>
+      <Route
+        path="instructional-videos/:slug"
+        component={FullBrowserWrapper}
+        childComponent={ChapterVideoPlayer}
+      />
       <Route
         path="photo-essay/:slug"
         component={FullBrowserWrapper}
