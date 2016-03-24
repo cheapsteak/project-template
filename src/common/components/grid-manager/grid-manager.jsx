@@ -26,8 +26,8 @@ export default class GridManager extends React.Component {
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
-    animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.2, paddingTop: 120});
-    this.refs.menu.animateIn(0.6, 1.15);
+    animate.to(this.containerEl, 0.7, {ease: Expo.easeOut, delay: 1.7, paddingTop: 120});
+    this.refs.menu.animateIn(0.7, 1.6);
 
     window.addEventListener('resize', this.handleWindowResize);
     this.context.eventBus.on('clickFilter', this.handleClickFilter);
@@ -53,19 +53,19 @@ export default class GridManager extends React.Component {
     const isFiltered = this.state.isFiltered;
 
     if (windowWidth <= breakpoints[0]) {
-      currLayout = <Layout890 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout890 isFiltered={isFiltered}/>
     } else if (windowWidth <= breakpoints[1]) {
-      currLayout = <Layout1060 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1060 isFiltered={isFiltered}/>
     } else if (windowWidth <= breakpoints[2]) {
-      currLayout = <Layout1230 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1230 isFiltered={isFiltered}/>
     } else if (windowWidth <= breakpoints[3]) {
-      currLayout = <Layout1400 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1400 isFiltered={isFiltered}/>
     } else if (windowWidth <= breakpoints[4]) {
-      currLayout = <Layout1570 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1570 isFiltered={isFiltered}/>
     } else if (windowWidth <= breakpoints[5]) {
-      currLayout = <Layout1740 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1740 isFiltered={isFiltered}/>
     } else {
-      currLayout = <Layout1920 screenWidth={windowWidth} isFiltered={isFiltered}/>
+      currLayout = <Layout1920 isFiltered={isFiltered}/>
     }
 
     return (
