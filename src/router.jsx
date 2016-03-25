@@ -11,6 +11,9 @@ import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowse
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 
+import MobileApp from './mobile/mobile.jsx';
+import MobileLanding from './mobile/landing/landing.jsx';
+
 function handleRouteUpdate () {
   console.log('route updated');
   ga('send', 'pageview');
@@ -39,6 +42,9 @@ export default <Provider store={store}>
         component={FullBrowserWrapper}
         childComponent={PhotoEssay}
       />
+    </Route>
+    <Route path="/mobile" component={MobileApp}>
+      <IndexRoute component={MobileLanding} />
     </Route>
   </Route>
 
