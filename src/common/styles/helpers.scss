@@ -1,5 +1,5 @@
 // usage example:
-// @include scale('margin-top', 50px, (50/1400)vw, 70px);
+// @include scale('margin-top', 50px, 50*(100vw/1400), 70px);
 
 @mixin scale($prop, $lte-1400, $gt-1400, $gte-1920) {
   @media (max-width: $break-large) {
@@ -10,6 +10,18 @@
   }
   @media (min-width: $break-xlarge + 1) {
     #{$prop}: $gte-1920;
+  }
+}
+
+@mixin scale-prop($prop, $size) {
+  @media (max-width: $break-large) {
+    #{$prop}: $size*1px;
+  }
+  @media (min-width: $break-large + 1) {
+    #{$prop}: $size*(100/$large-size)*1vw;
+  }
+  @media (min-width: $break-xlarge + 1) {
+    #{$prop}: $size*($xlarge-size/$large-size)*1px;
   }
 }
 
@@ -49,4 +61,10 @@
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
