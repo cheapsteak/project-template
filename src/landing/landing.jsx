@@ -2,13 +2,14 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
-import IconLoader from 'svgs/icon-loader.svg';
+import IconLoader from 'svgs/icon-sa_monogram.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
 import Promise from 'bluebird';
 import Preload from 'inject-prefetch';
 import gridData  from 'common/data/grid';
 import videoData  from 'common/data/narrative-video';
+import RectangularButton  from 'common/components/rectangular-button/rectangular-button.jsx';
 const BackgroundCover = require('background-cover').BackgroundCover;
 
 export default class LandingPage extends React.Component {
@@ -76,20 +77,37 @@ export default class LandingPage extends React.Component {
     })
   };
 
-  preloadNextContent = () => {
-    const gridImages = gridData.getImagesUrls();
-    const video = videoData.src;
+  positionVideo = () => {
+    BackgroundCover(this.refs.video, this.refs.videoContainer);
+  };
 
-    Preload(gridImages.concat(video));
+  preloadNextContent = () => {
+    const gridImages = gridData.getImages();
+    const documentaryVideo = videoData.src;
+
+    Preload(gridImages.concat(documentaryVideo));
   };
 
   animateIn = (callback) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.loaderContainer];
-
     animate.set(staggerEls, {autoAlpha: 0, scale: 1.6});
 
     return animate.staggerTo(staggerEls, 1.7, {autoAlpha: 1, y: 0, scale: 1.2, ease: Expo.easeOut, delay: 0.3}, 0.3)
       .then(() => callback && callback())
+  };
+
+  animateOnVideoLoaded = () => {
+    const ease = Expo.easeOut;
+    const staggerEls = [this.refs.description, this.ctaWatch, this.ctaExplore];
+
+    return animate.all([
+      animate.to(this.refs.loaderContainer, 0.3, {autoAlpha: 0}),
+      animate.to(this.refs.coverBg, 1.2, {autoAlpha: 0}),
+      animate.to(this.refs.contentContainer, 1.5, {y: 0, ease: ease}),
+      animate.to([this.refs.subtitle, this.refs.title], 1.7, {scale: 1, ease: ease}),
+      animate.to(this.refs.video, 2, {scale: 1, ease: ease}),
+      animate.staggerTo(staggerEls, 1, {autoAlpha: 1, y: 0, delay: 0.3, ease: ease}, 0.2)
+    ])
   };
 
   animateOutToGrid = (callback) => {
@@ -110,27 +128,10 @@ export default class LandingPage extends React.Component {
 
     return animate.all([
         animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
-        animate.to(this.refs.mainContainer, duration, {x: '100%', ease: ease})
+        animate.to(this.refs.mainContainer, duration, {x: '100%', ease: ease}),
+        animate.to(this.refs.contentContainer, 0.2, {autoAlpha: 0})
       ])
       .then(() => callback && callback())
-  };
-
-  animateOnVideoLoaded = () => {
-    const ease = Expo.easeOut;
-    const staggerEls = [this.refs.description, this.ctaWatch, this.ctaExplore];
-
-    return animate.all([
-      animate.to(this.refs.loaderContainer, 0.3, {autoAlpha: 0}),
-      animate.to(this.refs.coverBg, 1.2, {autoAlpha: 0}),
-      animate.to(this.refs.contentContainer, 1.5, {y: 0, ease: ease}),
-      animate.to([this.refs.subtitle, this.refs.title], 1.7, {scale: 1, ease: ease}),
-      animate.to(this.refs.video, 2, {scale: 1, ease: ease}),
-      animate.staggerTo(staggerEls, 1, {autoAlpha: 1, y: 0, delay: 0.3, ease: ease}, 0.2)
-    ])
-  };
-
-  positionVideo = () => {
-    BackgroundCover(this.refs.video, this.refs.videoContainer);
   };
 
   render() {
@@ -140,8 +141,13 @@ export default class LandingPage extends React.Component {
         <div ref="mainContainer" className={`main-container`}>
 
           <div ref="videoContainer" className={`video-container`}>
-            <video ref="video" preload={true} loop={true} muted={true}>
-              <source src={`${ASSET_PATH}/videos/landing-video.mp4`}/>
+            <video
+              ref="video"
+              preload={true}
+              loop={true}
+              muted={true}
+              src={`${ASSET_PATH}/videos/landing-video.mp4`}
+            >
             </video>
             <div ref="gradient" className={`gradient`}></div>
           </div>
@@ -160,21 +166,29 @@ export default class LandingPage extends React.Component {
                 ref="ctaWatch"
                 className={`cta watch`}
                 to={`video`}
-                onMouseEnter={() => audio.play('button-rollover') }
-                onClick={() => audio.play('button-click')}
               >
-                <div className={`icon`} dangerouslySetInnerHTML={{ __html: IconWatch }}></div>
-                <p>Start the Tour</p>
+                <RectangularButton
+                  style={{width: '100%', height: '100%'}}
+                  text={`Start the Tour`}
+                  color={`#fff`}
+                  svgIcon={IconWatch}
+                  backgroundColor={`#8f8f8f`}
+                  hoverBackgroundColor={`#6a6969`}
+                />
               </Link>
               <Link
                 ref="ctaExplore"
                 className={`cta explore`}
                 to={`grid`}
-                onMouseEnter={() => audio.play('button-rollover') }
-                onClick={() => audio.play('button-click')}
               >
-                <div className={`icon`} dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
-                <p>Explore</p>
+                <RectangularButton
+                  style={{width: '100%', height: '100%'}}
+                  text={`Explore`}
+                  color={`#fff`}
+                  svgIcon={IconExplore}
+                  backgroundColor={`rgba(255,255,255,0)`}
+                  hoverBackgroundColor={`rgba(255,255,255,0.2)`}
+                />
               </Link>
             </div>
           </div>

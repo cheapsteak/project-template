@@ -6,17 +6,15 @@
   user-select: none;
   overflow: hidden;
   @include gpu;
+  z-index: 99999;
 
   * {
     @include gpu;
   }
 
   .main-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+    @include absolute-100;
+    @include flex-center;
   }
 
   .video-container {
@@ -41,59 +39,41 @@
   .content-container {
     position: relative;
     display: inline-block;
-    max-width: 600px;
+    @include scale-prop(max-width, 580);
     cursor: default;
 
     .subtitle {
-      font-size: 30px;
+      @include scale-prop(font-size, 30);
       color: rgba(143, 143, 143, 1);
     }
 
     .title {
-      font-size: 105px;
+      @include scale-prop(font-size, 105);
+      @include scale-prop(margin-top, 100);
+      @include scale-prop(margin-bottom, 40);
       color: rgba(255, 255, 255, 1);
-      margin-top: 100px;
     }
 
     .description {
       width: 90%;
-      font-size: 20px;
+      @include scale-prop(font-size, 20);
       color: rgba(143, 143, 143, 1);
-      margin: 40px auto 0;
     }
 
     .cta-container {
       display: inline-block;
-      margin: 80px auto 0;
+      margin-left: auto;
+      margin-right: auto;
+      @include scale-prop(margin-top, 80);
 
       .cta {
-        width: 200px;
-        height: 50px;
         display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        &.watch {
-          background-color: rgba(143, 143, 143, 1);
-        }
+        @include scale-prop(width, 200);
+        @include scale-prop(height, 50);
 
         &.explore {
-          margin-top: 10px;
-          background-color: rgba(143, 143, 143, 0);
+          @include scale-prop(margin-top, 10);
           border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        svg {
-          width: 16px;
-          height: 16px;
-          margin: 0 25px;
-        }
-
-        p {
-          display: inline-block;
-          color: #fff;
-          font-weight: bold;
-          font-size: 17px;
         }
       }
     }
@@ -101,32 +81,33 @@
 
   .loader-container {
     display: inline-block;
-    left: 50%;
     position: absolute;
-    bottom: 90px;
+    left: 50%;
+    @include scale-prop(bottom, 90);
     text-align: center;
     transform: translateX(-50%);
 
     svg {
-      width: 40px;
-      height: 40px;
+      @include scale-prop(width, 40);
+      @include scale-prop(height, 40);
+      margin-left: auto;
       fill: #fff;
-      animation: spin 10s infinite;
+      animation: spin 2.5s infinite;
     }
 
     p {
-      font-size: 12px;
-      margin-top: 5px;
+      @include scale-prop(font-size, 12);
+      @include scale-prop(margin-top, -5);
       color: rgba(143, 143, 143, 1);
     }
   }
 
   @keyframes spin {
     from {
-      transform: rotate(0deg);
+      transform: rotateY(0deg);
     }
     to {
-      transform: rotate(360deg);
+      transform: rotateY(360deg);
     }
   }
 
