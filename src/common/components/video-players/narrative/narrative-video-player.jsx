@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/video-player-play.svg';
-import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import PlayButtonSvg from 'svgs/icon-play.svg';
+import PauseButtonSvg from 'svgs/icon-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import IconExplore from 'svgs/icon-explore.svg';

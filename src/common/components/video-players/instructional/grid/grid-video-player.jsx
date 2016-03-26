@@ -1,14 +1,14 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/video-player-play.svg';
-import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import PlayButtonSvg from 'svgs/icon-play.svg';
+import PauseButtonSvg from 'svgs/icon-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
-import CloseSvg from 'svgs/video-player-close.svg';
+import CloseSvg from 'svgs/icon-close.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
@@ -145,7 +145,7 @@ export default class GridVideoPlayer extends React.Component {
       } else {
 
         // Potential Issue: When video is not loaded yet, the timeline dots will not appear yet.
-        // This can cause the dots to appear instantly during the animate in (instead of the 
+        // This can cause the dots to appear instantly during the animate in (instead of the
         // staggered animation)
         this.animateInControls();
       }
@@ -157,20 +157,20 @@ export default class GridVideoPlayer extends React.Component {
 
     // Video Finished
     if(this.props.duration && nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration && 
+      if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         this.animateInEndOverlay();
         this.props.hideFullControls();
         this.clearCountdown();
         this.nextVideoIntervalId = setInterval(() => {
           if(this.state.nextVideoTimeLeft > 0) {
-            this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 }) 
+            this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
             this.clearCountdown();
             /*
-            
+
               GO TO NEXT VIDEO
-              
+
               this.context.router.push(this.props.nextVideoRoute);
 
              */
@@ -400,7 +400,7 @@ export default class GridVideoPlayer extends React.Component {
             >
             {
               this.state.showEndingCTA
-              ? [ 
+              ? [
                 <ImageCard
                   key={'currentId'}
                   label="Learn More"
@@ -417,7 +417,7 @@ export default class GridVideoPlayer extends React.Component {
                   timeLeft={this.state.nextVideoTimeLeft}
                 />
               ]
-              : undefined 
+              : undefined
             }
             </TransitionGroup>
             <div
