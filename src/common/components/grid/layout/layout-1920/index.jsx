@@ -3,27 +3,12 @@ import Layout from '../index.jsx';
 import GridTile from '../../grid-tile';
 
 export default class Layout1920 extends Layout {
-
-  state = {
-    baseHeight: 0,
-    oneThirdHeight: 0,
-    twoThirdHeight: 0
-  };
-
-  calculateSizes = () => {
-    const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth * 3 / 11 - 8;
-    const oneThirdHeight = containerWidth / 11 - 10;
-    const twoThirdHeight = containerWidth * 2 / 11 - 19;
-
-    this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
-    //console.log('calculateSizes: Layout-1920');
-  };
-
+  
   render() {
-    const one = this.state.oneThirdHeight;
-    const two = this.state.twoThirdHeight;
-    const three = this.state.baseHeight;
+    const containerWidth = window.innerWidth - 60;
+    const one = containerWidth / 11 - 10;
+    const two = containerWidth * 2 / 11 - 19;
+    const three = containerWidth * 3 / 11 - 8;
     const four = three + one;
 
     return (

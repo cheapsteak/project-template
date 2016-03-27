@@ -1,29 +1,15 @@
 import React from 'react';
 import Layout from '../index.jsx';
 import GridTile from '../../grid-tile';
+import scrollbarSize from 'common/utils/scrollbar-size';
 
 export default class Layout1230 extends Layout {
 
-  state = {
-    baseHeight: 0,
-    oneThirdHeight: 0,
-    twoThirdHeight: 0
-  };
-
-  calculateSizes = () => {
-    const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth * (3 / 7) - 10;
-    const oneThirdHeight = containerWidth / 7 - 15;
-    const twoThirdHeight = containerWidth / 3.5 - 15;
-
-    this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
-    //console.log('calculateSizes: Layout-1230');
-  };
-
   render() {
-    const one = this.state.oneThirdHeight;
-    const two = this.state.twoThirdHeight;
-    const three = this.state.baseHeight;
+    const containerWidth = window.innerWidth - 60 - scrollbarSize.get();
+    const one = containerWidth / 7 - 15;
+    const two = containerWidth / 3.5 - 15;
+    const three = containerWidth * (3 / 7) - 10;
 
     return (
       <div className={`grid layout-1230 ${this.state.status} ${this.props.className}`}>

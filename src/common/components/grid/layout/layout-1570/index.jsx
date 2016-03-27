@@ -1,29 +1,15 @@
 import React from 'react';
 import Layout from '../index.jsx';
 import GridTile from '../../grid-tile';
+import scrollbarSize from 'common/utils/scrollbar-size';
 
 export default class Layout1570 extends Layout {
 
-  state = {
-    baseHeight: 0,
-    oneThirdHeight: 0,
-    twoThirdHeight: 0
-  };
-
-  calculateSizes = () => {
-    const containerWidth = this.containerEl.offsetWidth;
-    const baseHeight = containerWidth / 3 - 13;
-    const oneThirdHeight = containerWidth / 9 - 19;
-    const twoThirdHeight = containerWidth * 2 / 9 - 15;
-
-    this.setState({baseHeight, oneThirdHeight, twoThirdHeight});
-    //console.log('calculateSizes: Layout-1570');
-  };
-
   render() {
-    const one = this.state.oneThirdHeight;
-    const two = this.state.twoThirdHeight;
-    const three = this.state.baseHeight;
+    const containerWidth = window.innerWidth - 60 - scrollbarSize.get();
+    const one = containerWidth / 9 - 19;
+    const two = containerWidth * 2 / 9 - 15;
+    const three = containerWidth / 3 - 13;
     const four = three + one + 20;
 
     return (
@@ -73,11 +59,11 @@ export default class Layout1570 extends Layout {
           />
         </div>
 
-        <div className={`grid-item width-1 left-margin`} style={{height: two}}>
+        <div className={`grid-item width-1 left-margin`} style={{height: two+1}}>
           <div className={`filler full-size red`}></div>
         </div>
 
-        <div className={`grid-item width-11 left-margin`} style={{height: one}}>
+        <div className={`grid-item width-11 left-margin`} style={{height: one+1}}>
           <div className={`filler full-size dark-blue`}></div>
         </div>
 
@@ -97,7 +83,7 @@ export default class Layout1570 extends Layout {
           />
         </div>
 
-        <div className={`grid-item width-2 left-margin top-margin light-blue`} style={{height: four}}>
+        <div className={`grid-item width-22 left-margin top-margin light-blue`} style={{height: four}}>
           <GridTile
             ref="tile6"
             chapter={`history`}
@@ -105,12 +91,12 @@ export default class Layout1570 extends Layout {
           />
         </div>
 
-        <div className={`grid-item width-1 left-margin`} style={{height: three}}>
+        <div className={`grid-item width-12 left-margin`}>
           <div className={`filler full-size sand`} style={{height: one}}></div>
           <div className={`filler top-margin width-100 grey`} style={{height: two}}></div>
         </div>
 
-        <div className={`grid-item width-3 left-margin`} style={{height: three+5}}>
+        <div className={`grid-item width-3 left-margin`} style={{height: three+3}}>
           <div className={`width-100 height-33-less-15`}>
             <div className={`filler width-66-less-5 height-100 red`}></div>
             <div className={`filler width-33-less-15 height-100 left-margin dark-blue`}></div>

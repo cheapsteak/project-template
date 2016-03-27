@@ -8,8 +8,14 @@
   .width-11 {
     width: 10%;
   }
+  .width-12 {
+    width: calc(100% / 8 - 37px);
+  }
 
   .width-2 {
+    width: calc(100% * 2 / 9 - 14px);
+  }
+  .width-22 {
     width: calc(100% * 2 / 9 - 17px);
   }
 

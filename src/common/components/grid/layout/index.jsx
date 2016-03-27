@@ -19,23 +19,23 @@ export default class Layout extends React.Component {
     className: ''
   };
 
+  state = {
+    status: states.LOADING
+  };
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.initializeLayout();
-    this.calculateSizes();
 
     this.tiles = this.getTiles();
     this.fillers = document.querySelectorAll('.grid-page .filler');
     animate.set(this.fillers, {autoAlpha: 0, scale: 1.15});
 
     this.animateIn();
-
-    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillUnmount() {
     this.packery.destroy();
-    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   getTiles = () => {
@@ -61,14 +61,6 @@ export default class Layout extends React.Component {
     });
   };
 
-  handleWindowResize = () => {
-    this.calculateSizes();
-  };
-
-  calculateSizes = () => {
-    // this is overridden in derived classes
-  };
-
   animateIn = () => {
     setTimeout(() => {
       this.tiles.forEach((tile, index) => {
@@ -81,8 +73,8 @@ export default class Layout extends React.Component {
 
   animateFillers = (delay = 0.5) => {
     return animate.all([
-      animate.staggerTo(this.fillers, 0.5, {autoAlpha: 1, delay: delay}, 0.1),
-      animate.staggerTo(this.fillers, 1, {scale: 1, delay: delay, ease: Expo.easeOut}, 0.1)
+      animate.staggerTo(this.fillers, 0.8, {autoAlpha: 1, delay: delay}, 0.1),
+      animate.staggerTo(this.fillers, 1.2, {scale: 1, delay: delay, ease: Expo.easeOut}, 0.1)
     ])
   };
 }

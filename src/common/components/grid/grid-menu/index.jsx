@@ -5,6 +5,7 @@ import IconReturn from 'svgs/icon-play.svg';
 import IconClose from 'svgs/icon-close.svg';
 import IconFilter from 'svgs/icon-check.svg';
 import {Link} from 'react-router';
+import scrollbarSize from 'common/utils/scrollbar-size';
 
 const states = {
   IDLE: 'idle',
@@ -62,9 +63,8 @@ export default class GridMenu extends React.Component {
   };
 
   handleWindowResize = () => {
-    const parentContainer = this.containerEl.parentNode;
-    const scrollbarWidth = parentContainer.offsetWidth - parentContainer.clientWidth;
-    animate.set(this.containerEl, {width: parentContainer.clientWidth});
+    const scrollbarWidth = scrollbarSize.get();
+    animate.set(this.containerEl, {width: window.innerWidth - scrollbarWidth});
   };
 
   animateIn = (duration = 0.5, delay = 0, ease = Expo.easeOut) => {
@@ -77,7 +77,7 @@ export default class GridMenu extends React.Component {
     return animate.all([
       animate.to(this.containerEl, duration, {y: '0%', ease: ease, delay: delay}),
       animate.to(afterTabs, 0.6, {y: '0%', ease: ease, delay: delay + 0.1}),
-      animate.staggerTo(ctaItems, 0.08, {y: 0, autoAlpha: 0.8, delay: delay + 0.2, ease: ease}, 0.12)
+      animate.staggerTo(ctaItems, 0.08, {y: 0, autoAlpha: 0.8, delay: delay + 0.2, ease: ease}, 0.1)
         .then(() => animate.set(ctaItems, {clearProps: 'all'}))
     ])
   };

@@ -86,6 +86,7 @@
     @include scale-prop(bottom, 90);
     text-align: center;
     transform: translateX(-50%);
+    transform-style: initial;
 
     svg {
       @include scale-prop(width, 40);

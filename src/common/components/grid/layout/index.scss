@@ -52,11 +52,16 @@ $grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   visibility: hidden;
   user-select: none;
   overflow: hidden;
+  @include gpu;
+
+  * {
+    @include gpu;
+  }
 
   &.ready {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s;
+    //transition: opacity 0.3s;
   }
 
   .full-size {

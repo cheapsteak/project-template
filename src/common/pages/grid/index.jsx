@@ -61,8 +61,8 @@ export default class GridPage extends React.Component {
 
   animateIn = (callback) => {
     return animate.all([
-        animate.to(this.containerEl, 0.7, {ease: Expo.easeOut, delay: 1.7, paddingTop: this.menuHeight + 40}),
-        this.refs.menu.animateIn(0.7, 1.7, Expo.easeOut)
+        animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, paddingTop: this.menuHeight + 40}),
+        this.refs.menu.animateIn(0.5, 1.7, Expo.easeOut)
       ])
       .then(() => {
         this.isMenuAnimated = true;
