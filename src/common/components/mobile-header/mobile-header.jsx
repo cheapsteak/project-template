@@ -5,16 +5,37 @@ import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 
 export default class MobileHeader extends React.Component {
 
-  state = {
-    showMenu: true
+  static propTypes = {
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
+    color: React.PropTypes.string,
+    backgroundColor: React.PropTypes.string
   };
 
-  handleMenuClick = () => {
-    this.setState({ showMenu: !this.state.showMenu });
+  componentDidMount() {
+    this.setColor(this.props.color, this.props.backgroundColor);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setColor(nextProps.color, nextProps.backgroundColor);
+  }
+
+  setColor = (color, backgroundColor) => {
+    const content = this.refs.header.querySelectorAll('.menu-content');
+
+    _.forEach(content, (node) => {
+      if(node.firstChild) {
+        node.firstChild.style.fill = color;
+      } else {
+        node.style.backgroundColor = color;
+      }
+    });
+
+    this.refs.header.style.backgroundColor = backgroundColor;
   };
 
   render () {
-    const { className, style } = this.props;
+    const { className, style, color = '', backgroundColor = '' } = this.props;
 
     return (
       <div
@@ -23,14 +44,17 @@ export default class MobileHeader extends React.Component {
       >
         <div
           className="menu-icon"
-          onClick={this.handleMenuClick}
+          onClick={this.props.onMenuClick}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          {
+            _.range(3).map((i) => {
+              return <span key={i} className="menu-content"></span>
+            })
+          }
         </div>
         <div
-          className="logo-icon"
+          className="logo-icon menu-content"
+          data-color={color}
           dangerouslySetInnerHTML={{ __html: SALogoSvg }}>
         </div>
         <TransitionGroup
@@ -38,9 +62,11 @@ export default class MobileHeader extends React.Component {
           className="menu-wrapper"
         >
           {
-            this.state.showMenu
+            this.props.isMenuOpen
             ? <MobileMenu
-                onClick={this.handleMenuClick}
+                closeMenu={this.props.closeMenu}
+                openMenu={this.props.openMenu}
+                onBackIconClick={this.props.onMenuClick}
               />
             : null
           }

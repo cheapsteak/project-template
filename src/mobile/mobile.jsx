@@ -1,19 +1,11 @@
 import React from 'react';
 import TransitionGroup from 'react-addons-transition-group';
-import Header from 'common/components/mobile-header/mobile-header';
+import Header from 'common/components/mobile-header/mobile-header-redux';
 
 export default class Mobile extends React.Component {
   static childContextTypes = {
     eventBus: React.PropTypes.object.isRequired,
     router: React.PropTypes.object
-  };
-
-  state = {
-    showMenu: false
-  }
-
-  toggleMenuDisplay = () => {
-    this.setState({ showMenu: !this.state.showMenu });
   };
 
   render () {
@@ -22,9 +14,7 @@ export default class Mobile extends React.Component {
 
     return (
       <div className="full-height">
-        <Header
-          onMenuClick={this.toggleMenuDisplay}
-        />
+        <Header />
         <TransitionGroup
           component="div"
           className="route-content-wrapper full-height"

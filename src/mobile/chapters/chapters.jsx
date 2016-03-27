@@ -1,18 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import Button from 'common/components/rectangular-button/rectangular-button';
-import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 import * as actionCreators from 'common/components/mobile-header/mobile-header-actions';
 import store from 'common/store';
 
-export default class Landing extends React.Component {
+export default class MobileChapters extends React.Component {
 
   componentWillMount() {
     store.dispatch(actionCreators.setHeaderColors({
-      color: 'white',
-      backgroundColor: 'transparent'
+      color: '#565D60',
+      backgroundColor: 'white'
     }));
   }
 
@@ -35,14 +33,12 @@ export default class Landing extends React.Component {
             backgroundColor="#8F8F8F"
             svgIcon={IconWatch}
           />
-          <Link to="/mobile/chapters">
-            <Button
-              style={{border: "1px solid rgba(255,255,255,0.2)"}}
-              text="Explore"
-              color="#ffffff"
-              svgIcon={IconExplore}
-            />
-          </Link>
+          <Button
+            style={{border: "1px solid rgba(255,255,255,0.2)"}}
+            text="Explore"
+            color="#ffffff"
+            svgIcon={IconExplore}
+          />
         </div>
       </div>
     )

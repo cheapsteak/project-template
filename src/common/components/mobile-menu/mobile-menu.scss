@@ -10,23 +10,29 @@
   background-size: cover;
 
   .menu-header {
+    $arrow-shaft-length: 8.132vw;
+
     position: relative;
     width: 100%;
     height: 8.945vh;
     border-bottom: 1px solid rgba(255,255,255, 0.2);
     z-index: 10;
 
-    .back-arrow, .logo-icon {
+    .back-arrow-wrapper, .back-arrow, .logo-icon {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
     }
 
+    .back-arrow-wrapper {
+      height: 50%;
+      width: $arrow-shaft-length;
+      left: $side-padding;
+    }
+
     .back-arrow {
-      $arrow-shaft-length: 8.132vw;
       width: $arrow-shaft-length;
       height: 2px;
-      left: $side-padding;
       background-color: white;
       &:before {
         $arrow-head-length: $arrow-shaft-length/2.5;
@@ -43,7 +49,7 @@
 
     .logo-icon {
       right: $side-padding;
-      height: 40%;
+      height: 100%;
 
       svg {
         display: block;
@@ -87,7 +93,7 @@
 
     .menu-item-svg {
       display: block;
-      height: 30%;
+      height: 100%;
       width: 5.233vw;
       margin-right: 30px;
 

@@ -13,6 +13,7 @@ import ChapterVideoPlayer from 'common/components/video-players/instructional/ch
 
 import MobileApp from './mobile/mobile.jsx';
 import MobileLanding from './mobile/landing/landing.jsx';
+import MobileChapters from './mobile/chapters/chapters.jsx';
 
 function handleRouteUpdate () {
   console.log('route updated');
@@ -45,6 +46,7 @@ export default <Provider store={store}>
     </Route>
     <Route path="/mobile" component={MobileApp}>
       <IndexRoute component={MobileLanding} />
+      <Route path="chapters" component={MobileChapters} />
     </Route>
   </Route>
 

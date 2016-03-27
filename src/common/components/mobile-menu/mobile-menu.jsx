@@ -15,7 +15,7 @@ export default class MobileMenu extends React.Component {
 
   data = [
     {
-      route: '/mobile',
+      route: '/mobile/chapters',
       name: 'Explore More Content',
       svgIcon: IconExplore
     },
@@ -55,7 +55,7 @@ export default class MobileMenu extends React.Component {
   };
 
   animateOutMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth, ease: EaseType.easeOut });
+    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth, ease: EaseType.easeIn });
   };
 
   render () {
@@ -65,15 +65,27 @@ export default class MobileMenu extends React.Component {
       <div
         ref="menu"
         className="mobile-menu"
-        onClick={this.props.onClick}
       >
         <div className="menu-header">
-          <div className="back-arrow"></div>
           <div
-            className="logo-icon"
-            dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            className="back-arrow-wrapper"
+            onClick={this.props.onBackIconClick}
           >
+            <div
+              className="back-arrow"
+            >
+            </div>
           </div>
+          <Link
+            to="/mobile"
+            onClick={this.props.closeMenu}
+          >
+            <div
+              className="logo-icon"
+              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            >
+            </div>
+          </Link>
         </div>
         {
           this.data.map((item, i) => {
@@ -82,6 +94,7 @@ export default class MobileMenu extends React.Component {
                 key={i}
                 to={item.route}
                 className="menu-item"
+                onClick={this.props.closeMenu}
               >
                 <span
                   className="menu-item-svg"
