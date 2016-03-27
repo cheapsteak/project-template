@@ -1,0 +1,163 @@
+.grid-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  @include scale-prop(height, 80);
+  color: #fff;
+  user-select: none;
+  @include gpu;
+
+  &:focus {
+    outline: none;
+  }
+
+  * {
+    @include gpu;
+  }
+
+  .tab {
+    position: relative;
+    @include flex-center;
+    float: left;
+    width: calc(100% / 3);
+    height: 100%;
+    opacity: 0.95;
+    font-weight: bold;
+    @include scale-prop(font-size, 17);
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    .after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      width: 100%;
+      @include scale-prop(height, 20);
+      background-color: inherit;
+      opacity: 0.55;
+    }
+
+    .icon {
+      @include flex-center;
+      @include scale-prop(width, 36);
+      @include scale-prop(height, 36);
+      @include scale-prop(margin-right, 10);
+      border-radius: 50%;
+      transition: border-color 0.3s, background-color 0.3s, transform 0.3s, opacity 0.3s;
+
+      svg {
+        position: relative;
+        @include scale-prop(width, 13);
+        @include scale-prop(height, 13);
+      }
+
+      &.filter {
+        svg {
+          fill: #5E5E5F;
+        }
+      }
+
+      &.return, &.close {
+        background-color: rgba(143, 143, 143, 0.5);
+      }
+
+      &.return {
+        svg {
+          @include scale-prop(left, 2);
+        }
+      }
+    }
+
+    p {
+      opacity: 0.8;
+      transition: color 0.3s, opacity 0.3s, transform 0.3s;
+    }
+
+    @mixin idleCloseState {
+      background-color: #2b2b2b;
+      p {
+        color: #8f8f8f;
+      }
+    }
+    @mixin hoverCloseState {
+      p {
+        opacity: 1;
+      }
+      .icon {
+        transform: scale(1.1);
+      }
+    }
+    @mixin activeCloseState {
+      p {
+        color: #000;
+        opacity: 0.5;
+      }
+      .icon {
+        transform: scale(1);
+        background-color: #000;
+        opacity: 0.5;
+      }
+    }
+
+    @mixin idleFilterState {
+      background-color: #8f8f8f;
+      p {
+        opacity: 0.8;
+      }
+      .icon {
+        background-color: rgba(255, 255, 255, 0);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        svg {
+          opacity: 0;
+          transition: opacity 0.3s;
+        }
+      }
+    }
+    @mixin hoverFilterState {
+      p {
+        opacity: 1;
+      }
+      .icon {
+        border-color: rgba(255, 255, 255, 1);
+        background-color: rgba(255, 255, 255, 1);
+        svg {
+          opacity: 1;
+        }
+      }
+    }
+
+    &.filter {
+      @include idleFilterState;
+
+      &:hover {
+        @include hoverFilterState;
+      }
+      &.active {
+        @include hoverFilterState;
+      }
+      &.deactivated {
+        @include idleFilterState;
+      }
+    }
+
+    &.return, &.close {
+      @include idleCloseState;
+
+      &:hover {
+        @include hoverCloseState;
+      }
+      &:active {
+        @include activeCloseState;
+      }
+      &.active {
+        @include activeCloseState;
+      }
+    }
+  }
+}

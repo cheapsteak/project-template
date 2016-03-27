@@ -6,65 +6,65 @@ const data = {
     title: 'welcome',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/welcome',
-    instructionalVideoUrl: null
+    chapterRoute: 'chapters/welcome',
+    instructionalVideoRoute: null
   },
   science: {
     title: 'science',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/science',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/science',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   },
   literacy: {
     title: 'literacy & writing',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/literacy-and-writing',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/literacy-and-writing',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   },
   math: {
     title: 'math',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/math',
-    instructionalVideoUrl: null
+    chapterRoute: 'chapters/math',
+    instructionalVideoRoute: null
   },
   electives: {
     title: 'electives',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/electives',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/electives',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   },
   computer: {
     title: 'computer science',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/computer-science',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/computer-science',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   },
   investment: {
     title: 'parental investment',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/parental-investment',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/parental-investment',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   },
   development: {
     title: 'character development',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/character-development',
+    chapterRoute: 'chapters/character-development',
     narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoUrl: null
+    instructionalVideoRoute: null
   },
   history: {
     title: 'history',
     subtitle: 'chapter',
     image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterUrl: 'chapters/history',
-    instructionalVideoUrl: 'tests/instructional-grid-player'
+    chapterRoute: 'chapters/history',
+    instructionalVideoRoute: 'tests/instructional-grid-player'
   }
 };
 
@@ -73,7 +73,7 @@ export default {
     return data[id];
   },
 
-  getImagesUrls() {
+  getImages() {
     const images = _.mapValues(data, 'image');
     return _.values(images);
   }

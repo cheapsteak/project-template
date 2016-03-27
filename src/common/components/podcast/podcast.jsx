@@ -33,12 +33,16 @@ export default class Podcast extends React.Component {
     });
 
     this.resize();
-    window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
+
+  resize = () => {
+    this.handleWindowResize();
+  };
 
   play = () => {
     this.mediaEl.play();
@@ -48,7 +52,7 @@ export default class Podcast extends React.Component {
     this.mediaEl.pause();
   };
 
-  resize = () => {
+  handleWindowResize = () => {
     const containerSize = this.refs.playContainer.offsetWidth;
 
     for (let i = 0; i < this.circles.length; i++) {

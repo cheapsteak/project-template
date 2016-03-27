@@ -1,0 +1,276 @@
+@import "../grid-tile/index";
+
+$grid-red: #9c291d;
+$grid-grey: #515d62;
+$grid-sand: #a07434;
+$grid-light-blue: #4f91b1;
+$grid-dark-blue: #131f2f;
+
+$grid-item-offset: 20px;
+
+$size-25: calc(100% / 4);
+$size-25-less-5: calc(100% / 4 - 5px);
+$size-25-less-10: calc(100% / 4 - 10px);
+$size-25-less-15: calc(100% / 4 - 15px);
+
+$size-33: calc(100% / 3);
+$size-33-less-5: calc(100% / 3 - 5px);
+$size-33-less-10: calc(100% / 3 - 10px);
+$size-33-less-15: calc(100% / 3 - 15px);
+
+$size-50: calc(100% / 2);
+$size-50-less-5: calc(100% / 2 - 5px);
+$size-50-less-10: calc(100% / 2 - 10px);
+$size-50-less-15: calc(100% / 2 - 15px);
+
+$size-66: calc(100% * 2 / 3);
+$size-66-less-5: calc(100% * 2 / 3 - 5px);
+$size-66-less-10: calc(100% * 2 / 3 - 10px);
+$size-66-less-15: calc(100% * 2 / 3 - 15px);
+$size-66-less-20: calc(100% * 2 / 3 - 20px);
+
+$size-75: calc(100% * 3 / 4);
+$size-75-less-5: calc(100% * 3 / 4 - 5px);
+$size-75-less-10: calc(100% * 3 / 4 - 10px);
+$size-75-less-15: calc(100% * 3 / 4 - 15px);
+$size-75-less-20: calc(100% * 3 / 4 - 20px);
+
+$size-100: 100%;
+$size-100-less-5: calc(100% - 5px);
+$size-100-less-10: calc(100% - 10px);
+$size-100-less-15: calc(100% - 15px);
+
+$sand-noise: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
+$light-blue-noise: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
+$dark-blue-noise: url('#{$ASSET_PATH}/images/noise-dark-blue.png');
+$red-noise: url('#{$ASSET_PATH}/images/noise-red.png') repeat;
+$grey-noise: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
+
+.grid {
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  user-select: none;
+  overflow: hidden;
+
+  &.ready {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s;
+  }
+
+  .full-size {
+    width: $size-100;
+    height: $size-100;
+  }
+
+  .filler {
+    float: left;
+  }
+
+  .grid-item {
+    float: left;
+    margin-top: $grid-item-offset;
+
+    &.first-row {
+      margin-top: 0;
+    }
+
+    > div {
+      display: inline-block;
+      float: left;
+    }
+
+    .width-25 {
+      width: $size-25;
+    }
+    .width-25-less-5 {
+      width: $size-25-less-5;
+    }
+    .width-25-less-10 {
+      width: $size-25-less-10;
+    }
+    .width-25-less-15 {
+      width: $size-25-less-15;
+    }
+
+    .width-33 {
+      width: $size-33;
+    }
+    .width-33-less-5 {
+      width: $size-33-less-5;
+    }
+    .width-33-less-10 {
+      width: $size-33-less-10;
+    }
+    .width-33-less-15 {
+      width: $size-33-less-15;
+    }
+
+    .width-50 {
+      width: $size-50;
+    }
+    .width-50-less-5 {
+      width: $size-50-less-5;
+    }
+    .width-50-less-10 {
+      width: $size-50-less-10;
+    }
+    .width-50-less-15 {
+      width: $size-50-less-15;
+    }
+
+    .width-66 {
+      width: $size-66;
+    }
+    .width-66-less-5 {
+      width: $size-66-less-5;
+    }
+    .width-66-less-10 {
+      width: $size-66-less-10;
+    }
+    .width-66-less-15 {
+      width: $size-66-less-15;
+    }
+    .width-66-less-20 {
+      width: $size-66-less-20;
+    }
+
+    .width-75 {
+      width: $size-75;
+    }
+    .width-75-less-5 {
+      width: $size-75-less-5;
+    }
+    .width-75-less-10 {
+      width: $size-75-less-10;
+    }
+    .width-75-less-15 {
+      width: $size-75-less-15;
+    }
+
+    .width-100 {
+      width: $size-100;
+    }
+
+    .height-25 {
+      height: $size-25;
+    }
+    .height-25-less-5 {
+      height: $size-25-less-5;
+    }
+    .height-25-less-10 {
+      height: $size-25-less-10;
+    }
+    .height-25-less-15 {
+      height: $size-25-less-15;
+    }
+
+    .height-33 {
+      height: $size-33;
+    }
+    .height-33-less-5 {
+      height: $size-33-less-5;
+    }
+    .height-33-less-10 {
+      height: $size-33-less-10;
+    }
+    .height-33-less-15 {
+      height: $size-33-less-15;
+    }
+
+    .height-50 {
+      height: $size-50;
+    }
+    .height-50-less-5 {
+      height: $size-50-less-5;
+    }
+    .height-50-less-10 {
+      height: $size-50-less-10;
+    }
+    .height-50-less-15 {
+      height: $size-50-less-15;
+    }
+
+    .height-66 {
+      height: $size-66;
+    }
+    .height-66-less-5 {
+      height: $size-66-less-5;
+    }
+    .height-66-less-10 {
+      height: $size-66-less-10;
+    }
+    .height-66-less-15 {
+      height: $size-66-less-15;
+    }
+
+    .height-100 {
+      height: $size-100;
+    }
+    .height-100-less-5 {
+      height: $size-100-less-5;
+    }
+    .height-100-less-10 {
+      height: $size-100-less-10;
+    }
+    .height-100-less-15 {
+      height: $size-100-less-15;
+    }
+
+  }
+
+  // ------- offsets
+  .top-padding {
+    padding-top: $grid-item-offset;
+  }
+  .right-padding {
+    padding-right: $grid-item-offset;
+  }
+  .bottom-padding {
+    padding-bottom: $grid-item-offset;
+  }
+  .left-padding {
+    padding-left: $grid-item-offset;
+  }
+  .top-margin {
+    margin-top: $grid-item-offset;
+  }
+  .right-margin {
+    margin-right: $grid-item-offset;
+  }
+  .bottom-margin {
+    margin-bottom: $grid-item-offset;
+  }
+  .left-margin {
+    margin-left: $grid-item-offset;
+  }
+
+  // ------- colors
+  .red {
+    &.filler, .noise {
+      background: $red-noise;
+    }
+  }
+  .grey {
+    &.filler, .noise {
+      background: $grey-noise;
+    }
+  }
+  .sand {
+    &.filler, .noise {
+      background: $sand-noise
+    }
+  }
+  .light-blue {
+    &.filler, .noise {
+      background: $light-blue-noise
+    }
+  }
+  .dark-blue {
+    &.filler, .noise {
+      background: $dark-blue-noise;
+    }
+  }
+
+}
