@@ -68,6 +68,11 @@
 
     &:nth-child(2) {
       background-color: #997949;
+
+      img {
+        right: -10%;
+      }
+
       .panel-label {
         background-color: rgba(134,102,56,0.5);
       }
@@ -75,6 +80,11 @@
 
     &:nth-child(3) {
       background-color: #6C91AC;
+
+      img {
+        right: -10%;
+      }
+
       .panel-label {
         background-color: rgba(72,115,150,0.5);
       }
@@ -82,6 +92,11 @@
 
     &:nth-child(4) {
       background-color: #565D60;
+
+      img {
+        right: -10%;
+      }
+
       .panel-label {
         background-color: rgba(63,69,72,0.5);
       }
@@ -89,13 +104,19 @@
 
     &:nth-child(5) {
       background-color: #17202F;
+
       .panel-label {
-        background-color: #0C131F;
+        background-color: rgba(12,18,32,0.5);
       }
     }
 
     &:nth-child(6) {
       background-color: #883429;
+
+      img {
+        right: -5%;
+      }
+
       .panel-label {
         background-color: rgba(12,19,31,0.5);
       }
@@ -111,6 +132,11 @@
 
     &:nth-child(8) {
       background-color: #6C91AC;
+
+      img {
+        right: -18%;
+      }
+
       .panel-label {
         background-color: rgba(72,115,150,0.5);
       }
@@ -118,8 +144,13 @@
 
     &:nth-child(9) {
       background-color: #17202F;
+
+      img {
+        right: -10%;
+      }
+
       .panel-label {
-        background-color: #0C1220;
+        background-color: rgba(12,18,32,0.5);
       }
     }
   }

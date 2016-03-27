@@ -3,13 +3,14 @@
   
   overflow: hidden;
   background-color: black;
+  transform: translate(0,0,0);
 
   .list-divider {
+    position: relative;
     display: flex;
     align-items: center;
     height: $list-item-height/2;
     background-color: #414244;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
     padding: 0 5.333vw;
 
     span {
@@ -34,7 +35,10 @@
     display: flex;
     height: $list-item-height;
     background-color: #37383A;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+
+    &:not(:last-child):not(:first-child) {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
 
     &:first-child {
       background-color: #5F5F5F;

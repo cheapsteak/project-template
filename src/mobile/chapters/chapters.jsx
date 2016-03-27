@@ -13,7 +13,7 @@ export default class MobileChapters extends React.Component {
 
   state = {
     narrativeVideo: {
-      image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`,
+      image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`,
       route: '/mobile',
       duration: 22.31
     },
@@ -22,82 +22,82 @@ export default class MobileChapters extends React.Component {
         isOpen: false,
         name: 'Welcome',
         image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Math',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-2.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Science',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-3.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Electives',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-4.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'History',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-5.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Character Development',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-6.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Art',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-7.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Computer Science',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-8.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
       {
         isOpen: false,
         name: 'Literacy & Writing',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail.jpg`, route: '/mobile',}
+        image: `${ASSET_PATH}/mobile-chapters-kid-9.png`,
+        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
+        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
+        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
       },
     ]
   };
