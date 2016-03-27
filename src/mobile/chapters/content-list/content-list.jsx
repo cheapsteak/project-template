@@ -56,7 +56,6 @@ export default class ChapterContentList extends React.Component {
       <div
         ref="list"
         className="content-list"
-        style={{ overflow: 'hidden' }}
       >
         <div
           ref="content"

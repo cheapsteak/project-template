@@ -29,7 +29,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Math',
+        name: 'Science',
         image: `${ASSET_PATH}/mobile-chapters-kid-2.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -38,7 +38,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Science',
+        name: 'Literacy &<br/>Writing',
         image: `${ASSET_PATH}/mobile-chapters-kid-3.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -47,7 +47,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Electives',
+        name: 'Math',
         image: `${ASSET_PATH}/mobile-chapters-kid-4.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -56,7 +56,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'History',
+        name: 'Electives',
         image: `${ASSET_PATH}/mobile-chapters-kid-5.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -74,7 +74,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Art',
+        name: 'Computer<br/>Science',
         image: `${ASSET_PATH}/mobile-chapters-kid-7.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -83,7 +83,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Computer Science',
+        name: 'History',
         image: `${ASSET_PATH}/mobile-chapters-kid-8.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -92,7 +92,7 @@ export default class MobileChapters extends React.Component {
       },
       {
         isOpen: false,
-        name: 'Literacy & Writing',
+        name: 'Parental<br/>Investment',
         image: `${ASSET_PATH}/mobile-chapters-kid-9.png`,
         instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
         panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
@@ -169,7 +169,7 @@ export default class MobileChapters extends React.Component {
                 >
                   <div className="chapter-text">
                     <label>Chapter</label>
-                    <h1>{chapter.name}</h1>
+                    <h1 dangerouslySetInnerHTML={{ __html: chapter.name }}></h1>
                   </div>
                   <img className="chapter-image" src={chapter.image} />
                   <div className="panel-label">

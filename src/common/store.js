@@ -1,7 +1,6 @@
 import { combineReducers, createStore } from 'redux';
 import config from '../../config.js';
 
-console.log(window.navigator.userAgent);
 const MobileDetect = require('mobile-detect');
 const md = new MobileDetect(window.navigator.userAgent);
 
