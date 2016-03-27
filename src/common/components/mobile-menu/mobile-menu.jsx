@@ -9,7 +9,7 @@ import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
 
 const EaseType = Quad;
-const duration = 0.5;
+const duration = 0.75;
 
 export default class MobileMenu extends React.Component {
 
@@ -32,7 +32,7 @@ export default class MobileMenu extends React.Component {
   ];
 
   componentDidMount () {
-    animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth });
+    animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth*2 });
   }
 
   componentWillAppear (callback) {
@@ -55,7 +55,7 @@ export default class MobileMenu extends React.Component {
   };
 
   animateOutMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth, ease: EaseType.easeIn });
+    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth*2, ease: EaseType.easeIn });
   };
 
   render () {
