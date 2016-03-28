@@ -103,15 +103,15 @@ export default class PanoramaMenu extends React.Component {
             onClick={this.setCurrentTab}
             data-slug={`math`}
           >
-            Math
+            <span>Math Classroom</span>
           </div>
 
           <div
             className={`item`}
             onClick={this.setCurrentTab}
-            data-slug={`ela`}
+            data-slug={`literacy`}
           >
-            ELA
+            <span>Literacy Classroom</span>
           </div>
 
           <div
@@ -119,7 +119,7 @@ export default class PanoramaMenu extends React.Component {
             onClick={this.setCurrentTab}
             data-slug={`science`}
           >
-            Science
+            <span>Science Lab</span>
           </div>
 
           <div
@@ -127,7 +127,7 @@ export default class PanoramaMenu extends React.Component {
             onClick={this.setCurrentTab}
             data-slug={`hallway`}
           >
-            Hallway
+            <span>Hallway</span>
           </div>
         </div>
       </div>

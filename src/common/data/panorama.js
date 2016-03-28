@@ -9,7 +9,7 @@ export default [
     initLat: 0
   },
   {
-    slug: 'ela',
+    slug: 'literacy',
     //src: `${config.ASSET_PATH}/images/pan-history.jpg`,
     src: 'http://successacademy.jam3.net/panoramas/IMG_0241_2_3%20Panorama.jpg',
     initLong: -2,
@@ -23,7 +23,7 @@ export default [
     initLat: 0
   },
   {
-    slug: 'hallway',
+    slug: 'welcome',
     //src: `${config.ASSET_PATH}/images/pan-hallway.jpg`,
     src: 'http://successacademy.jam3.net/panoramas/IMG_0439_40_41%20Panorama.jpg',
     initLong: 0,

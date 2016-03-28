@@ -128,7 +128,7 @@ export default class GridMenu extends React.Component {
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
           onMouseEnter={this.playRolloverSfx}
-          to={`tests/narrative-video-player`}
+          to={`narrative-video`}
         >
           <div
             ref="returnIcon"
