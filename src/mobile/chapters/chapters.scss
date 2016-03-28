@@ -1,0 +1,162 @@
+.mobile-chapters {
+  overflow-x: hidden;
+  position: relative;
+  top: calc(8.945vh);
+
+  .chapter-wrapper {
+    position: relative;
+    width: 100%;
+
+    .chapter-content {
+      position: relative;
+      height: 36.234vh;
+
+      label, h1, .panel-label {
+        font-weight: bold;
+      }
+
+      label {
+        font-size: 4.667vw;
+        color: rgba(255,255,255,0.5);
+      }
+
+      h1 {
+        font-size: 9.333vw;
+        color: #FFFFFF;
+      }
+
+      & > img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        z-index: 1;
+      }
+    }
+
+    .chapter-text {
+      position: absolute;
+      top: 45%;
+      left: 5.333vw;
+      transform: translateY(-50%);
+    }
+
+    .panel-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      font-size: 4vw;
+      color: white;
+      z-index: 5;
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translateY(-50%);
+      }
+    }
+
+    &:nth-child(1) {
+      background-color: #565D60;
+      .panel-label {
+        background-color: rgba(63,69,72,0.5);
+      }
+    }
+
+    &:nth-child(2) {
+      background-color: #997949;
+
+      img {
+        right: -10%;
+      }
+
+      .panel-label {
+        background-color: rgba(134,102,56,0.5);
+      }
+    }
+
+    &:nth-child(3) {
+      background-color: #6C91AC;
+
+      img {
+        right: -10%;
+      }
+
+      .panel-label {
+        background-color: rgba(72,115,150,0.5);
+      }
+    }
+
+    &:nth-child(4) {
+      background-color: #565D60;
+
+      img {
+        right: -10%;
+      }
+
+      .panel-label {
+        background-color: rgba(63,69,72,0.5);
+      }
+    }
+
+    &:nth-child(5) {
+      background-color: #17202F;
+
+      .panel-label {
+        background-color: rgba(12,18,32,0.5);
+      }
+    }
+
+    &:nth-child(6) {
+      background-color: #883429;
+
+      img {
+        right: -9%;
+      }
+
+      .panel-label {
+        background-color: rgba(12,19,31,0.5);
+      }
+    }
+
+    &:nth-child(7) {
+      background-color: #565D60;
+
+      img {
+        right: -5%;
+      }
+
+      .panel-label {
+        background-color: rgba(63,69,72,0.5);
+      }
+    }
+
+
+    &:nth-child(8) {
+      background-color: #6C91AC;
+
+      img {
+        right: -18%;
+      }
+
+      .panel-label {
+        background-color: rgba(72,115,150,0.5);
+      }
+    }
+
+    &:nth-child(9) {
+      background-color: #17202F;
+
+      img {
+        right: -20%;
+      }
+
+      .panel-label {
+        background-color: rgba(12,18,32,0.5);
+      }
+    }
+  }
+}

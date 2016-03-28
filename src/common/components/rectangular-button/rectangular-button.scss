@@ -1,5 +1,13 @@
 .rectangular-button {
+<<<<<<< HEAD
+  display: inline-flex;
+  padding: 17px 20px;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+=======
   display: flex;
+>>>>>>> 3566222e746e5259c8eed4885b9a9962ad0b8737
   align-items: center;
   @include scale-prop(padding-top, 17);
   @include scale-prop(padding-bottom, 17);
