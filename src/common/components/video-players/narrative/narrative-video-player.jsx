@@ -153,19 +153,21 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
     }
-
-    if(this.props.isMuted !== nextProps.isMuted) {
-      this.video.muted = nextProps.isMuted;
-    }
   }
 
   componentDidMount() {
     this.animationStates = calculateAnimationStates(this.refs);
 
-    animate.set(this.refs.exploreButton, this.animationStates.out.exploreButton);
-    animate.set(this.refs.overlay, this.animationStates.out.overlay);
-    animate.set(this.refs.videoWrapper, this.animationStates.idle.videoWrapper);
-    animate.set(this.refs.circleCTA, this.animationStates.out.circleCTA);
+    const initialState = this.props.useFullControls
+      ? 'idle'
+      : 'out';
+
+    animate.set(this.refs.exploreButton, this.animationStates[initialState].exploreButton);
+    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+    animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
+    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+
     animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
     animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
@@ -451,6 +453,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
+            muted={this.props.isMuted}
           >
           </video>
           <Link ref={node => this.refs.circleCTA = findDOMNode(node)} className="circle-cta" to={circleCTA.route}>

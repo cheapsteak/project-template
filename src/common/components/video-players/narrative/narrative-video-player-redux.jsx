@@ -10,8 +10,13 @@ import _ from 'lodash';
 @connect(state => ({ video: state.narrativeVideo}) )
 class NarrativeVideoPlayerRedux extends React.Component {
   constructor(props) {
+    const startTime = props.startTime || 0;
     super(props);
+
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
+
+    this.boundActionCreators.hideFullControls();
+    this.boundActionCreators.setVideoTime(startTime);
   }
 
   render () {
