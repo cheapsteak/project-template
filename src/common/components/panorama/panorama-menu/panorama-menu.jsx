@@ -103,15 +103,23 @@ export default class PanoramaMenu extends React.Component {
             onClick={this.setCurrentTab}
             data-slug={`math`}
           >
-            Math Class
+            Math
           </div>
 
           <div
             className={`item`}
             onClick={this.setCurrentTab}
-            data-slug={`history`}
+            data-slug={`ela`}
           >
-            History Class
+            ELA
+          </div>
+
+          <div
+            className={`item`}
+            onClick={this.setCurrentTab}
+            data-slug={`science`}
+          >
+            Science
           </div>
 
           <div
