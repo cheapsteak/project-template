@@ -1,8 +1,8 @@
-<svg version="1.1" id="_VOLUME_ICON_MUTE" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" viewBox="0 0 23.7 19.9" enable-background="new 0 0 23.7 19.9" xml:space="preserve">
 <g>
-	<path fill="#FFFFFF" d="M0,5v10h5.2l6.8,4.9V0L5.2,5H0z M10,3.9V16l-4.2-3H2V7h3.8L10,3.9z"/>
-	<polygon opacity="0.5" fill="#FFFFFF" points="20.4,9.9 23.6,6.8 22.3,5.4 19,8.5 15.7,5.4 14.3,6.8 17.6,9.9 14.3,13.1 15.7,14.5 
+	<path d="M0,5v10h5.2l6.8,4.9V0L5.2,5H0z M10,3.9V16l-4.2-3H2V7h3.8L10,3.9z"/>
+	<polygon opacity="0.5" points="20.4,9.9 23.6,6.8 22.3,5.4 19,8.5 15.7,5.4 14.3,6.8 17.6,9.9 14.3,13.1 15.7,14.5 
 		19,11.3 22.3,14.5 23.7,13.1 	"/>
 </g>
 </svg>

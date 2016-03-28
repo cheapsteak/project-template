@@ -13,7 +13,7 @@ export default class PlayButton extends React.Component {
     label: React.PropTypes.string,
     onPlay: React.PropTypes.func,
     onPause: React.PropTypes.func,
-    onUpdate: React.PropTypes.func,
+    //onUpdate: React.PropTypes.func,
     onEnd: React.PropTypes.func,
     isCountDown: React.PropTypes.bool
   };
@@ -22,7 +22,7 @@ export default class PlayButton extends React.Component {
     circleColor: '#6d7880',
     onPlay: () => console.log('PlayButton.onPlay()'),
     onPause: () => console.log('PlayButton.onPause()'),
-    onUpdate: (progress) => console.log('PlayButton.onUpdate() progress:', progress),
+    //onUpdate: (progress) => {/*console.log('PlayButton.onUpdate() progress:', progress*/},
     onEnd: () => console.log('PlayButton.onEnd')
   };
 
@@ -37,7 +37,7 @@ export default class PlayButton extends React.Component {
 
       if (newProps.progress) {
         this.setState({playProgress: newProps.progress});
-        this.props.onUpdate(newProps.progress);
+        //this.props.onUpdate(newProps.progress);
       }
 
 
@@ -90,6 +90,7 @@ export default class PlayButton extends React.Component {
   };
 
   handleOnclick = () => {
+    audio.play('button-click');
     if (this.props.isCountDown) return;
 
     this.setState({isHovered: false});
@@ -103,6 +104,7 @@ export default class PlayButton extends React.Component {
   };
 
   handleMouseEnter = () => {
+    audio.play('button-rollover');
     if (this.props.isCountDown || this.state.playProgress === undefined) {
       this.setState({isHovered: true});
       this.colorCircle.animate(1, {
@@ -118,7 +120,7 @@ export default class PlayButton extends React.Component {
 
     if (this.props.isCountDown) {
       this.setState({isHovered: false});
-      
+
       // animate circle back to progress
       this.colorCircle.animate(progress, {
         duration: 400 * (1 - progress),

@@ -1,7 +1,7 @@
 .progress-play-button {
   display: inline-block;
-  width: 10vw;
-  height: 10vw;
+  @include scale-prop(width, 145);
+  @include scale-prop(height, 145);
 
   svg {
     fill: #6d7880;
@@ -29,13 +29,13 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      margin-top: -10px;
-      margin-left: -10px;
-      width: 20px;
-      height: 20px;
+      @include scale-prop(margin-top, -10);
+      @include scale-prop(margin-left, -10);
+      @include scale-prop(width, 20);
+      @include scale-prop(height, 20);
 
       &.play {
-        margin-left: -7px;
+        @include scale-prop(margin-left, -7);
       }
 
       svg {
@@ -46,10 +46,10 @@
   }
 
   .label {
-    font-size: 25px;
+    @include scale-prop(font-size, 25);
     font-weight: bold;
     text-align: center;
-    margin-top: 15px;
+    @include scale-prop(margin-top, 15);
     color: #fff;
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/video-player-play.svg';
-import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import PlayButtonSvg from 'svgs/icon-play.svg';
+import PauseButtonSvg from 'svgs/icon-pause.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import EnterFullBrowserButtonSvg from 'svgs/video-player-enter-fullbrowser.svg';
@@ -92,7 +92,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.props.duration && nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration && 
+      if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         this.animateInEndOverlay();
         this.animateOutControls();
@@ -129,7 +129,7 @@ export default class ChapterVideoPlayer extends React.Component {
     return Promise.resolve();
   };
 
-  componentWillLeaveFullBrowser = () => { 
+  componentWillLeaveFullBrowser = () => {
     const container = findDOMNode(this);
     const clone = document.querySelector('#clone-video');
     const cloneParent = clone.parentNode;
@@ -227,7 +227,7 @@ export default class ChapterVideoPlayer extends React.Component {
           className="video-wrapper"
         >
         {
-          !isFullBrowser ?  
+          !isFullBrowser ?
             <video
               id={this.videoId}
               preload="metadata"
@@ -264,9 +264,9 @@ export default class ChapterVideoPlayer extends React.Component {
             </Link>
           </div>
           {
-            /* 
+            /*
               The duration is put into the store and pass down to the component
-              to account for the work around with moving around the video node 
+              to account for the work around with moving around the video node
             */
           }
           <Timeline

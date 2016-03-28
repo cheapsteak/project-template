@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/video-player-play.svg';
-import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import PlayButtonSvg from 'svgs/icon-play.svg';
+import PauseButtonSvg from 'svgs/icon-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import IconExplore from 'svgs/icon-explore.svg';
@@ -145,7 +145,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     // Video Finished
     if(this.props.duration && nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration && 
+      if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         clearTimeout(this.hideControlsTimeoutId);
         this.hideControlsTimeoutId = undefined;
@@ -355,7 +355,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const times = this.props.timeline.map(point => point.time);
 
     // newTime === video.duration will cause a replay
-    const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001; 
+    const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001;
 
     this.video.currentTime = newTime;
   };
@@ -446,6 +446,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             ref={(node) => this.video = node }
             src={this.props.src}
             preload="metadata"
+            autoPlay={true}
             onLoadedMetadata={this.handleMetadataLoaded}
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
@@ -476,7 +477,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                   route="/"
                   image="/narrative-ending-card.jpg"
                 />
-              : undefined 
+              : undefined
             }
             </TransitionGroup>
             <div

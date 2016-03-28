@@ -1,0 +1,16 @@
+@import "../index";
+
+.grid.layout-1400 {
+
+  .width-2 {
+    width: calc(100% * 2 / 8 + 5px);
+  }
+  .width-22 {
+    width: calc(100% * 2 / 3 - 10px);
+  }
+
+  .width-3 {
+    width: calc(100% * 3 / 8 - 12px);
+  }
+
+}

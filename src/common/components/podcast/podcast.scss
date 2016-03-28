@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  overflow-y: hidden;
+  overflow: hidden;
   background: url('#{$ASSET_PATH}/images/podcast-bg.png') #f3f3f3 repeat;
 
   video {
@@ -13,30 +13,49 @@
     position: absolute;
     top: 50%;
     right: 10vw;
+    //@include scale-prop(right, 115);
     transform: translateY(-50%);
-    @include scale(width, 280px, 20.3vw, 390px);
+    @include scale-prop(width, 280);
 
     h2 {
       color: rgba(43, 43, 43, 1);
       font-weight: bold;
-      @include scale(font-size, 40px, 2.9vw, 55px);
+      @include scale-prop(font-size, 40);
     }
 
     p {
-      margin-top: 30px;
-      font-size: 18px;
       color: rgba(143, 143, 143, 1);
       line-height: 140%;
-      @include scale(font-size, 18px, 1.3vw, 24.7px);
+      @include scale-prop(margin-top, 30);
+      @include scale-prop(font-size, 18);
     }
   }
 
-  .progress-play-button {
-    position: relative;
+  .play-container {
+    @include flex-center;
+    position: absolute;
     top: 50%;
     left: 20vw;
-    transform: translateY(-50%);
-    @include scale(width, 128px, 10vw, 192px);
-    @include scale(height, 128px, 10vw, 192px);
+    //@include scale-prop(left, 300);
+    transform: translate(-50%, -50%);
+    width: 160vw;
+    height: 160vw;
+
+    .progress-play-button {
+
+    }
+
+    .circles-container {
+      @include absolute-100;
+
+      .circle {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(43, 43, 43, 0.08);
+      }
+    }
   }
 }
