@@ -26,9 +26,13 @@ export default class App extends React.Component {
 
   componentDidMount() {
     store.subscribe(() => {
-      this.setState({
-        showModal: store.getState().showLearnMoreModal
-      });
+      const currentState = store.getState().showLearnMoreModal;
+
+      if(this.state.showModal !== currentState) {
+        this.setState({
+          showModal: store.getState().showLearnMoreModal
+        });
+      }
     });
   }
 
