@@ -4,8 +4,6 @@ import VideoPlayer from 'common/components/video-players/narrative/narrative-vid
 export default function () {
   return <div style={{ backgroundColor: 'black', textAlign: 'center', width: '100vw', height: '100vh'}}>
     <VideoPlayer
-      modelSlug="test"
-      basePath=""
     />
   </div>
 }
