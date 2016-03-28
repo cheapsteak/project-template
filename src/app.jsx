@@ -3,7 +3,7 @@ import TransitionGroup from 'react-addons-transition-group';
 import LearnMoreModal from 'common/components/learn-more-modal/learn-more-modal.jsx';
 import store from 'common/store.js';
 import * as modalActions from 'common/actions/learn-more-modal-actions.js';
-const EventEmitter = require('events').EventEmitter;
+const EventEmitter = require('event-emitter');
 const vent = new EventEmitter();
 
 window.REDUX_STORE = store;

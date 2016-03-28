@@ -34,29 +34,23 @@ export default class GridMenu extends React.Component {
     router: React.PropTypes.object.isRequired
   };
 
-  componentWillReceiveProps(nextProps) {
-
-  }
-
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.tabs = [this.refs.returnTab, this.refs.filterTab, this.refs.closeTab];
 
     animate.set(this.containerEl, {y: '-125%'});
 
-    this.tabs.forEach((tab) => {
-      tab = findDOMNode(tab);
-      tab.addEventListener('mouseenter', () => audio.play('button-rollover'));
-      tab.addEventListener('click', () => audio.play('button-click'));
-    });
-
     setTimeout(() => this.resize());
     window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillUnmount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
+
+  playRolloverSfx = () => {
+    audio.play('button-rollover')
+  };
 
   resize = () => {
     this.handleWindowResize();
@@ -85,6 +79,8 @@ export default class GridMenu extends React.Component {
   handleFilterClick = () => {
     var filterTabState;
 
+    audio.play('button-click');
+
     if (this.state.filterTabState === states.IDLE || this.state.filterTabState === states.DEACTIVATED) {
       filterTabState = states.ACTIVE
     } else if (this.state.filterTabState === states.ACTIVE) {
@@ -104,6 +100,8 @@ export default class GridMenu extends React.Component {
     if (this.state.closeTabState === states.ACTIVE) {
       return;
     }
+
+    audio.play('button-click');
     this.setState({closeTabState: states.ACTIVE});
     this.context.router.goBack();
   };
@@ -112,6 +110,8 @@ export default class GridMenu extends React.Component {
     if (this.state.returnTabState === states.ACTIVE) {
       return;
     }
+
+    audio.play('button-click');
     this.setState({returnTabState: states.ACTIVE});
   };
 
@@ -127,6 +127,7 @@ export default class GridMenu extends React.Component {
           ref="returnTab"
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
+          onMouseEnter={this.playRolloverSfx}
           to={`tests/narrative-video-player`}
         >
           <div
@@ -142,6 +143,7 @@ export default class GridMenu extends React.Component {
           ref="filterTab"
           className={`filter tab ${filterState}`}
           onClick={this.handleFilterClick}
+          onMouseEnter={this.playRolloverSfx}
           onMouseLeave={this.handleFilterMouseLeave}
         >
           <div
@@ -157,6 +159,7 @@ export default class GridMenu extends React.Component {
           ref="closeTab"
           className={`close tab ${closeState}`}
           onClick={this.handleCloseClick}
+          onMouseEnter={this.playRolloverSfx}
         >
           <div
             ref="closeIcon"
