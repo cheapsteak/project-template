@@ -46,11 +46,11 @@ export default class LandingPage extends React.Component {
   }
 
   componentWillAppear(callback) {
-    this.initAnimateInPromise = this.animateIn(callback);
+    this.initAnimateInPromise = this.animateIn(callback, {delay: 0});
   }
 
   componentWillEnter(callback) {
-    this.initAnimateInPromise = this.animateIn(callback);
+    this.initAnimateInPromise = this.animateIn(callback, {delay: 0});
   }
 
   componentWillLeave(callback) {
@@ -92,11 +92,17 @@ export default class LandingPage extends React.Component {
     Preload(gridImages.concat(documentaryVideo));
   };
 
-  animateIn = (callback) => {
+  animateIn = (callback, {delay=0}) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.loaderContainer];
     animate.set(staggerEls, {autoAlpha: 0, scale: 1.6});
 
-    return animate.staggerTo(staggerEls, 1.7, {autoAlpha: 1, y: 0, scale: 1.2, ease: Expo.easeOut, delay: 0.3}, 0.3)
+    return animate.staggerTo(staggerEls, 1.7, {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1.2,
+        ease: Expo.easeOut,
+        delay: 0.3 + delay
+      }, 0.3)
       .then(() => callback && callback())
   };
 
@@ -159,17 +165,17 @@ export default class LandingPage extends React.Component {
           <div ref="coverBg" className={`cover-bg`}></div>
 
           <div ref="contentContainer" className={`content-container`}>
-            <div ref="subtitle" className={`subtitle`}>Welcome to our</div>
-            <div ref="title" className={`title`}>Middle School Tour</div>
+            <div ref="subtitle" className={`subtitle`}>Welcome to</div>
+            <div ref="title" className={`title`}>Success Academy Middle Schools</div>
             <div ref="description" className={`description`}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.
+              Take an inside look at our culture and curriculum through the eyes of our scholars.
             </div>
 
             <div ref="ctaContainer" className={`cta-container`}>
               <Link
                 ref="ctaWatch"
                 className={`cta watch`}
-                to={`video`}
+                to={`narrative-video`}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}

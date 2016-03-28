@@ -32,7 +32,7 @@ export default <Provider store={store}>
     <Route path="/" component={App}>
       <IndexRoute component={LandingPage}/>
       <Route path="grid" component={GridPage}/>
-      <Route path="video" component={NarrativeVideoPlayer}/>
+      <Route path="narrative-video" component={NarrativeVideoPlayer}/>
       <Route path="chapters/:chapter_slug" component={Chapter}>
         <Route
           path="instructional-videos/:slug"

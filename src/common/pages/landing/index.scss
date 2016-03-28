@@ -39,7 +39,7 @@
   .content-container {
     position: relative;
     display: inline-block;
-    @include scale-prop(max-width, 580);
+    @include scale-prop(max-width, 900);
     cursor: default;
 
     .subtitle {
@@ -58,6 +58,8 @@
       width: 90%;
       @include scale-prop(font-size, 20);
       color: rgba(143, 143, 143, 1);
+      margin: auto;
+      @include scale-prop(max-width, 500);
     }
 
     .cta-container {
@@ -93,7 +95,7 @@
       @include scale-prop(height, 40);
       margin-left: auto;
       fill: #fff;
-      animation: spin 2.5s infinite;
+      //animation: spin 2.5s infinite;
     }
 
     p {

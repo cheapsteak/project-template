@@ -73,7 +73,7 @@ export default class GridPage extends React.Component {
 
   animateOut = (callback) => {
     return animate.all([
-        animate.to(this.containerEl, 1, {autoAlpha: 0})
+        animate.to(this.containerEl, 0, {autoAlpha: 0})
       ])
       .then(() => {
         callback && callback()
