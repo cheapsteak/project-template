@@ -23,6 +23,7 @@
     "babel-polyfill": "^6.5.0",
     "background-cover": "0.0.4",
     "bezier-easing": "^1.1.1",
+    "bluebird": "^3.3.4",
     "domready": "^1.0.8",
     "event-emitter": "^0.3.4",
     "fastclick": "^1.0.6",
