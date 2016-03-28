@@ -1,0 +1,80 @@
+.content-list {
+  $list-item-height: 12.428vh;
+  
+  overflow: hidden;
+  background-color: black;
+  transform: translate(0,0,0);
+
+  .list-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: $list-item-height/2;
+    background-color: #414244;
+    padding: 0 5.333vw;
+
+    span {
+      height: 36%;
+      
+      svg {
+        fill: rgba(150,150,150,0.4);
+        height: 100%;
+      }
+    }
+
+    label {
+      font-size: 4vw;
+      font-weight: bold;
+      color: rgba(255,255,255,0.4);
+      padding-top: 0.9vw;
+      margin-left: 2.667vw;
+    }
+  }
+
+  .list-item {
+    display: flex;
+    height: $list-item-height;
+    background-color: #37383A;
+
+    &:not(:last-child):not(:first-child) {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    &:first-child {
+      background-color: #5F5F5F;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    .list-text-content {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      padding: 0 5.333vw;
+
+      label, h4 {
+        display: block;
+        font-weight: bold;
+      }
+
+      label {
+        font-size: 3.333vw;
+        color: rgba(255,255,255,0.4);
+        margin-bottom: 0.35vh;
+      }
+
+      h4 {
+        font-size: 4.4vw;
+        color: white;
+      }
+
+      .item-duration {
+        margin-left: auto;
+        font-size: 3.333vw;
+        color: rgba(255,255,255,0.4);
+      }
+    }
+  }
+}

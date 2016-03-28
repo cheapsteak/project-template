@@ -12,7 +12,11 @@ import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import NarrativeVideoPlayer from 'common/components/video-players/narrative/narrative-video-player-redux.jsx';
 
-function handleRouteUpdate() {
+import MobileApp from './mobile/mobile.jsx';
+import MobileLanding from './mobile/landing/landing.jsx';
+import MobileChapters from './mobile/chapters/chapters.jsx';
+
+function handleRouteUpdate () {
   console.log('route updated');
   ga('send', 'pageview');
 }
@@ -41,6 +45,10 @@ export default <Provider store={store}>
           childComponent={PhotoEssay}
         />
       </Route>
+    </Route>
+    <Route path="/mobile" component={MobileApp}>
+      <IndexRoute component={MobileLanding} />
+      <Route path="chapters" component={MobileChapters} />
     </Route>
 
     {testRoutes}
