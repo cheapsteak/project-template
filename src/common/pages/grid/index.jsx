@@ -52,6 +52,7 @@ export default class GridPage extends React.Component {
   }
 
   componentWillUnmount() {
+    this.context.eventBus.off('clickFilter', this.handleClickFilter);
     window.removeEventListener('resize', this.handleWindowResize);
   }
 

@@ -21,17 +21,6 @@ export default class Podcast extends React.Component {
     this.mediaEl = this.refs.mediaEl;
     this.circles = findDOMNode(this.refs.circlesContainer).children;
 
-    this.mediaEl.addEventListener('loadedmetadata', () => {
-      const duration = this.mediaEl.duration;
-      this.setState({duration});
-    });
-
-    this.mediaEl.addEventListener('timeupdate', () => {
-      const currTime = this.mediaEl.currentTime;
-      const progress = currTime / this.state.duration;
-      this.setState({progress});
-    });
-
     this.resize();
     window.addEventListener('resize', this.handleWindowResize);
   }
@@ -42,6 +31,17 @@ export default class Podcast extends React.Component {
 
   resize = () => {
     this.handleWindowResize();
+  };
+
+  handleLoadedMetadata = () => {
+    const duration = this.mediaEl.duration;
+    this.setState({duration});
+  };
+
+  handleTimeUpdate = () => {
+    const currTime = this.mediaEl.currentTime;
+    const progress = currTime / this.state.duration;
+    this.setState({progress});
   };
 
   play = () => {
@@ -67,7 +67,13 @@ export default class Podcast extends React.Component {
     return (
       <div className={`podcast ${this.props.className || ''}`}>
 
-        <video ref="mediaEl" preload={true} src={this.props.src}></video>
+        <video
+          ref="mediaEl"
+          preload={true}
+          src={this.props.src}
+          onLoadedMetadata={this.handleLoadedMetadata}
+          onTimeUpdate={this.handleTimeUpdate}
+        ></video>
 
         <div ref="playContainer" className={`play-container`}>
           <div ref="circlesContainer" className={`circles-container`}>

@@ -75,7 +75,7 @@ export default class Panorama extends React.Component {
     this.containerEl = findDOMNode(this);
     this.setPanorama();
 
-    this.context.eventBus.on('zoomUpdate', (level) => this.onZoomUpdate(level));
+    this.context.eventBus.on('zoomUpdate', this.onZoomUpdate);
     this.context.eventBus.on('zoomIn', this.zoomIn);
     this.context.eventBus.on('zoomOut', this.zoomOut);
 
@@ -94,6 +94,17 @@ export default class Panorama extends React.Component {
     } catch (e) {
       console.log('couldnt properly destroy panorama');
     }
+
+    this.context.eventBus.off('zoomUpdate', this.onZoomUpdate);
+    this.context.eventBus.off('zoomIn', this.zoomIn);
+    this.context.eventBus.off('zoomOut', this.zoomOut);
+
+    this.context.eventBus.off('leaveIdle', this.handleLeaveIdle);
+    this.context.eventBus.off('enterFullBrowser', this.handleEnterFullBrowser);
+    this.context.eventBus.off('leaveFullBrowser', this.handleLeaveFullBrowser);
+
+    //this.containerEl.removeEventListener('mousewheel', this.handleMouseWheel);
+    //this.containerEl.removeEventListener('DOMMouseScroll', this.handleMouseWheel);
   }
 
   handleCloseClick = () => {
