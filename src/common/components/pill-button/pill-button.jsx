@@ -1,5 +1,6 @@
 import React from 'react';
 import animate from 'gsap-promise';
+import Promise from 'bluebird';
 
 export default class PillButton extends React.Component {
 
@@ -11,30 +12,32 @@ export default class PillButton extends React.Component {
   _clicked = undefined;
 
   componentDidMount() {
-    animate.set(this.refs.verticalBar, { rotation: 90 });
+    animate.set(this.refs.verticalBar, {rotation: 90});
   }
 
   handleClick = (e) => {
     this._clicked = 'clicked';
+    audio.play('button-click');
 
-    if(!this.state.active) {
+    if (!this.state.active) {
       this.animateToActive();
     } else {
       this.animateToIdle();
     }
 
-    this.setState({ active: !this.state.active });
+    this.setState({active: !this.state.active});
     this.props.onClick && this.props.onClick();
   };
 
   handleMouseEnter = (e) => {
+    audio.play('button-rollover');
     this.animateMouseEnter();
   };
 
   handleMouseLeave = (e) => {
-    if(this._clicked) {
+    if (this._clicked) {
       this._clicked = undefined;
-      return
+      return;
     }
 
     this.animateMouseLeave();
@@ -47,17 +50,17 @@ export default class PillButton extends React.Component {
     ]);
 
     return animate
-      .to(this.refs.text, 0.2, { opacity: 0, y: 20 })
+      .to(this.refs.text, 0.2, {opacity: 0, y: 20})
       .then(() => {
-        animate.set(this.refs.text, { y: -20 });
-        return Promise.all[
-          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#2B2B2B'} }),
-          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
-          animate.to(this.refs.horizontalBar, 0.3, { rotation: 180 }),
-          animate.to(this.refs.verticalBar, 0.3, { rotation: 180 })
-        ];
+        animate.set(this.refs.text, {y: -20});
+        return Promise.all([
+          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#2B2B2B'}}),
+          animate.to(this.refs.text, 0.2, {opacity: 1, y: 0}),
+          animate.to(this.refs.horizontalBar, 0.3, {rotation: 180}),
+          animate.to(this.refs.verticalBar, 0.3, {rotation: 180})
+        ]);
       });
-  }
+  };
 
   animateToIdle = () => {
     TweenMax.killTweensOf([
@@ -66,15 +69,15 @@ export default class PillButton extends React.Component {
     ]);
 
     return animate
-      .to(this.refs.text, 0.2, { opacity: 0, y: -20 })
+      .to(this.refs.text, 0.2, {opacity: 0, y: -20})
       .then(() => {
-        animate.set(this.refs.text, { y: 20 });
-        return Promise.all[
-          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
-          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#121212'} }),
-          animate.to(this.refs.horizontalBar, 0.3, { rotation: 0 }),
-          animate.to(this.refs.verticalBar, 0.3, { rotation: 90 })
-        ];
+        animate.set(this.refs.text, {y: 20});
+        return Promise.all([
+          animate.to(this.refs.text, 0.2, {opacity: 1, y: 0}),
+          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#121212'}}),
+          animate.to(this.refs.horizontalBar, 0.3, {rotation: 0}),
+          animate.to(this.refs.verticalBar, 0.3, {rotation: 90})
+        ]);
       });
   };
 
@@ -85,13 +88,13 @@ export default class PillButton extends React.Component {
     ]);
 
     return animate
-      .to(this.refs.text, 0.2, { opacity: 0, y: -20 })
+      .to(this.refs.text, 0.2, {opacity: 0, y: -20})
       .then(() => {
-        animate.set(this.refs.text, { y: 20 });
-        return Promise.all[
-          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 }),
-          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#121212'} })
-        ];
+        animate.set(this.refs.text, {y: 20});
+        return Promise.all([
+          animate.to(this.refs.text, 0.2, {opacity: 1, y: 0}),
+          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#121212'}})
+        ]);
       });
   };
 
@@ -102,18 +105,18 @@ export default class PillButton extends React.Component {
     ]);
 
     return animate
-      .to(this.refs.text, 0.2, { opacity: 0, y: 20 })
+      .to(this.refs.text, 0.2, {opacity: 0, y: 20})
       .then(() => {
-        animate.set(this.refs.text, { y: -20 });
-        return Promise.all[
-          animate.to(this.refs.pillButton, 0.3, { css: {backgroundColor: '#2B2B2B'} }),
-          animate.to(this.refs.text, 0.2, { opacity: 1, y: 0 })
-        ]
+        animate.set(this.refs.text, {y: -20});
+        return Promise.all([
+          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#2B2B2B'}}),
+          animate.to(this.refs.text, 0.2, {opacity: 1, y: 0})
+        ]);
       });
-  }
+  };
 
-  render () {
-    const { className, style } = this.props;
+  render() {
+    const {className, style} = this.props;
 
     return (
       <div

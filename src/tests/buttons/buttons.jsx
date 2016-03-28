@@ -1,9 +1,10 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import PillButton from 'common/components/pill-button/pill-button';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import gridIcon from 'svgs/icon-explore.svg';
 import closeIcon from 'svgs/icon-close.svg';
+import playIcon from 'svgs/icon-play.svg';
 
 export default class ButtonsTest extends React.Component {
 
@@ -22,7 +23,7 @@ export default class ButtonsTest extends React.Component {
       hoverBackgroundColor: "#3e4548"
     },
     {
-      text: 'Red Button',
+      text: '',
       color: "#ffffff",
       backgroundColor: "#962b22",
       hoverBackgroundColor: "#7c1711",
@@ -32,7 +33,8 @@ export default class ButtonsTest extends React.Component {
       text: 'Navy Button',
       color: "#ffffff",
       backgroundColor: "#152030",
-      hoverBackgroundColor: "#0a1321"
+      hoverBackgroundColor: "#0a1321",
+      svg: playIcon
     },
     {
       text: 'Teal Button',
@@ -44,15 +46,15 @@ export default class ButtonsTest extends React.Component {
     {
       text: 'Clear Button',
       color: "#ffffff",
-      style: { border: '1px solid white', fill: 'black' },
-      hoverBackgroundColor: "rgba(255,255,255,0.8)",
+      style: {border: '1px solid white', fill: 'black'},
+      hoverBackgroundColor: "rgba(255,255,255,0.2)",
       svg: gridIcon
     }
   ];
 
   style = {
     display: 'flex',
-    backgroundColor: '#444',
+    backgroundColor: '#777',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -60,15 +62,15 @@ export default class ButtonsTest extends React.Component {
     height: '100%'
   };
 
-  render () {
+  render() {
 
     return (
       <div style={this.style}>
-        <PillButton 
+        <PillButton
           style={{margin: 20}}
           idleText="Pill Button Idle"
           activeText="Pill Button Active"
-          onClick={() => alert('Pill Button Clicked')}
+          onClick={() => console.log('Pill Button Clicked')}
         />
         <div style={{display: 'flex'}}>
           {
@@ -81,7 +83,7 @@ export default class ButtonsTest extends React.Component {
                 color={button.color}
                 backgroundColor={button.backgroundColor}
                 hoverBackgroundColor={button.hoverBackgroundColor}
-                onClick={() => alert(`${button.text} Clicked`)}
+                onClick={() => console.log(`${button.text} clicked`)}
               />
             })
           }

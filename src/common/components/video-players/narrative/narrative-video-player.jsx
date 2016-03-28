@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/video-player-play.svg';
-import PauseButtonSvg from 'svgs/video-player-pause.svg';
+import PlayButtonSvg from 'svgs/icon-play.svg';
+import PauseButtonSvg from 'svgs/icon-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
 import ForwardButtonSvg from 'svgs/video-forward-button.svg';
 import IconExplore from 'svgs/icon-explore.svg';
@@ -145,7 +145,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     // Video Finished
     if(this.props.duration && nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration && 
+      if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         clearTimeout(this.hideControlsTimeoutId);
         this.hideControlsTimeoutId = undefined;
@@ -153,19 +153,21 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
     }
-
-    if(this.props.isMuted !== nextProps.isMuted) {
-      this.video.muted = nextProps.isMuted;
-    }
   }
 
   componentDidMount() {
     this.animationStates = calculateAnimationStates(this.refs);
 
-    animate.set(this.refs.exploreButton, this.animationStates.out.exploreButton);
-    animate.set(this.refs.overlay, this.animationStates.out.overlay);
-    animate.set(this.refs.videoWrapper, this.animationStates.idle.videoWrapper);
-    animate.set(this.refs.circleCTA, this.animationStates.out.circleCTA);
+    const initialState = this.props.useFullControls
+      ? 'idle'
+      : 'out';
+
+    animate.set(this.refs.exploreButton, this.animationStates[initialState].exploreButton);
+    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+    animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
+    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+
     animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
     animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
@@ -355,7 +357,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const times = this.props.timeline.map(point => point.time);
 
     // newTime === video.duration will cause a replay
-    const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001; 
+    const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001;
 
     this.video.currentTime = newTime;
   };
@@ -446,10 +448,12 @@ export default class NarrativeVideoPlayer extends React.Component {
             ref={(node) => this.video = node }
             src={this.props.src}
             preload="metadata"
+            autoPlay={true}
             onLoadedMetadata={this.handleMetadataLoaded}
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
+            muted={this.props.isMuted}
           >
           </video>
           <Link ref={node => this.refs.circleCTA = findDOMNode(node)} className="circle-cta" to={circleCTA.route}>
@@ -476,7 +480,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                   route="/"
                   image="/narrative-ending-card.jpg"
                 />
-              : undefined 
+              : undefined
             }
             </TransitionGroup>
             <div

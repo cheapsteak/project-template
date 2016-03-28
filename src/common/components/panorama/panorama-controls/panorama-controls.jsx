@@ -2,6 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import Promise from 'bluebird';
+import detector from '../../../utils/detect';
 
 import IconFullBrowser from 'svgs/icon-fullscreen.svg';
 import IconArrowLeft from 'svgs/icon-zoom-arrow-left.svg';
@@ -59,7 +60,15 @@ export default class PanoramaControls extends React.Component {
     this.setIndicatorPos();
   }
 
-  doDrag = (coordX) => {
+  componentWillUnmount() {
+    document.removeEventListener('mousemove', this.doDrag);
+    document.removeEventListener('touchmove', this.doDrag);
+    document.removeEventListener('mouseup', this.stopDrag);
+    document.removeEventListener('touchend', this.stopDrag);
+  }
+
+  doDrag = (e) => {
+    const coordX = (detector.isMobile) ? e.targetTouches[0].clientX : e.clientX;
     if (this.state.isDraggingSlider) {
       const pos = coordX - this.refs.slider.getBoundingClientRect().left;
       const zoomLevel = Math.min(pos / this.refs.slider.offsetWidth, 1);
@@ -76,11 +85,11 @@ export default class PanoramaControls extends React.Component {
   handleSliderDrag = () => {
     this.setState({isDraggingSlider: true});
 
-    document.addEventListener('mousemove', (e) => this.doDrag(e.clientX));
-    document.addEventListener('touchmove', (e) => this.doDrag(e.targetTouches[0].clientX));
+    document.addEventListener('mousemove', this.doDrag);
+    document.addEventListener('touchmove', this.doDrag);
 
-    document.addEventListener('mouseup', () => this.stopDrag());
-    document.addEventListener('touchend', () => this.stopDrag());
+    document.addEventListener('mouseup', this.stopDrag);
+    document.addEventListener('touchend', this.stopDrag);
   };
 
   setIndicatorPos = (zoomLevel = this.props.zoomLevel) => {

@@ -1,0 +1,24 @@
+@import "../index";
+
+.grid.layout-1920 {
+
+  .width-1 {
+    width: calc(100% / 11 - 15px);
+  }
+  .width-11 {
+    width: calc(100% / 11 - 26px);
+  }
+
+  .width-2 {
+    width: calc(100% * 2 / 11 - 13px);
+  }
+
+  .width-3 {
+    width: calc(100% * 3 / 11 - 10px);
+  }
+
+  .width-4 {
+    width: calc(100% * 4 / 11 - 16px);
+  }
+
+}

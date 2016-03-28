@@ -1,0 +1,115 @@
+.landing-page {
+  @include absolute-100;
+  font-weight: bold;
+  text-align: center;
+  background-color: rgba(23, 23, 23, 1);
+  user-select: none;
+  overflow: hidden;
+  @include gpu;
+  z-index: 99999;
+
+  * {
+    @include gpu;
+  }
+
+  .main-container {
+    @include absolute-100;
+    @include flex-center;
+  }
+
+  .video-container {
+    @include absolute-100;
+
+    video {
+      position: absolute;
+      opacity: 0.3;
+    }
+
+    .gradient {
+      @include absolute-100;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(30, 30, 40, 0) 30%, rgba(30, 30, 40, 0.75) 83%);
+    }
+  }
+
+  .cover-bg {
+    @include absolute-100;
+    background-color: #565e61;
+  }
+
+  .content-container {
+    position: relative;
+    display: inline-block;
+    @include scale-prop(max-width, 580);
+    cursor: default;
+
+    .subtitle {
+      @include scale-prop(font-size, 30);
+      color: rgba(143, 143, 143, 1);
+    }
+
+    .title {
+      @include scale-prop(font-size, 105);
+      @include scale-prop(margin-top, 100);
+      @include scale-prop(margin-bottom, 40);
+      color: rgba(255, 255, 255, 1);
+    }
+
+    .description {
+      width: 90%;
+      @include scale-prop(font-size, 20);
+      color: rgba(143, 143, 143, 1);
+    }
+
+    .cta-container {
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      @include scale-prop(margin-top, 80);
+
+      .cta {
+        display: flex;
+        @include scale-prop(width, 200);
+        @include scale-prop(height, 50);
+
+        &.explore {
+          @include scale-prop(margin-top, 10);
+          border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+      }
+    }
+  }
+
+  .loader-container {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    @include scale-prop(bottom, 90);
+    text-align: center;
+    transform: translateX(-50%);
+    transform-style: initial;
+
+    svg {
+      @include scale-prop(width, 40);
+      @include scale-prop(height, 40);
+      margin-left: auto;
+      fill: #fff;
+      animation: spin 2.5s infinite;
+    }
+
+    p {
+      @include scale-prop(font-size, 12);
+      @include scale-prop(margin-top, -5);
+      color: rgba(143, 143, 143, 1);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+}

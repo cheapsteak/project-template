@@ -1,6 +1,6 @@
 import React from 'react';
 import animate from 'gsap-promise';
-import CloseSvg from 'svgs/video-player-close.svg';
+import CloseSvg from 'svgs/icon-close.svg';
 import config from '../../../../config.js';
 
 

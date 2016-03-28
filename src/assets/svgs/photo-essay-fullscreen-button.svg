@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="24" viewBox="0 0 32 24">
-  <rect class="cls-1" x="5" y="5" width="22" height="14"/>
-  <path id="Rectangle_14_copy" data-name="Rectangle 14 copy" class="cls-2" d="M1357,766h-5v-5" transform="translate(-1351 -743)"/>
-  <path id="Rectangle_14_copy_2" data-name="Rectangle 14 copy 2" class="cls-2" d="M1377,744h5v5" transform="translate(-1351 -743)"/>
+  <rect x="5" y="5" width="22" height="14"/>
+  <path d="M1357,766h-5v-5" transform="translate(-1351 -743)"/>
+  <path d="M1377,744h5v5" transform="translate(-1351 -743)"/>
 </svg>

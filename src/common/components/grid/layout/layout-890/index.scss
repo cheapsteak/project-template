@@ -1,0 +1,12 @@
+@import "../index";
+
+.grid.layout-890 {
+
+  .width-2 {
+    width: calc(40% - 10px);
+  }
+
+  .width-3 {
+    width: calc(60% - 10px);
+  }
+}
