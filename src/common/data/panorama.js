@@ -4,28 +4,28 @@ export default [
   {
     slug: 'math',
     //src: `${config.ASSET_PATH}/images/pan-math.jpg`,
-    src: 'http://successacademy.jam3.net/panoramas/IMG_0034_5_6%20Panorama.jpg',
+    src: 'http://successacademy.jam3.net/panoramas/panorama-math.jpg',
     initLong: 2.5,
     initLat: 0
   },
   {
-    slug: 'literacy',
+    slug: 'literacy-and-writing',
     //src: `${config.ASSET_PATH}/images/pan-history.jpg`,
-    src: 'http://successacademy.jam3.net/panoramas/IMG_0241_2_3%20Panorama.jpg',
+    src: 'http://successacademy.jam3.net/panoramas/panorama-literacy.jpg',
     initLong: -2,
     initLat: 0
   },
   {
     slug: 'science',
     //src: `${config.ASSET_PATH}/images/pan-history.jpg`,
-    src: 'http://successacademy.jam3.net/panoramas/IMG_0409_10_11%20Panorama.jpg',
+    src: 'http://successacademy.jam3.net/panoramas/panorama-science.jpg',
     initLong: 3,
     initLat: 0
   },
   {
-    slug: 'hallway',
+    slug: 'welcome',
     //src: `${config.ASSET_PATH}/images/pan-hallway.jpg`,
-    src: 'http://successacademy.jam3.net/panoramas/IMG_0439_40_41%20Panorama.jpg',
+    src: 'http://successacademy.jam3.net/panoramas/panorama-hallway.jpg',
     initLong: 0,
     initLat: 0
   }

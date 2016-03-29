@@ -11,7 +11,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: []
+    instructionalVideos: [],
+    panoramas: ['welcome', 'literacy', 'science', 'math'],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'math',
@@ -22,7 +27,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: ['math'],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'science',
@@ -33,7 +43,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: ['science'],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'electives',
@@ -44,7 +59,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: []
+    instructionalVideos: [],
+    panoramas: [],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'computer-science',
@@ -55,7 +75,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: [],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'literacy-and-writing',
@@ -66,7 +91,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: ['literacy-and-writing'],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'history',
@@ -77,7 +107,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: [],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'character-development',
@@ -88,7 +123,12 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: [],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   },
   {
     slug: 'parental-investment',
@@ -99,6 +139,11 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideoUrl: ['tests/instructional-grid-player']
+    instructionalVideos: ['tests/instructional-grid-player'],
+    panoramas: [],
+    photoEssays: [],
+    articles: [],
+    podcast: '',
+    infoGraphics: ''
   }
 ]

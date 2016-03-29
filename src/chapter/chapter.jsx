@@ -149,15 +149,22 @@ export default class Chapter extends React.Component {
           />
         </div>
 
-        <div className="page-component">
-          <h2 className="component-title">360 Virtual Tour</h2>
-          <div className="panorama-container">
-            <Panorama
-              slug={`math`}
-              hasMenu={true}
-            />
-          </div>
-        </div>
+        {
+          // panorama component
+          this.state.data.panoramas &&
+          (
+            <div className="page-component">
+              <h2 className="component-title">360 Virtual Tour</h2>
+              <div className="panorama-container">
+                <Panorama
+                  slug={`math`}
+                  hasMenu={this.state.data.panoramas.length > 1}
+                />
+              </div>
+            </div>
+          )
+        }
+
         <div className="page-component">
           <h2 className="component-title">
             Photo Essay
