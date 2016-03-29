@@ -97,7 +97,66 @@ $parallax-amplitude: 50px;
         @include scale-prop(font-size, 25);
         @include scale-prop(margin-top, 10);
         opacity: 0.5;
+      }
 
+      .hero-button {
+        @include scale-prop(height, 60);
+        display: inline-block;
+        @include scale-prop(margin-top, 30);
+        cursor: pointer;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0);
+
+        .thumb {
+          @include scale-prop(width, 60);
+          height: 100%;
+          background-size: contain;
+          display: inline-block;
+          float: left;
+          opacity: 1;
+          transition: opacity 0.4s;
+          background-color: rgba(0, 0, 0, 1);
+        }
+
+        .button {
+          @include scale-prop(width, 190);
+          height: 100%;
+          @include flex-center;
+          color: #f99100;
+          @include scale-prop(font-size, 17);
+          float: left;
+          background-color: #fff;
+          transition: background-color 0.4s, color 0.4s;
+
+          .icon {
+            @include scale-prop(width, 16);
+            @include scale-prop(height, 16);
+            @include scale-prop(margin-right, 20);
+          }
+
+          svg {
+            fill: #f99100;
+            width: 100%;
+            height: 100%;
+            transition: fill 0.3s;
+          }
+        }
+
+        &:hover {
+
+          .thumb {
+            opacity: 0.65;
+          }
+
+          .button {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.45);
+          }
+
+          svg {
+            fill: #fff;
+          }
+        }
       }
     }
   }
