@@ -424,10 +424,12 @@ export default class NarrativeVideoPlayer extends React.Component {
             onClick={this.handleOverlayClick}
           >
           </div>
-          <button ref="exploreButton" className="explore-button">
-            <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
-            <div>Explore</div>
-          </button>
+          <Link to="/grid">
+            <button ref="exploreButton" className="explore-button">
+              <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
+              <div>Explore</div>
+            </button>
+          </Link>
           <video
             ref={(node) => this.video = node }
             src={this.props.src}

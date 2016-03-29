@@ -183,6 +183,40 @@ $parallax-amplitude: 50px;
   }
 }
 
+.article-row {
+  @include scale-prop('padding-left', 115);
+  @include scale-prop('padding-right', 115);
+  position: relative;
+  display: flex;
+  width: 100%;
+  z-index: 2;
+
+  &:not(:last-child) {
+    @include scale-prop('padding-bottom', 80);
+  }
+
+  & + &.has-image {
+    @include scale-prop('top', -40);
+    z-index: 1;
+  }
+
+  & + &:not(.has-image) {
+    @include scale-prop('margin-top', 40);
+  }
+
+  &:nth-child(even) {
+    background-color: rgba(#E8E8E8, 0.5);
+  }
+
+  &:nth-child(odd) {
+    justify-content: flex-end;
+  }
+
+  p {
+    @include scale-prop('margin-bottom', 15);
+  }
+}
+
 .photo-essay {
   overflow: hidden;
 
