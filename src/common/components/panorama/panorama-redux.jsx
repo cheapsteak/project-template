@@ -10,7 +10,10 @@ class PanoramaRedux extends React.Component {
   constructor(props) {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
-    this.boundActionCreators.setPanorama(props.slug);
+  }
+
+  componentWillMount () {
+    this.boundActionCreators.setPanorama(this.props.slug);
   }
 
   render() {
