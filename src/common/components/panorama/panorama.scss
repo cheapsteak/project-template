@@ -6,6 +6,10 @@
   background-color: #a6987d;
   @include gpu;
 
+  * {
+    @include gpu;
+  }
+
   &.loading {
     .psv-container {
       opacity: 0;
@@ -53,30 +57,12 @@
 
   .close-btn {
     position: absolute;
-    display: flex;
-    align-items: center;
     top: 0;
     right: 0;
     width: 150px;
-    background-color: #9f7740;
     height: 40px;
     z-index: 1000;
-    color: #fff;
-    font-weight: bold;
-    font-size: 17px;
-    cursor: pointer;
     @include autoAlpha-0;
-    transform: translateY(-100%);
-
-    .icon-container {
-      margin-left: 20px;
-      margin-right: 30px;
-
-      svg {
-        width: 16px;
-        height: 16px;
-      }
-    }
   }
 
   .psv-inject-target, .psv-inject-target-wrapper {

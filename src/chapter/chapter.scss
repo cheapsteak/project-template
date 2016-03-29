@@ -27,8 +27,17 @@ $parallax-amplitude: 50px;
     position: relative;
     @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
     @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
-    width: calc(100% - 50px);
     background-color: white;
+
+    @media (max-width: $break-large) {
+      width: calc(100% - 50px);
+    }
+    @media (min-width: $break-large + 1) {
+      width: calc(100% - #{(50/1400 * 100)}vw);
+    }
+    @media (min-width: $break-xlarge + 1) {
+      width: calc(100% - 70px);
+    }
   }
 
   .nav {
@@ -37,27 +46,59 @@ $parallax-amplitude: 50px;
     top: 0;
     width: 100%;
     background-color: rgba(#747981, 0.7);
-
     display: flex;
     justify-content: space-between;
 
     .nav-button {
-      display: flex;
-      background-color: #41474A;
-      height: 50px;
-      align-items: center;
-      color: #A5A8A8;
+
     }
   }
 
   .chapter-header {
     overflow: hidden;
-    height: calc(100vh - 50px);
     background-color: #fff;
+
+    @media (max-width: $break-large) {
+      height: calc(100vh - 50px);
+    }
+    @media (min-width: $break-large + 1) {
+      height: calc(100vh - #{(50/1400 * 100)}vw);
+    }
+    @media (min-width: $break-xlarge + 1) {
+      height: calc(100vh - 70px);
+    }
+
     video {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .hero-content {
+      position: absolute;
+      @include scale-prop(left, 100);
+      @include scale-prop(bottom, 100);
+      @include scale-prop(max-width, 430);
+      font-weight: bold;
+      color: #fff;
+
+      .hero-cta {
+        @include scale-prop(font-size, 24);
+      }
+
+      .hero-title {
+        @include scale-prop(font-size, 70);
+        @include scale-prop(margin-top, 10);
+        text-transform: capitalize;
+      }
+
+      .hero-description {
+        font-weight: normal;
+        @include scale-prop(font-size, 25);
+        @include scale-prop(margin-top, 10);
+        opacity: 0.5;
+
+      }
     }
   }
 
@@ -76,11 +117,8 @@ $parallax-amplitude: 50px;
   }
 
   .podcast {
-    height: 400px;
+    @include scale-prop(height, 480);
     .text-container {
-      width: 20vw;
-      min-width: 280px;
-      right: 8.21vw;
       margin-top: - $parallax-amplitude * 2;
     }
   }

@@ -19,7 +19,7 @@ export default class Layout1570 extends Layout {
           <div className={`width-100 bottom-margin grey`} style={{height: two}}>
             <GridTile
               ref="tile0"
-              chapter={`welcome`}
+              slug={`welcome`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -32,7 +32,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item first-row width-3 left-margin sand`} style={{height: three}}>
           <GridTile
             ref="tile1"
-            chapter={`science`}
+            slug={`science`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -45,7 +45,7 @@ export default class Layout1570 extends Layout {
           <div className={`width-100 top-margin dark-blue`} style={{height: three}}>
             <GridTile
               ref="tile2"
-              chapter={`electives`}
+              slug={`electives`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -54,7 +54,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item width-4 light-blue`} style={{height: two}}>
           <GridTile
             ref="tile3"
-            chapter={`literacy`}
+            slug={`literacy-and-writing`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -70,7 +70,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item width-4 left-margin grey`} style={{height: two}}>
           <GridTile
             ref="tile4"
-            chapter={`math`}
+            slug={`math`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -78,7 +78,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item width-3 grey`} style={{height: three}}>
           <GridTile
             ref="tile5"
-            chapter={`computer`}
+            slug={`computer-science`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -86,7 +86,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item width-22 left-margin top-margin light-blue`} style={{height: four}}>
           <GridTile
             ref="tile6"
-            chapter={`history`}
+            slug={`history`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -103,7 +103,7 @@ export default class Layout1570 extends Layout {
             <div className={`width-100 top-margin dark-blue`} style={{height: two, float: 'left'}}>
               <GridTile
                 ref="tile7"
-                chapter={`investment`}
+                slug={`parental-investment`}
                 isFiltered={this.props.isFiltered}
               />
             </div>
@@ -113,7 +113,7 @@ export default class Layout1570 extends Layout {
         <div className={`grid-item width-3 red`} style={{height: two}}>
           <GridTile
             ref="tile8"
-            chapter={`development`}
+            slug={`character-development`}
             isFiltered={this.props.isFiltered}
           />
         </div>

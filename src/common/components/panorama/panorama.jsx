@@ -7,8 +7,8 @@ import deviceOrientation from '../../utils/three-device-orientation';
 import animate from 'gsap-promise';
 import detect from '../../utils/detect';
 import TransitionGroup from 'react-addons-transition-group';
-
 import IconClose from 'svgs/icon-close.svg';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
 
 import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
@@ -39,6 +39,7 @@ const zoomRangeNum = maxZoomNum + minZoomNum;
 export default class Panorama extends React.Component {
 
   static propTypes = {
+    className: React.PropTypes.string,
     src: React.PropTypes.string.isRequired,
     initLong: React.PropTypes.number,
     initLat: React.PropTypes.number,
@@ -46,6 +47,7 @@ export default class Panorama extends React.Component {
   };
 
   static defaultProps = {
+    className: '',
     initLong: 0,
     initLat: 0
   };
@@ -278,7 +280,7 @@ export default class Panorama extends React.Component {
   };
 
   render() {
-    const isMobile = detect.isMobile;
+    const isMobile = detect.isPhone;
 
     const controls = isMobile ? null : (
       <PanoramaControls
@@ -303,8 +305,14 @@ export default class Panorama extends React.Component {
         className={`close-btn`}
         onClick={this.handleCloseClick}
       >
-        <div className={`icon-container`} dangerouslySetInnerHTML={{ __html: IconClose }}></div>
-        <p>Close</p>
+        <RectangularButton
+          style={{width: '100%', height: '100%'}}
+          text={`Close`}
+          color={`#fff`}
+          svgIcon={IconClose}
+          backgroundColor={`#8d652f`}
+          hoverBackgroundColor={`#8d652f`}
+        />
       </div>
     );
 
@@ -318,7 +326,7 @@ export default class Panorama extends React.Component {
 
     return (
       <div
-        className={`panorama ${this.state.status}`}
+        className={`panorama ${this.state.status} ${this.props.className}`}
         onMouseMove={this.handleMouseMove}
       >
         <PanoramaCompass

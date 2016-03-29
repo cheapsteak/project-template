@@ -4,13 +4,25 @@ import InstructionalVideo from 'common/components/video-players/instructional/ch
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
 import TransitionGroup from 'react-addons-transition-group';
 import unwrapComponent from 'common/utils/unwrap-component.js';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
+import {Link} from 'react-router';
 import ScrollMagic from 'scrollmagic';
+import IconExplore from 'svgs/icon-explore.svg';
+import IconPlay from 'svgs/icon-play.svg';
+import chaptersModel from 'common/models/chapters-model';
 
 export default class Chapter extends React.Component {
-  componentDidMount () {
+
+  componentWillMount() {
+    const slug = this.props.params.chapter_slug;
+    const data = chaptersModel.get(slug);
+    this.setState({data});
+  }
+
+  componentDidMount() {
     const el = findDOMNode(this);
     const scrollController = new ScrollMagic.Controller({
       //container: el,
@@ -18,7 +30,7 @@ export default class Chapter extends React.Component {
       loglevel: 2
     });
 
-    const getY = function (progress, min=50, max=-50) {
+    const getY = function (progress, min = 50, max = -50) {
       //const amplitude = max - min;
       //return progress * amplitude - amplitude/2;
       return min + (max - min) * progress;
@@ -36,7 +48,7 @@ export default class Chapter extends React.Component {
 
     const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
 
-      if (i === 10)  {
+      if (i === 10) {
         el.style.color = 'red';
       }
 
@@ -85,19 +97,45 @@ export default class Chapter extends React.Component {
     }
   };
 
-  render () {
+  render() {
+    if (!this.state.data) return <div/>;
+
     return <section className="chapter-page">
       <div className="main">
         <nav className="nav">
-          <span className="nav-button">Return to Tour</span>
-          <span className="nav-button">Explore</span>
+          <Link
+            className={`nav-button left`}
+            to={`narrative-video`}
+          >
+            <RectangularButton
+              text={`Return to Documentary`}
+              color={`#adafaf`}
+              svgIcon={IconPlay}
+              backgroundColor={`#565d60`}
+              hoverBackgroundColor={`#3e4548`}
+            />
+          </Link>
+          <Link
+            className={`nav-button right`}
+            to={`grid`}
+          >
+            <RectangularButton
+              text={`Explore Chapters`}
+              color={`#adafaf`}
+              svgIcon={IconExplore}
+              backgroundColor={`#565d60`}
+              hoverBackgroundColor={`#3e4548`}
+            />
+          </Link>
         </nav>
+
         <div className="page-component chapter-header">
-          <video
-            autoPlay
-            loop
-            src="http://successacademy.jam3.net/middleschool/videos/temp-comp.mp4">
-          </video>
+          <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
+          <div className={`hero-content`}>
+            <div className={`hero-cta`}>{this.state.data.hero.cta}</div>
+            <div className={`hero-title`}>{this.state.data.title}</div>
+            <div className={`hero-description`}>{this.state.data.hero.description}</div>
+          </div>
         </div>
 
         <div className="page-component">
@@ -112,15 +150,22 @@ export default class Chapter extends React.Component {
           />
         </div>
 
-        <div className="page-component">
-          <h2 className="component-title">360 Virtual Tour</h2>
-          <div className="panorama-container">
-            <Panorama
-              slug={`math`}
-              hasMenu={true}
-            />
-          </div>
-        </div>
+        {
+          // panorama component
+          this.state.data.panoramas &&
+          (
+            <div className="page-component">
+              <h2 className="component-title">360 Virtual Tour</h2>
+              <div className="panorama-container">
+                <Panorama
+                  slug={`math`}
+                  hasMenu={this.state.data.panoramas.length > 1}
+                />
+              </div>
+            </div>
+          )
+        }
+
         <div className="page-component">
           <h2 className="component-title">
             Photo Essay
@@ -144,7 +189,12 @@ export default class Chapter extends React.Component {
           className="route-content-wrapper"
 
         >
-          { React.cloneElement(this.props.children || <div />, {key: this.props.params.slug, getTarget: this.getTarget}) }
+          {
+            React.cloneElement(this.props.children || <div />, {
+              key: this.state.slug,
+              getTarget: this.getTarget
+            })
+          }
         </TransitionGroup>
         <footer>footer</footer>
       </div>

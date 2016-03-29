@@ -13,6 +13,9 @@
   }
 }
 
+// usage example:
+// @include scale-calc-deduct(font-size, 20);
+
 @mixin scale-prop($prop, $size) {
   @media (max-width: $break-large) {
     #{$prop}: $size*1px;
@@ -22,6 +25,21 @@
   }
   @media (min-width: $break-xlarge + 1) {
     #{$prop}: $size*($xlarge-size/$large-size)*1px;
+  }
+}
+
+// usage example:
+// @include scale-calc-deduct(width, '100%', 69);
+
+@mixin scale-calc-deduct($prop, $baseVal, $size) {
+  @media (max-width: $break-large) {
+    #{$prop}: calc(#{$baseVal} - #{$size} * 1px);
+  }
+  @media (min-width: $break-large + 1) {
+    #{$prop}: calc(#{$baseVal} - #{$size*(100/$large-size)} * 1vw);
+  }
+  @media (min-width: $break-xlarge + 1) {
+    #{$prop}: calc(#{$baseVal} - #{$size*($xlarge-size/$large-size)} * 1px);
   }
 }
 

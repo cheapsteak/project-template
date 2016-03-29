@@ -1,80 +1,40 @@
 import config from '../../../config.js';
-import _ from 'lodash';
 
-const data = {
-  welcome: {
-    title: 'welcome',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/welcome',
-    instructionalVideoRoute: null
+export default [
+  {
+    slug: 'welcome',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  science: {
-    title: 'science',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/science',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'science',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  literacy: {
-    title: 'literacy & writing',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/literacy-and-writing',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'literacy-and-writing',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  math: {
-    title: 'math',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/math',
-    instructionalVideoRoute: null
+  {
+    slug: 'math',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  electives: {
-    title: 'electives',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/electives',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'electives',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  computer: {
-    title: 'computer science',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/computer-science',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'computer-science',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  investment: {
-    title: 'parental investment',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/parental-investment',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'parental-investment',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  development: {
-    title: 'character development',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/character-development',
-    narrativeVideoUrl: 'tests/narrative-video-player',
-    instructionalVideoRoute: null
+  {
+    slug: 'character-development',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   },
-  history: {
-    title: 'history',
-    subtitle: 'chapter',
-    image: `${config.ASSET_PATH}/images/kid-test.png`,
-    chapterRoute: 'chapters/history',
-    instructionalVideoRoute: 'tests/instructional-grid-player'
+  {
+    slug: 'history',
+    image: `${config.ASSET_PATH}/images/kid-test.png`
   }
-};
-
-export default {
-  getDataByChapterId(id) {
-    return data[id];
-  },
-
-  getImages() {
-    const images = _.mapValues(data, 'image');
-    return _.values(images);
-  }
-};
+];
