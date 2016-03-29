@@ -1,69 +1,19 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
+import PlayButton from 'common/components/play-button/play-button';
 import PlayButtonSvg from 'svgs/icon-play.svg';
 import PauseButtonSvg from 'svgs/icon-pause.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
+import CloseSvg from 'svgs/icon-close.svg';
 import EnterFullBrowserButtonSvg from 'svgs/video-player-enter-fullbrowser.svg';
 import ExitFullBrowserButtonSvg from 'svgs/video-player-exit-fullbrowser.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-
-function calculateAnimationStates (els) {
-  const zoomedInRect = els.root.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height - zoomedOutVideoMargin * 2
-  }
-
-  return {
-    out: {
-      videoWrapper: {
-        delay: 0.3,
-        scaleX: 1,
-        scaleY: 1
-      },
-      endingOverlay: {
-        delay: 0.1,
-        display: 'none',
-        opacity: 0
-      },
-      replayButton: {
-        opacity: 0
-      },
-      replayLabel: {
-        opacity: 0
-      },
-      controls: {
-        y: els.controls.offsetHeight
-      }
-    },
-    idle: {
-      videoWrapper: {
-        scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height
-      },
-      endingOverlay: {
-        display: 'block',
-        opacity: 1
-      },
-      replayButton: {
-        delay: 0.8,
-        opacity: 1
-      },
-      replayLabel: {
-        delay: 0.8,
-        opacity: 1
-      },
-      controls: {
-        y: 0
-      }
-    }
-  };
-};
+import calculateAnimationStates from '../calculateAnimationStates.js';
+import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 
 export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
@@ -78,34 +28,59 @@ export default class ChapterVideoPlayer extends React.Component {
   cloneId = 'clone-video';
   hideControlsTimeoutId = undefined;
 
-  componentWillMount() {
-    // this.props.onVideoTimeChange(0);
-  }
-
   componentDidMount() {
-    const { endingOverlay, replayButton, replayLabel } = this.refs;
+
     this.animationStates = calculateAnimationStates(this.refs);
-    animate.set(endingOverlay, this.animationStates.out.endingOverlay);
-    animate.set(replayButton, this.animationStates.out.replayButton);
-    animate.set(replayLabel, this.animationStates.out.replayLabel);
+
+    const initialState = this.props.useFullControls
+      ? 'idle'
+      : 'out';
+
+    const endingState = this.props.currentTime === this.props.duration && this.props.duration
+      ? 'idle'
+      : 'out';
+
+    animate.set(this.refs.closeButton, this.animationStates[initialState].closeButton);
+    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+
+    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+
+    console.log(initialState);
+        
+
+    animate.set(this.refs.endingOverlay, this.animationStates[endingState].endingOverlay);
+    animate.set(this.refs.replayButton, this.animationStates[endingState].replayButton);
+    animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
+
+    this.props.isPlaying && this.video && this.video.play();
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if(this.props.init !== undefined && this.props.init !== nextProps.init) {
+      console.log('animatein');
+          
+      this.animateInControls();
+    } else if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
+      if(nextProps.useFullControls) {
+        this.animateInControls();
+      } else {
+        this.animateOutControls();
+      }
+    }
+
     if(this.props.duration && nextProps.duration) {
       if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         this.animateInEndOverlay();
-        this.animateOutControls();
+        this.props.hideFullControls();
       } else if (this.props.currentTime === this.props.duration
         && nextProps.currentTime !== nextProps.duration) {
-        this.animateOutEndOverlay()
-        .then(this.animateInControls);
+        this.animateOutEndOverlay();
+        this.props.hideFullControls();
       }
-    }
-
-    if(this.props.isMuted != nextProps.isMuted) {
-      this.video.muted = nextProps.isMuted;
-    }
+    } 
   }
 
   componentWillEnterFullBrowser = () => {
@@ -130,6 +105,11 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillLeaveFullBrowser = () => {
+    animate.to(this.refs.videoWrapper, 0.6, this.animationStates.out.videoWrapper);
+    return Promise.resolve();
+  };
+
+  componentDidLeaveFullBrowser = () => {
     const container = findDOMNode(this);
     const clone = document.querySelector('#clone-video');
     const cloneParent = clone.parentNode;
@@ -138,18 +118,39 @@ export default class ChapterVideoPlayer extends React.Component {
 
     cloneParent.removeChild(clone)
     cloneParent.insertBefore(video, cloneParent.firstChild);
-
     isPlaying && video.play();
-
-    return Promise.resolve();
   };
 
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
 
+  get videoEnded () {
+    return this.video.currentTime === this.video.duration;
+  }
+
+  handleComponentMouseMove = () => {
+    if(this.props.init) return;
+
+    if(!this.props.useFullControls && !this.videoEnded) {
+      this.props.showFullControls();
+    }
+
+    if(this.props.isPlaying) {
+      this.setHideControlsTimeout();
+    }
+  };
+
+
+  setHideControlsTimeout = () => {
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = setTimeout(() => {
+      this.props.hideFullControls();
+      this.hideControlsTimeoutId = undefined;
+    }, 1500);
+  }
+
   handleMetadataLoaded = () => {
-    this.video.currentTime = this.props.currentTime;
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
   };
 
@@ -183,66 +184,121 @@ export default class ChapterVideoPlayer extends React.Component {
   }
 
   animateInControls = () => {
-    return animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls);
+    return Promise.all([
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+    ]);
   };
 
   animateOutControls = () => {
-    return animate.to(this.refs.controls, 0.3, this.animationStates.out.controls);
+    const conditionalAnimations = !this.videoEnded && [
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
+    ];
+
+    return Promise.all([
+      ...conditionalAnimations,
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+    ]);
   };
 
   animateInEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
-
     return Promise.all([
-      animate.to(videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
-      animate.to(endingOverlay, 0.3, this.animationStates.idle.endingOverlay),
-      animate.to(replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.idle.replayLabel)
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
     ]);
   };
 
   animateOutEndOverlay = () => {
-    const { videoWrapper, endingOverlay, replayButton, replayLabel, controls } = this.refs;
+    this.stopAnimations();
 
     return Promise.all([
-      animate.to(videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(replayLabel, 0.3, this.animationStates.out.replayLabel)
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
+      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
+  stopAnimations = () => {
+    TweenMax.killTweensOf(_.values(this.refs));
+  }
+
   render() {
-    const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className } = this.props;
+    const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
+    const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className = '', noZoom, init } = this.props;
     const route = (!isFullBrowser ? fullBrowserChapterRoute : chapterRoute) || '/';
 
     return (
       <div
         ref="root"
-        className={`video-player instructional-video-player chapter-player ${className || ''}`}
+        className={
+          `video-player instructional-video-player chapter-player ${className} ${noZoom ? 'no-zoom' : ''} ${init ? 'init' : ''}
+          `
+        }
         style={style}
+        onMouseMove={this.handleComponentMouseMove}
       >
         <div
           ref="videoWrapper"
-          className="video-wrapper"
+          className={`video-wrapper`}
         >
-        {
-          !isFullBrowser ?
-            <video
-              id={this.videoId}
-              preload="metadata"
-              ref={(node) => this.video = node }
-              src={this.props.src}
-              onLoadedMetadata={this.handleMetadataLoaded}
-              onEnded={this.handleVideoPlayPause}
-              onTimeUpdate={this.handleTimeUpdate}
-              poster={this.props.poster}
-            >
-            </video>
-            : undefined
-        }
+          {
+            !isFullBrowser ?
+              <video
+                id={this.videoId}
+                preload="metadata"
+                ref={(node) => this.video = node }
+                src={this.props.src}
+                onLoadedMetadata={this.handleMetadataLoaded}
+                onEnded={this.handleVideoPlayPause}
+                onTimeUpdate={this.handleTimeUpdate}
+                muted={this.props.isMuted}
+                poster={this.props.poster}
+              >
+              </video>
+              : undefined
+          }
+          <Link to={route}>
+            <button ref="closeButton" className="close-button">
+              <span dangerouslySetInnerHTML={{ __html: CloseSvg }}></span>
+              <div>Close</div>
+            </button>
+          </Link>
+          {
+            this.props.init
+            ? <PlayButton
+                label="Play"
+                onPlay={this.handleVideoPlayPause}
+              />
+            : null
+          }
+          <div ref="overlay" className="video-overlay"></div>
+        </div>
+        <div
+          ref="simpleProgressBar"
+          className="simple-progress-bar"
+        >
+          <span style={{ width: progressWidth }}></span>
         </div>
         <div className="controls" ref="controls">
+          <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
             <span
               className="button play-button"

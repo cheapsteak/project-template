@@ -51,7 +51,7 @@
     width: 149px;
     height: 56px;
     background-color: #987849;
-    z-index: 10;
+    z-index: 100;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -69,5 +69,20 @@
 
   .image-card {
     left: calc(50% - 370px);
+  }
+
+  &.init {
+    background-color: transparent;
+
+    .simple-progress-bar {
+      display: none;
+    }
+  }
+
+  .progress-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
   }
 }

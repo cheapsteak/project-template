@@ -13,7 +13,7 @@ class ChapterVideoPlayerRedux extends React.Component {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
 
-    if(!props.videos[props.slug]) {
+    if(!props.videos.currentVideo || props.videos.currentVideo.slug !== props.slug) {
       this.boundActionCreators.setVideo(props.slug);
     }
   }
@@ -28,7 +28,8 @@ class ChapterVideoPlayerRedux extends React.Component {
       onVideoPlay={this.boundActionCreators.playVideo}
       onVideoPause={this.boundActionCreators.pauseVideo}
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
-      nextVideo={videos.nextVideo}
+      showFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: true })}
+      hideFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: false })}
       mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
       unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
       {...this.props}

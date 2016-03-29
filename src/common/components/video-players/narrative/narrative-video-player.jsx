@@ -14,6 +14,7 @@ import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import ImageCard from '../components/image-card/image-card.jsx';
+import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 
 function calculateAnimationStates (els) {
   const zoomedInRect = els.component.getBoundingClientRect();
@@ -74,7 +75,7 @@ function calculateAnimationStates (els) {
       overlay: {
         display: 'block',
         delay: 0.3,
-        opacity: 0.25
+        opacity: 0.5
       },
       endingOverlay: {
         display: 'block',
@@ -209,23 +210,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     return currentChapter;
   };
 
-  secondsToMinutes (totalSeconds) {
-    const totalSecondsFloat = parseFloat(totalSeconds);
-    let minutes = Math.floor(totalSecondsFloat / 60);
-    let seconds = Math.round(totalSecondsFloat - (minutes * 60));
-
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-
-    if (seconds < 10) {
-      seconds = "0" + seconds;
-    }
-
-    const time = minutes + ':' + seconds;
-
-    return time;
-  }
 
   /************************/
   /*     Animatations     */
@@ -515,7 +499,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           onMouseMove={ e => e.stopPropagation() }
           onMouseLeave={ this.handleMouseLeaveControls }
         >
-          <span className="label-duration">{this.secondsToMinutes(this.video && this.video.duration || 0)}</span>
+          <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
             <span
               className="button play-button"
