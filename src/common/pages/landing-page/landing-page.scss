@@ -39,7 +39,7 @@
   .content-container {
     position: relative;
     display: inline-block;
-    @include scale-prop(max-width, 900);
+    @include scale-prop(max-width, 600);
     cursor: default;
 
     .subtitle {
@@ -70,7 +70,7 @@
 
       .cta {
         display: flex;
-        @include scale-prop(width, 200);
+        @include scale-prop(width, 260);
         @include scale-prop(height, 50);
 
         &.explore {

@@ -174,7 +174,7 @@ export default class GridTile extends React.Component {
 
     const isFiltered = this.props.isFiltered;
     const icon = isFiltered ? IconWatch : IconExplore;
-    const copy = isFiltered ? 'See Inside the Classroom' : 'Explore';
+    const copy = isFiltered ? 'In Action' : 'Discover';
     const url = isFiltered ? this.state.data.instructionalVideos[0] : 'chapters/' + this.state.data.slug;
 
     return (
@@ -188,7 +188,7 @@ export default class GridTile extends React.Component {
           <div ref="noise" className={`noise`}></div>
 
           <div ref="textContainer" className={`text-container`}>
-            <div className={`subtitle`}>Chapter</div>
+            {/*<div className={`subtitle`}>Chapter</div>*/}
             <div className={`title`}>{this.state.data.title}</div>
           </div>
 
@@ -199,7 +199,7 @@ export default class GridTile extends React.Component {
           <Link to={`${url}`}>
             <div className="cta">
               <div ref="ctaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: icon }}></div>
-              <p ref="ctaText">{copy}</p>
+              <p ref="ctaText">{copy}: <br/>{this.state.data.title}</p>
             </div>
           </Link>
 
