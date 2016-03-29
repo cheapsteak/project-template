@@ -14,7 +14,7 @@ export default [
     instructionalVideos: [],
     panoramas: ['welcome', 'literacy', 'science', 'math'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -30,7 +30,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['math'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -46,7 +46,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['science'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -62,7 +62,7 @@ export default [
     instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -78,7 +78,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -94,7 +94,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['literacy-and-writing'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -110,7 +110,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -126,7 +126,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   },
@@ -142,7 +142,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infoGraphics: ''
   }
