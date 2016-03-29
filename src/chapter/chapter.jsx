@@ -140,6 +140,13 @@ export default class Chapter extends React.Component {
             <div className={`hero-cta`}>{this.state.data.hero.cta}</div>
             <div className={`hero-title`}>{this.state.data.title}</div>
             <div className={`hero-description`}>{this.state.data.hero.description}</div>
+            <Link className={`hero-button`} to={`grid`}>
+              <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
+              <div className={`button`}>
+                <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
+                <p>Watch Chapter</p>
+              </div>
+            </Link>
           </div>
         </div>
 
