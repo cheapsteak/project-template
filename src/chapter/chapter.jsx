@@ -109,7 +109,8 @@ export default class Chapter extends React.Component {
             id="instructionalVideo"
             ref='instructionalVideo'
             slug="math-1"
-            shouldHideInTheBack={true}
+            poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
+            noZoom={true}
           />
         </div>
 
