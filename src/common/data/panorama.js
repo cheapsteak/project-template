@@ -23,7 +23,7 @@ export default [
     initLat: 0
   },
   {
-    slug: 'welcome',
+    slug: 'hallway',
     //src: `${config.ASSET_PATH}/images/pan-hallway.jpg`,
     src: 'http://successacademy.jam3.net/panoramas/IMG_0439_40_41%20Panorama.jpg',
     initLong: 0,

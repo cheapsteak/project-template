@@ -22,7 +22,7 @@ export default class Layout1230 extends Layout {
           <div className={`width-66-less-20 height-100 grey`}>
             <GridTile
               ref="tile0"
-              chapter={`welcome`}
+              slug={`welcome`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -37,7 +37,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size`}>
             <GridTile
               ref="tile1"
-              chapter={`science`}
+              slug={`science`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -47,7 +47,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size`}>
             <GridTile
               ref="tile2"
-              chapter={`literacy`}
+              slug={`literacy-and-writing`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -57,7 +57,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size`}>
             <GridTile
               ref="tile3"
-              chapter={`math`}
+              slug={`math`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -71,7 +71,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size`}>
             <GridTile
               ref="tile4"
-              chapter={`electives`}
+              slug={`electives`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -85,7 +85,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size left-padding`}>
             <GridTile
               ref="tile5"
-              chapter={`computer`}
+              slug={`computer-science`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -95,7 +95,7 @@ export default class Layout1230 extends Layout {
           <div className={`full-size`}>
             <GridTile
               ref="tile6"
-              chapter={`investment`}
+              slug={`parental-investment`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -107,7 +107,7 @@ export default class Layout1230 extends Layout {
           <div className={`width-100 height-66-less-5 top-margin grey`}>
             <GridTile
               ref="tile7"
-              chapter={`development`}
+              slug={`character-development`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -117,7 +117,7 @@ export default class Layout1230 extends Layout {
           <div className={`width-66-less-10 height-100 red`}>
             <GridTile
               ref="tile8"
-              chapter={`history`}
+              slug={`history`}
               isFiltered={this.props.isFiltered}
             />
           </div>

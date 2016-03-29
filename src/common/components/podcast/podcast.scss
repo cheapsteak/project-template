@@ -12,8 +12,8 @@
   .text-container {
     position: absolute;
     top: 50%;
-    right: 10vw;
-    //@include scale-prop(right, 115);
+    //right: 10vw;
+    @include scale-prop(right, 115);
     transform: translateY(-50%);
     @include scale-prop(width, 280);
 
@@ -35,8 +35,8 @@
     @include flex-center;
     position: absolute;
     top: 50%;
-    left: 20vw;
-    //@include scale-prop(left, 300);
+    //left: 20vw;
+    @include scale-prop(left, 370);
     transform: translate(-50%, -50%);
     width: 160vw;
     height: 160vw;

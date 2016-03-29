@@ -7,7 +7,7 @@ import {Link} from 'react-router';
 import animate from 'gsap-promise';
 import Promise from 'bluebird';
 import Preload from 'inject-prefetch';
-import gridData  from '../../data/grid';
+import gridData  from '../../models/grid-model';
 import videoData  from '../../data/narrative-video';
 import RectangularButton  from '../../../../node_modules/common/components/rectangular-button/rectangular-button.jsx';
 import BgCover from 'background-cover';

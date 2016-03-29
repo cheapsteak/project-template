@@ -1,6 +1,7 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import model from '../../../data/grid';
+import gridModel from '../../../models/grid-model';
+import chaptersModel from '../../../models/chapters-model';
 import animate from 'gsap-promise';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
@@ -14,7 +15,7 @@ const sizes = {
 export default class GridTile extends React.Component {
 
   static propTypes = {
-    chapter: React.PropTypes.string,
+    slug: React.PropTypes.string,
     isFiltered: React.PropTypes.bool,
     className: React.PropTypes.string
   };
@@ -29,26 +30,35 @@ export default class GridTile extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const hasInstrVideo = model.getDataByChapterId(this.props.chapter).instructionalVideoRoute;
+    if (!this.state.data) return;
+
+    const hasInstrVideo = this.state.data.instructionalVideoUrl[0];
     if (nextProps.isFiltered !== this.lastFilteredState && !hasInstrVideo) {
       nextProps.isFiltered ? this.applyFilter() : this.removeFilter();
       this.lastFilteredState = nextProps.isFiltered;
     }
   }
 
+
+  componentWillMount() {
+    const slug = this.props.slug;
+    const gridData = Object.assign({}, gridModel.get(slug));
+    const chapterData = Object.assign({}, chaptersModel.get(slug));
+    this.setState({data: Object.assign(gridData, chapterData)});
+  }
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.textContainer = this.refs.textContainer;
     this.imageContainer = this.refs.imageContainer;
-    this.ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
+    const ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
 
     animate.set(this.containerEl, {autoAlpha: 0});
-    animate.set(this.ctaItems, {autoAlpha: 0, y: 40});
+    animate.set(ctaItems, {autoAlpha: 0, y: 40});
 
     setTimeout(() => {
-      const data = model.getDataByChapterId(this.props.chapter);
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
-      this.setState({data, size});
+      this.setState({size});
     });
   }
 
@@ -79,9 +89,10 @@ export default class GridTile extends React.Component {
       return;
     }
 
-    audio.play('button-rollover');
-
     const pos = (this.containerEl.offsetWidth - this.refs.image.offsetWidth) * 0.5;
+    const ctaItems = [this.refs.ctaIcon, this.refs.ctaText];
+
+    audio.play('button-rollover');
 
     return animate.all([
       animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'}),
@@ -92,7 +103,7 @@ export default class GridTile extends React.Component {
         ease: Expo.easeOut,
         overwrite: 'all'
       }),
-      animate.staggerTo(this.ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1)
+      animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1)
     ]);
   };
 
@@ -102,9 +113,10 @@ export default class GridTile extends React.Component {
     }
 
     const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
+    const ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
 
     return animate.all([
-      animate.staggerTo(this.ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1),
+      animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1),
       animate.to(this.imageContainer, 0.5, {
         autoAlpha: 1,
         left: pos,
@@ -158,10 +170,12 @@ export default class GridTile extends React.Component {
   };
 
   render() {
+    if (!this.state.data) return <div/>;
+
     const isFiltered = this.props.isFiltered;
     const icon = isFiltered ? IconWatch : IconExplore;
     const copy = isFiltered ? 'See Inside the Classroom' : 'Explore';
-    const url = isFiltered ? this.state.data.instructionalVideoRoute : this.state.data.chapterRoute;
+    const url = isFiltered ? this.state.data.instructionalVideoUrl[0] : 'chapters/' + this.state.data.slug;
 
     return (
       <div
@@ -174,7 +188,7 @@ export default class GridTile extends React.Component {
           <div ref="noise" className={`noise`}></div>
 
           <div ref="textContainer" className={`text-container`}>
-            <div className={`subtitle`}>{this.state.data.subtitle}</div>
+            <div className={`subtitle`}>Chapter</div>
             <div className={`title`}>{this.state.data.title}</div>
           </div>
 

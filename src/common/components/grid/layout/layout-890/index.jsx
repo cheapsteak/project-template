@@ -18,7 +18,7 @@ export default class Layout890 extends Layout {
           <div className={`width-100 height-66-less-5 top-margin grey`}>
             <GridTile
               ref="tile0"
-              chapter={`welcome`}
+              slug={`welcome`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -26,7 +26,7 @@ export default class Layout890 extends Layout {
         <div className={`grid-item first-row width-3 left-margin sand`} style={{height: three}}>
           <GridTile
             ref="tile1"
-            chapter={`science`}
+            slug={`science`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -35,7 +35,7 @@ export default class Layout890 extends Layout {
           <div className={`full-size light-blue`}>
             <GridTile
               ref="tile2"
-              chapter={`literacy`}
+              slug={`literacy-and-writing`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -55,7 +55,7 @@ export default class Layout890 extends Layout {
         <div className={`grid-item width-3 left-margin light-blue`} style={{height: three}}>
           <GridTile
             ref="tile3"
-            chapter={`electives`}
+            slug={`electives`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -63,7 +63,7 @@ export default class Layout890 extends Layout {
         <div className={`grid-item width-3 height-2 light-blue`} style={{height: two}}>
           <GridTile
             ref="tile4"
-            chapter={`math`}
+            slug={`math`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -71,7 +71,7 @@ export default class Layout890 extends Layout {
           <div className={`full-size grey`}>
             <GridTile
               ref="tile5"
-              chapter={`development`}
+              slug={`character-development`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -80,7 +80,7 @@ export default class Layout890 extends Layout {
         <div className={`grid-item width-3 grey`} style={{height: three}}>
           <GridTile
             ref="tile6"
-            chapter={`computer`}
+            slug={`computer-science`}
             isFiltered={this.props.isFiltered}
           />
         </div>
@@ -95,7 +95,7 @@ export default class Layout890 extends Layout {
           <div className={`width-66-less-10 height-100 left-margin grey`}>
             <GridTile
               ref="tile7"
-              chapter={`investment`}
+              slug={`parental-investment`}
               isFiltered={this.props.isFiltered}
             />
           </div>
@@ -104,7 +104,7 @@ export default class Layout890 extends Layout {
           <div className={`full-size grey`}>
             <GridTile
               ref="tile8"
-              chapter={`history`}
+              slug={`history`}
               isFiltered={this.props.isFiltered}
             />
           </div>
