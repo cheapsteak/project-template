@@ -74,7 +74,7 @@ export default class PillButton extends React.Component {
         animate.set(this.refs.text, {y: 20});
         return Promise.all([
           animate.to(this.refs.text, 0.2, {opacity: 1, y: 0}),
-          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#121212'}}),
+          animate.to(this.refs.pillButton, 0.3, {css: {backgroundColor: '#2B2B2B'}}),
           animate.to(this.refs.horizontalBar, 0.3, {rotation: 0}),
           animate.to(this.refs.verticalBar, 0.3, {rotation: 90})
         ]);

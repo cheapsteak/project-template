@@ -5,6 +5,7 @@ import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
+import Article from 'common/components/article/article';
 import TransitionGroup from 'react-addons-transition-group';
 import unwrapComponent from 'common/utils/unwrap-component.js';
 import {findDOMNode} from 'react-dom';
@@ -97,10 +98,14 @@ export default class Chapter extends React.Component {
     }
   };
 
-  render() {
+  getContainer = () => {
+    return this.refs.chapter;
+  };
+
+  render () {
     if (!this.state.data) return <div/>;
 
-    return <section className="chapter-page">
+    return <section ref="chapter" className="chapter-page">
       <div className="main">
         <nav className="nav">
           <Link
@@ -176,11 +181,34 @@ export default class Chapter extends React.Component {
           />
         </div>
         <div className="page-component">
-          <h2 className="component-title">Articles</h2>
-          <article>article 1</article>
-          <article>article 2</article>
-        </div>
+          <h2 className="component-title">
+            Articles
+          </h2>
+          {
+            this.state.data.articles
+            ? this.state.data.articles.map((article, i) => {
+              return (
+                <div
+                  key={i}
+                  className={`article-row ${article.image ? 'has-image' : ''}`}
+                >
+                  <Article
+                    className="col-3"
+                    scrollTopPadding={40}
+                    title={article.title}
+                    bannerImage={article.image}
+                    aboveFoldSelector={article.aboveFoldSelector}
+                    getTarget={this.getContainer}
+                  >
+                    { article.content }
+                  </Article>
+                </div>
+              )
+            })
 
+            : null
+          }
+        </div>
         <div className="page-component">
           <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
         </div>
