@@ -47,11 +47,11 @@ body {
 @import 'common/components/grid/layout/layout-1740/index';
 @import 'common/components/grid/layout/layout-1920/index';
 @import 'common/components/grid/grid-menu/index';
-@import 'common/pages/grid/index';
+@import 'common/pages/grid-page/grid-page';
 @import 'chapter/chapter.scss';
 @import 'common/components/podcast/podcast';
 @import 'common/components/play-button/play-button';
-@import 'common/pages/landing/index';
+@import 'common/pages/landing-page/landing-page';
 
 // Mobile
 @import 'mobile/landing/landing';
