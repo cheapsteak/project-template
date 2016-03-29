@@ -41,6 +41,8 @@ export default class PanoramaMenu extends React.Component {
     animate.set(this.refs.heading, {y: '-100%'});
     animate.set(this.refs.container, {y: '-180%'});
     animate.set(this.items, {y: 20, autoAlpha: 0});
+
+    this.refs.firstTab.click();
   }
 
   animateIn = () => {
@@ -121,7 +123,8 @@ export default class PanoramaMenu extends React.Component {
 
         <div ref="container" className={`items-container`}>
           <div
-            className={`item selected`}
+            ref="firstTab"
+            className={`item`}
             onClick={this.handleTabClick}
             onMouseEnter={this.handleTabMouseEnter}
             data-slug={`math`}
@@ -151,7 +154,7 @@ export default class PanoramaMenu extends React.Component {
             className={`item`}
             onClick={this.handleTabClick}
             onMouseEnter={this.handleTabMouseEnter}
-            data-slug={`welcome`}
+            data-slug={`hallway`}
           >
             <span>Hallway</span>
           </div>
