@@ -12,11 +12,11 @@ export default [
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: [],
-    panoramas: ['welcome', 'literacy', 'science', 'math'],
+    panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'math',
@@ -32,7 +32,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'science',
@@ -48,7 +48,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'electives',
@@ -64,7 +64,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'computer-science',
@@ -80,7 +80,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'literacy-and-writing',
@@ -96,7 +96,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'history',
@@ -112,7 +112,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'character-development',
@@ -128,7 +128,7 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   },
   {
     slug: 'parental-investment',
@@ -144,6 +144,6 @@ export default [
     photoEssays: [],
     articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
-    infoGraphics: ''
+    infographics: ''
   }
 ]

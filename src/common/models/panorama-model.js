@@ -1,5 +1,4 @@
 import data from '../data/panorama.js';
-import chaptersModel from 'common/models/chapters-model.js';
 
 export default {
   get (slug) {
