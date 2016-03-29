@@ -58,6 +58,7 @@ export default class Chapter extends React.Component {
             style={videoStyle}
             slug="math-1"
             shouldHideInTheBack={true}
+            poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
           />
           <br/><br/><br/><br/><br/><br/>
           <PhotoEssay

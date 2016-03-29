@@ -16,17 +16,19 @@ const defState = {
 };
 
 const defVideoValues = {
+  init: true,
   currentTime: 0,
   duration: undefined,
   isPlaying: false,
   isMuted: false,
-  useFullControls: true
+  useFullControls: false
 };
 
 function video(state = {}, action) {
+
   switch(action.type) {
     case PLAY_INSTRUCTIONAL_VIDEO:
-      return Object.assign({}, state, { isPlaying: true });
+      return Object.assign({}, state, { isPlaying: true, init: false });
 
     case STOP_INSTRUCTIONAL_VIDEO:
       return Object.assign({}, state, { isPlaying: false });

@@ -46,11 +46,11 @@ export default class FullBrowserWrapper extends React.Component {
   componentWillLeaveFullBrowser = async () => {
     const component = unwrapComponent(this.refs.child);
 
-    await this.animateToTarget();
 
     if(component.componentWillLeaveFullBrowser) {
        await component.componentWillLeaveFullBrowser();
     }
+    await this.animateToTarget();
 
     return Promise.resolve();
   };

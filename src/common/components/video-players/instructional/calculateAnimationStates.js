@@ -12,7 +12,6 @@ export default function calculateAnimationStates (els) {
         y: els.simpleProgressBar.offsetHeight
       },
       videoWrapper: {
-        delay: 0.3,
         scaleX: 1,
         scaleY: 1
       },
