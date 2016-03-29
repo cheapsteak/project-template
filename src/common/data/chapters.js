@@ -14,7 +14,7 @@ export default [
     instructionalVideos: [],
     panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -30,7 +30,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['math'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -46,7 +46,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['science'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -62,7 +62,7 @@ export default [
     instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -78,7 +78,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -94,7 +94,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: ['literacy-and-writing'],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -110,7 +110,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -126,7 +126,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   },
@@ -142,7 +142,7 @@ export default [
     instructionalVideos: ['tests/instructional-grid-player'],
     panoramas: [],
     photoEssays: [],
-    articles: [],
+    articles: [ 'welcome-1', 'welcome-2' ],
     podcast: '',
     infographics: ''
   }
