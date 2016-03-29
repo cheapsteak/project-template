@@ -40,7 +40,7 @@ export default class Panorama extends React.Component {
 
   static propTypes = {
     className: React.PropTypes.string,
-    src: React.PropTypes.string.isRequired,
+    src: React.PropTypes.string,
     initLong: React.PropTypes.number,
     initLat: React.PropTypes.number,
     hasMenu: React.PropTypes.bool
@@ -68,14 +68,14 @@ export default class Panorama extends React.Component {
   };
 
   componentWillReceiveProps(newProps) {
-    if (newProps.src !== this.props.src) {
+    if (newProps.src && newProps.src !== this.props.src) {
       this.setPanorama(newProps.src, newProps.initLong, newProps.initLat);
     }
   }
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.setPanorama();
+    this.props.src && this.setPanorama();
 
     this.context.eventBus.on('zoomUpdate', this.onZoomUpdate);
     this.context.eventBus.on('zoomIn', this.zoomIn);
@@ -221,8 +221,6 @@ export default class Panorama extends React.Component {
       max_fov: maxZoomNum,
       mousewheel: false
     });
-
-    window.ppp = this.panorama;
 
     this.panorama.on('ready', () => {
       this.setState({status: states.INIT, long: long, lat: lat});
