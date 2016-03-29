@@ -39,6 +39,7 @@ const zoomRangeNum = maxZoomNum + minZoomNum;
 export default class Panorama extends React.Component {
 
   static propTypes = {
+    className: React.PropTypes.string,
     src: React.PropTypes.string.isRequired,
     initLong: React.PropTypes.number,
     initLat: React.PropTypes.number,
@@ -46,6 +47,7 @@ export default class Panorama extends React.Component {
   };
 
   static defaultProps = {
+    className: '',
     initLong: 0,
     initLat: 0
   };
@@ -127,7 +129,7 @@ export default class Panorama extends React.Component {
       zIndex: 1000
     });
 
-    animate.to(this.containerEl, 0.4, {
+    animate.to(this.containerEl, 0.45, {
         width: '100%',
         height: '100%',
         top: 0,
@@ -143,7 +145,7 @@ export default class Panorama extends React.Component {
 
   handleLeaveFullBrowser = () => {
     const clientRect = this.containerEl.parentNode.getBoundingClientRect();
-    animate.to(this.containerEl, 0.4, {
+    animate.to(this.containerEl, 0.45, {
         top: clientRect.top,
         left: clientRect.left,
         width: clientRect.width,
@@ -278,7 +280,7 @@ export default class Panorama extends React.Component {
   };
 
   render() {
-    const isMobile = detect.isMobile;
+    const isMobile = detect.isPhone;
 
     const controls = isMobile ? null : (
       <PanoramaControls
@@ -318,7 +320,7 @@ export default class Panorama extends React.Component {
 
     return (
       <div
-        className={`panorama ${this.state.status}`}
+        className={`panorama ${this.state.status} ${this.props.className}`}
         onMouseMove={this.handleMouseMove}
       >
         <PanoramaCompass

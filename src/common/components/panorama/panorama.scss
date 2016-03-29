@@ -6,6 +6,10 @@
   background-color: #a6987d;
   @include gpu;
 
+  * {
+    @include gpu;
+  }
+
   &.loading {
     .psv-container {
       opacity: 0;

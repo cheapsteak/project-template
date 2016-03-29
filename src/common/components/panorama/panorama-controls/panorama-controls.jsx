@@ -11,9 +11,14 @@ import IconArrowRight from 'svgs/icon-zoom-arrow-right.svg';
 export default class PanoramaControls extends React.Component {
 
   static propTypes = {
+    className: React.PropTypes.string,
     zoomLevel: React.PropTypes.number,
     modes: React.PropTypes.object,
     currMode: React.PropTypes.string
+  };
+
+  static defaultProps = {
+    className: ''
   };
 
   state = {
@@ -58,6 +63,7 @@ export default class PanoramaControls extends React.Component {
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.setIndicatorPos();
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillUnmount() {
@@ -65,7 +71,12 @@ export default class PanoramaControls extends React.Component {
     document.removeEventListener('touchmove', this.doDrag);
     document.removeEventListener('mouseup', this.stopDrag);
     document.removeEventListener('touchend', this.stopDrag);
+    window.removeEventListener('resize', this.handleWindowResize);
   }
+
+  handleWindowResize = () => {
+    this.setIndicatorPos();
+  };
 
   doDrag = (e) => {
     const coordX = (detector.isMobile) ? e.targetTouches[0].clientX : e.clientX;
@@ -79,10 +90,12 @@ export default class PanoramaControls extends React.Component {
   stopDrag = () => {
     if (this.state.isDraggingSlider) {
       this.setState({isDraggingSlider: false});
+      audio.play('button-click');
     }
   };
 
   handleSliderDrag = () => {
+    audio.play('button-click');
     this.setState({isDraggingSlider: true});
 
     document.addEventListener('mousemove', this.doDrag);
@@ -100,12 +113,18 @@ export default class PanoramaControls extends React.Component {
     this.setState({sliderPos, progressWidth});
   };
 
+  handleMouseEnter = () => {
+    audio.play('button-rollover');
+  };
+
   handleZoomIn = () => {
     this.context.eventBus.emit('zoomIn');
+    audio.play('button-click');
   };
 
   handleZoomOut = () => {
     this.context.eventBus.emit('zoomOut');
+    audio.play('button-click');
   };
 
   resetUI = () => {
@@ -128,11 +147,11 @@ export default class PanoramaControls extends React.Component {
         this.setIndicatorPos();
 
         return animate.all([
-            animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.6, {y: '0%', ease: Expo.easeOut}),
-            animate.to(this.refs.bottomBar, 0.6, {y: '0%', ease: Expo.easeOut})
+            animate.to([this.refs.zoomControls, this.refs.fullBrowserButton], 0.8, {y: '0%', ease: Expo.easeOut}),
+            animate.to(this.refs.bottomBar, 0.8, {y: '0%', ease: Expo.easeOut})
               .then(() => this.setState({enableMasking: false})),
-            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.5, {width: 0, ease: Expo.easeOut, delay: 0.5}),
-            animate.staggerFrom(ui, 0.5, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 0.8}, 0.1)
+            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.6, {width: 0, ease: Expo.easeOut, delay: 0.7}),
+            animate.staggerFrom(ui, 0.7, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 0.9}, 0.1)
           ])
           .then(() => resolve())
       });
@@ -167,8 +186,8 @@ export default class PanoramaControls extends React.Component {
         animate.all([
             animate.from(this.containerEl, 1, {y: '160%', ease: Expo.easeOut}),
             animate.from(this.refs.bottomBarWrapper, 0.8, {y: -100, ease: Expo.easeOut}),
-            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.5, {width: 0, ease: Expo.easeOut, delay: 0.6}),
-            animate.staggerFrom(ui, 0.5, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 1}, 0.1)
+            animate.from(this.refs.zoomProgress, durBasedOnZoom + 0.6, {width: 0, ease: Expo.easeOut, delay: 0.6}),
+            animate.staggerFrom(ui, 0.7, {y: 20, autoAlpha: 0, ease: Expo.easeOut, delay: durBasedOnZoom + 0.8}, 0.1)
           ])
           .then(() => resolve())
       });
@@ -177,8 +196,8 @@ export default class PanoramaControls extends React.Component {
 
   animateOnLeaveFullBrowser = () => {
     return animate.all([
-        animate.to(this.refs.bottomBar, 0.4, {y: '-100%', ease: Expo.easeOut}),
-        animate.to(this.containerEl, 0.6, {y: '160%', ease: Expo.easeOut})
+        animate.to(this.refs.bottomBar, 0.5, {y: '-100%', ease: Expo.easeOut}),
+        animate.to(this.containerEl, 0.7, {y: '160%', ease: Expo.easeOut})
       ])
       .then(() => {
         this.resetUI();
@@ -192,6 +211,7 @@ export default class PanoramaControls extends React.Component {
   };
 
   handleFullBrowserClick = () => {
+    audio.play('button-click');
     this.context.eventBus.emit('leaveIdle');
   };
 
@@ -200,7 +220,7 @@ export default class PanoramaControls extends React.Component {
     const maskState = this.state.enableMasking ? 'mask' : '';
 
     return (
-      <div className={`panorama-controls ${fullBrowserMode}`}>
+      <div className={`panorama-controls ${fullBrowserMode} ${this.props.className}`}>
 
         <div className={`zoom-controls-wrapper ${maskState}`}>
           <div ref="zoomControls" className={`zoom-controls`}>
@@ -216,6 +236,7 @@ export default class PanoramaControls extends React.Component {
               ref="zoomOutButton"
               className={`zoom-out button`}
               onClick={this.handleZoomOut}
+              onMouseEnter={this.handleMouseEnter}
             >
               <span>-</span>
             </div>
@@ -224,6 +245,7 @@ export default class PanoramaControls extends React.Component {
               ref="zoomInButton"
               className={`zoom-in button`}
               onClick={this.handleZoomIn}
+              onMouseEnter={this.handleMouseEnter}
             >
               <span>+</span>
             </div>
@@ -238,6 +260,7 @@ export default class PanoramaControls extends React.Component {
               }}
                 onMouseDown={this.handleSliderDrag}
                 onTouchStart={this.handleSliderDrag}
+                onMouseEnter={this.handleMouseEnter}
               >
                 <div className={`arrow left`} dangerouslySetInnerHTML={{ __html: IconArrowLeft }}></div>
                 <div className={`circle`}></div>
@@ -254,6 +277,7 @@ export default class PanoramaControls extends React.Component {
           <div
             ref="fullBrowserButton"
             className={`full-browser button`}
+            onMouseEnter={this.handleMouseEnter}
             onClick={this.handleFullBrowserClick}
             dangerouslySetInnerHTML={{ __html: IconFullBrowser }}
           ></div>

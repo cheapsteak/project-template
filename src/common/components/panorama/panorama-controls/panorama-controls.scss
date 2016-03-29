@@ -1,20 +1,33 @@
-$controlsWidth: 560px;
-$controlsHeight: 70px;
+$controlsWidth: 560;
+$controlsHeight: 70;
 $buttonWidth: $controlsHeight*0.8;
+
+$responsiveWidth: $controlsWidth/1400 * 100;
 
 .panorama-controls {
   display: flex;
   position: absolute;
   left: 50%;
-  margin-left: -$controlsWidth/2;
   bottom: 0;
-  width: $controlsWidth;
-  height: $controlsHeight;
+  //margin-left: -$responsiveWidth/2*1vw;
+  //width: $responsiveWidth*1vw;
+  @include scale-prop(margin-left, -$controlsWidth/2);
+  @include scale-prop(width, $controlsWidth);
+  @include scale-prop(height, $controlsHeight);
   z-index: 1000;
+  @include gpu;
+
+  &:focus {
+    outline: none;
+  }
+
+  * {
+    @include gpu;
+  }
 
   .bottom-bar-wrapper {
     width: 100%;
-    height: 40px;
+    @include scale-prop(height, 40);
     overflow: hidden;
     position: absolute;
     left: 0;
@@ -29,16 +42,14 @@ $buttonWidth: $controlsHeight*0.8;
   }
 
   .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     cursor: pointer;
     color: rgba(255, 255, 255, 0.8);
-    width: $buttonWidth;
+    @include scale-prop(width, $buttonWidth);
     height: 100%;
     transition: color 0.3s;
     position: absolute;
-    font-size: 20px;
+    @include scale-prop(font-size, 20);
 
     &.zoom-in {
       right: 0;
@@ -57,10 +68,10 @@ $buttonWidth: $controlsHeight*0.8;
   .zoom-controls-wrapper {
     display: flex;
     position: relative;
-    width: calc(100% - 69px);
-    height: 100%;
+    @include scale-calc-deduct(width, '100%', 68);
+    height: 101%;
     font-weight: bold;
-    font-size: 20px;
+    @include scale-prop(font-size, 20);
 
     &.mask {
       overflow: hidden;
@@ -80,44 +91,41 @@ $buttonWidth: $controlsHeight*0.8;
       .zoom-line {
         position: absolute;
         right: 0;
-        bottom: -8px;
         width: 1px;
-        height: 16px;
+        @include scale-prop(bottom, -8);
+        @include scale-prop(height, 16);
         background-color: rgba(255, 255, 255, 1);
-        @include gpu;
       }
     }
 
     .slider {
       position: relative;
-      margin-left: $buttonWidth*1.5;
-      width: calc(100% - #{$buttonWidth *3});
+      @include scale-prop(margin-left, $buttonWidth*1.5);
+      @include scale-calc-deduct(width, '100%', $buttonWidth *3);
       height: 100%;
 
       .slider-indicator {
         position: absolute;
-        width: 85px;
+        @include scale-prop(width, 85);
         height: 100%;
         cursor: pointer;
 
         .circle {
-          width: 15px;
-          height: 15px;
+          @include scale-prop(width, 15);
+          @include scale-prop(height, 15);
           border-radius: 50%;
           border: 2px solid rgba(255, 255, 255, 0.8);
           transition: border-color 0.3s, transform 0.3s;
         }
 
         .arrow {
-          width: 35px;
+          @include flex-center;
+          @include scale-prop(width, 35);
           height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
 
           svg {
-            width: 7px;
-            height: 11px;
+            @include scale-prop(width, 7);
+            @include scale-prop(height, 11);
             fill: rgba(255, 255, 255, 0.5);
             transition: fill 0.3s, transform 0.3s;
           }
@@ -125,14 +133,13 @@ $buttonWidth: $controlsHeight*0.8;
 
         .zoom-value {
           position: absolute;
-          right: 28px;
-          bottom: -28px;
+          @include scale-prop(right, 28);
+          @include scale-prop(bottom, -28);
           color: rgba(255, 255, 255, 0.5);
           font-weight: bold;
-          font-size: 12px;
+          @include scale-prop(font-size, 12);
           transition: color 0.3s;
           pointer-events: none;
-          @include gpu;
         }
 
         @mixin hover {
@@ -163,6 +170,7 @@ $buttonWidth: $controlsHeight*0.8;
           }
 
           .arrow {
+            position: relative;
             &.left {
               svg {
                 transform: translateX(8px);
@@ -182,8 +190,8 @@ $buttonWidth: $controlsHeight*0.8;
 
   .full-browser-button-wrapper {
     position: relative;
-    width: $controlsHeight;
-    height: 100%;
+    @include scale-prop(width, $controlsHeight);
+    height: 101%;
     overflow: hidden;
   }
 
@@ -193,8 +201,8 @@ $buttonWidth: $controlsHeight*0.8;
     background-color: rgba(43, 43, 43, 0.9);
 
     svg {
-      width: 30px;
-      height: 25px;
+      @include scale-prop(width, 30);
+      @include scale-prop(height, 25);
       opacity: 0.8;
       transition: opacity 0.3s;
     }
@@ -215,11 +223,11 @@ $buttonWidth: $controlsHeight*0.8;
   &.full-browser-mode {
     width: 100%;
     left: 0;
-    bottom: 40px;
+    @include scale-prop(bottom, 40);
     margin-left: 0;
 
     .button {
-      width: $controlsHeight;
+      @include scale-prop(width, $controlsHeight);
     }
 
     .zoom-controls-wrapper {
@@ -227,8 +235,8 @@ $buttonWidth: $controlsHeight*0.8;
 
       .slider {
         position: relative;
-        margin-left: $controlsHeight*1.4;
-        width: calc(100% - #{$controlsHeight *2.8});
+        @include scale-prop(margin-left, $controlsHeight*1.4);
+        @include scale-calc-deduct(width, '100%', $controlsHeight *2.8);
       }
     }
 
