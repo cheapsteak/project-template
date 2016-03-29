@@ -14,7 +14,7 @@
 }
 
 // usage example:
-// @include scale-calc-deduct(font-size, 20);
+// @include scale-prop(font-size, 20);
 
 @mixin scale-prop($prop, $size) {
   @media (max-width: $break-large) {
@@ -29,7 +29,7 @@
 }
 
 // usage example:
-// @include scale-calc-deduct(width, '100%', 69);
+// @include scale-calc-deduct(width, '100%', 70);
 
 @mixin scale-calc-deduct($prop, $baseVal, $size) {
   @media (max-width: $break-large) {
