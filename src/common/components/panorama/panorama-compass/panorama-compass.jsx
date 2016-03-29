@@ -5,9 +5,14 @@ import animate from 'gsap-promise';
 export default class PanoramaCompass extends React.Component {
 
   static propTypes = {
+    className: React.PropTypes.string,
     rotation: React.PropTypes.number.isRequired,
     modes: React.PropTypes.objectOf(React.PropTypes.string).isRequired,
     currMode: React.PropTypes.string.isRequired
+  };
+
+  static defaultProps = {
+    className: ''
   };
 
   componentWillReceiveProps(newProps) {
@@ -47,7 +52,7 @@ export default class PanoramaCompass extends React.Component {
     const rotationStyles = {transform: rotation, WebkitTransform: rotation};
 
     return (
-      <div className={`panorama-compass`}>
+      <div className={`panorama-compass ${this.props.className}`}>
         <p className={`north`}>N</p>
         <p className={`east`}>E</p>
         <p className={`south`}>S</p>

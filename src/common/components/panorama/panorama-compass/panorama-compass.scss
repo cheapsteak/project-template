@@ -1,12 +1,9 @@
-$offset: 10px;
-$pos: calc(50% - 4px);
-
 .panorama-compass {
   position: absolute;
-  left: 40px;
-  top: 40px;
-  width: 115px;
-  height: 115px;
+  @include scale-prop(left, 30);
+  @include scale-prop(top, 30);
+  @include scale-prop(width, 100);
+  @include scale-prop(height, 100);
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.3);
   z-index: 1000;
@@ -14,25 +11,29 @@ $pos: calc(50% - 4px);
 
   p {
     font-weight: bold;
-    font-size: 11px;
+    @include scale-prop(font-size, 9);
     color: #fff;
     position: absolute;
 
     &.north {
-      top: $offset;
-      left: $pos;
+      left: 50%;
+      @include scale-prop(margin-left, -4);
+      @include scale-prop(top, 10);
     }
     &.east {
-      top: $pos;
-      right: $offset;
+      top: 50%;
+      @include scale-prop(margin-top, -4);
+      @include scale-prop(right, 10);
     }
     &.south {
-      left: calc(50% - 2px);
-      bottom: 6px;
+      left: 50%;
+      @include scale-prop(margin-left, -2);
+      @include scale-prop(bottom, 6);
     }
     &.west {
-      top: $pos;
-      left: $offset;
+      top: 50%;
+      @include scale-prop(margin-top, -4);
+      @include scale-prop(left, 10);
     }
   }
 
@@ -51,10 +52,10 @@ $pos: calc(50% - 4px);
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -30px;
-    margin-top: -30px;
-    width: 60px;
-    height: 60px;
+    @include scale-prop(margin-left, -25);
+    @include scale-prop(margin-top, -25);
+    @include scale-prop(width, 50);
+    @include scale-prop(height, 50);
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.3);
 
@@ -63,7 +64,9 @@ $pos: calc(50% - 4px);
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 30px solid rgba(255, 255, 255, 0);
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0);
+      @include scale-prop(border-width, 25);
       border-top-color: rgba(255, 255, 255, 0.3);
     }
 
@@ -71,10 +74,10 @@ $pos: calc(50% - 4px);
       position: absolute;
       top: 50%;
       left: 50%;
-      margin-left: -4px;
-      margin-top: -4px;
-      width: 8px;
-      height: 8px;
+      @include scale-prop(margin-left, -4);
+      @include scale-prop(margin-top, -4);
+      @include scale-prop(width, 8);
+      @include scale-prop(height, 8);
       border-radius: 50%;
       background-color: rgba(255, 255, 255, 1);
     }
