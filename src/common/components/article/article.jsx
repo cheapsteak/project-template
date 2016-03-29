@@ -44,7 +44,8 @@ export default class Article extends React.Component {
   }
 
   getDistanceFromTop = () => {
-    return this.refs.textWrapper.offsetTop - this.props.scrollTopPadding;
+    const container = this.props.getTarget();
+    return container.scrollTop + this.refs.textWrapper.getBoundingClientRect().top - this.props.scrollTopPadding;
   };
 
   getAvailableScrollDistance = () => {
@@ -55,15 +56,14 @@ export default class Article extends React.Component {
   handleClick = async (e) => {
     const clientRect = this.refs.article.getBoundingClientRect();
     const container = this.props.getTarget();
-    const scrollTo = Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance());
 
     if(this.collapsed) {
-      if(scrollTo === this.getDistanceFromTop()) {
-        await animate.to(container, 0.3, { scrollTop: scrollTo });
+      if(this.getDistanceFromTop() < this.getAvailableScrollDistance()) {
+        await animate.to(container, 0.3, { scrollTop: this.getDistanceFromTop() });
         await this.expand();
       } else {
         await this.expand();
-        await animate.to(container, 0.3, { scrollTop: Math.min(this.getDistanceFromTop(), this.getAvailableScrollDistance()) });
+        await animate.to(container, 0.3, { scrollTop: this.getDistanceFromTop() });
       }
     } else {
       this.collapse();
@@ -103,10 +103,11 @@ export default class Article extends React.Component {
           </div>
           <div className="article-content">
             <div ref="textWrapper" className="text-wrapper">
-              <div ref="text" className="article-text">
-                {
-                  this.props.children
-                }
+              <div
+                ref="text"
+                className="article-text"
+                dangerouslySetInnerHTML={{ __html: this.props.children }}
+              >
               </div>
             </div>
             <PillButton

@@ -1,12 +1,11 @@
 .article {
   width: 100%;
-  background-color: white;
   color: #8F8F8F;
 
   h1 {
     @include scale('font-size', 30px, #{(30/1400*100)}vw, #{(30/1400*100)}vw);
+    @include scale-prop('line-height', 35);
     font-weight: bold;
-    line-height: 35px;
     color: black;
   }
 
