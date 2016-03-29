@@ -12,7 +12,7 @@ export default class Layout extends React.Component {
 
   static propTypes = {
     isFiltered: React.PropTypes.bool,
-    className: ''
+    className: React.PropTypes.string,
   };
 
   static defaultProps = {
