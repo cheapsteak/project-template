@@ -12,7 +12,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: [],
     panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -29,7 +29,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: [],
+    instructionalVideos: ["math-1"],
     panoramas: ['math'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -46,7 +46,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: ["science-1", "science-2"],
     panoramas: ['science'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -63,7 +63,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -80,7 +80,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: [],
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -148,7 +148,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
