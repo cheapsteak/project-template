@@ -12,4 +12,8 @@ export default {
     };
   },
 
+  getAll () {
+    return data.map( chapter => this.get(chapter.slug) );
+  },
+
 }

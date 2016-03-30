@@ -5,6 +5,7 @@ export default [
   {
     slug: 'welcome',
     title: 'Welcome',
+    time: 0,
     hero: {
       cta: '',
       description: 'At Success Academy we completely redefined how to teach Science.',
@@ -21,6 +22,7 @@ export default [
   {
     slug: 'math',
     title: 'Math',
+    time: 20,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Math.',
@@ -37,6 +39,7 @@ export default [
   {
     slug: 'science',
     title: 'Science',
+    time: 40,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Science.',
@@ -53,6 +56,7 @@ export default [
   {
     slug: 'electives',
     title: 'Electives',
+    time: 60,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Electives.',
@@ -69,6 +73,7 @@ export default [
   {
     slug: 'computer-science',
     title: 'Computer Science',
+    time: 70,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Computer Science.',
@@ -85,6 +90,7 @@ export default [
   {
     slug: 'literacy-and-writing',
     title: 'Literacy & Writing',
+    time: 80,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Literacy and Writing.',
@@ -101,6 +107,7 @@ export default [
   {
     slug: 'history',
     title: 'History',
+    time: 90,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach History.',
@@ -117,6 +124,7 @@ export default [
   {
     slug: 'character-development',
     title: 'Character Development',
+    time: 100,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Character Development.',
@@ -133,6 +141,7 @@ export default [
   {
     slug: 'parental-investment',
     title: 'Parental Investment',
+    time: 140,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Parental Investment.',

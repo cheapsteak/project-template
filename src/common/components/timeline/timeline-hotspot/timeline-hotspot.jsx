@@ -10,7 +10,7 @@ export default class TimelineHotspot extends React.Component {
     hasUserInteraction: false,
     shouldShowCTA: false
   };
- 
+
   timeOutIds = [];
 
   componentWillReceiveProps(nextProps) {
@@ -19,7 +19,7 @@ export default class TimelineHotspot extends React.Component {
 
       if(nextProps.withinCurrentTime) {
         // Show and Hide after xxx ms because it is within currentTime range
-        this.showCTA(); 
+        this.showCTA();
         this.timeOutIds.push(setTimeout(this.hideCTA, 3000));
         // Hide faster because it is not within currentTime range
       } else if(!this.state.hasUserInteraction){
@@ -83,19 +83,18 @@ export default class TimelineHotspot extends React.Component {
   };
 
   render() {
-    const { style, image, route } = this.props; 
+    const { style, image } = this.props;
 
     return (
       <div className="timeline-hotspot" style={style}>
         <TransitionGroup
           >
-          { 
+          {
             this.state.shouldShowCTA && React.cloneElement(this.props.children, {
               onMouseEnter: this.handleMouseEnter,
               onMouseLeave: this.handleMouseLeave,
               hasUserInteraction: this.hasUserInteraction,
-              route: route
-            }) 
+            })
           }
         </TransitionGroup>
         <div
