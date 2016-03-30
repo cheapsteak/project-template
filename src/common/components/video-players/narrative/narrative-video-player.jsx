@@ -9,6 +9,7 @@ import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
@@ -32,7 +33,8 @@ function calculateAnimationStates (els) {
       videoWrapper: {
         delay: 0.3,
         scaleX: 1,
-        scaleY: 1
+        scaleY: 1,
+        cursor: 'none'
       },
       overlay: {
         delay: 0.1,
@@ -70,7 +72,8 @@ function calculateAnimationStates (els) {
       },
       videoWrapper: {
         scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height
+        scaleY: zoomedOutRect.height/zoomedInRect.height,
+        cursor: 'default'
       },
       overlay: {
         display: 'block',
@@ -181,12 +184,15 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.showFullControls();
       }
     }
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = undefined;
     this.props.hideFullControls();
+    window.removeEventListener('resize', this.handleResize);
   }
 
   get videoEnded () {
@@ -237,8 +243,6 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateOutControls = () => {
     this.stopAnimations();
-    console.log('HERERE');
-        
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -304,6 +308,10 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
   /*       Handlers       */
   /************************/
+
+  handleResize = () => {
+    this.animationStates = calculateAnimationStates(this.refs);
+  };
 
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
@@ -429,10 +437,15 @@ export default class NarrativeVideoPlayer extends React.Component {
           >
           </div>
           <Link to="/grid">
-            <button ref="exploreButton" className="explore-button">
-              <div dangerouslySetInnerHTML={{ __html: IconExplore }}></div>
-              <div>Explore</div>
-            </button>
+            <RectangularButton
+              ref={ node => this.refs.exploreButton = findDOMNode(node) }
+              className="explore-button"
+              text="Chapter Menu"
+              color="#ffffff"
+              backgroundColor="#EB9729"
+              hoverBackgroundColor="#EB9729"
+              svgIcon={IconExplore}
+            />
           </Link>
           <video
             ref={(node) => this.video = node }

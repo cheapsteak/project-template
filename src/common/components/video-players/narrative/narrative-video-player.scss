@@ -51,26 +51,9 @@
 
   .explore-button {
     position: absolute;
-    display: flex;
-    border: none;
-    color: white;
-    padding: 0;
-    margin: 0;
-    font-size: 17px;
-    line-height: 0px;
-    font-weight: bold;
-    right: -1px;
-    width: 161px;
-    height: 56px;
-    background-color: #987849;
-    z-index: 10;
-    align-items: center;
-    justify-content: center;
-
-    svg {
-      width: 18px;
-      margin-right: 28px;
-    }
+    top: 0;
+    right: 0;
+    z-index: 100;
   }
 
   .image-card {
