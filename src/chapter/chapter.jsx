@@ -1,5 +1,4 @@
 import React from 'react';
-import ParallaxVideoWrapper from 'common/components/parallax-video-wrapper/parallax-video-wrapper.jsx';
 import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
@@ -102,7 +101,7 @@ export default class Chapter extends React.Component {
     return this.refs.chapter;
   };
 
-  render () {
+  render() {
     if (!this.state.data) return <div/>;
 
     return <section ref="chapter" className="chapter-page">
@@ -110,9 +109,10 @@ export default class Chapter extends React.Component {
         <nav className="nav">
           <Link
             className={`nav-button left`}
-            to={`narrative-video`}
+            to={`${this.state.data.routes.narrativeVideo}`}
           >
             <RectangularButton
+              style={{height: '100%'}}
               text={`Return to Documentary`}
               color={`#adafaf`}
               svgIcon={IconPlay}
@@ -125,6 +125,7 @@ export default class Chapter extends React.Component {
             to={`grid`}
           >
             <RectangularButton
+              style={{height: '100%'}}
               text={`Explore Chapters`}
               color={`#adafaf`}
               svgIcon={IconExplore}
@@ -140,7 +141,12 @@ export default class Chapter extends React.Component {
             <div className={`hero-cta`}>{this.state.data.hero.cta}</div>
             <div className={`hero-title`}>{this.state.data.title}</div>
             <div className={`hero-description`}>{this.state.data.hero.description}</div>
-            <Link className={`hero-button`} to={`${this.state.data.routes.narrativeVideo}`}>
+            <Link
+              className={`hero-button`}
+              to={`${this.state.data.routes.narrativeVideo}`}
+              onMouseEnter={() => audio.play('button-rollover')}
+              onClick={() => audio.play('button-click')}
+            >
               <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
               <div className={`button`}>
                 <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
@@ -164,18 +170,18 @@ export default class Chapter extends React.Component {
 
         {
           // panorama component
-          this.state.data.panoramas.length &&
-          (
-            <div className="page-component">
-              <h2 className="component-title">360 Virtual Tour</h2>
-              <div className="panorama-container">
-                <Panorama
-                  slug={this.state.data.panoramas[0]}
-                  hasMenu={this.state.data.panoramas.length > 1}
-                />
+          this.state.data.panoramas.length ?
+            (
+              <div className="page-component">
+                <h2 className="component-title">360° Photos</h2>
+                <div className="panorama-container">
+                  <Panorama
+                    slug={this.state.data.panoramas[0]}
+                    hasMenu={this.state.data.panoramas.length > 1}
+                  />
+                </div>
               </div>
-            </div>
-          )
+            ) : null
         }
 
         <div className="page-component">
@@ -193,7 +199,7 @@ export default class Chapter extends React.Component {
           </h2>
           {
             this.state.data.articles
-            ? this.state.data.articles.map((article, i) => {
+              ? this.state.data.articles.map((article, i) => {
               return (
                 <div
                   key={i}
@@ -211,9 +217,7 @@ export default class Chapter extends React.Component {
                   </Article>
                 </div>
               )
-            })
-
-            : null
+            }) : null
           }
         </div>
         <div className="page-component">

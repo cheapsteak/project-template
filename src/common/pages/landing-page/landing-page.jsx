@@ -175,7 +175,7 @@ export default class LandingPage extends React.Component {
               <Link
                 ref="ctaWatch"
                 className={`cta watch`}
-                to={`narrative-video`}
+                to={`narrative-video/math`}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}

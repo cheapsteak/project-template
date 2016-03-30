@@ -1,5 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import PillButton from 'common/components/pill-button/pill-button';
 import animate from 'gsap-promise';
 
@@ -36,11 +36,11 @@ export default class Article extends React.Component {
     const aboveFoldText = this.refs.article.querySelector(this.props.aboveFoldSelector);
     const clientRect = this.refs.text.getBoundingClientRect();
 
-    if(aboveFoldText) {
+    if (aboveFoldText) {
       this.aboveFoldDisplayHeight = aboveFoldText.getBoundingClientRect().height;
     }
 
-    animate.set(this.refs.textWrapper, { height: this.collapsed ? this.aboveFoldDisplayHeight : clientRect.height });
+    animate.set(this.refs.textWrapper, {height: this.collapsed ? this.aboveFoldDisplayHeight : clientRect.height});
   }
 
   getDistanceFromTop = () => {
@@ -53,17 +53,17 @@ export default class Article extends React.Component {
     return container.scrollHeight - container.offsetHeight;
   };
 
-  handleClick = async (e) => {
+  handleClick = async(e) => {
     const clientRect = this.refs.article.getBoundingClientRect();
     const container = this.props.getTarget();
 
-    if(this.collapsed) {
-      if(this.getDistanceFromTop() < this.getAvailableScrollDistance()) {
-        await animate.to(container, 0.3, { scrollTop: this.getDistanceFromTop() });
+    if (this.collapsed) {
+      if (this.getDistanceFromTop() < this.getAvailableScrollDistance()) {
+        await animate.to(container, 0.3, {scrollTop: this.getDistanceFromTop()});
         await this.expand();
       } else {
         await this.expand();
-        await animate.to(container, 0.3, { scrollTop: this.getDistanceFromTop() });
+        await animate.to(container, 0.3, {scrollTop: this.getDistanceFromTop()});
       }
     } else {
       this.collapse();
@@ -74,15 +74,15 @@ export default class Article extends React.Component {
 
   expand = () => {
     const clientRect = this.refs.text.getBoundingClientRect();
-    return animate.to(this.refs.textWrapper, 0.3, { height: clientRect.height })
+    return animate.to(this.refs.textWrapper, 0.3, {height: clientRect.height})
   };
 
   collapse = () => {
-   return animate.to(this.refs.textWrapper, 0.3, { height: this.aboveFoldDisplayHeight })
+    return animate.to(this.refs.textWrapper, 0.3, {height: this.aboveFoldDisplayHeight})
   };
 
-  render () {
-    const { className = '', style, bannerImage } = this.props;
+  render() {
+    const {className = '', style, bannerImage} = this.props;
 
     return (
       <div
@@ -92,10 +92,10 @@ export default class Article extends React.Component {
       >
         {
           bannerImage
-          ? <div className="banner-image">
-              <img src={bannerImage} />
-            </div>
-          : undefined
+            ? <div className="banner-image">
+            <img src={bannerImage}/>
+          </div>
+            : undefined
         }
         <div className="article-content-wrapper">
           <div className="article-title">
@@ -112,7 +112,7 @@ export default class Article extends React.Component {
             </div>
             <PillButton
               idleText="Read More"
-              activeText="Read Less"
+              activeText="See Less"
               onClick={this.handleClick}
             />
           </div>
