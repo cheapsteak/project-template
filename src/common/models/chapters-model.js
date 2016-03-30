@@ -8,12 +8,15 @@ export default {
 
     return {
       ...chapter,
-      articles: chapter.articles.map(articleModel.get)
+      articles: chapter.articles.map(articleModel.get),
+      routes: {
+        narrativeVideo: '/narrative-video/' + chapter.slug
+      }
     };
   },
 
   getAll () {
     return data.map( chapter => this.get(chapter.slug) );
   },
-
+  
 }
