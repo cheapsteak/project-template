@@ -1,4 +1,6 @@
 export default function calculateAnimationStates (els) {
+  console.log(els);
+      
   const zoomedInRect = els.root.getBoundingClientRect();
   const zoomedOutVideoMargin = 40;
   const zoomedOutRect = {
@@ -13,7 +15,8 @@ export default function calculateAnimationStates (els) {
       },
       videoWrapper: {
         scaleX: 1,
-        scaleY: 1
+        scaleY: 1,
+        cursor: 'none'
       },
       overlay: {
         opacity: 0
@@ -49,7 +52,8 @@ export default function calculateAnimationStates (els) {
       },
       videoWrapper: {
         scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height
+        scaleY: zoomedOutRect.height/zoomedInRect.height,
+        cursor: 'default'
       },
       overlay: {
         opacity: 0.4

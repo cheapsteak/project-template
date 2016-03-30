@@ -1,6 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import PlayButtonSvg from 'svgs/icon-play.svg';
 import PauseButtonSvg from 'svgs/icon-pause.svg';
 import BackButtonSvg from 'svgs/video-back-button.svg';
@@ -348,10 +349,17 @@ export default class GridVideoPlayer extends React.Component {
               </label>
             </div>
           </div>
-          <button ref="closeButton" className="close-button">
-            <span dangerouslySetInnerHTML={{ __html: CloseSvg }}></span>
-            <div>Close</div>
-          </button>
+          <Link to={'/grid'}>
+            <RectangularButton
+              ref={ node => this.refs.closeButton = findDOMNode(node) }
+              className="close-button"
+              text="Close"
+              color="#ffffff"
+              backgroundColor="#f99100"
+              hoverBackgroundColor="#f99100"
+              svgIcon={CloseSvg}
+            />
+          </Link>
           <Link to={this.props.chapterRoute || '/'}>
             <div ref="moreAboutCTA" className="more-about-cta">
               <span className="circle-button">+</span>{`More About ${this.props.title}`}

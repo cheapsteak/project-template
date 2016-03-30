@@ -450,8 +450,8 @@ export default class NarrativeVideoPlayer extends React.Component {
               className="explore-button"
               text="Chapter Menu"
               color="#ffffff"
-              backgroundColor="#EB9729"
-              hoverBackgroundColor="#EB9729"
+              backgroundColor="#f99100"
+              hoverBackgroundColor="#f99100"
               svgIcon={IconExplore}
             />
           </Link>
