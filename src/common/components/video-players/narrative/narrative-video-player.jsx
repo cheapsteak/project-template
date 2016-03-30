@@ -121,11 +121,16 @@ export default class NarrativeVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  // Local Storage Ids
+  static timeStorageId = 'narrative-video-time';
+  static muteStorageId = 'narrative-video-mute-status';
+
   state = {
     showEndingCTA: false
   };
 
   hideControlsTimeoutId = undefined;
+  setLocalStorageIntervalId = undefined;
 
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
@@ -184,7 +189,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
-    this.hideControlsTimeoutId = undefined;
+    this.clearTimeStorageInterval();
   }
 
   get videoEnded () {
@@ -193,6 +198,17 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   changeVideoTime = (time) => {
     this.video.currentTime = time;
+  };
+
+  setTimeStorageInterval = () => {
+    this.localStorageIntervalId = setInterval(() => {
+      localStorage.setItem(NarrativeVideoPlayer.timeStorageId, this.video.currentTime);
+    }, 1000);
+  };
+
+  clearTimeStorageInterval = () => {
+    clearInterval(this.localStorageIntervalId);
+    this.localStorageIntervalId = undefined;
   };
 
   /************************/
@@ -204,7 +220,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const dots = this.refs.component.querySelectorAll('.dot');
 
     this.stopAnimations();
-    animate.staggerFrom(dots, 0.3, { delay: 0.5, opacity: 0 }, 0.2);
+    animate.staggerFrom(dots, 0.1, { delay: 0.5, opacity: 0 }, 0.1);
 
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
@@ -286,8 +302,22 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleMetadataLoaded = () => {
-    this.video.currentTime = this.props.currentTime;
+    const storedTime = parseFloat(localStorage.getItem(NarrativeVideoPlayer.timeStorageId));
+    const isMuted = localStorage.getItem(NarrativeVideoPlayer.muteStorageId);
+
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
+
+    if(typeof storedTime === 'number' && !isNaN(storedTime) && storedTime !== this.video.duration) {
+      this.changeVideoTime(storedTime)
+    }
+
+    if(isMuted === "true") {
+      this.props.mute();
+    } else {
+      this.props.unmute();
+    }
+
+    this.setTimeStorageInterval();
   };
 
   handleTimeUpdate = () => {
@@ -363,16 +393,18 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleOverlayClick = (e) => {
     if(e.target.id === 'videoOverlay') {
-        this.props.hideFullControls();
-        !this.props.isPlaying && this.video.play();
-        clearTimeout(this.hideControlsTimeoutId);
+      this.props.hideFullControls();
+      !this.props.isPlaying && this.video.play();
+      clearTimeout(this.hideControlsTimeoutId);
     }
   };
 
   handleVolumeClick = (e) => {
     if(this.props.isMuted) {
+      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, false);
       this.props.unmute();
     } else {
+      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, true);
       this.props.mute();
     }
   };
