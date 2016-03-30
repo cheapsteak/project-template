@@ -90,7 +90,6 @@ export default class Chapter extends React.Component {
   }
 
   getTarget = (component, slug) => {
-      console.log('CALLED');
     if (component instanceof InstructionalVideo) {
           
       return this.refs.instructionalVideo;

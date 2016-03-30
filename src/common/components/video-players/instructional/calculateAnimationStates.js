@@ -1,6 +1,4 @@
 export default function calculateAnimationStates (els) {
-  console.log(els);
-      
   const zoomedInRect = els.root.getBoundingClientRect();
   const zoomedOutVideoMargin = 40;
   const zoomedOutRect = {
