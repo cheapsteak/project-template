@@ -226,7 +226,8 @@ export default class Chapter extends React.Component {
         >
           {
             React.cloneElement(this.props.children || <div />, {
-              key: this.state.slug,
+              // This is the slug for the full browser component, not the chapter
+              key: this.props.params.slug,
               getTarget: this.getTarget
             })
           }
