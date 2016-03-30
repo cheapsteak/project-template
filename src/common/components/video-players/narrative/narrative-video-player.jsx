@@ -130,7 +130,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
 
-    if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
+    if(this.props.useFullControls !== nextProps.useFullControls
+       && !this.videoEnded && this.lastMouseCoord) {
       if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
@@ -185,6 +186,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = undefined;
+    this.props.hideFullControls();
   }
 
   get videoEnded () {
@@ -235,6 +237,8 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateOutControls = () => {
     this.stopAnimations();
+    console.log('HERERE');
+        
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -356,7 +360,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       y: e.clientY
     };
 
-    if(this.videoEnded) {
+    if(this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
       return;
     }

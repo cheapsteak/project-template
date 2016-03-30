@@ -46,9 +46,6 @@ export default class ChapterVideoPlayer extends React.Component {
 
     animate.set(this.refs.controls, this.animationStates[initialState].controls);
 
-    console.log(initialState);
-        
-
     animate.set(this.refs.endingOverlay, this.animationStates[endingState].endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates[endingState].replayButton);
     animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
