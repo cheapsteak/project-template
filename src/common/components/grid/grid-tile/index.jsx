@@ -175,7 +175,7 @@ export default class GridTile extends React.Component {
     const isFiltered = this.props.isFiltered;
     const icon = isFiltered ? IconWatch : IconExplore;
     const copy = isFiltered ? 'In Action' : 'Discover';
-    const url = isFiltered ? this.state.data.instructionalVideos[0] : 'chapters/' + this.state.data.slug;
+    const url = isFiltered ? this.state.data.routes.instructionalVideos[0] : 'chapters/' + this.state.data.slug;
 
     return (
       <div
