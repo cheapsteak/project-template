@@ -5,7 +5,11 @@ import * as actionCreators from './narrative-video-player-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import store from 'common/store.js';
+import { getCurrentChapter } from 'common/store.js';
+import chaptersModel from 'common/models/chapters-model';
 import _ from 'lodash';
+
+const allChapters = chaptersModel.getAll();
 
 @connect(state => ({ video: state.narrativeVideo}) )
 class NarrativeVideoPlayerRedux extends React.Component {
@@ -33,6 +37,8 @@ class NarrativeVideoPlayerRedux extends React.Component {
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
       mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
       unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
+      currentChapter={getCurrentChapter()}
+      chapters={allChapters}
       {...this.props}
       {...video}
     />

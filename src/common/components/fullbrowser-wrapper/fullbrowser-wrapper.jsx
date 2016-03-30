@@ -24,6 +24,7 @@ export default class FullBrowserWrapper extends React.Component {
     const component = unwrapComponent(this.refs.child);
 
     if(component.componentWillEnterFullBrowser) {
+          
       await component.componentWillEnterFullBrowser()
     }
 

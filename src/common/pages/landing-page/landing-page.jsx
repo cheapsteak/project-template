@@ -165,8 +165,8 @@ export default class LandingPage extends React.Component {
           <div ref="coverBg" className={`cover-bg`}></div>
 
           <div ref="contentContainer" className={`content-container`}>
-            <div ref="subtitle" className={`subtitle`}>Welcome to</div>
-            <div ref="title" className={`title`}>Success Academy Middle Schools</div>
+            <div ref="subtitle" className={`subtitle`}>Welcome to our</div>
+            <div ref="title" className={`title`}>Middle School Tour</div>
             <div ref="description" className={`description`}>
               Take an inside look at our culture and curriculum through the eyes of our scholars.
             </div>
@@ -175,11 +175,11 @@ export default class LandingPage extends React.Component {
               <Link
                 ref="ctaWatch"
                 className={`cta watch`}
-                to={`narrative-video`}
+                to={`narrative-video/math`}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
-                  text={`Start the Tour`}
+                  text={`Watch Documentary`}
                   color={`#fff`}
                   svgIcon={IconWatch}
                   backgroundColor={`#8f8f8f`}
@@ -193,7 +193,7 @@ export default class LandingPage extends React.Component {
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
-                  text={`Explore`}
+                  text={`Chapter Menu`}
                   color={`#fff`}
                   svgIcon={IconExplore}
                   backgroundColor={`rgba(255,255,255,0)`}

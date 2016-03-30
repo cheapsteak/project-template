@@ -8,8 +8,17 @@ export default {
 
     return {
       ...chapter,
-      articles: chapter.articles.map(articleModel.get)
+      articles: chapter.articles.map(articleModel.get),
+      routes: {
+        narrativeVideo: '/narrative-video/' + chapter.slug,
+        //instructionalVideo: '/grid/instructional-videos/' + chapterInstructionalVideos[0],
+        instructionalVideos: chapter.instructionalVideos.map(slug => '/grid/instructional-videos/' + slug),
+      }
     };
+  },
+
+  getAll () {
+    return data.map(chapter => this.get(chapter.slug));
   },
 
 }

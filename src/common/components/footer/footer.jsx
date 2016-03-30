@@ -1,6 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
-import PillButton from 'common/components/pill-button/pill-button';
+import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
@@ -16,8 +15,8 @@ export default class Footer extends React.Component {
     secondaryBackgroundColor: React.PropTypes.string
   };
 
-  render () {
-    const { className = '', style } = this.props;
+  render() {
+    const {className = '', style} = this.props;
 
     return (
       <div
@@ -37,7 +36,7 @@ export default class Footer extends React.Component {
           <a href="#">Home</a>
           <a href="#">Learn More</a>
           <a href="#">Privacy & Terms</a>
-          <a href="#">Successacademy.org</a>
+          <a href="http://successacademy.org">Successacademy.org</a>
         </div>
         <div
           className="share-links"

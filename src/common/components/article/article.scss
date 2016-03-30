@@ -3,8 +3,8 @@
   color: #8F8F8F;
 
   h1 {
-    @include scale('font-size', 30px, #{(30/1400*100)}vw, #{(30/1400*100)}vw);
-    @include scale-prop('line-height', 35);
+    @include scale-prop('font-size', 30);
+    line-height: 120%;
     font-weight: bold;
     color: black;
   }
@@ -16,11 +16,15 @@
 
   .article-content-wrapper {
     display: flex;
-    margin-top: 35px;
+    @include scale('margin-top', 40px, #{(40/1400*100)}vw, #{(40/1400*100)}vw);
   }
 
   .article-title {
     flex: 0.33;
+
+    h1 {
+      width: 90%;
+    }
   }
 
   .article-content {
@@ -32,11 +36,13 @@
   }
 
   .article-text {
-    @include scale('font-size', 14px, #{(14/1400*100)}vw, #{(14/1400*100)}vw);
-    line-height: 26px;
+    @include scale-prop('font-size', 18);
+    line-height: 140%;
   }
 
   .pill-button {
-    margin-top: 20px;
+    @include scale('margin-top', 40px, #{(40/1400*100)}vw, #{(40/1400*100)}vw);
+    @include scale-prop(width, 155);
   }
 }
+

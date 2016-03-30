@@ -128,14 +128,14 @@ export default class GridMenu extends React.Component {
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
           onMouseEnter={this.playRolloverSfx}
-          to={`narrative-video`}
+          to={`narrative-video/math`}
         >
           <div
             ref="returnIcon"
             className={`icon return`}
             dangerouslySetInnerHTML={{ __html: IconReturn }}
           ></div>
-          <p ref="returnText">Return to Documentary</p>
+          <p ref="returnText">Watch Documentary</p>
           <div ref="returnTabAfter" className={`after`}></div>
         </Link>
 
@@ -151,7 +151,7 @@ export default class GridMenu extends React.Component {
             className={`icon filter`}
             dangerouslySetInnerHTML={{ __html: IconFilter }}
           ></div>
-          <p ref="filterText">See Instructional Videos</p>
+          <p ref="filterText">See Classes in Action</p>
           <div ref="filterTabAfter" className={`after`}></div>
         </div>
 

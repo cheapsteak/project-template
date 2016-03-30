@@ -13,8 +13,9 @@ import {
 import dataModel from '../../../data/narrative-video.js';
 
 const defOptions = {
+  currentTime: 0,
   isPlaying: true,
-  isMuted: true,
+  isMuted: false,
   useFullControls: false
 }
 
