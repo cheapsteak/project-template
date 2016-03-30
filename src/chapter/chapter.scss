@@ -9,7 +9,8 @@ $orange: #f99100;
   background-color: #747981;
 
   .component-title {
-    @extend .col-4;
+    //@extend .col-4;
+    padding-left: #{(115/1400*100)}vw;
     @extend .margin-auto-horizontal;
     @include scale('font-size', 40px, #{(40/1400*100)}vw, 55px);
     @include scale('margin-bottom', 40px, #{(40/1400*100)}vw, #{(40/1400*100)}vw);
@@ -232,4 +233,8 @@ $orange: #f99100;
       margin-bottom: 0;
     }
   }
+}
+
+.instructional-video-component {
+  width: calc(100% - #{(115/1400*100*2)}vw);
 }

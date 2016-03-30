@@ -27,6 +27,20 @@ $parallaxLimitY: 70px;
     @include flex-center;
     @include gpu;
     @include scale-prop(font-size, 30);
+    opacity: 0.7;
+    transition: opacity 0.4s;
+
+    &.half-width {
+      width: 50%;
+
+      &:last-of-type {
+        left: 50%;
+      }
+    }
+
+    &:hover {
+      opacity: 1;
+    }
 
     .cta {
       display: inline-block;
@@ -52,12 +66,7 @@ $parallaxLimitY: 70px;
           position: relative;
           @include scale-prop(width, 18);
           @include scale-prop(height, 18);
-        }
-
-        &.watch {
-          svg {
-            @include scale-prop(left, 3);
-          }
+          @include scale-prop(left, 3);
         }
       }
 

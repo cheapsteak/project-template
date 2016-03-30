@@ -92,7 +92,7 @@ export default class Chapter extends React.Component {
   getTarget = (component, slug) => {
       console.log('CALLED');
     if (component instanceof InstructionalVideo) {
-          
+
       return this.refs.instructionalVideo;
     }
     if (component instanceof PhotoEssay) {
@@ -162,7 +162,7 @@ export default class Chapter extends React.Component {
         <div className="page-component">
           <h2 className="component-title">Instructional Video</h2>
           <InstructionalVideo
-            className="col-4 margin-auto-horizontal instructional-video-component"
+            className="margin-auto-horizontal instructional-video-component"
             id="instructionalVideo"
             ref='instructionalVideo'
             slug="math-1"
