@@ -421,7 +421,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           <Link
             ref={node => this.refs.circleCTA = findDOMNode(node)}
             className="circle-cta"
-            to={this.props.currentChapter.route || '/'}
+            to={`/chapters/${this.props.currentChapter.slug}`}
           >
             <div className="circle-cta-text">
               <label className="stagger-cta">Explore</label>
