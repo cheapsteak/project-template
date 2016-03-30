@@ -13,9 +13,29 @@ const reducers = combineReducers({
   mobileHeaderMenu: md.mobile() && require('common/components/mobile-header/mobile-header-reducers.js')
 });
 
-export default createStore(
+const store = createStore(
   reducers,
   (config.env || 'local') === 'local' && window.devToolsExtension
       ? window.devToolsExtension()
       : undefined
 );
+
+export default store;
+
+export function getCurrentChapter () {
+  const state = store.getState();
+  if (!state.narrativeVideo || state.narrativeVideo.currentTime === undefined) {
+    return {
+      title: '',
+      route: '/'
+    };
+  }
+  const { currentTime } = state.narrativeVideo;
+  const chapters = require('common/models/chapters-model.js').getAll();
+  const currentChapter = chapters.reduce(function (previousQualitfyingChapter, chapter) {
+    return currentTime >= chapter.time ? chapter :  previousQualitfyingChapter;
+  }, undefined);
+
+  return currentChapter;
+
+}
