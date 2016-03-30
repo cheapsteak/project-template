@@ -32,7 +32,7 @@ export default class GridTile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.state.data) return;
 
-    const hasInstrVideo = this.state.data.instructionalVideos[0];
+    const hasInstrVideo = this.state.data.hasInstructionalVideo;
     if (nextProps.isFiltered !== this.lastFilteredState && !hasInstrVideo) {
       nextProps.isFiltered ? this.applyFilter() : this.removeFilter();
       this.lastFilteredState = nextProps.isFiltered;
@@ -175,7 +175,7 @@ export default class GridTile extends React.Component {
     const isFiltered = this.props.isFiltered;
     const icon = isFiltered ? IconWatch : IconExplore;
     const copy = isFiltered ? 'In Action' : 'Discover';
-    const url = isFiltered ? this.state.data.instructionalVideos[0] : 'chapters/' + this.state.data.slug;
+    const url = isFiltered ? this.state.data.routes.instructionalVideo : 'chapters/' + this.state.data.slug;
 
     return (
       <div

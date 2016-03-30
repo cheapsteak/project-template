@@ -5,6 +5,7 @@ import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
 import Article from 'common/components/article/article';
+import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
 import unwrapComponent from 'common/utils/unwrap-component.js';
 import {findDOMNode} from 'react-dom';
@@ -235,7 +236,12 @@ export default class Chapter extends React.Component {
             })
           }
         </TransitionGroup>
-        <footer>footer</footer>
+        <footer>
+          <Footer
+            primaryBackgroundColor={`#3e4548`}
+            secondaryBackgroundColor={`#52585b`}
+          />
+        </footer>
       </div>
     </section>;
   }

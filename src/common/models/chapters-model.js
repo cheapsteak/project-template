@@ -10,13 +10,14 @@ export default {
       ...chapter,
       articles: chapter.articles.map(articleModel.get),
       routes: {
-        narrativeVideo: '/narrative-video/' + chapter.slug
+        narrativeVideo: '/narrative-video/' + chapter.slug,
+        instructionalVideo: '/instructional-video/' + chapter.slug,
       }
     };
   },
 
   getAll () {
-    return data.map( chapter => this.get(chapter.slug) );
+    return data.map(chapter => this.get(chapter.slug));
   },
-  
+
 }
