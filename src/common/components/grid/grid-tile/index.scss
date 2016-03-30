@@ -60,19 +60,26 @@ $parallaxLimitY: 70px;
         margin: auto;
         @include scale-prop(margin-bottom, 20);
         @include gpu;
+        transform: translateY(40px);
         @include autoAlpha-0;
 
         svg {
           position: relative;
           @include scale-prop(width, 18);
           @include scale-prop(height, 18);
-          @include scale-prop(left, 3);
+        }
+
+        &.watch {
+          svg {
+            @include scale-prop(left, 2);
+          }
         }
       }
 
       p {
         @include gpu;
         @include autoAlpha-0;
+        transform: translateY(40px);
       }
     }
   }
