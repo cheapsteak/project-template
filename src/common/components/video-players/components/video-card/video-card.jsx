@@ -118,8 +118,7 @@ export default class NextVideoCard extends React.Component {
 
   handleMouseLeave = () => {
     this.video.pause();
-    this.video.currentTime = 0;
-  }
+  };
 
   render() {
     return (
