@@ -11,6 +11,7 @@ import FullBrowserWrapper from 'common/components/fullbrowser-wrapper/fullbrowse
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import NarrativeVideoPlayer from 'common/components/video-players/narrative/narrative-video-player-redux.jsx';
+import InstructionalVideoPlayer from 'common/components/video-players/instructional/grid/grid-video-player-redux.jsx';
 
 import MobileApp from './mobile/mobile.jsx';
 import MobileLanding from './mobile/landing/landing.jsx';
@@ -32,6 +33,7 @@ export default <Provider store={store}>
     <Route path="/" component={App}>
       <IndexRoute component={LandingPage}/>
       <Route path="grid" component={GridPage}/>
+      <Route path="grid/instructional-videos/:slug" component={InstructionalVideoPlayer}/>
       <Route path="narrative-videos/:slug" component={NarrativeVideoPlayer}/>
       <Route path="chapters/:chapter_slug" component={Chapter}>
         <Route
