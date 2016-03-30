@@ -74,12 +74,19 @@
   &.init {
     background-color: transparent;
 
+    .video-wrapper {
+      cursor: default !important;
+    }
+
     .simple-progress-bar {
       display: none;
     }
   }
 
   .progress-play-button {
+    @include scale-prop('width', 110);
+    @include scale-prop('height', 110);
+
     position: absolute;
     top: 50%;
     left: 50%;

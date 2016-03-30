@@ -13,7 +13,8 @@ export default function calculateAnimationStates (els) {
       },
       videoWrapper: {
         scaleX: 1,
-        scaleY: 1
+        scaleY: 1,
+        cursor: 'none'
       },
       overlay: {
         opacity: 0
@@ -44,12 +45,13 @@ export default function calculateAnimationStates (els) {
     },
     idle: {
       simpleProgressBar: {
-        delay: 0.5,
+        delay: 0.1,
         y: 0
       },
       videoWrapper: {
         scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height
+        scaleY: zoomedOutRect.height/zoomedInRect.height,
+        cursor: 'default'
       },
       overlay: {
         opacity: 0.4
