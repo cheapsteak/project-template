@@ -464,7 +464,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                   label="See All"
                   title="Chapters"
                   route="/"
-                  image="/narrative-ending-card.jpg"
+                  image={`${ASSET_PATH}/narrative-ending-card.jpg`}
                 />
               : undefined
             }

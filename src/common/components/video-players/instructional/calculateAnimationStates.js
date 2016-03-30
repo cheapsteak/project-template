@@ -44,7 +44,7 @@ export default function calculateAnimationStates (els) {
     },
     idle: {
       simpleProgressBar: {
-        delay: 0.5,
+        delay: 0.1,
         y: 0
       },
       videoWrapper: {
