@@ -10,7 +10,6 @@ import chaptersModel from 'common/models/chapters-model';
 import _ from 'lodash';
 
 const allChapters = chaptersModel.getAll();
-console.log('asdfsadfsdaf');
 
 @connect(state => ({ video: state.narrativeVideo}) )
 class NarrativeVideoPlayerRedux extends React.Component {
