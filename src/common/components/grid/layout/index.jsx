@@ -23,6 +23,13 @@ export default class Layout extends React.Component {
     status: states.LOADING
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isFiltered !== this.lastFilteredState) {
+      nextProps.isFiltered ? this.applyFilter() : this.removeFilter();
+      this.lastFilteredState = nextProps.isFiltered;
+    }
+  }
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.initializeLayout();
@@ -72,9 +79,32 @@ export default class Layout extends React.Component {
   };
 
   animateFillers = (delay = 0.5) => {
+
+    setTimeout(() => {
+      this.fillers.animatedIn = true;
+    }, delay * 1000);
+
     return animate.all([
-      animate.staggerTo(this.fillers, 0.8, {autoAlpha: 1, delay: delay}, 0.1),
-      animate.staggerTo(this.fillers, 1.2, {scale: 1, delay: delay, ease: Expo.easeOut}, 0.1)
+      animate.staggerTo(this.fillers, 0.8, {autoAlpha: this.props.isFiltered ? 0.1 : 1, delay: delay}, 0.1),
+      animate.staggerTo(this.fillers, 1.2, {
+        scale: this.props.isFiltered ? 0.9 : 1,
+        delay: delay,
+        ease: Expo.easeOut
+      }, 0.1)
     ])
+  };
+
+  applyFilter = () => {
+    if (!this.fillers.animatedIn) {
+      return;
+    }
+    animate.to(this.fillers, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: Expo.easeOut});
+  };
+
+  removeFilter = () => {
+    if (!this.fillers.animatedIn) {
+      return;
+    }
+    animate.to(this.fillers, 0.3, {scale: 1, autoAlpha: 1, ease: Expo.easeOut});
   };
 }

@@ -12,7 +12,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: false,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -29,7 +29,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: [],
     panoramas: ['math'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -46,7 +46,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: ['science'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -63,7 +63,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: false,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -80,7 +80,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -97,7 +97,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: ['literacy-and-writing'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -114,7 +114,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: false,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -131,7 +131,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -148,7 +148,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    hasInstructionalVideo: true,
+    instructionalVideos: ["math-1", "science-1", "science-2"],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
