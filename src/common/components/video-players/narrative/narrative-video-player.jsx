@@ -306,7 +306,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handlePrevClick = (e) => {
     const currentTime = this.props.currentTime;
-    const times = this.props.timeline.map(point => point.time).reverse();
+    const times = this.props.chapters.map(point => point.time).reverse();
     const newTime =  _.find(times, (time) => time < currentTime) || 0;
 
     this.video.currentTime = newTime;
@@ -314,7 +314,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleNextClick = (e) => {
     const currentTime = this.video.currentTime;
-    const times = this.props.timeline.map(point => point.time);
+    const times = this.props.chapters.map(point => point.time);
 
     // newTime === video.duration will cause a replay
     const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001;
