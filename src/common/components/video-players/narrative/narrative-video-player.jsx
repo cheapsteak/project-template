@@ -189,7 +189,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
-    clearInterval(this.localStorageIntervalId);
+    this.clearTimeStorageInterval();
   }
 
   get videoEnded () {
