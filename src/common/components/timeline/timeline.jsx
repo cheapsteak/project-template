@@ -70,7 +70,7 @@ export default class Timeline extends React.Component {
 
   handleMouseLeave = (e) => {
     const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
-    
+
     this.mouseDown = false;
 
     animate.to(hoveredTimeStamp, 0.3, { top: -12 });
@@ -168,11 +168,11 @@ export default class Timeline extends React.Component {
           >
             <span ref="progressHead"></span>
           </div>
-          { 
+          {
             /* Check if there is a duration before setting the dots for the case of video metadata currently loading */
-            duration 
+            duration
               ? items.map(point => {
-                  const style = { left: (point.time / duration * 100) + '%' }; 
+                  const style = { left: (point.time / duration * 100) + '%' };
                   const className = currentTime === point.time ? ' selected' : '';
                   // const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
                   const isActive = false;
@@ -185,7 +185,7 @@ export default class Timeline extends React.Component {
                       route={point.route}
                       onClick={this.handlePointClick.bind(this, point.time)}
                     >
-                      <HoverCard src={point.img} ctaText={point.ctaText} />
+                      <HoverCard src={point.img} ctaText={point.title} />
                     </HotSpot>
                   )
                 })

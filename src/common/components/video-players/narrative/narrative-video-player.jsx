@@ -138,8 +138,8 @@ export default class NarrativeVideoPlayer extends React.Component {
       }
     }
 
-    if(this.props.circleCTA.text !== nextProps.circleCTA.text)  {
-      if(nextProps.circleCTA.text) {
+    if(this.props.currentChapter.title !== nextProps.currentChapter.title)  {
+      if(nextProps.currentChapter.title) {
         this.animateCircleCTAText();
       }
     }
@@ -194,22 +194,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
-
-  getCurrentChapter = () => {
-    const { timeline, currentTime } = this.props;
-    const duration = this.video.duration;
-    let currentChapter = {};
-
-    timeline.forEach((chapter, i) => {
-      let upperRange = (timeline[i+1] || {}).time || duration;
-      if(chapter.time <= currentTime && chapter.time < upperRange) {
-        currentChapter = chapter;
-      }
-    });
-
-    return currentChapter;
-  };
-
 
   /************************/
   /*     Animatations     */
@@ -307,15 +291,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleTimeUpdate = () => {
-    const currentChapter = this.getCurrentChapter();
-
-    if(this.props.circleCTA.text !== currentChapter.ctaText) {
-      this.props.setCircleCTA({
-        text: currentChapter.ctaText || '',
-        route: currentChapter.route || ''
-      });
-    }
-
+    const currentChapter = this.props.currentChapter;
     this.props.onVideoTimeChange(this.video.currentTime);
   };
 
@@ -330,7 +306,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handlePrevClick = (e) => {
     const currentTime = this.props.currentTime;
-    const times = this.props.timeline.map(point => point.time).reverse();
+    const times = this.props.chapters.map(point => point.time).reverse();
     const newTime =  _.find(times, (time) => time < currentTime) || 0;
 
     this.video.currentTime = newTime;
@@ -338,7 +314,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleNextClick = (e) => {
     const currentTime = this.video.currentTime;
-    const times = this.props.timeline.map(point => point.time);
+    const times = this.props.chapters.map(point => point.time);
 
     // newTime === video.duration will cause a replay
     const newTime =  _.find(times, (time) => time > currentTime) || this.video.duration - 0.001;
@@ -403,7 +379,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
 
   render() {
-    const { style, circleCTA, className } = this.props;
+    const { style, className } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
     return (
@@ -442,10 +418,14 @@ export default class NarrativeVideoPlayer extends React.Component {
             muted={this.props.isMuted}
           >
           </video>
-          <Link ref={node => this.refs.circleCTA = findDOMNode(node)} className="circle-cta" to={circleCTA.route}>
+          <Link
+            ref={node => this.refs.circleCTA = findDOMNode(node)}
+            className="circle-cta"
+            to={this.props.currentChapter.route || '/'}
+          >
             <div className="circle-cta-text">
               <label className="stagger-cta">Explore</label>
-              <h3 className="stagger-cta">{circleCTA.text}</h3>
+              <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
             </div>
           </Link>
           <div
@@ -532,7 +512,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             currentTime={this.props.currentTime}
             duration={ this.video && this.video.duration || 0 }
             onTimeChange={this.changeVideoTime}
-            items={this.props.timeline}
+            items={this.props.chapters}
           />
         </div>
       </div>

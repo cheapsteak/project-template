@@ -60,13 +60,12 @@ export default class TimelineHoverCard extends React.Component {
           onMouseLeave={this.props.onMouseLeave}
           onClick={this.props.onClick}
         >
-          <Link to={this.props.route}>
             <div ref="card" className="card" >
               <div ref="image" className="image" style={{ backgroundImage: `url(${this.props.src})` }}></div>
               <span ref="ctaText" className="cta-text stagger-text">{this.props.ctaText}</span>
               {
               /*
-                To be demo'ed to client and decide if they want to remove it                
+                To be demo'ed to client and decide if they want to remove it
 
                 <span ref="ctaLabel" className="cta-label stagger-text">Explore</span>
               */
@@ -74,7 +73,6 @@ export default class TimelineHoverCard extends React.Component {
               <div ref="frontOverlay" className="front-label-bg"></div>
               <div ref="backOverlay" className="back-label-bg"></div>
             </div>
-          </Link>
           <div ref="line" className="line"></div>
         </div>
     )
