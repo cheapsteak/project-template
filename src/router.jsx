@@ -32,10 +32,10 @@ export default <Provider store={store}>
     <Route path="/" component={App}>
       <IndexRoute component={LandingPage}/>
       <Route path="grid" component={GridPage}/>
-      <Route path="narrative-video/:slug" component={NarrativeVideoPlayer}/>
+      <Route path="narrative-videos/:slug" component={NarrativeVideoPlayer}/>
       <Route path="chapters/:chapter_slug" component={Chapter}>
         <Route
-          path="instructional-video/:slug"
+          path="instructional-videos/:slug"
           component={FullBrowserWrapper}
           childComponent={ChapterVideoPlayer}
         />
