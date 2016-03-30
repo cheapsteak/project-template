@@ -4,6 +4,7 @@ import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
+import IconLeftArrow from 'svgs/icon-left-arrow.svg';
 import Article from 'common/components/article/article';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
@@ -118,7 +119,7 @@ export default class Chapter extends React.Component {
               style={{height: '100%'}}
               text={`Return to Documentary`}
               color={`#adafaf`}
-              svgIcon={IconPlay}
+              svgIcon={IconLeftArrow}
               backgroundColor={`#565d60`}
               hoverBackgroundColor={`#3e4548`}
             />
