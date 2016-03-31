@@ -308,8 +308,8 @@ export default class Panorama extends React.Component {
           text={`Close`}
           color={`#fff`}
           svgIcon={IconClose}
-          backgroundColor={`#8d652f`}
-          hoverBackgroundColor={`#8d652f`}
+          backgroundColor={`#f7910b`}
+          hoverBackgroundColor={`#de8209`}
         />
       </div>
     );

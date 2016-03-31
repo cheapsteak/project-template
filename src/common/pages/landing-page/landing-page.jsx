@@ -11,6 +11,8 @@ import gridData  from '../../models/grid-model';
 import videoData  from '../../data/narrative-video';
 import RectangularButton  from '../../../../node_modules/common/components/rectangular-button/rectangular-button.jsx';
 import BgCover from 'background-cover';
+import landingData  from '../../data/landing';
+import Footer from 'common/components/footer/footer';
 
 export default class LandingPage extends React.Component {
 
@@ -22,7 +24,13 @@ export default class LandingPage extends React.Component {
     className: ''
   };
 
-  state = {};
+  state = {
+    data: {}
+  };
+
+  componentWillMount() {
+    this.setState({data: {...landingData}});
+  }
 
   componentDidMount() {
     const textPos = (this.refs.ctaContainer.offsetHeight + this.refs.description.offsetHeight) * 0.5;
@@ -112,9 +120,10 @@ export default class LandingPage extends React.Component {
 
     return animate.all([
       animate.to(this.refs.loaderContainer, 0.3, {autoAlpha: 0}),
-      animate.to(this.refs.coverBg, 1.2, {autoAlpha: 0}),
+      animate.to(this.refs.coverBg, 0.8, {autoAlpha: 0}),
       animate.to(this.refs.contentContainer, 1.5, {y: 0, ease: ease}),
       animate.to([this.refs.subtitle, this.refs.title], 1.7, {scale: 1, ease: ease}),
+      animate.to(this.refs.title, 0.6, {color: '#fff'}),
       animate.to(this.refs.video, 2, {scale: 1, ease: ease}),
       animate.staggerTo(staggerEls, 1, {autoAlpha: 1, y: 0, delay: 0.3, ease: ease}, 0.2)
     ])
@@ -145,6 +154,7 @@ export default class LandingPage extends React.Component {
   };
 
   render() {
+    const isReturn = !!localStorage.getItem('narrative-video-time');
 
     return (
       <div className={`landing-page ${this.props.className}`}>
@@ -165,25 +175,25 @@ export default class LandingPage extends React.Component {
           <div ref="coverBg" className={`cover-bg`}></div>
 
           <div ref="contentContainer" className={`content-container`}>
-            <div ref="subtitle" className={`subtitle`}>Welcome to our</div>
-            <div ref="title" className={`title`}>Middle School Tour</div>
+            <div ref="subtitle" className={`subtitle`}>{this.state.data.subtitle}</div>
+            <div ref="title" className={`title`}>{this.state.data.title}</div>
             <div ref="description" className={`description`}>
-              Take an inside look at our culture and curriculum through the eyes of our scholars.
+              {this.state.data.description}
             </div>
 
-            <div ref="ctaContainer" className={`cta-container`}>
+            <div ref="ctaContainer" className={`cta-container ${isReturn ? 'resume' : ''}`}>
               <Link
                 ref="ctaWatch"
                 className={`cta watch`}
-                to={`narrative-video/math`}
+                to={`narrative-video`}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
-                  text={`Watch Documentary`}
+                  text={`${isReturn? 'Resume Documentary' : 'Watch Documentary'}`}
                   color={`#fff`}
                   svgIcon={IconWatch}
-                  backgroundColor={`#8f8f8f`}
-                  hoverBackgroundColor={`#6a6969`}
+                  backgroundColor={`#f7910b`}
+                  hoverBackgroundColor={`#de8209`}
                 />
               </Link>
               <Link
@@ -207,6 +217,11 @@ export default class LandingPage extends React.Component {
             <div className={`icon`} dangerouslySetInnerHTML={{ __html: IconLoader }}></div>
             <p>Loading</p>
           </div>
+
+          <Footer
+            primaryBackgroundColor={`rgba(62, 69, 72, 0.5)`}
+            secondaryBackgroundColor={`rgba(82, 88, 91,0.6)`}
+          />
 
         </div>
       </div>

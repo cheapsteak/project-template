@@ -10,6 +10,7 @@
   @include scale-prop('font-size', 14);
   color: #8f8f8f;
   font-weight: bold;
+  user-select: none;
 
   a {
     opacity: 0.6;
@@ -21,15 +22,15 @@
     height: 100%;
     @include scale-prop('margin-left', 15);
     @include scale-prop('margin-right', 15);
-    transition: $transition;
+    transition: opacity 0.3s ease;
 
     &:hover {
       opacity: 1;
-      transition: $transition;
     }
   }
 
   .main-links, .share-links {
+    @include scale-prop('padding-top', 3);
     @include scale-prop('padding-left', 20);
     @include scale-prop('padding-right', 20);
   }
@@ -56,6 +57,7 @@
     label, .svg-icons {
       flex: 1;
       color: rgba(255, 255, 255, 0.6);
+      text-align: left;
     }
 
     .share-icons {
@@ -70,7 +72,7 @@
       @include scale-prop('margin-left', 20);
       cursor: pointer;
       opacity: 1;
-      transition: $transition;
+      transition: opacity 0.3s ease;
 
       svg {
         width: 100%;
@@ -79,7 +81,6 @@
 
       &:hover {
         opacity: 0.6;
-        transition: $transition;
       }
     }
   }
