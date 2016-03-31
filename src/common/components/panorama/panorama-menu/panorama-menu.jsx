@@ -1,6 +1,8 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
+import panData  from '../../../data/panorama';
+import panModel  from '../../../models/panorama-model';
 
 export default class PanoramaMenu extends React.Component {
 
@@ -13,6 +15,10 @@ export default class PanoramaMenu extends React.Component {
 
   static defaultProps = {
     className: ''
+  };
+
+  state = {
+    data: []
   };
 
   componentWillReceiveProps(newProps) {
@@ -34,6 +40,11 @@ export default class PanoramaMenu extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const data = panData.map(data => panModel.get(data.slug));
+    this.setState({data});
+  }
+
   componentDidMount() {
     this.containerEl = findDOMNode(this);
     this.items = document.querySelectorAll('.panorama-menu .item');
@@ -41,8 +52,6 @@ export default class PanoramaMenu extends React.Component {
     animate.set(this.refs.heading, {y: '-100%'});
     animate.set(this.refs.container, {y: '-180%'});
     animate.set(this.items, {y: 20, autoAlpha: 0});
-
-    this.refs.firstTab.click();
   }
 
   animateIn = () => {
@@ -118,46 +127,27 @@ export default class PanoramaMenu extends React.Component {
         onMouseLeave={this.handleMouseLeave}
       >
         <div ref="heading" className={`heading`}>
-          Select a Different Environment
+          Select a Room
         </div>
 
         <div ref="container" className={`items-container`}>
-          <div
-            ref="firstTab"
-            className={`item`}
-            onClick={this.handleTabClick}
-            onMouseEnter={this.handleTabMouseEnter}
-            data-slug={`math`}
-          >
-            <span>Math Classroom</span>
-          </div>
 
-          <div
-            className={`item`}
-            onClick={this.handleTabClick}
-            onMouseEnter={this.handleTabMouseEnter}
-            data-slug={`literacy-and-writing`}
-          >
-            <span>Literacy Classroom</span>
-          </div>
+          {
+            this.state.data.map((item, index) => {
+              return (
+                <div
+                  className={`item ${index == 0 ? 'selected': ''}`}
+                  onClick={this.handleTabClick}
+                  onMouseEnter={this.handleTabMouseEnter}
+                  key={index}
+                  data-slug={item.slug}
+                >
+                  <span>{item.title}</span>
+                </div>
+              )
+            })
+          }
 
-          <div
-            className={`item`}
-            onClick={this.handleTabClick}
-            onMouseEnter={this.handleTabMouseEnter}
-            data-slug={`science`}
-          >
-            <span>Science Lab</span>
-          </div>
-
-          <div
-            className={`item`}
-            onClick={this.handleTabClick}
-            onMouseEnter={this.handleTabMouseEnter}
-            data-slug={`hallway`}
-          >
-            <span>Hallway</span>
-          </div>
         </div>
       </div>
     );
