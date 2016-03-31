@@ -40,6 +40,11 @@ export default class App extends React.Component {
     const { pathname } = this.props.location;
     let key = pathname.split('/')[1] || 'root';
 
+    // TODO: To be removed when we change the grid to use a nested view
+    if (key === 'grid' && pathname.split('/')[2]) {
+      key += pathname.split('/')[2];
+    }
+
     return (
       <div className="route-content-wrapper full-height">
         <TransitionGroup
