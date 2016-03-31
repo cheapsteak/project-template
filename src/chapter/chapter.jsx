@@ -18,6 +18,8 @@ import chaptersModel from 'common/models/chapters-model';
 
 export default class Chapter extends React.Component {
 
+  cleanupOperations = [];
+
   componentWillMount() {
     const slug = this.props.params.chapter_slug;
     const data = chaptersModel.get(slug);
@@ -36,6 +38,11 @@ export default class Chapter extends React.Component {
       container: el.querySelector('.main'),
       globalSceneOptions: {},
       loglevel: 2
+    });
+
+    this.cleanupOperations.push(() => {
+      scrollController.destroy();
+      headerScrollController.destroy();
     });
 
     const getY = function (progress, min = 50, max = -50) {
@@ -119,6 +126,11 @@ export default class Chapter extends React.Component {
     });
     scrollController.addScene(scrollScenes);
   }
+
+  componentWillUnmount() {
+    this.cleanupOperations.forEach(fn => fn());
+    this.cleanupOperations = [];
+  };
 
   getTarget = (component, slug) => {
     if (component instanceof InstructionalVideo) {
