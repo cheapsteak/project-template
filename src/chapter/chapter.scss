@@ -50,10 +50,22 @@ $orange: #f99100;
   .nav {
     position: fixed;
     z-index: 100;
-    top: 50px;
-    left: 50px;
-    width: calc(100% - 50px);
     @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
+    @media (max-width: $break-large) {
+      top: 50px;
+      left: 50px;
+      width: calc(100% - 50px);
+    }
+    @media (min-width: $break-large + 1) {
+      top: #{(50/1400 * 100)}vw;
+      left: #{(50/1400 * 100)}vw;
+      width: calc(100% - #{(50/1400 * 100)}vw);
+    }
+    @media (min-width: $break-xlarge + 1) {
+      top: #{(50/1400 * 100)}vw;
+      left: #{(70/1400 * 100)}vw;
+      width: calc(100% - 70px);
+    }
     background-color: rgba(#747981, 0.7);
     display: flex;
     justify-content: space-between;
