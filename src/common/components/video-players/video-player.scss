@@ -119,15 +119,20 @@
 
     a {
       display: block;
+      height: 100%;
     }
 
     .button-wrapper {
-      margin: 10px;
+      position: relative;
+      height: 100%;
     }
 
     .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       flex: 1;
-      margin: 10px;
+      margin: 0 10px;
       fill: white;
       cursor: pointer;
 

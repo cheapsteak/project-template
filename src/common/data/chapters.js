@@ -8,7 +8,7 @@ export default [
     time: 0,
     hero: {
       cta: '',
-      description: 'At Success Academy we completely redefined how to teach Science.',
+      description: 'Redefining What’s Possible in Public Education',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
@@ -25,14 +25,14 @@ export default [
     time: 20,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Math.',
+      description: 'Empowering Confident Mathematicians',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: ['math'],
-    panoramas: ['math'],
+    panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['math-1', 'math-2', 'math-3'],
     podcast: '',
     infographics: ''
   },
@@ -42,14 +42,14 @@ export default [
     time: 40,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Science.',
+      description: 'The Joy of Discovery through Scientific Inquiry',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: ['science'],
-    panoramas: ['science'],
+    panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['science-1'],
     podcast: '',
     infographics: ''
   },
@@ -59,14 +59,14 @@ export default [
     time: 60,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Electives.',
+      description: 'Developing the Whole Child',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['electives-1'],
     podcast: '',
     infographics: ''
   },
@@ -76,14 +76,14 @@ export default [
     time: 70,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Computer Science.',
+      description: 'Nurturing the Next Generation of Technologists and Developers',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: ['computer-science'],
     panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: [],
     podcast: '',
     infographics: ''
   },
@@ -93,15 +93,15 @@ export default [
     time: 80,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Literacy and Writing.',
+      description: 'Developing Independent Learners through Literacy',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: ['literacy', 'writing'],
     instructionalVideosCtas: ['Literacy', 'Writing'],
-    panoramas: ['literacy-and-writing'],
+    panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['literacy-and-writing-1'],
     podcast: '',
     infographics: ''
   },
@@ -111,14 +111,14 @@ export default [
     time: 90,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach History.',
+      description: 'Studying the Past to Shape the Future',
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: ['history'],
     panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['history-1', 'history-2'],
     podcast: '',
     infographics: ''
   },
@@ -135,7 +135,7 @@ export default [
     instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['character-development-1'],
     podcast: '',
     infographics: ''
   },
@@ -152,7 +152,7 @@ export default [
     instructionalVideos: [],
     panoramas: [],
     photoEssays: [],
-    articles: ['welcome-1', 'welcome-2'],
+    articles: ['parental-investment-1'],
     podcast: '',
     infographics: ''
   }

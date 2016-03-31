@@ -136,7 +136,7 @@ export default class NextVideoCard extends React.Component {
           </video>
           <span ref="topUI">
             <div ref="button" className="next-video-button">></div>
-            <label>Up Next</label>
+            <label>Next</label>
           </span>
           <h2 ref="title">{this.props.title}</h2>
 

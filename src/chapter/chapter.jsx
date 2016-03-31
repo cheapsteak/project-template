@@ -240,7 +240,7 @@ export default class Chapter extends React.Component {
                 >
                   <Article
                     className="col-3"
-                    scrollTopPadding={40}
+                    scrollTopPadding={60}
                     title={article.title}
                     bannerImage={article.image}
                     aboveFoldSelector={article.aboveFoldSelector}

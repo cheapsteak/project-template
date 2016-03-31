@@ -195,6 +195,10 @@ $orange: #f99100;
   width: 100%;
   z-index: 2;
 
+  &:only-of-type {
+    @include scale-prop('padding-bottom', 40);
+  }
+
   &:not(:last-child) {
     @include scale-prop('padding-bottom', 80);
   }

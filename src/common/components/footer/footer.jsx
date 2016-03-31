@@ -1,5 +1,6 @@
 import React from 'react';
-import {findDOMNode} from 'react-dom';
+import { findDOMNode } from 'react-dom';
+import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
@@ -33,9 +34,9 @@ export default class Footer extends React.Component {
             dangerouslySetInnerHTML={{ __html: SALogoSvg }}
           >
           </div>
-          <a href="#">Home</a>
-          <a href="#">Learn More</a>
-          <a href="#">Privacy & Terms</a>
+          <Link to="/">Home</Link>
+          <a href="#">About</a>
+          <a href="#">Privacy</a>
           <a href="http://successacademy.org">Successacademy.org</a>
         </div>
         <div

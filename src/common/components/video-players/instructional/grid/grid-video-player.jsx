@@ -314,7 +314,7 @@ export default class GridVideoPlayer extends React.Component {
               ? [
                 <ImageCard
                   key={'currentId'}
-                  label="Learn More"
+                  label="Discover:"
                   title={this.props.title}
                   route={this.props.chapterRoute}
                   image={this.props.endingCardImage}
@@ -391,13 +391,11 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterPrevButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link to={prevVideoRoute}>
-                <span
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-                  onClick={this.handlePrevClick}
-                >
-                </span>
+              <Link
+                to={prevVideoRoute}
+                className="button" 
+                dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+              >
               </Link>
               <TransitionGroup>
                 {
@@ -417,13 +415,11 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterNextButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link to={nextVideoRoute}>
-                <span
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-                  onClick={this.handleNextClick}
-                >
-                </span>
+              <Link
+                to={nextVideoRoute}
+                className="button"
+                dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+              >
               </Link>
               <TransitionGroup>
                 {

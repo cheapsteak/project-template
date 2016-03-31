@@ -9,9 +9,36 @@
     color: black;
   }
 
+  h4 {
+    @include scale-prop('font-size', 18);
+    @include scale-prop('margin-top', 20);
+    @include scale-prop('margin-bottom', 5);
+    font-weight: bold;
+    color: #777;
+  }
+  
   img {
     width: 100%;
+  }
 
+  ul {
+    display: table;
+    border-collapse: collapse;
+    li {
+      display: table-row;
+      border-bottom-color: transparent;
+      border-bottom-style: solid;
+      @include scale-prop('border-bottom-width', 30);
+
+      &:before {
+        content: '•';
+        color: #777;
+        display: table-cell; 
+        text-align: right;
+        @include scale-prop('padding-right', 30);
+        @include scale-prop('font-size', 25);
+      }
+    }
   }
 
   .article-content-wrapper {
@@ -29,6 +56,12 @@
 
   .article-content {
     flex: 0.66;
+
+    img {
+      @include scale-prop('margin-top', 20);
+      @include scale-prop('margin-bottom', 20);
+      width: 100%;
+    }
   }
 
   .text-wrapper {
