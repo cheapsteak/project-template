@@ -34,15 +34,8 @@ export default class Chapter extends React.Component {
       loglevel: 2
     });
 
-    const headerScrollController = new ScrollMagic.Controller({
-      container: el.querySelector('.main'),
-      globalSceneOptions: {},
-      loglevel: 2
-    });
-
     this.cleanupOperations.push(() => {
       scrollController.destroy();
-      headerScrollController.destroy();
     });
 
     const getY = function (progress, min = 50, max = -50) {
@@ -60,30 +53,6 @@ export default class Chapter extends React.Component {
       '.panorama-container .parallax-target',
       '.podcast .text-container',
     ];
-
-    const headerScrollScene = new ScrollMagic.Scene({
-      triggerElement: el,
-      duration: el.querySelector('.main').getBoundingClientRect().height,
-      triggerHook: 0
-    })
-      .on('enter', e => {
-        TweenMax.set(this.refs.nav, {
-          position: 'absolute',
-          zIndex: 1000,
-          left: '0',
-          width: '100%'
-        });
-      })
-      .on('leave', e => {
-        const left = this.refs.nav.getClientRects()[0].left;
-        TweenMax.set(this.refs.nav, {
-          position: 'fixed',
-          left: left,
-          width: `calc(100% - ${left}px)`
-        });
-      })
-
-    headerScrollController.addScene(headerScrollScene);
 
     const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
 
@@ -152,36 +121,35 @@ export default class Chapter extends React.Component {
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
     return <section ref="chapter" className="chapter-page">
-      <div className="main" ref="main">
-        <nav className="nav" ref="nav">
-          <Link
-            className={`nav-button left`}
-            to={`/narrative-video`}
-          >
-            <RectangularButton
-              style={{height: '100%'}}
-              text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
-              color={`#adafaf`}
-              svgIcon={isReturn ? IconLeftArrow : IconPlay}
-              backgroundColor={`#565d60`}
-              hoverBackgroundColor={`#3e4548`}
-            />
-          </Link>
-          <Link
-            className={`nav-button right`}
-            to={`grid`}
-          >
-            <RectangularButton
-              style={{height: '100%'}}
-              text={`Explore Chapters`}
-              color={`#adafaf`}
-              svgIcon={IconExplore}
-              backgroundColor={`#565d60`}
-              hoverBackgroundColor={`#3e4548`}
-            />
-          </Link>
-        </nav>
-
+      <nav className="nav">
+        <Link
+          className={`nav-button left`}
+          to={`/narrative-video`}
+        >
+          <RectangularButton
+            style={{height: '100%'}}
+            text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
+            color={`#adafaf`}
+            svgIcon={isReturn ? IconLeftArrow : IconPlay}
+            backgroundColor={`#565d60`}
+            hoverBackgroundColor={`#3e4548`}
+          />
+        </Link>
+        <Link
+          className={`nav-button right`}
+          to={`grid`}
+        >
+          <RectangularButton
+            style={{height: '100%'}}
+            text={`Explore Chapters`}
+            color={`#adafaf`}
+            svgIcon={IconExplore}
+            backgroundColor={`#565d60`}
+            hoverBackgroundColor={`#3e4548`}
+          />
+        </Link>
+      </nav>
+      <div className="main">
         <div className="page-component chapter-header">
           <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
           <div className={`hero-content`}>

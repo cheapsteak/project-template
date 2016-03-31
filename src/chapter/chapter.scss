@@ -32,31 +32,32 @@ $orange: #f99100;
     @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
     background-color: white;
 
+    overflow: auto;
     @media (max-width: $break-large) {
       width: calc(100% - 50px);
+      height: calc(100% - 50px);
     }
     @media (min-width: $break-large + 1) {
       width: calc(100% - #{(50/1400 * 100)}vw);
+      height: calc(100% - #{(50/1400 * 100)}vw);
     }
     @media (min-width: $break-xlarge + 1) {
       width: calc(100% - 70px);
+      height: calc(100% - 70px);
     }
   }
 
   .nav {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    width: 100%;
+    position: fixed;
+    z-index: 100;
+    top: 50px;
+    left: 50px;
+    width: calc(100% - 50px);
     @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
     background-color: rgba(#747981, 0.7);
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-
-    .nav-button {
-
-    }
   }
 
   .chapter-header {
