@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  @include scale-calc-deduct(height, '100%', 50);
+  //@include scale-calc-deduct(height, '100%', 50);
+  height: 100%;
   background-color: #111;
   @include scale-prop('padding-top', 80);
   @include scale-prop('padding-bottom', 80);

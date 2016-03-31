@@ -113,15 +113,35 @@ $orange: #f99100;
         overflow: hidden;
         background-color: rgba(0, 0, 0, 0);
 
-        .thumb {
+        .thumb-container {
           @include scale-prop(width, 60);
           height: 100%;
-          background-size: contain;
           display: inline-block;
           float: left;
-          opacity: 1;
-          transition: opacity 0.4s;
           background-color: rgba(0, 0, 0, 1);
+          @include flex-center;
+          position: relative;
+
+          .thumb {
+            background-size: contain;
+            opacity: 1;
+            transition: opacity 0.3s;
+            @include absolute-100;
+          }
+
+          .icon {
+            position: relative;
+            @include scale-prop(width, 16);
+            @include scale-prop(height, 16);
+            @include scale-prop(margin-left, 3);
+
+            svg {
+              fill: #fff;
+              width: 100%;
+              height: 100%;
+              transition: fill 0.3s;
+            }
+          }
         }
 
         .button {
@@ -133,19 +153,6 @@ $orange: #f99100;
           float: left;
           background-color: #fff;
           transition: background-color 0.4s, color 0.4s;
-
-          .icon {
-            @include scale-prop(width, 16);
-            @include scale-prop(height, 16);
-            @include scale-prop(margin-right, 20);
-          }
-
-          svg {
-            fill: $orange;
-            width: 100%;
-            height: 100%;
-            transition: fill 0.3s;
-          }
         }
 
         &:hover {
@@ -165,6 +172,34 @@ $orange: #f99100;
         }
       }
     }
+
+    .arrow-cta {
+      position: absolute;
+      bottom: #{(45/1400*100)}vw;
+      @include scale-prop(width, 16);
+      @include scale-prop(height, 10);
+      @include scale-prop(margin-left, -8);
+      left: 50%;
+      animation: inf-bounce 1.8s infinite;
+
+      svg {
+        transform: rotate(-90deg);
+      }
+
+      @keyframes inf-bounce {
+        0%, 100% {
+          transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transform: translateY(-5px);
+        }
+
+        50% {
+          transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+          transform: translateY(5px);
+        }
+      }
+
+    }
+
   }
 
   .panorama-container {

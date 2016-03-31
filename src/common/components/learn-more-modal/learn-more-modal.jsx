@@ -74,7 +74,7 @@ export default class LearnMoreModal extends React.Component {
           ref="content"
           className="modal-content"
         >
-          <h1>Learn More</h1>
+          <h1>About</h1>
           <div className="text-wrapper">
             {
               items.map((paragraph, i) => {
