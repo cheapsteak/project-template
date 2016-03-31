@@ -81,7 +81,8 @@ $orange: #f99100;
 
     .hero-content {
       position: absolute;
-      @include scale-prop(max-width, 520);
+      // @include scale-prop(max-width, 520);
+      @include scale-prop(max-width, 550);
       padding-left: #{(115/1400*100)}vw;
       bottom: #{(100/1400*100)}vw;
       font-weight: bold;
@@ -195,6 +196,10 @@ $orange: #f99100;
   display: flex;
   width: 100%;
   z-index: 2;
+
+  &:only-of-type, &:last-child {
+    @include scale-prop('padding-bottom', 40);
+  }
 
   &:not(:last-child) {
     @include scale-prop('padding-bottom', 80);
