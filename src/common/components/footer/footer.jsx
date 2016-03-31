@@ -1,6 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
-import { Link } from 'react-router';
+import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
@@ -9,6 +8,7 @@ import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
 import store from 'common/store';
 import * as actionCreators from 'common/actions/learn-more-modal-actions';
+import {Link} from 'react-router';
 
 export default class Footer extends React.Component {
 
@@ -81,15 +81,16 @@ export default class Footer extends React.Component {
           className="main-links"
           style={{ backgroundColor: this.props.primaryBackgroundColor }}
         >
-          <div
-            className="svg-logo"
-            dangerouslySetInnerHTML={{ __html: SALogoSvg }}
-          >
-          </div>
-          <a href="#">Home</a>
-          <div className={'link'} onClick={this.handleLearnMoreClick}>About</div>
+          <a href="http://successacademy.org" target="_blank">
+            <div
+              className="svg-logo"
+              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            >
+            </div>
+          </a>
+          <Link to={`/`} className="home-link">Home</Link>
+          <a onClick={this.handleLearnMoreClick}>Learn More</a>
           <a href="http://successacademy.org/privacy_policy.html" target="_blank">Privacy & Terms</a>
-          <a href="http://successacademy.org" target="_blank">Successacademy.org</a>
         </div>
         <div
           className="share-links"
