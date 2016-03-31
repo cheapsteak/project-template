@@ -9,7 +9,7 @@ export default [
     hero: {
       cta: '',
       description: 'Redefining What’s Possible in Public Education',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/welcome.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Arianne',
@@ -27,7 +27,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'Empowering Confident Mathematicians',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/math.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Quinlan',
@@ -45,7 +45,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'The Joy of Discovery through Scientific Inquiry',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/science.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Idrissa',
@@ -63,7 +63,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'Developing the Whole Child',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/electives.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Morgan and William',
@@ -81,7 +81,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'Nurturing the Next Generation of Technologists and Developers',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/computer.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Raquel',
@@ -99,7 +99,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'Developing Independent Learners through Literacy',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/literacy.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Sela',
@@ -118,7 +118,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'Studying the Past to Shape the Future',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/history.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Frankie',
@@ -136,7 +136,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Character Development.',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/character.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Lianne',
@@ -154,7 +154,7 @@ export default [
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Parental Investment.',
-      bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
+      bgVideoUrl: `http://successacademy.jam3.net/videos/parental.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     scholar: 'Alexander',
