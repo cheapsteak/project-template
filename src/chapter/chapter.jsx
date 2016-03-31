@@ -137,6 +137,8 @@ export default class Chapter extends React.Component {
   render() {
     if (!this.state.data) return <div/>;
 
+    const isReturn = !!localStorage.getItem('narrative-video-time');
+
     return <section ref="chapter" className="chapter-page">
       <div className="main" ref="main">
         <nav className="nav" ref="nav">
@@ -146,9 +148,9 @@ export default class Chapter extends React.Component {
           >
             <RectangularButton
               style={{height: '100%'}}
-              text={`Return to Documentary`}
+              text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
               color={`#adafaf`}
-              svgIcon={IconLeftArrow}
+              svgIcon={isReturn ? IconLeftArrow : IconPlay}
               backgroundColor={`#565d60`}
               hoverBackgroundColor={`#3e4548`}
             />
@@ -167,6 +169,7 @@ export default class Chapter extends React.Component {
             />
           </Link>
         </nav>
+
         <div className="page-component chapter-header">
           <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
           <div className={`hero-content`}>
@@ -179,13 +182,17 @@ export default class Chapter extends React.Component {
               onMouseEnter={() => audio.play('button-rollover')}
               onClick={() => audio.play('button-click')}
             >
-              <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
-              <div className={`button`} style={{ width: 'auto', padding: '0 20px' }}>
+              <div className={`thumb-container`}>
+                <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
                 <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
-                <p>{ `Watch ${this.state.data.scholar} Chapter` }</p>
+              </div>
+              <div className={`button`} style={{ width: 'auto', padding: '0 20px' }}>
+                <p>{ `Watch ${this.state.data.scholar}'s Chapter` }</p>
               </div>
             </Link>
           </div>
+
+          <div className={`arrow-cta`} dangerouslySetInnerHTML={{__html: IconLeftArrow}}></div>
         </div>
 
         <div className="page-component">
@@ -219,58 +226,58 @@ export default class Chapter extends React.Component {
           /***   Photo Essay  ***/
 
           this.state.data.photoEssays.length
-          ? <div className="page-component">
-              <h2 className="component-title">
-                Photo Essay
-              </h2>
-              <PhotoEssay
-                ref="photoEssay"
-                slug={this.state.data.photoEssays[0]}
-              />
-            </div>
-          : null
+            ? <div className="page-component">
+            <h2 className="component-title">
+              Photo Essay
+            </h2>
+            <PhotoEssay
+              ref="photoEssay"
+              slug={this.state.data.photoEssays[0]}
+            />
+          </div>
+            : null
         }
-        { 
+        {
           /***   Articles   ***/
 
           this.state.data.articles.length
-          ? <div className="page-component">
-              <h2 className="component-title">
-                Articles
-              </h2>
-              {
-                this.state.data.articles
-                  ? this.state.data.articles.map((article, i) => {
-                  return (
-                    <div
-                      key={i}
-                      className={`article-row ${article.image ? 'has-image' : ''}`}
+            ? <div className="page-component">
+            <h2 className="component-title">
+              Articles
+            </h2>
+            {
+              this.state.data.articles
+                ? this.state.data.articles.map((article, i) => {
+                return (
+                  <div
+                    key={i}
+                    className={`article-row ${article.image ? 'has-image' : ''}`}
+                  >
+                    <Article
+                      className="col-3"
+                      scrollTopPadding={60}
+                      title={article.title}
+                      bannerImage={article.image}
+                      aboveFoldSelector={article.aboveFoldSelector}
+                      getTarget={this.getContainer}
                     >
-                      <Article
-                        className="col-3"
-                        scrollTopPadding={60}
-                        title={article.title}
-                        bannerImage={article.image}
-                        aboveFoldSelector={article.aboveFoldSelector}
-                        getTarget={this.getContainer}
-                      >
-                        { article.content }
-                      </Article>
-                    </div>
-                  )
-                }) : null
-              }
-            </div>
-          : null
+                      { article.content }
+                    </Article>
+                  </div>
+                )
+              }) : null
+            }
+          </div>
+            : null
         }
         {
           /***   Podcast   ***/
 
           this.state.data.slug === 'welcome'
-          ? <div className="page-component">
-              <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
-            </div>
-          : null
+            ? <div className="page-component">
+            <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
+          </div>
+            : null
         }
         <TransitionGroup
           component="div"
@@ -291,6 +298,7 @@ export default class Chapter extends React.Component {
           />
         </footer>
       </div>
-    </section>;
+    </section>
+      ;
   }
 }
