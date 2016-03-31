@@ -11,8 +11,13 @@
   color: #8f8f8f;
   font-weight: bold;
   user-select: none;
+  @include gpu;
 
-  a {
+  * {
+    @include gpu;
+  }
+
+  a, .link {
     opacity: 0.6;
     color: #ffffff;
     font-weight: bold;
@@ -23,6 +28,7 @@
     @include scale-prop('margin-left', 15);
     @include scale-prop('margin-right', 15);
     transition: opacity 0.3s ease;
+    cursor: pointer;
 
     &:hover {
       opacity: 1;

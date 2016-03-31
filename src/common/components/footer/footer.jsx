@@ -6,6 +6,8 @@ import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
+import store from 'common/store';
+import * as actionCreators from 'common/actions/learn-more-modal-actions';
 
 export default class Footer extends React.Component {
 
@@ -17,8 +19,37 @@ export default class Footer extends React.Component {
   };
 
   componentDidMount() {
+    this.containerEl = findDOMNode(this);
     this.share = new Share(location.origin);
   }
+
+  componentWillAppear(callback) {
+    this.animateIn(callback);
+  }
+
+  componentWillEnter(callback) {
+    this.animateIn(callback);
+  }
+
+  componentWillLeave(callback) {
+    this.animateOut(callback);
+  }
+
+  animateIn = (callback) => {
+    animate.set(this.containerEl, {y: '100%'});
+
+    animate.to(this.containerEl, 0.7, {y: '0%', ease: Expo.easeOut, delay: 0.9})
+      .then(() => {
+        callback && callback()
+      })
+  };
+
+  animateOut = (callback) => {
+    animate.to(this.containerEl, 0.4, {y: '100%', ease: Expo.easeOut})
+      .then(() => {
+        callback && callback()
+      })
+  };
 
   handleFacebookClick = () => {
     this.share.facebook();
@@ -30,6 +61,10 @@ export default class Footer extends React.Component {
 
   handleEmailClick = () => {
     window.location.href = 'mailto:mail@example.org';
+  };
+
+  handleLearnMoreClick = () => {
+    store.dispatch(actionCreators.openModal());
   };
 
   render() {
@@ -51,9 +86,9 @@ export default class Footer extends React.Component {
           >
           </div>
           <a href="#">Home</a>
-          <a href="#">Learn More</a>
-          <a href="#">Privacy & Terms</a>
-          <a href="http://successacademy.org">Successacademy.org</a>
+          <div className={'link'} onClick={this.handleLearnMoreClick}>Learn More</div>
+          <a href="http://successacademy.org/privacy_policy.html" target="_blank">Privacy & Terms</a>
+          <a href="http://successacademy.org" target="_blank">Successacademy.org</a>
         </div>
         <div
           className="share-links"

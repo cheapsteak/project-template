@@ -13,6 +13,7 @@ import RectangularButton  from '../../../../node_modules/common/components/recta
 import BgCover from 'background-cover';
 import landingData  from '../../data/landing';
 import Footer from 'common/components/footer/footer';
+import TransitionGroup from 'react-addons-transition-group';
 
 export default class LandingPage extends React.Component {
 
@@ -25,7 +26,8 @@ export default class LandingPage extends React.Component {
   };
 
   state = {
-    data: {}
+    data: {},
+    shouldShowFooter: false
   };
 
   componentWillMount() {
@@ -118,6 +120,8 @@ export default class LandingPage extends React.Component {
     const ease = Expo.easeOut;
     const staggerEls = [this.refs.description, this.ctaWatch, this.ctaExplore];
 
+    this.setState({shouldShowFooter: true});
+
     return animate.all([
       animate.to(this.refs.loaderContainer, 0.3, {autoAlpha: 0}),
       animate.to(this.refs.coverBg, 0.8, {autoAlpha: 0}),
@@ -132,6 +136,8 @@ export default class LandingPage extends React.Component {
   animateOutToGrid = (callback) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
 
+    this.setState({shouldShowFooter: false});
+
     return animate
       .all([
         animate.staggerTo(staggerEls, 0.6, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1),
@@ -142,8 +148,10 @@ export default class LandingPage extends React.Component {
   };
 
   animateOutToVideo = (callback) => {
-    const duration = 1;
+    const duration = 0.8;
     const ease = Expo.easeOut;
+
+    //this.setState({shouldShowFooter: false});
 
     return animate.all([
         animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
@@ -218,10 +226,16 @@ export default class LandingPage extends React.Component {
             <p>Loading</p>
           </div>
 
-          <Footer
-            primaryBackgroundColor={`rgba(62, 69, 72, 0.5)`}
-            secondaryBackgroundColor={`rgba(82, 88, 91,0.6)`}
-          />
+          <TransitionGroup className={`footer-container`}>
+            {
+              this.state.shouldShowFooter && (
+                <Footer
+                  primaryBackgroundColor={`rgba(62, 69, 72, 0.5)`}
+                  secondaryBackgroundColor={`rgba(82, 88, 91,0.6)`}
+                />
+              )
+            }
+          </TransitionGroup>
 
         </div>
       </div>
