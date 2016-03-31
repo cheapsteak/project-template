@@ -23,7 +23,7 @@ export default [
   {
     slug: 'math',
     title: 'Math',
-    time: 20,
+    time: 35,
     hero: {
       cta: ctaText,
       description: 'Empowering Confident Mathematicians',
@@ -41,7 +41,7 @@ export default [
   {
     slug: 'science',
     title: 'Science',
-    time: 40,
+    time: 70,
     hero: {
       cta: ctaText,
       description: 'The Joy of Discovery through Scientific Inquiry',
@@ -59,7 +59,7 @@ export default [
   {
     slug: 'electives',
     title: 'Electives',
-    time: 60,
+    time: 105,
     hero: {
       cta: ctaText,
       description: 'Developing the Whole Child',
@@ -77,7 +77,7 @@ export default [
   {
     slug: 'computer-science',
     title: 'Computer Science',
-    time: 70,
+    time: 140,
     hero: {
       cta: ctaText,
       description: 'Nurturing the Next Generation of Technologists and Developers',
@@ -95,7 +95,7 @@ export default [
   {
     slug: 'literacy-and-writing',
     title: 'Literacy & Writing',
-    time: 80,
+    time: 175,
     hero: {
       cta: ctaText,
       description: 'Developing Independent Learners through Literacy',
@@ -114,7 +114,7 @@ export default [
   {
     slug: 'history',
     title: 'History',
-    time: 90,
+    time: 205,
     hero: {
       cta: ctaText,
       description: 'Studying the Past to Shape the Future',
@@ -132,7 +132,7 @@ export default [
   {
     slug: 'character-development',
     title: 'Character Development',
-    time: 100,
+    time: 240,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Character Development.',
@@ -150,7 +150,7 @@ export default [
   {
     slug: 'parental-investment',
     title: 'Parental Investment',
-    time: 140,
+    time: 275,
     hero: {
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Parental Investment.',

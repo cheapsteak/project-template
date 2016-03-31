@@ -17,7 +17,7 @@
     @include gpu;
   }
 
-  a, .link {
+  a {
     opacity: 0.6;
     color: #ffffff;
     font-weight: bold;
@@ -31,6 +31,10 @@
     cursor: pointer;
 
     &:hover {
+      opacity: 0.8;
+    }
+
+    &.active {
       opacity: 1;
     }
   }

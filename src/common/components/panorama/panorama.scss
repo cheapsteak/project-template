@@ -59,8 +59,8 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 150px;
-    height: 40px;
+    @include scale-prop('width', 150);
+    @include scale-prop('height', 40);
     z-index: 1000;
     @include autoAlpha-0;
   }
