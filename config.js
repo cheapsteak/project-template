@@ -9,6 +9,11 @@ const config = {
     basePath: '/middleschool-preview',
     gaID: ''
   },
+  qa: {
+    ASSET_PATH: '/middleschool-qa',
+    basePath: '/middleschool-qa',
+    gaID: ''
+  },
   production: {
     ASSET_PATH: '/middleschool',
     basePath: '/middleschool',

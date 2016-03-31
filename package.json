@@ -10,11 +10,13 @@
     "build": "rm -rf build && gulp build",
     "build:dev": "BABEL_ENV=production npm run build",
     "build:preview": "BABEL_ENV=production NODE_ENV=preview npm run build",
+    "build:qa": "BABEL_ENV=production NODE_ENV=qa npm run build",
     "build:production": "NODE_ENV=production npm run build",
     "start": "linklocal && BABEL_ENV=development gulp",
     "postinstall": "linklocal",
     "release": "npm run build:production",
     "deploy:dev": "npm run build:dev && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool/",
+    "deploy:qa": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-qa/",
     "deploy:preview": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-preview/"
   },
   "license": "ISC",
