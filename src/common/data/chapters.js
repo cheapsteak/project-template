@@ -48,7 +48,7 @@ export default [
     },
     instructionalVideos: ['science'],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['science-1'],
     articles: ['science-1'],
     podcast: '',
     infographics: ''
@@ -65,7 +65,7 @@ export default [
     },
     instructionalVideos: [],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['electives-1'],
     articles: ['electives-1'],
     podcast: '',
     infographics: ''
@@ -82,7 +82,7 @@ export default [
     },
     instructionalVideos: ['computer-science'],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['computer-science-1'],
     articles: [],
     podcast: '',
     infographics: ''
@@ -117,7 +117,7 @@ export default [
     },
     instructionalVideos: ['history'],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['history-1'],
     articles: ['history-1', 'history-2'],
     podcast: '',
     infographics: ''
@@ -134,7 +134,7 @@ export default [
     },
     instructionalVideos: [],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['character-development-1'],
     articles: ['character-development-1'],
     podcast: '',
     infographics: ''
@@ -151,7 +151,7 @@ export default [
     },
     instructionalVideos: [],
     panoramas: [],
-    photoEssays: [],
+    photoEssays: ['parental-investment-1'],
     articles: ['parental-investment-1'],
     podcast: '',
     infographics: ''

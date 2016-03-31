@@ -22,6 +22,7 @@ export default [
   {
     slug: 'science-1',
     title: 'Science Olympiad',
+    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Science Olympiad is one of the premier science competitions in the nation, with over 7,300 teams in 50 states taking on rigorous challenges from all STEM disciplines. Learning-by-doing is essential to science education, and Science Olympiad provides scholars unique ways to practice science in a hands-on, inquiry-driven, collaborative environment.</p>
               <p>Scholars work in teams of two or three on projects related to a specific area of science or engineering. Their projects can range anywhere from constructing a glider to becoming expert meteorologists! Our scholars work and train for months on their projects, all in preparation for the NYC regional tournament held each spring.</p>`,
@@ -30,6 +31,7 @@ export default [
   {
     slug: 'math-1',
     title: 'Math Olympiads: Going Up Against The World’s Best Math Minds',
+    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Recently, a group of middle school scholars from SA Harlem East were given a set of five math problems to solve. The problems were difficult and unusual. Some, like the one below, puzzled even the adults at the school:</p>
               <p>Soshana looks in a mirror and sees the reflection of a clock behind her as shown in figure A. How many minutes later will the reflection in the mirror of the same clock next show the image shown in figure B?</p>
@@ -53,6 +55,7 @@ export default [
   {
     slug: 'math-2',
     title: 'Sample Math Problems',
+    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Curious about the math our scholars practice? Here are some sample problems that 7th graders may encounter on a typical day:</p>
               <p>There are 125% more third graders than fifth graders. If there are 243 third and fifth graders altogether, how many are third graders and how many are fifth graders?</p>
@@ -64,6 +67,7 @@ export default [
   {
     slug: 'math-3',
     title: 'Aboard Sailboats, Scholars See Math in Action',
+    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">For three days at the end of May, two dozen seventh-grade scholars from three Success Academy middle schools — Harlem East, Harlem West, and Harlem Central — traveled to Oyster Bay, L.I., to study marine biology, ecosystems, winds, tides, and sailing at the Waterfront Center.</p>
               <p>The scholars learned about different types of sea animals, and the natural and man-made forces that affect their life cycles. Every day, they went sailing, crewing small boats and — on the last day — a historic 40-foot sloop, the Christeen.</p>
