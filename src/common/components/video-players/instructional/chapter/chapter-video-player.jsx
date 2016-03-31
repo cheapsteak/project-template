@@ -2,6 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButton from 'common/components/play-button/play-button';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import PlayButtonSvg from 'svgs/icon-play.svg';
 import PauseButtonSvg from 'svgs/icon-pause.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
@@ -24,13 +25,14 @@ export default class ChapterVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  els = {};
   videoId = 'target-video';
   cloneId = 'clone-video';
   hideControlsTimeoutId = undefined;
 
   componentDidMount() {
 
-    this.animationStates = calculateAnimationStates(this.refs);
+    this.animationStates = calculateAnimationStates(this.els);
 
     const initialState = this.props.useFullControls
       ? 'idle'
@@ -40,18 +42,15 @@ export default class ChapterVideoPlayer extends React.Component {
       ? 'idle'
       : 'out';
 
-    animate.set(this.refs.closeButton, this.animationStates[initialState].closeButton);
-    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
-    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+    animate.set(this.els.closeButton, this.animationStates[initialState].closeButton);
+    animate.set(this.els.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
 
-    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+    animate.set(this.els.controls, this.animationStates[initialState].controls);
 
-    console.log(initialState);
-        
-
-    animate.set(this.refs.endingOverlay, this.animationStates[endingState].endingOverlay);
-    animate.set(this.refs.replayButton, this.animationStates[endingState].replayButton);
-    animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
+    animate.set(this.els.endingOverlay, this.animationStates[endingState].endingOverlay);
+    animate.set(this.els.replayButton, this.animationStates[endingState].replayButton);
+    animate.set(this.els.replayLabel, this.animationStates[endingState].replayLabel);
 
     this.props.isPlaying && this.video && this.video.play();
   }
@@ -59,8 +58,6 @@ export default class ChapterVideoPlayer extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     if(this.props.init !== undefined && this.props.init !== nextProps.init) {
-      console.log('animatein');
-          
       this.animateInControls();
     } else if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
       if(nextProps.useFullControls) {
@@ -84,7 +81,7 @@ export default class ChapterVideoPlayer extends React.Component {
   }
 
   componentWillEnterFullBrowser = () => {
-    const container = this.refs.videoWrapper;
+    const container = this.els.videoWrapper;
     const video = document.querySelector(`#${this.videoId}`);
     const videoParent = video.parentNode;
     const clone = video.cloneNode();
@@ -105,7 +102,7 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillLeaveFullBrowser = () => {
-    animate.to(this.refs.videoWrapper, 0.6, this.animationStates.out.videoWrapper);
+    animate.to(this.els.videoWrapper, 0.6, this.animationStates.out.videoWrapper);
     return Promise.resolve();
   };
 
@@ -129,10 +126,20 @@ export default class ChapterVideoPlayer extends React.Component {
     return this.video.currentTime === this.video.duration;
   }
 
-  handleComponentMouseMove = () => {
+  handleComponentMouseMove = (e) => {
     if(this.props.init) return;
 
-    if(!this.props.useFullControls && !this.videoEnded) {
+    const mouseCoords = {
+      x: e.clientX,
+      y: e.clientY
+    };
+
+    if(this.videoEnded || !this.lastMouseCoord) {
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
+
+    if(!this.props.useFullControls && !this.videoEnded && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
     }
 
@@ -185,38 +192,38 @@ export default class ChapterVideoPlayer extends React.Component {
 
   animateInControls = () => {
     return Promise.all([
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
-      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
-      animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.els.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
+      animate.to(this.els.overlay, 0.3, this.animationStates.idle.overlay),
+      animate.to(this.els.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.els.controls, 0.3, this.animationStates.idle.controls),
     ]);
   };
 
   animateOutControls = () => {
     const conditionalAnimations = !this.videoEnded && [
-      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
+      animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.els.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
 
     return Promise.all([
       ...conditionalAnimations,
-      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls)
+      animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.els.controls, 0.3, this.animationStates.out.controls)
     ]);
   };
 
   animateInEndOverlay = () => {
     return Promise.all([
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
-      animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
-      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
+      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
+      animate.to(this.els.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
+      animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.els.replayButton, 0.3, this.animationStates.idle.replayButton),
+      animate.to(this.els.replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(this.els.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.els.overlay, 0.3, this.animationStates.end.overlay),
+      animate.to(this.els.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
     ]);
   };
 
@@ -224,20 +231,20 @@ export default class ChapterVideoPlayer extends React.Component {
     this.stopAnimations();
 
     return Promise.all([
-      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
-      animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
-      animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
+      animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
+      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
+      animate.to(this.els.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
+      animate.to(this.els.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.els.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
+      animate.to(this.els.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
   stopAnimations = () => {
-    TweenMax.killTweensOf(_.values(this.refs));
+    TweenMax.killTweensOf(_.values(this.els));
   }
 
   render() {
@@ -247,7 +254,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
     return (
       <div
-        ref="root"
+        ref={ node => this.els.root = node }
         className={
           `video-player instructional-video-player chapter-player ${className} ${noZoom ? 'no-zoom' : ''} ${init ? 'init' : ''}
           `
@@ -256,7 +263,7 @@ export default class ChapterVideoPlayer extends React.Component {
         onMouseMove={this.handleComponentMouseMove}
       >
         <div
-          ref="videoWrapper"
+          ref={ node => this.els.videoWrapper = node }
           className={`video-wrapper`}
         >
           {
@@ -276,10 +283,15 @@ export default class ChapterVideoPlayer extends React.Component {
               : undefined
           }
           <Link to={route}>
-            <button ref="closeButton" className="close-button">
-              <span dangerouslySetInnerHTML={{ __html: CloseSvg }}></span>
-              <div>Close</div>
-            </button>
+            <RectangularButton
+              ref={ node => this.els.closeButton = findDOMNode(node) }
+              className="close-button"
+              text="Close"
+              color="#ffffff"
+              backgroundColor="#f99100"
+              hoverBackgroundColor="#f99100"
+              svgIcon={CloseSvg}
+            />
           </Link>
           {
             this.props.init
@@ -289,15 +301,21 @@ export default class ChapterVideoPlayer extends React.Component {
               />
             : null
           }
-          <div ref="overlay" className="video-overlay"></div>
+          <div 
+            ref={ node => this.els.overlay = node }
+            className="video-overlay">
+          </div>
         </div>
         <div
-          ref="simpleProgressBar"
+          ref={ node => this.els.simpleProgressBar = node }
           className="simple-progress-bar"
         >
           <span style={{ width: progressWidth }}></span>
         </div>
-        <div className="controls" ref="controls">
+        <div
+          className="controls"
+          ref={ node => this.els.controls = node }
+        >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
             <span
@@ -333,21 +351,21 @@ export default class ChapterVideoPlayer extends React.Component {
           />
         </div>
         <div
-          ref="endingOverlay"
+          ref={ node => this.els.endingOverlay = node }
           className="end-overlay"
         >
           <div
             className="replay-group replay-group-chapter"
           >
             <div
-              ref="replayButton"
+              ref={ node => this.els.replayButton = node }
               className="replay-button"
               onClick={this.handleReplayClick}
               dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
             >
             </div>
             <label
-              ref="replayLabel"
+              ref={ node => this.els.replayLabel = node }
               className="replay-label"
             >
               Replay

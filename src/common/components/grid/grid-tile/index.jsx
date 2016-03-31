@@ -51,7 +51,7 @@ export default class GridTile extends React.Component {
     this.containerEl = findDOMNode(this);
     this.textContainer = this.refs.textContainer;
     this.imageContainer = this.refs.imageContainer;
-    const ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
+    var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
 
     animate.set(this.containerEl, {autoAlpha: 0});
     animate.set(ctaItems, {autoAlpha: 0, y: 40});
@@ -90,7 +90,12 @@ export default class GridTile extends React.Component {
     }
 
     const pos = (this.containerEl.offsetWidth - this.refs.image.offsetWidth) * 0.5;
-    const ctaItems = [this.refs.ctaIcon, this.refs.ctaText];
+    var ctaItems = [this.refs.ctaIcon0, this.refs.ctaText0];
+
+    if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
+      ctaItems = ctaItems.concat([this.refs.ctaIcon1, this.refs.ctaText1]);
+      animate.set([this.refs.ctaIcon1, this.refs.ctaText1], {autoAlpha: 0, y: 40});
+    }
 
     audio.play('button-rollover');
 
@@ -113,7 +118,11 @@ export default class GridTile extends React.Component {
     }
 
     const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
-    const ctaItems = [this.refs.ctaText, this.refs.ctaIcon];
+    var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
+
+    if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
+      ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
+    }
 
     return animate.all([
       animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1),
@@ -149,6 +158,11 @@ export default class GridTile extends React.Component {
 
   applyFilter = () => {
     this.filterApplied = true;
+
+    if (this.state.data.routes.instructionalVideos.length > 1) {
+      const ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
+    }
+
     return animate.to(this.refs.contentWrapper, 0.3, {
       scale: 0.9,
       autoAlpha: 0.1,
@@ -175,7 +189,9 @@ export default class GridTile extends React.Component {
     const isFiltered = this.props.isFiltered;
     const icon = isFiltered ? IconWatch : IconExplore;
     const copy = isFiltered ? 'In Action' : 'Discover';
-    const url = isFiltered ? this.state.data.routes.instructionalVideos[0] : 'chapters/' + this.state.data.slug;
+    var links = isFiltered ? this.state.data.routes.instructionalVideos : 'chapters/' + this.state.data.slug;
+
+    if (!(links instanceof Array)) links = [links];
 
     return (
       <div
@@ -196,12 +212,28 @@ export default class GridTile extends React.Component {
             <img ref="image" src={this.state.data.image}/>
           </div>
 
-          <Link to={`${url}`}>
-            <div className="cta">
-              <div ref="ctaIcon" className={`icon explore`} dangerouslySetInnerHTML={{ __html: icon }}></div>
-              <p ref="ctaText">{copy}: <br/>{this.state.data.title}</p>
-            </div>
-          </Link>
+          {
+            links.map((link, index) => {
+              const width = links.length > 1 ? 'half-width' : 'full-width';
+              return (
+                <Link className={`${width}`} to={`${link}`} key={index}>
+                  <div className={`cta`}>
+                    <div
+                      ref={`ctaIcon${index}`}
+                      className={`icon explore`}
+                      dangerouslySetInnerHTML={{ __html: icon }}
+                    ></div>
+                    <p ref={`ctaText${index}`}>
+                      {copy}:
+                      <br/>
+                      {(isFiltered && this.state.data.instructionalVideosCtas && this.state.data.instructionalVideosCtas[index]) ||
+                      this.state.data.title}
+                    </p>
+                  </div>
+                </Link>
+              )
+            })
+          }
 
         </div>
       </div>

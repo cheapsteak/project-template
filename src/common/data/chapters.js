@@ -29,7 +29,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1"],
+    instructionalVideos: ['math'],
     panoramas: ['math'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -46,7 +46,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["science-1", "science-2"],
+    instructionalVideos: ['science'],
     panoramas: ['science'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -80,7 +80,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: ['computer-science'],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -97,7 +97,8 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: ['literacy', 'writing'],
+    instructionalVideosCtas: ['Literacy', 'Writing'],
     panoramas: ['literacy-and-writing'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -114,7 +115,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
-    instructionalVideos: ["math-1", "science-1", "science-2"],
+    instructionalVideos: ['history'],
     panoramas: [],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
