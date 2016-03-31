@@ -121,7 +121,7 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   get videoEnded () {
-    return this.video.currentTime === this.video.duration;
+    return this.video && this.video.currentTime === this.video.duration;
   }
 
   handleMetadataLoaded = () => {
@@ -380,6 +380,7 @@ export default class GridVideoPlayer extends React.Component {
             />
           </Link>
           <Link
+            onClick={this.props.onVideoPause}
             className="more-about-cta"
             ref={ node => this.refs.moreAboutCTA = findDOMNode(node) }
             to={this.props.chapterRoute || '/'}>
