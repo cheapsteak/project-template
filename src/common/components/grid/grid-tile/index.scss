@@ -11,6 +11,10 @@ $parallaxLimitY: 70px;
   position: relative;
   @include gpu;
 
+  * {
+    @include gpu;
+  }
+
   .content-wrapper {
     position: relative;
     width: 100%;
@@ -25,13 +29,12 @@ $parallaxLimitY: 70px;
     height: 100%;
     top: 0;
     @include flex-center;
-    @include gpu;
     @include scale-prop(font-size, 30);
-    opacity: 0.7;
-    transition: opacity 0.4s;
 
     &.half-width {
       width: 50%;
+      transition: opacity 0.3s;
+      opacity: 0.7;
 
       &:last-of-type {
         left: 50%;
@@ -59,20 +62,25 @@ $parallaxLimitY: 70px;
         position: relative;
         margin: auto;
         @include scale-prop(margin-bottom, 20);
-        @include gpu;
+        transform: translateY(40px);
         @include autoAlpha-0;
 
         svg {
           position: relative;
           @include scale-prop(width, 18);
           @include scale-prop(height, 18);
-          @include scale-prop(left, 3);
+        }
+
+        &.watch {
+          svg {
+            @include scale-prop(left, 2);
+          }
         }
       }
 
       p {
-        @include gpu;
         @include autoAlpha-0;
+        transform: translateY(40px);
       }
     }
   }
@@ -83,7 +91,6 @@ $parallaxLimitY: 70px;
     height: calc(100% + #{$parallaxLimitY*2});
     left: -$parallaxLimitX;
     top: -$parallaxLimitY;
-    @include gpu;
   }
 
   .text-container {
@@ -92,7 +99,6 @@ $parallaxLimitY: 70px;
     left: 30px;
     @include scale-prop(max-width, 170);
     transition: opacity 0.6s;
-    @include gpu;
 
     .subtitle {
       opacity: 0.5;
@@ -111,11 +117,9 @@ $parallaxLimitY: 70px;
     display: inline-block;
     @include scale-prop(bottom, -40);
     left: 30%;
-    @include gpu;
 
     img {
       width: 90%;
-      @include gpu;
     }
 
     &.portrait {

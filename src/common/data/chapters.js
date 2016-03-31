@@ -13,7 +13,7 @@ export default [
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
     instructionalVideos: [],
-    panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
+    panoramas: ['hallway', 'science', 'math', 'literacy-and-writing'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
     podcast: '',
