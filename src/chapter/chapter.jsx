@@ -154,7 +154,7 @@ export default class Chapter extends React.Component {
         <nav className="nav" ref="nav">
           <Link
             className={`nav-button left`}
-            to={`${this.state.data.routes.narrativeVideo}`}
+            to={`/narrative-video`}
           >
             <RectangularButton
               style={{height: '100%'}}

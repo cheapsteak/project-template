@@ -19,9 +19,16 @@ class NarrativeVideoPlayerRedux extends React.Component {
   }
 
   componentWillMount () {
-    const startTime = this.props.startTime || 0;
+    const hash = window.location.hash.replace(/^#/, '');
+    const chapterSlugs = _.map(allChapters, 'slug');
+
+    if (_.includes(chapterSlugs, hash)) {
+      const chapter = chaptersModel.get(hash);
+      localStorage.setItem(NarrativeVideoPlayer.timeStorageId, chapter.time);
+      history.replaceState("", document.title, window.location.pathname);
+    }
+
     this.boundActionCreators.hideFullControls();
-    this.boundActionCreators.setVideoTime(startTime);
   }
 
   render () {
