@@ -115,9 +115,11 @@ export default class GridTile extends React.Component {
 
     const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
     var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
+    var delay = 0.2;
 
     if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
       ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
+      delay = 0.4;
     }
 
     return animate.all([
@@ -126,7 +128,7 @@ export default class GridTile extends React.Component {
         autoAlpha: 1,
         left: pos,
         ease: Expo.easeInOut,
-        delay: 0.2,
+        delay: delay,
         overwrite: 'all'
       }),
       animate.to(this.textContainer, 0.1, {autoAlpha: 1, delay: 0.4, overwrite: 'all'})
