@@ -263,9 +263,15 @@ export default class Chapter extends React.Component {
             </div>
           : null
         }
-        <div className="page-component">
-          <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
-        </div>
+        {
+          /***   Podcast   ***/
+
+          this.state.data.slug === 'welcome'
+          ? <div className="page-component">
+              <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
+            </div>
+          : null
+        }
         <TransitionGroup
           component="div"
           className="route-content-wrapper"
