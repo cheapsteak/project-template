@@ -31,6 +31,12 @@ export default class Chapter extends React.Component {
       loglevel: 2
     });
 
+    const headerScrollController = new ScrollMagic.Controller({
+      container: el.querySelector('.main'),
+      globalSceneOptions: {},
+      loglevel: 2
+    });
+
     const getY = function (progress, min = 50, max = -50) {
       //const amplitude = max - min;
       //return progress * amplitude - amplitude/2;
@@ -46,6 +52,30 @@ export default class Chapter extends React.Component {
       '.panorama-container .parallax-target',
       '.podcast .text-container',
     ];
+
+    const headerScrollScene = new ScrollMagic.Scene({
+      triggerElement: el,
+      duration: el.querySelector('.main').getBoundingClientRect().height,
+      triggerHook: 0
+    })
+      .on('enter', e => {
+        TweenMax.set(this.refs.nav, {
+          position: 'absolute',
+          zIndex: 1000,
+          left: '0',
+          width: '100%'
+        });
+      })
+      .on('leave', e => {
+        const left = this.refs.nav.getClientRects()[0].left;
+        TweenMax.set(this.refs.nav, {
+          position: 'fixed',
+          left: left,
+          width: `calc(100% - ${left}px)`
+        });
+      })
+
+    headerScrollController.addScene(headerScrollScene);
 
     const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
 
@@ -107,8 +137,8 @@ export default class Chapter extends React.Component {
     if (!this.state.data) return <div/>;
 
     return <section ref="chapter" className="chapter-page">
-      <div className="main">
-        <nav className="nav">
+      <div className="main" ref="main">
+        <nav className="nav" ref="nav">
           <Link
             className={`nav-button left`}
             to={`${this.state.data.routes.narrativeVideo}`}
