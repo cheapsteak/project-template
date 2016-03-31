@@ -34,10 +34,7 @@ export default <Provider store={store}>
       <IndexRoute component={LandingPage}/>
       <Route path="grid" component={GridPage}/>
       <Route path="grid/instructional-videos/:slug" component={InstructionalVideoPlayer}/>
-      <Route path="narrative-video">
-        <IndexRoute component={NarrativeVideoPlayer}/>
-        <Route path=":slug" component={NarrativeVideoPlayer} />
-      </Route>
+      <Route path="narrative-video*" components={NarrativeVideoPlayer} />
       <Route path="chapters/:chapter_slug" component={Chapter}>
         <Route
           path="instructional-videos/:slug"
