@@ -7,33 +7,10 @@
   background-color: #2B2A2A;
 
   .more-about-cta {
-    display: flex;
     position: absolute;
     bottom: 65px;
     right: 20px;
-    padding: 12px 20px 12px 12px;
-    border-radius: 25px;
-    color: #8F8F8F;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: #2B2B2B;
-    align-items: center;
-    justify-content: space-around;
-    cursor: pointer;
-    z-index: 10;
-
-    .circle-button {
-      margin-right: 15px;
-      font-size: 16px;
-      color: #8F8F8F;
-      width: 28px;
-      height: 28px;
-      line-height: 30px;
-      border-radius: 50%;
-      text-align: center;
-      font-weight: bold;
-      background-color: #555555;
-    }
+    z-index: 100;
   }
 
   .close-button {

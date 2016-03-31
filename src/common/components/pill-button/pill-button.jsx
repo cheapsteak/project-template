@@ -4,6 +4,15 @@ import Promise from 'bluebird';
 
 export default class PillButton extends React.Component {
 
+  static propTypes = {
+    style: React.PropTypes.object,
+    className: React.PropTypes.string,
+    idleText: React.PropTypes.string,
+    activeText: React.PropTypes.string,
+    handleMouseEnter: React.PropTypes.func,
+    handleMouseLeave: React.PropTypes.func
+  };
+
   state = {
     active: false
   };

@@ -10,6 +10,7 @@ import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import CloseSvg from 'svgs/icon-close.svg';
+import PillButton from 'common/components/pill-button/pill-button';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
@@ -42,25 +43,31 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    const { endingOverlay, videoWrapper, replayButton, replayLabel, simpleProgressBar, controls } = this.refs;
     this.animationStates = calculateAnimationStates(this.refs);
-    animate.set(endingOverlay, this.animationStates.out.endingOverlay);
-    animate.set(replayButton, this.animationStates.out.replayButton);
-    animate.set(replayLabel, this.animationStates.out.replayLabel);
 
-    if(!this.props.isPlaying) {
-      animate.set(videoWrapper, this.animationStates.idle.videoWrapper);
+    let initialState = this.props.useFullControls
+      ? 'idle'
+      : 'out';
 
-      if(!this.props.useFullControls) {
-        this.props.showFullControls();
-      } else {
 
-        // Potential Issue: When video is not loaded yet, the timeline dots will not appear yet.
-        // This can cause the dots to appear instantly during the animate in (instead of the
-        // staggered animation)
-        this.animateInControls();
-      }
-    }
+    // Temporary Fix for race condition between store update and component mounting
+    initialState = 'out';
+
+    const endingState = this.props.currentTime === this.props.duration && this.props.duration
+      ? 'idle'
+      : 'out';
+
+
+
+    animate.set(this.refs.closeButton, this.animationStates[initialState].closeButton);
+    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+
+    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+
+    animate.set(this.refs.endingOverlay, this.animationStates[endingState].endingOverlay);
+    animate.set(this.refs.replayButton, this.animationStates[endingState].replayButton);
+    animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -103,10 +110,6 @@ export default class GridVideoPlayer extends React.Component {
         this.animateOutControls();
       }
     }
-
-    if(this.props.isMuted !== nextProps.isMuted) {
-      this.video.muted = nextProps.isMuted;
-    }
   }
 
   componentWillUnmount() {
@@ -114,6 +117,7 @@ export default class GridVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
     this.props.onVideoPause();
+    this.stopAnimations();
   }
 
   get videoEnded () {
@@ -123,6 +127,10 @@ export default class GridVideoPlayer extends React.Component {
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
+
+    if(this.props.isPlaying) {
+      this.video.play();
+    }
   };
 
   handleTimeUpdate = () => {
@@ -171,8 +179,18 @@ export default class GridVideoPlayer extends React.Component {
     this.handleVideoPlayPause();
   };
 
-  handleComponentMouseMove = () => {
-    if(!this.props.useFullControls && !this.videoEnded) {
+  handleComponentMouseMove = (e) => {
+    const mouseCoords = {
+      x: e.clientX,
+      y: e.clientY
+    };
+
+    if(this.videoEnded || !this.lastMouseCoord) {
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
+
+    if(!this.props.useFullControls && !this.videoEnded && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
     }
 
@@ -299,6 +317,7 @@ export default class GridVideoPlayer extends React.Component {
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
             poster={this.props.poster}
+            muted={this.props.isMuted}
           >
           </video>
           <div
@@ -360,10 +379,14 @@ export default class GridVideoPlayer extends React.Component {
               svgIcon={CloseSvg}
             />
           </Link>
-          <Link to={this.props.chapterRoute || '/'}>
-            <div ref="moreAboutCTA" className="more-about-cta">
-              <span className="circle-button">+</span>{`More About ${this.props.title}`}
-            </div>
+          <Link
+            className="more-about-cta"
+            ref={ node => this.refs.moreAboutCTA = findDOMNode(node) }
+            to={this.props.chapterRoute || '/'}>
+            <PillButton
+              idleText={`More About ${this.props.title}`}
+              activeText={`More About ${this.props.title}`}
+            />
           </Link>
           <div ref="overlay" className="video-overlay"></div>
         </div>
