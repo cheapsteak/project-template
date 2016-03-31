@@ -473,7 +473,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             to={`/chapters/${this.props.currentChapter.slug}`}
           >
             <div className="circle-cta-text">
-              <label className="stagger-cta">Explore</label>
+              <label className="stagger-cta">Discover More:</label>
               <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
             </div>
           </Link>

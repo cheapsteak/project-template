@@ -4,6 +4,7 @@ import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
+import IconLeftArrow from 'svgs/icon-left-arrow.svg';
 import Article from 'common/components/article/article';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
@@ -147,7 +148,7 @@ export default class Chapter extends React.Component {
               style={{height: '100%'}}
               text={`Return to Documentary`}
               color={`#adafaf`}
-              svgIcon={IconPlay}
+              svgIcon={IconLeftArrow}
               backgroundColor={`#565d60`}
               hoverBackgroundColor={`#3e4548`}
             />
@@ -166,7 +167,6 @@ export default class Chapter extends React.Component {
             />
           </Link>
         </nav>
-
         <div className="page-component chapter-header">
           <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
           <div className={`hero-content`}>
@@ -180,9 +180,9 @@ export default class Chapter extends React.Component {
               onClick={() => audio.play('button-click')}
             >
               <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
-              <div className={`button`}>
+              <div className={`button`} style={{ width: 'auto', padding: '0 20px' }}>
                 <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
-                <p>Watch Chapter</p>
+                <p>{ `Watch ${this.state.data.scholar} Chapter` }</p>
               </div>
             </Link>
           </div>
@@ -199,9 +199,9 @@ export default class Chapter extends React.Component {
             noZoom={true}
           />
         </div>
-
         {
-          // panorama component
+          /***   Panorama  ***/
+
           this.state.data.panoramas.length ?
             (
               <div className="page-component">
@@ -215,50 +215,66 @@ export default class Chapter extends React.Component {
               </div>
             ) : null
         }
+        {
+          /***   Photo Essay  ***/
 
-        <div className="page-component">
-          <h2 className="component-title">
-            Photo Essay
-          </h2>
-          <PhotoEssay
-            ref="photoEssay"
-            slug="math-1"
-          />
-        </div>
-        <div className="page-component">
-          <h2 className="component-title">
-            Articles
-          </h2>
-          {
-            this.state.data.articles
-              ? this.state.data.articles.map((article, i) => {
-              return (
-                <div
-                  key={i}
-                  className={`article-row ${article.image ? 'has-image' : ''}`}
-                >
-                  <Article
-                    className="col-3"
-                    scrollTopPadding={40}
-                    title={article.title}
-                    bannerImage={article.image}
-                    aboveFoldSelector={article.aboveFoldSelector}
-                    getTarget={this.getContainer}
-                  >
-                    { article.content }
-                  </Article>
-                </div>
-              )
-            }) : null
-          }
-        </div>
-        <div className="page-component">
-          <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
-        </div>
+          this.state.data.photoEssays.length
+          ? <div className="page-component">
+              <h2 className="component-title">
+                Photo Essay
+              </h2>
+              <PhotoEssay
+                ref="photoEssay"
+                slug={this.state.data.photoEssays[0]}
+              />
+            </div>
+          : null
+        }
+        { 
+          /***   Articles   ***/
+
+          this.state.data.articles.length
+          ? <div className="page-component">
+              <h2 className="component-title">
+                Articles
+              </h2>
+              {
+                this.state.data.articles
+                  ? this.state.data.articles.map((article, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className={`article-row ${article.image ? 'has-image' : ''}`}
+                    >
+                      <Article
+                        className="col-3"
+                        scrollTopPadding={60}
+                        title={article.title}
+                        bannerImage={article.image}
+                        aboveFoldSelector={article.aboveFoldSelector}
+                        getTarget={this.getContainer}
+                      >
+                        { article.content }
+                      </Article>
+                    </div>
+                  )
+                }) : null
+              }
+            </div>
+          : null
+        }
+        {
+          /***   Podcast   ***/
+
+          this.state.data.slug === 'welcome'
+          ? <div className="page-component">
+              <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
+            </div>
+          : null
+        }
         <TransitionGroup
           component="div"
           className="route-content-wrapper"
-
         >
           {
             React.cloneElement(this.props.children || <div />, {

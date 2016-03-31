@@ -11,7 +11,7 @@ export default class TimelineHoverCard extends React.Component {
     const { card, image, label, line, ctaText, ctaLabel, frontOverlay, backOverlay } = this.refs;
     const staggerEls = el.querySelectorAll('.stagger-text');
 
-    animate.set(line, { x: '-50%', y: -28, scaleY: 0, transformOrigin: '0 1' });
+    animate.set(line, { x: '-50%', y: 0, scaleY: 0, transformOrigin: '0 1' });
     animate.set(card, { display: 'none', x: '-50%', y: -50, height: 0 });
     animate.set(image, { scale: 1.5 });
     animate.set(frontOverlay, { y: 50 });
@@ -29,12 +29,12 @@ export default class TimelineHoverCard extends React.Component {
     this.stopAnimations();
 
     Promise.all([
-      animate.to(line, lineAnimTime, { delay: baseDelay, y: -63, scaleY: 1, transformOrigin: '0 0' }),
-      animate.to(card, 0.5, { delay: baseDelay + lineAnimTime - 0.2, display: 'block', height: 210, y: -260 }),
-      animate.to(image, 1.2, { delay: baseDelay + lineAnimTime, scale: 1 }),
-      animate.to(frontOverlay, 0.5, { delay: baseDelay + lineAnimTime + 0.4, y: 0 }),
-      animate.to(backOverlay, 0.4, { delay: baseDelay + lineAnimTime + 0.2, y: 0 }),
-      animate.staggerTo(staggerEls, 0.5, { delay: baseDelay + lineAnimTime + 0.6, display: 'block', opacity: 1, y: 8 }, 0.2)
+      animate.to(line, lineAnimTime, { delay: baseDelay, y: -35, scaleY: 1, transformOrigin: '0 0' }),
+      animate.to(card, 0.5, { delay: baseDelay, display: 'block', height: 210, y: -260 }),
+      animate.to(image, 1.2, { delay: baseDelay, scale: 1 }),
+      animate.to(frontOverlay, 0.5, { delay: baseDelay+ 0.4, y: 0 }),
+      animate.to(backOverlay, 0.4, { delay: baseDelay+ 0.2, y: 0 }),
+      animate.staggerTo(staggerEls, 0.5, { delay: baseDelay + 0.6, display: 'block', opacity: 1, y: 8 }, 0.2)
     ])
     .then(callback)
   }
@@ -48,7 +48,7 @@ export default class TimelineHoverCard extends React.Component {
     this.stopAnimations();
 
     Promise.all([
-      animate.to(line, 0.1, { delay: 0.2, y: -28, scaleY: 0, transformOrigin: '0 1' }),
+      animate.to(line, 0.1, { delay: 0.2, y: 0, scaleY: 0, transformOrigin: '0 1' }),
       animate.to(card, 0.3, { display: 'none', y: -50, height: 0 }),
       animate.to(frontOverlay, 0.2, { y: 50 }),
       animate.to(backOverlay, 0.3, { y: 50 }),

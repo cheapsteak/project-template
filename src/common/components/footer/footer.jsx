@@ -1,5 +1,6 @@
 import React from 'react';
-import {findDOMNode} from 'react-dom';
+import { findDOMNode } from 'react-dom';
+import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
@@ -86,7 +87,7 @@ export default class Footer extends React.Component {
           >
           </div>
           <a href="#">Home</a>
-          <div className={'link'} onClick={this.handleLearnMoreClick}>Learn More</div>
+          <div className={'link'} onClick={this.handleLearnMoreClick}>About</div>
           <a href="http://successacademy.org/privacy_policy.html" target="_blank">Privacy & Terms</a>
           <a href="http://successacademy.org" target="_blank">Successacademy.org</a>
         </div>
