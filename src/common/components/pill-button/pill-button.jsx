@@ -24,6 +24,10 @@ export default class PillButton extends React.Component {
     animate.set(this.refs.verticalBar, {rotation: 90});
   }
 
+  componentWillUnmount() {
+    TweenMax.killTweensOf(_.values(this.refs));
+  }
+
   handleClick = (e) => {
     this._clicked = 'clicked';
     audio.play('button-click');

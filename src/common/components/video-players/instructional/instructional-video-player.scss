@@ -31,8 +31,8 @@
       cursor: default !important;
     }
 
-    .simple-progress-bar {
-      display: none;
+    .simple-progress-bar, .controls {
+      display: none !important;
     }
   }
 
