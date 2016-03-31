@@ -12,10 +12,12 @@ class ChapterVideoPlayerRedux extends React.Component {
   constructor(props) {
     super(props);
     this.boundActionCreators = bindActionCreators(actionCreators, props.dispatch);
+  }
 
-    if(!props.videos.currentVideo || props.videos.currentVideo.slug !== props.slug) {
-      this.boundActionCreators.setVideo(props.slug);
-    }
+  componentWillMount() {
+    if(this.props.slug && !this.props.isFullBrowser) {
+      this.boundActionCreators.setVideo(this.props.slug);
+    }  
   }
 
   render () {
