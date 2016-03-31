@@ -15,33 +15,8 @@
 
   .close-button {
     position: absolute;
-    display: flex;
-    border: none;
-    color: white;
-    padding: 0;
-    margin: 0;
-    font-size: 17px;
-    line-height: 0px;
-    font-weight: bold;
     top: -1px;
     right: -1px;
-    width: 149px;
-    height: 56px;
-    background-color: #987849;
-    z-index: 100;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding-right: 10px;
-
-    &:focus {
-      outline:0;
-    }
-
-    svg {
-      width: 15px;
-      margin-right: 32px;
-    }
   }
 
   .image-card {
