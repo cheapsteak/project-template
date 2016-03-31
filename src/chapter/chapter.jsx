@@ -200,9 +200,9 @@ export default class Chapter extends React.Component {
             noZoom={true}
           />
         </div>
-
         {
-          // panorama component
+          /***   Panorama  ***/
+
           this.state.data.panoramas.length ?
             (
               <div className="page-component">
@@ -216,50 +216,60 @@ export default class Chapter extends React.Component {
               </div>
             ) : null
         }
+        {
+          /***   Photo Essay  ***/
 
-        <div className="page-component">
-          <h2 className="component-title">
-            Photo Essay
-          </h2>
-          <PhotoEssay
-            ref="photoEssay"
-            slug="math-1"
-          />
-        </div>
-        <div className="page-component">
-          <h2 className="component-title">
-            Articles
-          </h2>
-          {
-            this.state.data.articles
-              ? this.state.data.articles.map((article, i) => {
-              return (
-                <div
-                  key={i}
-                  className={`article-row ${article.image ? 'has-image' : ''}`}
-                >
-                  <Article
-                    className="col-3"
-                    scrollTopPadding={60}
-                    title={article.title}
-                    bannerImage={article.image}
-                    aboveFoldSelector={article.aboveFoldSelector}
-                    getTarget={this.getContainer}
-                  >
-                    { article.content }
-                  </Article>
-                </div>
-              )
-            }) : null
-          }
-        </div>
+          this.state.data.photoEssays.length
+          ? <div className="page-component">
+              <h2 className="component-title">
+                Photo Essay
+              </h2>
+              <PhotoEssay
+                ref="photoEssay"
+                slug={this.state.data.photoEssays[0]}
+              />
+            </div>
+          : null
+        }
+        { 
+          /***   Articles   ***/
+
+          this.state.data.articles.length
+          ? <div className="page-component">
+              <h2 className="component-title">
+                Articles
+              </h2>
+              {
+                this.state.data.articles
+                  ? this.state.data.articles.map((article, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className={`article-row ${article.image ? 'has-image' : ''}`}
+                    >
+                      <Article
+                        className="col-3"
+                        scrollTopPadding={60}
+                        title={article.title}
+                        bannerImage={article.image}
+                        aboveFoldSelector={article.aboveFoldSelector}
+                        getTarget={this.getContainer}
+                      >
+                        { article.content }
+                      </Article>
+                    </div>
+                  )
+                }) : null
+              }
+            </div>
+          : null
+        }
         <div className="page-component">
           <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
         </div>
         <TransitionGroup
           component="div"
           className="route-content-wrapper"
-
         >
           {
             React.cloneElement(this.props.children || <div />, {
