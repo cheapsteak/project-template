@@ -174,7 +174,7 @@ export default class LandingPage extends React.Component {
               preload={true}
               loop={true}
               muted={true}
-              src={`${ASSET_PATH}/videos/landing-video.mp4`}
+              src={`http://successacademy.jam3.net/videos/history.mp4`}
             >
             </video>
             <div ref="gradient" className={`gradient`}></div>
