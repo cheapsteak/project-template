@@ -52,6 +52,7 @@ $orange: #f99100;
     background-color: rgba(#747981, 0.7);
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 
     .nav-button {
 
@@ -80,7 +81,8 @@ $orange: #f99100;
 
     .hero-content {
       position: absolute;
-      @include scale-prop(max-width, 520);
+      // @include scale-prop(max-width, 520);
+      @include scale-prop(max-width, 550);
       padding-left: #{(115/1400*100)}vw;
       bottom: #{(100/1400*100)}vw;
       font-weight: bold;
@@ -195,7 +197,7 @@ $orange: #f99100;
   width: 100%;
   z-index: 2;
 
-  &:only-of-type {
+  &:only-of-type, &:last-child {
     @include scale-prop('padding-bottom', 40);
   }
 

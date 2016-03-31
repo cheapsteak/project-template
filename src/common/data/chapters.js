@@ -12,8 +12,9 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Arianne',
     instructionalVideos: [],
-    panoramas: ['math', 'literacy-and-writing', 'science', 'hallway'],
+    panoramas: ['hallway', 'science', 'math', 'literacy-and-writing'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
     podcast: '',
@@ -29,6 +30,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Quinlan',
     instructionalVideos: ['math'],
     panoramas: [],
     photoEssays: [],
@@ -46,6 +48,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Idrissa',
     instructionalVideos: ['science'],
     panoramas: [],
     photoEssays: ['science-1'],
@@ -63,6 +66,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Morgan and William',
     instructionalVideos: [],
     panoramas: [],
     photoEssays: ['electives-1'],
@@ -80,6 +84,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Raquel',
     instructionalVideos: ['computer-science'],
     panoramas: [],
     photoEssays: ['computer-science-1'],
@@ -97,6 +102,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Sela',
     instructionalVideos: ['literacy', 'writing'],
     instructionalVideosCtas: ['Literacy', 'Writing'],
     panoramas: [],
@@ -115,6 +121,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Frankie',
     instructionalVideos: ['history'],
     panoramas: [],
     photoEssays: ['history-1'],
@@ -132,6 +139,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Lianne',
     instructionalVideos: [],
     panoramas: [],
     photoEssays: ['character-development-1'],
@@ -149,6 +157,7 @@ export default [
       bgVideoUrl: `${config.ASSET_PATH}/videos/landing-video.mp4`,
       thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
     },
+    scholar: 'Alexander',
     instructionalVideos: [],
     panoramas: [],
     photoEssays: ['parental-investment-1'],

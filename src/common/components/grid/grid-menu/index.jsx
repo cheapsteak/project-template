@@ -1,7 +1,8 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
-import IconReturn from 'svgs/icon-play.svg';
+import IconBack from 'svgs/icon-zoom-arrow-left.svg';
+import IconPlay from 'svgs/icon-play.svg';
 import IconClose from 'svgs/icon-close.svg';
 import IconFilter from 'svgs/icon-check.svg';
 import {Link} from 'react-router';
@@ -120,6 +121,8 @@ export default class GridMenu extends React.Component {
     const returnState = this.state.returnTabState;
     const closeState = this.state.closeTabState;
 
+    const isReturn = !!localStorage.getItem('narrative-video-time');
+
     return (
       <div className={`grid-menu ${this.props.className}`}>
 
@@ -128,14 +131,14 @@ export default class GridMenu extends React.Component {
           className={`return tab ${returnState}`}
           onClick={this.handleReturnClick}
           onMouseEnter={this.playRolloverSfx}
-          to={`narrative-video/math`}
+          to={`narrative-video`}
         >
           <div
             ref="returnIcon"
-            className={`icon return`}
-            dangerouslySetInnerHTML={{ __html: IconReturn }}
+            className={`icon return ${isReturn ? 'back' : 'play'}`}
+            dangerouslySetInnerHTML={{ __html: isReturn ? IconBack : IconPlay }}
           ></div>
-          <p ref="returnText">Watch Documentary</p>
+          <p ref="returnText">{isReturn ? 'Return to Documentary' : 'Watch Documentary'}</p>
           <div ref="returnTabAfter" className={`after`}></div>
         </Link>
 

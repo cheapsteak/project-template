@@ -39,7 +39,6 @@ export default class GridTile extends React.Component {
     }
   }
 
-
   componentWillMount() {
     const slug = this.props.slug;
     const gridData = Object.assign({}, gridModel.get(slug));
@@ -51,10 +50,8 @@ export default class GridTile extends React.Component {
     this.containerEl = findDOMNode(this);
     this.textContainer = this.refs.textContainer;
     this.imageContainer = this.refs.imageContainer;
-    var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
 
     animate.set(this.containerEl, {autoAlpha: 0});
-    animate.set(ctaItems, {autoAlpha: 0, y: 40});
 
     setTimeout(() => {
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
@@ -94,7 +91,6 @@ export default class GridTile extends React.Component {
 
     if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
       ctaItems = ctaItems.concat([this.refs.ctaIcon1, this.refs.ctaText1]);
-      animate.set([this.refs.ctaIcon1, this.refs.ctaText1], {autoAlpha: 0, y: 40});
     }
 
     audio.play('button-rollover');
@@ -119,9 +115,11 @@ export default class GridTile extends React.Component {
 
     const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
     var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
+    var delay = 0.2;
 
     if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
       ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
+      delay = 0.4;
     }
 
     return animate.all([
@@ -130,7 +128,7 @@ export default class GridTile extends React.Component {
         autoAlpha: 1,
         left: pos,
         ease: Expo.easeInOut,
-        delay: 0.2,
+        delay: delay,
         overwrite: 'all'
       }),
       animate.to(this.textContainer, 0.1, {autoAlpha: 1, delay: 0.4, overwrite: 'all'})
@@ -220,7 +218,7 @@ export default class GridTile extends React.Component {
                   <div className={`cta`}>
                     <div
                       ref={`ctaIcon${index}`}
-                      className={`icon explore`}
+                      className={`icon ${isFiltered ? 'watch' : 'explore'}`}
                       dangerouslySetInnerHTML={{ __html: icon }}
                     ></div>
                     <p ref={`ctaText${index}`}>

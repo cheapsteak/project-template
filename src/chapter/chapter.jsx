@@ -167,7 +167,6 @@ export default class Chapter extends React.Component {
             />
           </Link>
         </nav>
-
         <div className="page-component chapter-header">
           <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
           <div className={`hero-content`}>
@@ -181,9 +180,9 @@ export default class Chapter extends React.Component {
               onClick={() => audio.play('button-click')}
             >
               <div className={`thumb`} style={{backgroundImage: `url('${this.state.data.hero.thumbUrl}')`}}></div>
-              <div className={`button`}>
+              <div className={`button`} style={{ width: 'auto', padding: '0 20px' }}>
                 <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
-                <p>Watch Chapter</p>
+                <p>{ `Watch ${this.state.data.scholar} Chapter` }</p>
               </div>
             </Link>
           </div>

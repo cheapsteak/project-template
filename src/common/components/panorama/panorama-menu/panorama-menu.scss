@@ -41,7 +41,7 @@ $width: 560;
       height: 100%;
       cursor: pointer;
       transition: color 0.3s;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.6);
       text-align: center;
       float: left;
 
@@ -56,7 +56,7 @@ $width: 560;
       }
 
       &:hover {
-        color: rgba(255, 255, 255, 1);
+        color: rgba(255, 255, 255, 0.8);
       }
 
       &:active {
@@ -65,7 +65,8 @@ $width: 560;
       }
 
       &.selected {
-        color: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 1);
+        cursor: default;
       }
     }
   }

@@ -68,13 +68,21 @@
       }
 
       &.return {
+
         svg {
-          @include scale-prop(left, 2);
+          @include scale-prop(left, -1);
+        }
+
+        &.play {
+          svg {
+            @include scale-prop(left, 2);
+          }
         }
       }
     }
 
     p {
+      @include scale-prop(margin-top, 5);
       opacity: 0.8;
       transition: color 0.3s, opacity 0.3s, transform 0.3s;
     }
