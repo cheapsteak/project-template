@@ -114,8 +114,8 @@ export default class Chapter extends React.Component {
     }
   };
 
-  getContainer = () => {
-    return this.refs.chapter;
+  getScrollContainer = () => {
+    return this.refs.main;
   };
 
   render() {
@@ -123,7 +123,10 @@ export default class Chapter extends React.Component {
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
-    return <section ref="chapter" className="chapter-page">
+    // To be removed after client feedback
+    const tempClass = this.state.data.slug === 'science' ? 'no-waste-of-space' : '';
+
+    return <section ref="chapter" className={`chapter-page ${tempClass}`}>
       <nav className="nav">
         <Link
           className={`nav-button left`}
@@ -152,7 +155,7 @@ export default class Chapter extends React.Component {
           />
         </Link>
       </nav>
-      <div className="main">
+      <div ref="main" className="main">
         <div className="page-component chapter-header">
           <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
           <div className={`hero-content`}>
@@ -242,7 +245,7 @@ export default class Chapter extends React.Component {
                       title={article.title}
                       bannerImage={article.image}
                       aboveFoldSelector={article.aboveFoldSelector}
-                      getTarget={this.getContainer}
+                      getTarget={this.getScrollContainer}
                     >
                       { article.content }
                     </Article>
