@@ -118,6 +118,10 @@ export default class ChapterVideoPlayer extends React.Component {
     isPlaying && video.play();
   };
 
+  componentWillUnmount() {
+    this.props.onVideoPause();
+  }
+
   changeVideoTime = (time) => {
     this.video.currentTime = time;
   };
