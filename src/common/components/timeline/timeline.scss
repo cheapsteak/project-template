@@ -27,7 +27,15 @@
       position: absolute;
       bottom: 50px;
       left: 100%;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      transition: opacity 0.5s ease-out;
+    }
+
+    &.hide-time {
+      &:before {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
     }
 
     & > span {
