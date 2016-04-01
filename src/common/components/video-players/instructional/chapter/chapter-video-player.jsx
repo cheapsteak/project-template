@@ -281,6 +281,15 @@ export default class ChapterVideoPlayer extends React.Component {
         onMouseMove={this.handleComponentMouseMove}
       >
         <div
+          className={`chapter-video-poster`}
+        >
+          <img src={this.props.poster} />
+          <PlayButton
+            label="Play"
+            onPlay={this.handleVideoPlayPause}
+          />
+        </div>
+        <div
           ref={ node => this.els.videoWrapper = node }
           className={`video-wrapper`}
         >
