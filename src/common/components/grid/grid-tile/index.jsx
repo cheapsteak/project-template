@@ -6,6 +6,7 @@ import animate from 'gsap-promise';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import {Link} from 'react-router';
+import detector from 'common/utils/detect';
 
 const sizes = {
   LANDSCAPE: 'landscape',
@@ -26,7 +27,8 @@ export default class GridTile extends React.Component {
 
   state = {
     data: {},
-    size: sizes.LANDSCAPE
+    size: sizes.LANDSCAPE,
+    isMobile: false
   };
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +45,8 @@ export default class GridTile extends React.Component {
     const slug = this.props.slug;
     const gridData = Object.assign({}, gridModel.get(slug));
     const chapterData = Object.assign({}, chaptersModel.get(slug));
-    this.setState({data: Object.assign(gridData, chapterData)});
+    const isMobile = detector.isMobile;
+    this.setState({data: Object.assign(gridData, chapterData), isMobile});
   }
 
   componentDidMount() {
@@ -56,8 +59,13 @@ export default class GridTile extends React.Component {
     setTimeout(() => {
       const size = (this.containerEl.offsetWidth >= this.containerEl.offsetHeight - 20) ? sizes.LANDSCAPE : sizes.PORTRAIT;
       this.setState({size});
+      if (this.state.isMobile) this.showMobileLinks();
     });
   }
+
+  showMobileLinks = () => {
+    this.handleMouseEnter();
+  };
 
   handleMouseMove = (e) => {
     if (this.filterApplied) {
@@ -93,19 +101,13 @@ export default class GridTile extends React.Component {
       ctaItems = ctaItems.concat([this.refs.ctaIcon1, this.refs.ctaText1]);
     }
 
-    audio.play('button-rollover');
+    animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'})
+    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.1, ease: Expo.easeOut, overwrite: 'all'})
 
-    return animate.all([
-      animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'}),
-      animate.to(this.imageContainer, 0.5, {
-        autoAlpha: 0.1,
-        left: pos,
-        delay: 0.1,
-        ease: Expo.easeOut,
-        overwrite: 'all'
-      }),
+    if (!this.state.isMobile) {
+      audio.play('button-rollover');
       animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1)
-    ]);
+    }
   };
 
   handleMouseLeave = () => {
@@ -157,10 +159,6 @@ export default class GridTile extends React.Component {
   applyFilter = () => {
     this.filterApplied = true;
 
-    if (this.state.data.routes.instructionalVideos.length > 1) {
-      const ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
-    }
-
     return animate.to(this.refs.contentWrapper, 0.3, {
       scale: 0.9,
       autoAlpha: 0.1,
@@ -193,7 +191,7 @@ export default class GridTile extends React.Component {
 
     return (
       <div
-        className={`grid-tile ${this.props.className}`}
+        className={`grid-tile ${this.props.className} ${this.state.isMobile ? 'is-mobile' : ''}`}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
         onMouseMove={this.handleMouseMove}

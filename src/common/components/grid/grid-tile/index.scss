@@ -85,6 +85,17 @@ $parallaxLimitY: 70px;
     }
   }
 
+  &.is-mobile {
+    a {
+      opacity: 1;
+    }
+
+    .cta .icon, .cta p {
+      @include autoAlpha-1;
+      transform: translateY(0);
+    }
+  }
+
   .noise {
     position: absolute;
     width: calc(100% + #{$parallaxLimitX*2});
