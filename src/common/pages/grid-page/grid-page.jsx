@@ -24,7 +24,8 @@ export default class GridPage extends React.Component {
 
   state = {
     screenWidth: window.innerWidth,
-    isFiltered: false
+    isFiltered: false,
+    isMenuAnimated: false
   };
 
   static contextTypes = {
@@ -62,11 +63,11 @@ export default class GridPage extends React.Component {
 
   animateIn = (callback) => {
     return animate.all([
-        animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, paddingTop: this.menuHeight + 40}),
+        animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, paddingTop: this.menuHeight + 20}),
         this.refs.menu.animateIn(0.5, 1.7, Expo.easeOut)
       ])
       .then(() => {
-        this.isMenuAnimated = true;
+        this.setState({isMenuAnimated: true});
         callback && callback()
       });
   };
@@ -89,29 +90,30 @@ export default class GridPage extends React.Component {
     const screenWidth = window.innerWidth;
     this.setState({screenWidth});
 
-    this.menuHeight = this.refs.menu.containerEl.offsetHeight;
-    if (this.isMenuAnimated) animate.set(this.containerEl, {paddingTop: this.menuHeight + 40});
+    this.menuHeight = this.refs.menu.containerEl.offsetHeight * 1.25;
+    if (this.state.isMenuAnimated) animate.set(this.containerEl, {paddingTop: this.menuHeight + 20});
   };
 
   render() {
     var currLayout;
     const windowWidth = this.state.screenWidth;
     const isFiltered = this.state.isFiltered;
+    const isMenuAnimated = this.state.isMenuAnimated;
 
     if (windowWidth <= breakpoints[0]) {
-      currLayout = <Layout890 isFiltered={isFiltered}/>
+      currLayout = <Layout890 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else if (windowWidth <= breakpoints[1]) {
-      currLayout = <Layout1060 isFiltered={isFiltered}/>
+      currLayout = <Layout1060 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else if (windowWidth <= breakpoints[2]) {
-      currLayout = <Layout1230 isFiltered={isFiltered}/>
+      currLayout = <Layout1230 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else if (windowWidth <= breakpoints[3]) {
-      currLayout = <Layout1400 isFiltered={isFiltered}/>
+      currLayout = <Layout1400 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else if (windowWidth <= breakpoints[4]) {
-      currLayout = <Layout1570 isFiltered={isFiltered}/>
+      currLayout = <Layout1570 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else if (windowWidth <= breakpoints[5]) {
-      currLayout = <Layout1740 isFiltered={isFiltered}/>
+      currLayout = <Layout1740 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     } else {
-      currLayout = <Layout1920 isFiltered={isFiltered}/>
+      currLayout = <Layout1920 isFiltered={isFiltered} isShortDelay={isMenuAnimated}/>
     }
 
     return (

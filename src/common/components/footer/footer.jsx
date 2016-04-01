@@ -90,7 +90,7 @@ export default class Footer extends React.Component {
           </a>
           <Link to={`/`} className="home-link">Home</Link>
           <a onClick={this.handleLearnMoreClick}>About</a>
-          <a href="http://successacademy.org/privacy_policy.html" target="_blank">Privacy Policy</a>
+          <a href="http://www.successacademies.org/privacy-policy/" target="_blank">Privacy Policy</a>
         </div>
         <div
           className="share-links"
