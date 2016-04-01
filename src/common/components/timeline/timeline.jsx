@@ -140,9 +140,10 @@ export default class Timeline extends React.Component {
   render () {
     const { style, currentTime, duration, items } = this.props;
     const progress = duration ? (this.state.time/duration * 100) : 0;
+    const hideTimeStamp = this.state.time/duration > 0.94;
 
     return (
-      <div className="timeline" style={style}>
+      <div ref="timeline" className="timeline" style={style}>
         <div
           className="timeline-container"
           onMouseUp={this.handleMouseUp}
@@ -151,7 +152,7 @@ export default class Timeline extends React.Component {
           onMouseLeave={this.handleMouseLeave}
           onMouseMove={this.handleMouseMove}
         >
-          { /* The element to appears when mouse hovers over the timeline */ }
+          { /* The Scrubber / The element to appears when mouse hovers over the timeline */ }
           <div
             ref="hoveredTimeStampContainer"
             className="hovered-time-stamp"
@@ -162,7 +163,7 @@ export default class Timeline extends React.Component {
 
           { /* The progress indicator */}
           <div
-            className="timeline-cover"
+            className={`timeline-cover ${hideTimeStamp ? 'hide-time' : ''}`}
             style={{ width: `${progress}%` }}
             data-time={this.secondsToMinutes(currentTime)}
           >

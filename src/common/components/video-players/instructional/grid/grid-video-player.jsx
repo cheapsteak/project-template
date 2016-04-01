@@ -29,12 +29,18 @@ export default class GridVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object,
+  };
+
+  static nextVideoCountdownTime = 15;
+
   nextVideoIntervalId = undefined;
   hideControlsTimeoutId = undefined;
 
   state = {
     showEndingCTA: false,
-    nextVideoTimeLeft: 15,
+    nextVideoTimeLeft: GridVideoPlayer.nextVideoCountdownTime,
     showHoverCard: undefined
   };
 
@@ -71,10 +77,9 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { endingOverlay, videoWrapper, replayButton, replayLabel, simpleProgressBar, controls } = this.refs;
 
     // Video Finished
-    if(this.props.duration && nextProps.duration) {
+    if(nextProps.duration) {
       if(this.props.currentTime !== this.props.duration &&
         nextProps.currentTime === nextProps.duration) {
         this.animateInEndOverlay();
@@ -84,22 +89,21 @@ export default class GridVideoPlayer extends React.Component {
           if(this.state.nextVideoTimeLeft > 0) {
             this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
+            this.context.router.push(this.props.nextVideo.gridRoute);
             this.clearCountdown();
-            /*
-
-              GO TO NEXT VIDEO
-
-              this.context.router.push(this.props.nextVideoRoute);
-
-             */
+            this.animateOutEndOverlay();
+            this.props.hideFullControls();
+            this.video.play();
           }
         }, 1000);
       } else if (this.props.currentTime === this.props.duration
         && nextProps.currentTime !== nextProps.duration) {
+
         // Video going to replay
         this.clearCountdown();
         this.animateOutEndOverlay();
         this.props.hideFullControls();
+        this.video.play();
       }
     }
 
@@ -192,11 +196,10 @@ export default class GridVideoPlayer extends React.Component {
 
     if(!this.props.useFullControls && !this.videoEnded && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
-    }
-
-    if(this.props.isPlaying) {
       this.setHideControlsTimeout();
     }
+    
+    this.lastMouseCoord = mouseCoords;
   };
 
   handleVolumeClick = (e) => {
@@ -214,7 +217,7 @@ export default class GridVideoPlayer extends React.Component {
   clearCountdown = () => {
     clearInterval(this.nextVideoIntervalId);
     this.nextVideoIntervalId = undefined;
-    this.setState({ nextVideoTimeLeft: 15 });
+    this.setState({ nextVideoTimeLeft: GridVideoPlayer.nextVideoCountdownTime });
   };
 
   setHideControlsTimeout = () => {

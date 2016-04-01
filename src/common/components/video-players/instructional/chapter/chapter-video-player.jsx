@@ -148,8 +148,21 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying) {
+      console.log('mOVE')
       this.setHideControlsTimeout();
     }
+  };
+
+  handleControlsMouseEnter = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log(e);
+        
+    console.log("enter")
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
+    return false;
   };
 
 
@@ -264,6 +277,7 @@ export default class ChapterVideoPlayer extends React.Component {
           `
         }
         style={style}
+        onMouseLeave={this.handleComponentMouseMove}
         onMouseMove={this.handleComponentMouseMove}
       >
         <div
@@ -309,6 +323,28 @@ export default class ChapterVideoPlayer extends React.Component {
             ref={ node => this.els.overlay = node }
             className="video-overlay">
           </div>
+          <div
+            ref={ node => this.els.endingOverlay = node }
+            className="end-overlay"
+          >
+            <div
+              className="replay-group replay-group-chapter"
+            >
+              <div
+                ref={ node => this.els.replayButton = node }
+                className="replay-button"
+                onClick={this.handleReplayClick}
+                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+              >
+              </div>
+              <label
+                ref={ node => this.els.replayLabel = node }
+                className="replay-label"
+              >
+                Replay
+              </label>
+            </div>
+          </div>
         </div>
         <div
           ref={ node => this.els.simpleProgressBar = node }
@@ -319,6 +355,8 @@ export default class ChapterVideoPlayer extends React.Component {
         <div
           className="controls"
           ref={ node => this.els.controls = node }
+          onMouseEnter={this.handleControlsMouseEnter}
+          onMouseMove={ (e) => e.stopPropagation() }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
@@ -353,28 +391,6 @@ export default class ChapterVideoPlayer extends React.Component {
             onTimeChange={this.changeVideoTime}
             items={[]}
           />
-        </div>
-        <div
-          ref={ node => this.els.endingOverlay = node }
-          className="end-overlay"
-        >
-          <div
-            className="replay-group replay-group-chapter"
-          >
-            <div
-              ref={ node => this.els.replayButton = node }
-              className="replay-button"
-              onClick={this.handleReplayClick}
-              dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-            >
-            </div>
-            <label
-              ref={ node => this.els.replayLabel = node }
-              className="replay-label"
-            >
-              Replay
-            </label>
-          </div>
         </div>
       </div>
     )
