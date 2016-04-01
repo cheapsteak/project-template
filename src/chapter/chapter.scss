@@ -188,16 +188,12 @@ $orange: #f99100;
 
     .arrow-cta {
       position: absolute;
-      bottom: #{(45/1400*100)}vw;
-      @include scale-prop(width, 16);
-      @include scale-prop(height, 10);
+      bottom: #{(25/1400*100)}vw;
+      @include scale-prop(width, 25);
+      @include scale-prop(height, 25);
       @include scale-prop(margin-left, -8);
       left: 50%;
       animation: inf-bounce 1.8s infinite;
-
-      svg {
-        transform: rotate(-90deg);
-      }
 
       @keyframes inf-bounce {
         0%, 100% {

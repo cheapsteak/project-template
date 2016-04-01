@@ -2,7 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import IconBack from 'svgs/icon-zoom-arrow-left.svg';
-import IconPlay from 'svgs/icon-play.svg';
+import IconPlay from 'svgs/icon-playoutline.svg';
 import IconClose from 'svgs/icon-close.svg';
 import IconFilter from 'svgs/icon-check.svg';
 import {Link} from 'react-router';

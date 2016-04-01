@@ -5,6 +5,7 @@ import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import Podcast from 'common/components/podcast/podcast.jsx';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
 import IconLeftArrow from 'svgs/icon-left-arrow.svg';
+import IconScroll from 'svgs/icon-scroll.svg';
 import Article from 'common/components/article/article';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
@@ -14,6 +15,7 @@ import {Link} from 'react-router';
 import ScrollMagic from 'scrollmagic';
 import IconExplore from 'svgs/icon-explore.svg';
 import IconPlay from 'svgs/icon-play.svg';
+import IconPlayOutline from 'svgs/icon-playoutline.svg';
 import chaptersModel from 'common/models/chapters-model';
 
 export default class Chapter extends React.Component {
@@ -131,7 +133,7 @@ export default class Chapter extends React.Component {
             style={{height: '100%'}}
             text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
             color={`#adafaf`}
-            svgIcon={isReturn ? IconLeftArrow : IconPlay}
+            svgIcon={isReturn ? IconLeftArrow : IconPlayOutline}
             backgroundColor={`#565d60`}
             hoverBackgroundColor={`#3e4548`}
           />
@@ -173,7 +175,7 @@ export default class Chapter extends React.Component {
             </Link>
           </div>
 
-          <div className={`arrow-cta`} dangerouslySetInnerHTML={{__html: IconLeftArrow}}></div>
+          <div className={`arrow-cta`} dangerouslySetInnerHTML={{__html: IconScroll}}></div>
         </div>
 
         <div className="page-component">

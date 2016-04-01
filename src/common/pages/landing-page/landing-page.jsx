@@ -1,6 +1,6 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import IconWatch from 'svgs/icon-play.svg';
+import IconWatch from 'svgs/icon-playoutline.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import IconLoader from 'svgs/icon-sa_monogram.svg';
 import {Link} from 'react-router';

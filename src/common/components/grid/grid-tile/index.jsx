@@ -3,7 +3,7 @@ import {findDOMNode} from 'react-dom';
 import gridModel from '../../../models/grid-model';
 import chaptersModel from '../../../models/chapters-model';
 import animate from 'gsap-promise';
-import IconWatch from 'svgs/icon-play.svg';
+import IconWatch from 'svgs/icon-playoutline.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import {Link} from 'react-router';
 import detector from 'common/utils/detect';

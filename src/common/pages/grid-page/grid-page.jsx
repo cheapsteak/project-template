@@ -118,8 +118,8 @@ export default class GridPage extends React.Component {
 
     return (
       <div className={`grid-page ${this.props.className}`}>
-        {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
         <GridMenu ref="menu"/>
+        {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
       </div>
     );
   }
