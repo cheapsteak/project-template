@@ -25,6 +25,10 @@ export default class ChapterVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
   els = {};
   videoId = 'target-video';
   cloneId = 'clone-video';
@@ -144,7 +148,6 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying) {
-      console.log('mOVE')
       this.setHideControlsTimeout();
     }
   };
@@ -153,9 +156,6 @@ export default class ChapterVideoPlayer extends React.Component {
     e.stopPropagation();
     e.preventDefault();
 
-    console.log(e);
-
-    console.log("enter")
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = undefined;
     return false;
@@ -200,6 +200,15 @@ export default class ChapterVideoPlayer extends React.Component {
       this.props.unmute();
     } else {
       this.props.mute();
+    }
+  }
+
+  handleCloseClick = () => {
+    if(this.props.isFullBrowser) {
+      this.context.router.push()
+    }
+    else {
+      this.props.exitFullBrowser()
     }
   }
 
@@ -301,17 +310,16 @@ export default class ChapterVideoPlayer extends React.Component {
               </video>
               : undefined
           }
-          <Link to={route}>
-            <RectangularButton
-              ref={ node => this.els.closeButton = findDOMNode(node) }
-              className="close-button"
-              text="Close"
-              color="#ffffff"
-              backgroundColor="#f99100"
-              hoverBackgroundColor="#f99100"
-              svgIcon={CloseSvg}
-            />
-          </Link>
+          <RectangularButton
+            ref={ node => this.els.closeButton = findDOMNode(node) }
+            onClick={ this.handleCloseClick }
+            className="close-button"
+            text="Close"
+            color="#ffffff"
+            backgroundColor="#f99100"
+            hoverBackgroundColor="#f99100"
+            svgIcon={CloseSvg}
+          />
           {
             this.props.init
             ? <PlayButton
@@ -366,12 +374,21 @@ export default class ChapterVideoPlayer extends React.Component {
               onClick={this.handleVolumeClick}
             >
             </span>
-            <Link className="button fullbrowser-button" to={route}>
-              <span
-                dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}
-              >
-              </span>
-            </Link>
+            {
+              isFullBrowser
+              ? <div
+                  className="button fullscreen-button"
+                  onClick={ () => this.props.exitFullBrowser(route) }
+                >
+                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                </div>
+              : <Link
+                  className="button fullscreen-button"
+                  to={route}
+                >
+                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                </Link>
+            }
           </div>
           {
             /*
