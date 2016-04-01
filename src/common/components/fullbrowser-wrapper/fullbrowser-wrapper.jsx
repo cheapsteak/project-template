@@ -8,6 +8,7 @@ export default class FullBrowserWrapper extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
   };
 
   componentWillAppear = async (callback) => {
@@ -64,6 +65,14 @@ export default class FullBrowserWrapper extends React.Component {
     }
   }
 
+  handleExitFullbrowser = (chapterPath) => {
+    if(this.context.previousRoute) {
+      this.context.router.goBack();
+    } else {
+      this.context.router.replace(chapterPath)
+    }
+  };
+
   animateToFullBrowser = () => {
     const el = findDOMNode(this);
     const child = findDOMNode(this.refs.child);
@@ -103,7 +112,9 @@ export default class FullBrowserWrapper extends React.Component {
           ref="child"
           {...childProps}
           isFullBrowser={true}
-          slug={this.props.params.slug} />
+          slug={this.props.params.slug}
+          exitFullBrowser={this.handleExitFullbrowser}
+        />
       </div>
     )
   }

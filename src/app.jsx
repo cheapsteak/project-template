@@ -11,18 +11,15 @@ window.REDUX_STORE = store;
 export default class App extends React.Component {
   static childContextTypes = {
     eventBus: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object
+    router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
   };
-
-  getChildContext() {
-    return {
-      eventBus: vent
-    };
-  }
 
   state = {
     showModal: false
   };
+
+  previousRoute = undefined;
 
   componentDidMount() {
     store.subscribe(() => {
@@ -34,6 +31,17 @@ export default class App extends React.Component {
         });
       }
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.previousRoute = nextProps.location.pathname;
+  }
+
+  getChildContext() {
+    return {
+      eventBus: vent,
+      previousRoute: this.previousRoute
+    };
   }
 
   render () {

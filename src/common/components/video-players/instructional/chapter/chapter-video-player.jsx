@@ -148,7 +148,6 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying) {
-      console.log('mOVE')
       this.setHideControlsTimeout();
     }
   };
@@ -157,9 +156,6 @@ export default class ChapterVideoPlayer extends React.Component {
     e.stopPropagation();
     e.preventDefault();
 
-    console.log(e);
-        
-    console.log("enter")
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = undefined;
     return false;
@@ -372,12 +368,21 @@ export default class ChapterVideoPlayer extends React.Component {
               onClick={this.handleVolumeClick}
             >
             </span>
-            <Link className="button fullbrowser-button" to={route}>
-              <span
-                dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}
-              >
-              </span>
-            </Link>
+            {
+              isFullBrowser
+              ? <div
+                  className="button fullscreen-button"
+                  onClick={ () => this.props.exitFullBrowser(route) }
+                >
+                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                </div>
+              : <Link
+                  className="button fullscreen-button"
+                  to={route}
+                >
+                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                </Link>
+            }
           </div>
           {
             /*
