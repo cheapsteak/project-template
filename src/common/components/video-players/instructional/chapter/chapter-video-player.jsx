@@ -25,6 +25,10 @@ export default class ChapterVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
   els = {};
   videoId = 'target-video';
   cloneId = 'clone-video';
@@ -203,6 +207,15 @@ export default class ChapterVideoPlayer extends React.Component {
     }
   }
 
+  handleCloseClick = () => {
+    if(this.props.isFullBrowser) {
+      this.context.router.push()
+    }
+    else {
+      this.props.exitFullBrowser()
+    }
+  }
+
   animateInControls = () => {
     return Promise.all([
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
@@ -264,6 +277,14 @@ export default class ChapterVideoPlayer extends React.Component {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className = '', noZoom, init } = this.props;
     const route = (!isFullBrowser ? fullBrowserChapterRoute : chapterRoute) || '/';
+    const BackButton = <RectangularButton
+      className="close-button"
+      text="Close"
+      color="#ffffff"
+      backgroundColor="#f99100"
+      hoverBackgroundColor="#f99100"
+      svgIcon={CloseSvg}
+    />
 
     return (
       <div
@@ -296,17 +317,16 @@ export default class ChapterVideoPlayer extends React.Component {
               </video>
               : undefined
           }
-          <Link to={route}>
-            <RectangularButton
-              ref={ node => this.els.closeButton = findDOMNode(node) }
-              className="close-button"
-              text="Close"
-              color="#ffffff"
-              backgroundColor="#f99100"
-              hoverBackgroundColor="#f99100"
-              svgIcon={CloseSvg}
-            />
-          </Link>
+          <RectangularButton
+            ref={ node => this.els.closeButton = findDOMNode(node) }
+            onClick={ this.handleCloseClick }
+            className="close-button"
+            text="Close"
+            color="#ffffff"
+            backgroundColor="#f99100"
+            hoverBackgroundColor="#f99100"
+            svgIcon={CloseSvg}
+          />
           {
             this.props.init
             ? <PlayButton
