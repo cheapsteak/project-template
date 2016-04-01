@@ -269,14 +269,6 @@ export default class ChapterVideoPlayer extends React.Component {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className = '', noZoom, init } = this.props;
     const route = (!isFullBrowser ? fullBrowserChapterRoute : chapterRoute) || '/';
-    const BackButton = <RectangularButton
-      className="close-button"
-      text="Close"
-      color="#ffffff"
-      backgroundColor="#f99100"
-      hoverBackgroundColor="#f99100"
-      svgIcon={CloseSvg}
-    />
 
     return (
       <div
