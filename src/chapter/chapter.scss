@@ -3,6 +3,23 @@
 $parallax-amplitude: 50px;
 $orange: #f99100;
 
+
+// Temporary Style to be removed
+.no-waste-of-space {
+  .main {
+    @include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
+    margin: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .nav {
+    width: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+  }
+}
+
 .chapter-page {
   height: 100%;
   overflow-y: auto;

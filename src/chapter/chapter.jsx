@@ -121,7 +121,10 @@ export default class Chapter extends React.Component {
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
-    return <section ref="chapter" className="chapter-page">
+    // To be removed after client feedback
+    const tempClass = this.state.data.slug === 'science' ? 'no-waste-of-space' : '';
+
+    return <section ref="chapter" className={`chapter-page ${tempClass}`}>
       <nav className="nav">
         <Link
           className={`nav-button left`}
