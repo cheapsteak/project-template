@@ -23,7 +23,6 @@
     background-color: #fff;
     cursor: pointer;
     border-radius: 50%;
-    box-shadow: 5px 5px 110px rgba(0, 0, 0, 0.15), -5px -5px 110px rgba(0, 0, 0, 0.15);
 
     .icon {
       position: absolute;
@@ -51,5 +50,16 @@
     text-align: center;
     @include scale-prop(margin-top, 15);
     color: #fff;
+  }
+
+  .play-button-shadow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    @include scale-prop(width, 150);
+    @include scale-prop(height, 150);
+    background-color: rgba(255, 255, 255, 0.35);
   }
 }

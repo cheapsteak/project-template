@@ -49,12 +49,8 @@ export default class ChapterVideoPlayer extends React.Component {
     animate.set(this.els.closeButton, this.animationStates[initialState].closeButton);
     animate.set(this.els.overlay, this.animationStates[initialState].overlay);
     animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
-
     animate.set(this.els.controls, this.animationStates[initialState].controls);
-
     animate.set(this.els.endingOverlay, this.animationStates[endingState].endingOverlay);
-    animate.set(this.els.replayButton, this.animationStates[endingState].replayButton);
-    animate.set(this.els.replayLabel, this.animationStates[endingState].replayLabel);
 
     this.props.isPlaying && this.video && this.video.play();
   }
@@ -81,7 +77,7 @@ export default class ChapterVideoPlayer extends React.Component {
         this.animateOutEndOverlay();
         this.props.hideFullControls();
       }
-    } 
+    }
   }
 
   componentWillEnterFullBrowser = () => {
@@ -245,8 +241,6 @@ export default class ChapterVideoPlayer extends React.Component {
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.els.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.els.replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(this.els.replayLabel, 0.3, this.animationStates.idle.replayLabel),
       animate.to(this.els.closeButton, 0.3, this.animationStates.idle.closeButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
@@ -262,10 +256,8 @@ export default class ChapterVideoPlayer extends React.Component {
       animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(this.els.replayButton, 0.3, this.animationStates.out.replayButton),
       animate.to(this.els.closeButton, 0.3, this.animationStates.out.closeButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.els.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
   };
 
@@ -297,6 +289,15 @@ export default class ChapterVideoPlayer extends React.Component {
         onMouseLeave={this.handleComponentMouseMove}
         onMouseMove={this.handleComponentMouseMove}
       >
+        <div
+          className={`chapter-video-poster`}
+        >
+          <img src={this.props.poster} />
+          <PlayButton
+            label="Play"
+            onPlay={this.handleVideoPlayPause}
+          />
+        </div>
         <div
           ref={ node => this.els.videoWrapper = node }
           className={`video-wrapper`}
@@ -335,7 +336,7 @@ export default class ChapterVideoPlayer extends React.Component {
               />
             : null
           }
-          <div 
+          <div
             ref={ node => this.els.overlay = node }
             className="video-overlay">
           </div>
@@ -346,19 +347,12 @@ export default class ChapterVideoPlayer extends React.Component {
             <div
               className="replay-group replay-group-chapter"
             >
-              <div
-                ref={ node => this.els.replayButton = node }
-                className="replay-button"
-                onClick={this.handleReplayClick}
-                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-              >
-              </div>
-              <label
-                ref={ node => this.els.replayLabel = node }
-                className="replay-label"
-              >
-                Replay
-              </label>
+              <PlayButton
+                icon={ReplayArrowSvg}
+                isReplay={true}
+                onPlay={this.handleReplayClick}
+                label={`Replay`}
+              />
             </div>
           </div>
         </div>
