@@ -90,7 +90,12 @@ export default class PlayButton extends React.Component {
   togglePlay = () => {
     const isPlaying = !this.state.isPlaying;
     this.setState({isPlaying});
-    (isPlaying) ? this.props.onPlay() : this.props.onPause();
+
+    if (this.props.isReplay) {
+      this.props.onPlay()
+    } else {
+      (isPlaying) ? this.props.onPlay() : this.props.onPause();
+    }
   };
 
   replayAnimation = () => {
@@ -161,7 +166,7 @@ export default class PlayButton extends React.Component {
   };
 
   render() {
-    const icon = this.state.isPlaying ? IconPause : this.props.icon;
+    const icon = this.state.isPlaying && !this.props.isReplay ? IconPause : this.props.icon;
     const isRoundLineCap = this.state.isHovered || this.state.playProgress;
     const componentClassName = (isRoundLineCap ? 'round-line-cap ' : ' ' ) + (this.props.className || '');
 
@@ -177,7 +182,7 @@ export default class PlayButton extends React.Component {
         >
           <div
             ref="icon"
-            className={`icon ${!this.state.isPlaying?'play' : ''}`}
+            className={`icon ${!this.state.isPlaying && !this.props.isReplay ? 'play' : ''}`}
             dangerouslySetInnerHTML={{ __html: icon }}></div>
         </div>
 
