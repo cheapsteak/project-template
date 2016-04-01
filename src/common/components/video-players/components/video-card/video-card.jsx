@@ -141,7 +141,6 @@ export default class NextVideoCard extends React.Component {
           <h2 ref="title">{this.props.title}</h2>
 
           <div className={`spinner-button`}>
-            <div className={`spinner-shadow`}></div>
             <PlayButton
               progress={1 - this.props.timeLeft/15}
               isCountDown={true}

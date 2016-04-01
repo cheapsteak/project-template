@@ -85,6 +85,7 @@ export default class Podcast extends React.Component {
           </div>
 
           <PlayButton
+            shouldHideHalo={true}
             progress={this.state.progress}
             onPlay={this.play}
             onPause={this.pause}

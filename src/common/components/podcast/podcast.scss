@@ -42,6 +42,9 @@
     height: 160vw;
 
     .progress-play-button {
+      .icon-container {
+        box-shadow: 5px 5px 110px rgba(0, 0, 0, 0.15), -5px -5px 110px rgba(0, 0, 0, 0.15);
+      }
 
     }
 
