@@ -11,6 +11,7 @@ $orange: #f99100;
     margin: 0 !important;
     width: 100% !important;
     height: 100% !important;
+    overflow-y: auto;
   }
 
   .nav {
@@ -22,7 +23,7 @@ $orange: #f99100;
 
 .chapter-page {
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
   background-color: #747981;
 
   .component-title {
