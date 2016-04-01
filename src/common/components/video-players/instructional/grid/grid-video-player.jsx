@@ -33,7 +33,7 @@ export default class GridVideoPlayer extends React.Component {
     router: React.PropTypes.object,
   };
 
-  static nextVideoCountdownTime = 3;
+  static nextVideoCountdownTime = 15;
 
   nextVideoIntervalId = undefined;
   hideControlsTimeoutId = undefined;
