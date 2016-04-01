@@ -97,7 +97,9 @@
     display: flex;
     align-items: bottom;
     width: 100%;
-    height: $control-ui-height;
+    // @include scale('height', 80px, #{(80/1400 * 100)}vw, 140px);
+    // @include scale-prop('height', 80);
+    height: 80px;
     background-color: rgba(143, 143, 143, 0.5);
     align-items: flex-end;
     justify-content: center;
@@ -105,7 +107,7 @@
   }
 
   .control-group, .timeline {
-    height: $control-ui-height/2;
+    height: 50%;
   }
 
   .control-group {

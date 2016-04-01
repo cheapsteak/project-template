@@ -22,6 +22,17 @@ class GridVideoPlayerRedux extends React.Component {
     this.boundActionCreators.playVideo();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const currentSlug = this.props.slug || this.props.params.slug;
+    const nextSlug = nextProps.slug || nextProps.params.slug;
+
+    if(currentSlug !== nextSlug) {
+      this.boundActionCreators.setVideo(nextSlug);
+      this.boundActionCreators.setVideoOptions({ useFullControls: false });
+      this.boundActionCreators.playVideo();
+    }
+  }
+
   render () {
     const { videos, className } = this.props;
 

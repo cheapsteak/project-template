@@ -148,8 +148,21 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying) {
+      console.log('mOVE')
       this.setHideControlsTimeout();
     }
+  };
+
+  handleControlsMouseEnter = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    console.log(e);
+        
+    console.log("enter")
+    clearTimeout(this.hideControlsTimeoutId);
+    this.hideControlsTimeoutId = undefined;
+    return false;
   };
 
 
@@ -264,6 +277,7 @@ export default class ChapterVideoPlayer extends React.Component {
           `
         }
         style={style}
+        onMouseLeave={this.handleComponentMouseMove}
         onMouseMove={this.handleComponentMouseMove}
       >
         <div
@@ -341,6 +355,8 @@ export default class ChapterVideoPlayer extends React.Component {
         <div
           className="controls"
           ref={ node => this.els.controls = node }
+          onMouseEnter={this.handleControlsMouseEnter}
+          onMouseMove={ (e) => e.stopPropagation() }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
