@@ -5,6 +5,8 @@ import NextButtonSvg from 'svgs/photo-essay-next-button.svg';
 import FullscreenButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
+import TransitionGroup from 'react-transition-group-plus';
+
 class TransitionItem extends React.Component {
 
   static propTypes = {
@@ -148,7 +150,21 @@ class PhotoEssay extends React.Component {
         </div>
         <div className="photo-description">
           <h3>About this picture</h3>
-          <p>{ photo.description }</p>
+          <TransitionGroup component="div" className="is-relative pin-non-first-children">
+            <TransitionItem
+              duration={0.3}
+              key={index}
+              beforeEnter={{ opacity: 0 }}
+              idle={{ opacity: 1 }}
+              afterLeave={{ opacity: 0 }}
+              ease={{
+                enter: Sine.easeIn,
+                leave: Sine.easeOut,
+              }}
+            >
+              <p>{ photo.description }</p>
+            </TransitionItem>
+          </TransitionGroup>
         </div>
         <div className="photo-controls">
           <div
