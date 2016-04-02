@@ -145,8 +145,39 @@ class PhotoEssay extends React.Component {
 
     return (
       <div className={`photo-essay ${className || ''}`} style={style}>
-        <div className="image-wrapper">
-          <img src={photo.image}/>
+        {/* need a wrapper for scrollmagic / parallax effect */}
+        <div className="parallax-target">
+          {/* need another wrapper for slideshow */}
+          <div
+            className="photo-slider"
+            style={{
+              transform: `translateX( ${-100 * index}%)`,
+              transition: `transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)`,
+            }}
+          >
+            {
+              photos && photos.map((photo, index) => {
+                const style = index === 0
+                  ? {
+                    position:  'static'
+                  }
+                  : {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    transform: `translateX(${100 * index}%)`
+                  };
+
+                return <div
+                    key={index}
+                    className="image-wrapper"
+                    style={style}
+                  >
+                    <img src={photo.image}/>
+                  </div>
+              })
+            }
+          </div>
         </div>
         <div className="photo-description">
           <h3>About this picture</h3>
