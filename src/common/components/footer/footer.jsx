@@ -78,7 +78,12 @@ export default class Footer extends React.Component {
         className={`footer ${className}`}
         style={style}
       >
-        <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+        <div className="fibonacci-container">
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+        </div>
+
         <div className="footer-wrapper">
           <div
             className="main-links"

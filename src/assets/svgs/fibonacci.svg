@@ -1,37 +1,37 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	  xml:space="preserve">
-<rect opacity="0.3" fill="#3E4548" enable-background="new    " width="100%"/>
+<rect opacity="0.3" fill="#3E4548" enable-background="new    " width="1350" height="100%"/>
 <g opacity="0.1">
 	<rect fill="#757A81" width="10"/>
-	<rect id="Rectangle_1_copy" x="30" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_2" x="60" fill="#757A81" width="20" />
-	<rect id="Rectangle_1_copy_3" x="100" fill="#757A81" width="30" />
-	<rect id="Rectangle_1_copy_4" x="150" fill="#757A81" width="50" />
-	<rect id="Rectangle_1_copy_6" x="480" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_6-2" x="440" fill="#757A81" width="20" />
-	<rect id="Rectangle_1_copy_6-3" x="390" fill="#757A81" width="30" />
-	<rect id="Rectangle_1_copy_6-4" x="320" fill="#757A81" width="50" />
-	<rect id="Rectangle_1_copy_5" x="220" fill="#757A81" width="80" />
+	<rect id="Rectangle_1_copy" x="30" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_2" x="60" fill="#757A81" width="20" height="100%"/>
+	<rect id="Rectangle_1_copy_3" x="100" fill="#757A81" width="30"  height="100%"/>
+	<rect id="Rectangle_1_copy_4" x="150" fill="#757A81" width="50" height="100%"/>
+	<rect id="Rectangle_1_copy_6" x="480" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_6-2" x="440" fill="#757A81" width="20" height="100%"/>
+	<rect id="Rectangle_1_copy_6-3" x="390" fill="#757A81" width="30" height="100%"/>
+	<rect id="Rectangle_1_copy_6-4" x="320" fill="#757A81" width="50" height="100%"/>
+	<rect id="Rectangle_1_copy_5" x="220" fill="#757A81" width="80" height="100%"/>
 </g>
 <g opacity="0.1">
 	<rect x="510" fill="#757A81" width="10"/>
-	<rect id="Rectangle_1_copy-2" x="540" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_2-2" x="570" fill="#757A81" width="20" />
-	<rect id="Rectangle_1_copy_3-2" x="610" fill="#757A81" width="30" />
-	<rect id="Rectangle_1_copy_4-2" x="660" fill="#757A81" width="50" />
-	<rect id="Rectangle_1_copy_6-5" x="990" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_6-6" x="950" fill="#757A81" width="20" />
-	<rect id="Rectangle_1_copy_6-7" x="900" fill="#757A81" width="30" />
-	<rect id="Rectangle_1_copy_6-8" x="830" fill="#757A81" width="50" />
-	<rect id="Rectangle_1_copy_5-2" x="730" fill="#757A81" width="80" />
+	<rect id="Rectangle_1_copy-2" x="540" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_2-2" x="570" fill="#757A81" width="20" height="100%"/>
+	<rect id="Rectangle_1_copy_3-2" x="610" fill="#757A81" width="30" height="100%"/>
+	<rect id="Rectangle_1_copy_4-2" x="660" fill="#757A81" width="50" height="100%"/>
+	<rect id="Rectangle_1_copy_6-5" x="990" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_6-6" x="950" fill="#757A81" width="20" height="100%"/>
+	<rect id="Rectangle_1_copy_6-7" x="900" fill="#757A81" width="30" height="100%"/>
+	<rect id="Rectangle_1_copy_6-8" x="830" fill="#757A81" width="50" height="100%"/>
+	<rect id="Rectangle_1_copy_5-2" x="730" fill="#757A81" width="80" height="100%"/>
 </g>
 <g opacity="0.1">
 	<rect x="1020" fill="#757A81" width="10"/>
-	<rect id="Rectangle_1_copy-3" x="1050" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_2-3" x="1080" fill="#757A81" width="20" />
-	<rect id="Rectangle_1_copy_3-3" x="1120" fill="#757A81" width="30" />
-	<rect id="Rectangle_1_copy_4-3" x="1170" fill="#757A81" width="50" />
-	<rect id="Rectangle_1_copy_6-12" x="1340" fill="#757A81" width="10" />
-	<rect id="Rectangle_1_copy_5-3" x="1240" fill="#757A81" width="80" />
+	<rect id="Rectangle_1_copy-3" x="1050" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_2-3" x="1080" fill="#757A81" width="20" height="100%"/>
+	<rect id="Rectangle_1_copy_3-3" x="1120" fill="#757A81" width="30" height="100%"/>
+	<rect id="Rectangle_1_copy_4-3" x="1170" fill="#757A81" width="50" height="100%"/>
+	<rect id="Rectangle_1_copy_6-12" x="1340" fill="#757A81" width="10" height="100%"/>
+	<rect id="Rectangle_1_copy_5-3" x="1240" fill="#757A81" width="80" height="100%"/>
 </g>
 </svg>
