@@ -230,6 +230,7 @@ export default class LandingPage extends React.Component {
             {
               this.state.shouldShowFooter && (
                 <Footer
+                  className={`landing-footer`}
                   primaryBackgroundColor={`rgba(37, 40, 42, 0.4)`}
                   secondaryBackgroundColor={`rgba(138, 141, 142,0.2)`}
                 />

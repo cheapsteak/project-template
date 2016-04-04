@@ -1,21 +1,63 @@
 .footer {
   $transition: all 0.3s ease;
-
-  position: relative;
-  display: flex;
-  align-content: center;
   left: 0;
   width: 100%;
-  @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
   @include scale-prop('font-size', 14);
   color: #8f8f8f;
   font-weight: bold;
   user-select: none;
+  overflow: hidden;
   @include gpu;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   * {
     @include gpu;
+  }
+
+  .fibonacci-container {
+    width: 100%;
+    @include scale-prop('height', 20);
+
+    .fibonacci {
+      position: absolute;
+      top: 0;
+      width: 1350px;
+
+      &:nth-of-type(2) {
+        left: 1350px;
+      }
+
+      &:nth-of-type(3) {
+        left: 2700px;
+      }
+    }
+
+    svg {
+      width: 100%;
+      @include scale-prop('height', 20);
+
+      rect {
+        @include scale-prop('height', 20);
+      }
+    }
+  }
+
+  .footer-wrapper {
+    display: flex;
+    align-content: center;
+    width: 100%;
+    //@include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
+    @include scale('height', 50px, #{(50/1400 * 100)}vw, 70px);
+    font-weight: bold;
+    user-select: none;
+  }
+
+  &.landing-footer {
+    .fibonacci {
+      display: none;
+    }
+    .footer-wrapper {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
   }
 
   a {

@@ -142,6 +142,7 @@ export default class NextVideoCard extends React.Component {
 
           <div className={`spinner-button`}>
             <PlayButton
+              circleColor={`#f99100`}
               progress={1 - this.props.timeLeft/15}
               isCountDown={true}
             />
