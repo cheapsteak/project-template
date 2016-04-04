@@ -12,6 +12,7 @@
   font-weight: bold;
   user-select: none;
   @include gpu;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 
   * {
     @include gpu;
@@ -24,18 +25,28 @@
     margin: 0;
     display: flex;
     align-content: center;
-    height: 100%;
+    //height: 100%;
     @include scale-prop('margin-left', 15);
     @include scale-prop('margin-right', 15);
     transition: opacity 0.3s ease;
     cursor: pointer;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 1;
     }
 
     &.active {
       opacity: 1;
+    }
+
+    &.logo-link {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      margin-right: 0;
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 

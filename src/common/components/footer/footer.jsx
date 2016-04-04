@@ -21,7 +21,7 @@ export default class Footer extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.share = new Share(location.origin);
+    this.share = new Share(location.origin + '/middleschool');
   }
 
   componentWillAppear(callback) {
@@ -81,7 +81,7 @@ export default class Footer extends React.Component {
           className="main-links"
           style={{ backgroundColor: this.props.primaryBackgroundColor }}
         >
-          <a href="http://successacademy.org" target="_blank">
+          <a className="logo-link" href="http://www.successacademies.org" target="_blank">
             <div
               className="svg-logo"
               dangerouslySetInnerHTML={{ __html: SALogoSvg }}
