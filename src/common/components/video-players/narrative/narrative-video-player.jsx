@@ -15,106 +15,8 @@ import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import ImageCard from '../components/image-card/image-card.jsx';
+import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
-
-function calculateAnimationStates (els) {
-  const zoomedInRect = els.component.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height - zoomedOutVideoMargin * 2
-  }
-
-  return {
-    out: {
-      simpleProgressBar: {
-        y: els.simpleProgressBar.offsetHeight
-      },
-      videoWrapper: {
-        delay: 0.3,
-        scaleX: 1,
-        scaleY: 1,
-        cursor: 'none'
-      },
-      overlay: {
-        delay: 0.1,
-        display: 'none',
-        opacity: 0
-      },
-      endingOverlay: {
-        display: 'none',
-        opacity: 0
-      },
-      replayButton: {
-        opacity: 0,
-        y: 100
-      },
-      replayLabel: {
-        opacity: 0,
-        y: 100
-      },
-      exploreButton: {
-        y: -els.exploreButton.offsetHeight
-      },
-      circleCTA: {
-        opacity: 0,
-        y: 50
-      },
-      controls: {
-        y: els.controls.offsetHeight,
-        display: 'none'
-      }
-    },
-    idle: {
-      simpleProgressBar: {
-        delay: 0.5,
-        y: 0
-      },
-      videoWrapper: {
-        scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height,
-        cursor: 'default'
-      },
-      overlay: {
-        display: 'block',
-        delay: 0.3,
-        opacity: 0.5
-      },
-      endingOverlay: {
-        display: 'block',
-        opacity: 1
-      },
-      replayButton: {
-        delay: 0.8,
-        opacity: 1,
-        y: 0
-      },
-      replayLabel: {
-        delay: 1.2,
-        opacity: 1,
-        y: 0
-      },
-      exploreButton: {
-        delay: 0.5,
-        y: -1
-      },
-      circleCTA: {
-        opacity: 1,
-        y: 0
-      },
-      controls: {
-        y: 0,
-        display: 'flex'
-      }
-    },
-    end: {
-      overlay: {
-        display: 'block',
-        opacity: 1
-      }
-    }
-  };
-};
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -134,6 +36,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   hideControlsTimeoutId = undefined;
   setLocalStorageIntervalId = undefined;
+  wrapperVisible = false;
 
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
@@ -172,7 +75,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       ? 'idle'
       : 'out';
 
-    animate.set(this.refs.exploreButton, this.animationStates[initialState].exploreButton);
+    animate.set(this.refs.cornerButton, this.animationStates[initialState].cornerButton);
     animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
     animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
@@ -224,8 +127,10 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   animateInControls = () => {
-    const buttons = this.refs.component.querySelectorAll('.button');
-    const dots = this.refs.component.querySelectorAll('.dot');
+    const buttons = this.refs.root.querySelectorAll('.button');
+    const dots = this.refs.root.querySelectorAll('.dot');
+
+    this.wrapperVisible = true;
 
     this.stopAnimations();
     animate.staggerFrom(dots, 0.1, { delay: 0.5, opacity: 0 }, 0.1);
@@ -234,7 +139,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.idle.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA),
       animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
       _.map(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})})
@@ -243,10 +148,11 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateOutControls = () => {
     this.stopAnimations();
+    this.wrapperVisible = false;
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
 
@@ -268,6 +174,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateInEndOverlay = () => {
     this.stopAnimations();
+    this.wrapperVisible = true;
 
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
@@ -275,7 +182,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
       animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
@@ -286,6 +193,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   animateOutEndOverlay = () => {
     this.setState({ showEndingCTA: false });
     this.stopAnimations();
+    this.wrapperVisible = false;
 
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
@@ -294,7 +202,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
@@ -311,6 +219,15 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleResize = () => {
     this.animationStates = calculateAnimationStates(this.refs);
+
+    animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
+
+    if(this.wrapperVisible) {
+      animate.set(this.refs.videoWrapper, {
+        scaleX: this.animationStates.idle.videoWrapper.scaleX,
+        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+      });
+    }
   };
 
   handleMetadataLoaded = () => {
@@ -428,7 +345,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     return (
       <div
-        ref="component"
+        ref="root"
         className="video-player narrative-video-player ${className || ''}"
         style={style}
         onMouseMove={this.handleComponentMouseMove}
@@ -446,7 +363,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           </div>
           <Link to="/grid">
             <RectangularButton
-              ref={ node => this.refs.exploreButton = findDOMNode(node) }
+              ref={ node => this.refs.cornerButton = findDOMNode(node) }
               className="explore-button"
               text="Chapter Menu"
               color="#ffffff"
