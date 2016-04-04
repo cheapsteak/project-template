@@ -10,7 +10,10 @@ const reducers = combineReducers({
   narrativeVideo: require('common/components/video-players/narrative/narrative-video-player-reducers.js'),
   instructionalVideos: require('common/components/video-players/instructional/instructional-video-player-reducers.js'),
   showLearnMoreModal: require('common/components/learn-more-modal/learn-more-modal-reducers.js'),
-  mobileHeaderMenu: md.mobile() && require('common/components/mobile-header/mobile-header-reducers.js')
+
+  // Mobile
+  mobileHeaderMenu: md.mobile() && require('common/components/mobile-header/mobile-header-reducers.js'),
+  mobileChapters: md.mobile() && require('../mobile/chapters/chapters-reducers.js')
 });
 
 const store = createStore(
