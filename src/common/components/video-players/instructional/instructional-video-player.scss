@@ -8,8 +8,8 @@
 
   .more-about-cta {
     position: absolute;
-    bottom: 65px;
-    right: 20px;
+    @include scale-prop('bottom', 65);
+    @include scale-prop('right', 20);
     z-index: 100;
   }
 
