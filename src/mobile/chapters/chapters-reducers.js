@@ -3,13 +3,11 @@ import {
   TOGGLE_CHAPTER_DISPLAY,
 } from './chapters-actions.js';
 
-import model from '../data/chapters.js';
+import model from '../model/chapters-model.js';
 
-const defState = model.map((chapter) => ({ ...chapter, isOpen: false }));
+const defState = model.getAll().map((chapter) => ({ ...chapter, isOpen: false }));
 
 function chapters(state = defState, action) {
-  console.log(action);
-      
   switch (action.type) {
     case CLOSE_CHAPTERS:
       return state.map(chapter => Object.assign({}, chapter, { isOpen: false }));

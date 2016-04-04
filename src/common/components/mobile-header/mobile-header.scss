@@ -13,15 +13,24 @@
     left: 0;
   }
 
-  .menu-icon {
+  .menu-title, .menu-icon {
     position: absolute;
     display: flex;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .menu-title {
+    right: 5.233vw;
+    font-size: 5.333vw;
+    font-weight: bold;
+  }
+
+  .menu-icon {
     flex-direction: column;
     justify-content: space-around;
-    top: 50%;
     left: 5.233vw;
     height: 40%;
-    transform: translateY(-50%);
     width: 25px;
     height: 32%;
     min-height: 21px;

@@ -9,8 +9,14 @@ export default class MobileHeader extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     color: React.PropTypes.string,
-    backgroundColor: React.PropTypes.string
+    backgroundColor: React.PropTypes.string,
+    title: React.PropTypes.string
   };
+
+  static contextTypes = {
+    router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
+  }
 
   componentDidMount() {
     this.setColor(this.props.color, this.props.backgroundColor);
@@ -31,19 +37,40 @@ export default class MobileHeader extends React.Component {
       }
     });
 
+    this.refs.header.style.color = color;
     this.refs.header.style.backgroundColor = backgroundColor;
+  };
+
+  handleBackClick = () => {
+    if(this.context.previousRoute) {
+      this.context.router.goBack();
+    } else {
+      window.history.back();
+    }
   };
 
   render () {
     const { className, style, color = '', backgroundColor = '' } = this.props;
+    const hiddenStyle = {
+      opacity: 0,
+      pointerEvents: 'none'
+    };
 
     return (
       <div
         ref="header"
         className="mobile-header"
-      >
+      > 
+        <div
+          className="menu-back"
+          style={ !this.props.backButton ? hiddenStyle : {} }
+          onClick={this.handleBackClick}
+        >
+          BACK BUTTON
+        </div>
         <div
           className="menu-icon"
+          style={ this.props.backButton ? hiddenStyle : {} }
           onClick={this.props.onMenuClick}
         >
           {
@@ -53,9 +80,17 @@ export default class MobileHeader extends React.Component {
           }
         </div>
         <div
+          ref="title"
+          style={ !this.props.title ? hiddenStyle : {} }
+          className="menu-title"
+        >
+          {this.props.title}
+        </div>
+        <div
           className="logo-icon menu-content"
-          data-color={color}
-          dangerouslySetInnerHTML={{ __html: SALogoSvg }}>
+          style={ this.props.title ? hiddenStyle : {} }
+          dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+        >
         </div>
         <TransitionGroup
           component="div"

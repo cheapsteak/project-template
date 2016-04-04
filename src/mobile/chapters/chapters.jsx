@@ -8,7 +8,6 @@ import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
-import chapterModel from '../data/chapters.js';
 import narrativeVideoModel from '../data/narrative-video.js';
 import store from 'common/store';
 
@@ -29,7 +28,7 @@ export default class MobileChapters extends React.Component {
       }
     });
 
-    store.dispatch(headerActionCreators.setHeaderColors({
+    store.dispatch(headerActionCreators.setHeaderSettings({
       color: '#565D60',
       backgroundColor: 'white'
     }));
@@ -106,7 +105,7 @@ export default class MobileChapters extends React.Component {
                         narrativeVideo={ narrativeVideoModel }
                         instructionalVideos={chapter.instructionalVideos}
                         panorama={chapter.panorama}
-                        article={chapter.article}
+                        articles={chapter.articles}
                         podcast={chapter.podcast}
                       />
                     : null

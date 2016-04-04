@@ -7,7 +7,6 @@ export function closeAllChapters() {
   }
 }
 
-
 export function toggleChapterDisplay(chapterName) {
   return {
     type: TOGGLE_CHAPTER_DISPLAY,

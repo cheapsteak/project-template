@@ -1,11 +1,12 @@
 import React from 'react';
+import {Link} from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
 import animate from 'gsap-promise';
 
 
 function ListItem (props) {
   return (
-    <div className="list-item">
+    <Link className="list-item" to={props.route}>
       <img src={ props.image } />
       <div className="list-text-content">
         <span>
@@ -18,7 +19,7 @@ function ListItem (props) {
           : null
         }
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -93,12 +94,17 @@ export default class ChapterContentList extends React.Component {
             image={ this.props.panorama.image }
             route={ this.props.panorama.route }
           />
-          <ListItem
-            label="Read"
-            name="Field Studies"
-            image={ this.props.article.image }
-            route={ this.props.article.route }
-          />
+          {
+            this.props.articles.map(article => {
+              return <ListItem
+                key={article.slug}
+                label="Read"
+                name="Field Studies"
+                image={ article.image }
+                route={ article.route }
+              />
+            })
+          }
           <ListItem
             label="Listen"
             name="Podcast"

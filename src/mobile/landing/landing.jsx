@@ -10,7 +10,7 @@ import store from 'common/store';
 export default class Landing extends React.Component {
 
   componentWillMount() {
-    store.dispatch(actionCreators.setHeaderColors({
+    store.dispatch(actionCreators.setHeaderSettings({
       color: 'white',
       backgroundColor: 'transparent'
     }));
