@@ -10,7 +10,6 @@ $orange: #f99100;
     @include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
     margin: 0 !important;
     width: 100% !important;
-    height: 100% !important;
     overflow-y: auto;
   }
 
