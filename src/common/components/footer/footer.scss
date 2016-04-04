@@ -45,7 +45,8 @@
     display: flex;
     align-content: center;
     width: 100%;
-    @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
+    //@include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
+    @include scale('height', 50px, #{(50/1400 * 100)}vw, 70px);
     font-weight: bold;
     user-select: none;
   }
