@@ -1,6 +1,10 @@
+import scale from 'common/utils/scaleAt1400';
+import clamp from 'clamp';
+
 export default function calculateAnimationStates (els) {
+  const marginAt1400 = 40;
   const zoomedInRect = els.root.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
+  const zoomedOutVideoMargin = clamp(scale(marginAt1400, window.innerWidth), marginAt1400, 70);
   const zoomedOutRect = {
     width: zoomedInRect.width - zoomedOutVideoMargin * 2,
     height: zoomedInRect.height - zoomedOutVideoMargin * 2
@@ -32,14 +36,19 @@ export default function calculateAnimationStates (els) {
         opacity: 0,
         y: 100
       },
-      closeButton: {
-        y: -els.closeButton.offsetHeight
+      cornerButton: {
+        y: -els.cornerButton.offsetHeight
       },
       moreAboutCTA: {
         opacity: 0
       },
+      circleCTA: {
+        opacity: 0,
+        y: 50
+      },
       controls: {
-        y: els.controls.offsetHeight,
+        y: zoomedOutVideoMargin * 2,
+        height: zoomedOutVideoMargin * 2,
         display: 'none'
       }
     },
@@ -70,7 +79,7 @@ export default function calculateAnimationStates (els) {
         opacity: 1,
         y: 0
       },
-      closeButton: {
+      cornerButton: {
         delay: 0.5,
         y: -1
       },
@@ -78,8 +87,13 @@ export default function calculateAnimationStates (els) {
         delay: 0.3,
         opacity: 1
       },
+      circleCTA: {
+        opacity: 1,
+        y: 0
+      },
       controls: {
         y: 0,
+        height: zoomedOutVideoMargin * 2,
         display: 'flex'
       }
     },

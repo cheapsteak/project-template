@@ -17,7 +17,7 @@ import TransitionGroup from 'react-transition-group-plus';
 import ImageCard from '../../components/image-card/image-card.jsx';
 import VideoCard from '../../components/video-card/video-card.jsx';
 import HoverCard from './grid-hover-card/grid-hover-card.jsx';
-import calculateAnimationStates from '../calculateAnimationStates.js';
+import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 
 export default class GridVideoPlayer extends React.Component {
@@ -37,6 +37,7 @@ export default class GridVideoPlayer extends React.Component {
 
   nextVideoIntervalId = undefined;
   hideControlsTimeoutId = undefined;
+  wrapperVisible = false;
 
   state = {
     showEndingCTA: false,
@@ -63,9 +64,7 @@ export default class GridVideoPlayer extends React.Component {
       ? 'idle'
       : 'out';
 
-
-
-    animate.set(this.refs.closeButton, this.animationStates[initialState].closeButton);
+    animate.set(this.refs.cornerButton, this.animationStates[initialState].cornerButton);
     animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
     animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
 
@@ -74,6 +73,8 @@ export default class GridVideoPlayer extends React.Component {
     animate.set(this.refs.endingOverlay, this.animationStates[endingState].endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates[endingState].replayButton);
     animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,10 +91,6 @@ export default class GridVideoPlayer extends React.Component {
             this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
             this.context.router.push(this.props.nextVideo.gridRoute);
-            this.clearCountdown();
-            this.animateOutEndOverlay();
-            this.props.hideFullControls();
-            this.video.play();
           }
         }, 1000);
       } else if (this.props.currentTime === this.props.duration
@@ -114,6 +111,13 @@ export default class GridVideoPlayer extends React.Component {
         this.animateOutControls();
       }
     }
+
+    if(this.props.slug && this.props.slug !== nextProps.slug) {
+      this.clearCountdown();
+      this.animateOutEndOverlay();
+      this.props.hideFullControls();
+      this.video.play();
+    }
   }
 
   componentWillUnmount() {
@@ -122,11 +126,25 @@ export default class GridVideoPlayer extends React.Component {
     this.video.pause();
     this.props.onVideoPause();
     this.stopAnimations();
+    window.removeEventListener('resize', this.handleResize);
   }
 
   get videoEnded () {
     return this.video && this.video.currentTime === this.video.duration;
   }
+
+  handleResize = () => {
+    this.animationStates = calculateAnimationStates(this.refs);
+
+    animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
+
+    if(this.wrapperVisible) {
+      animate.set(this.refs.videoWrapper, {
+        scaleX: this.animationStates.idle.videoWrapper.scaleX,
+        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+      });
+    }
+  };
 
   handleMetadataLoaded = () => {
     this.video.currentTime = this.props.currentTime;
@@ -229,11 +247,13 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   animateInControls = () => {
+    this.wrapperVisible = true;
+
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
       animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.idle.moreAboutCTA)
     ]);
@@ -242,9 +262,11 @@ export default class GridVideoPlayer extends React.Component {
   animateOutControls = () => {
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
+
+    this.wrapperVisible = false;
 
     return Promise.all([
       ...conditionalAnimations,
@@ -257,13 +279,15 @@ export default class GridVideoPlayer extends React.Component {
   animateInEndOverlay = () => {
     this.stopAnimations();
 
+    this.zoomedOut = true;
+
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
@@ -274,6 +298,7 @@ export default class GridVideoPlayer extends React.Component {
   animateOutEndOverlay = () => {
     this.stopAnimations();
     this.setState({ showEndingCTA: false });
+    this.wrapperVisible = false;
 
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
@@ -282,7 +307,7 @@ export default class GridVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(this.refs.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.moreAboutCTA, 0.3, this.animationStates.out.moreAboutCTA),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
@@ -373,7 +398,7 @@ export default class GridVideoPlayer extends React.Component {
           </div>
           <Link to={'/grid'}>
             <RectangularButton
-              ref={ node => this.refs.closeButton = findDOMNode(node) }
+              ref={ node => this.refs.cornerButton = findDOMNode(node) }
               className="close-button"
               text="Close"
               color="#ffffff"

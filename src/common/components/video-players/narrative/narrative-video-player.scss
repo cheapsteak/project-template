@@ -8,10 +8,9 @@
   }
 
   .video-wrapper {
-    position: relative;
-    width: 101%;
-    height: 101%;
-    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
 
     .circle-cta {
       position: absolute;
