@@ -91,10 +91,6 @@ export default class GridVideoPlayer extends React.Component {
             this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
             this.context.router.push(this.props.nextVideo.gridRoute);
-            this.clearCountdown();
-            this.animateOutEndOverlay();
-            this.props.hideFullControls();
-            this.video.play();
           }
         }, 1000);
       } else if (this.props.currentTime === this.props.duration
@@ -114,6 +110,13 @@ export default class GridVideoPlayer extends React.Component {
       } else {
         this.animateOutControls();
       }
+    }
+
+    if(this.props.slug && this.props.slug !== nextProps.slug) {
+      this.clearCountdown();
+      this.animateOutEndOverlay();
+      this.props.hideFullControls();
+      this.video.play();
     }
   }
 
