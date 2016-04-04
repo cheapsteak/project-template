@@ -5,6 +5,7 @@ import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
+import FibonacciSVG from 'svgs/fibonacci.svg';
 import Share from 'easy-share-popup';
 import store from 'common/store';
 import * as actionCreators from 'common/actions/learn-more-modal-actions';
@@ -77,42 +78,45 @@ export default class Footer extends React.Component {
         className={`footer ${className}`}
         style={style}
       >
-        <div
-          className="main-links"
-          style={{ backgroundColor: this.props.primaryBackgroundColor }}
-        >
-          <a className="logo-link" href="http://www.successacademies.org" target="_blank">
-            <div
-              className="svg-logo"
-              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
-            >
+        <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+        <div className="footer-wrapper">
+          <div
+            className="main-links"
+            style={{ backgroundColor: this.props.primaryBackgroundColor }}
+          >
+            <a className="logo-link" href="http://www.successacademies.org" target="_blank">
+              <div
+                className="svg-logo"
+                dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+              >
+              </div>
+            </a>
+            <Link to={`/`} className="home-link">Home</Link>
+            <a onClick={this.handleLearnMoreClick}>About</a>
+            <a href="http://www.successacademies.org/privacy-policy/" target="_blank">Privacy Policy</a>
+          </div>
+          <div
+            className="share-links"
+            style={{ backgroundColor: this.props.secondaryBackgroundColor }}
+          >
+            <label>Share</label>
+            <div className="share-icons">
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: TwitterSvg }}
+                onClick={this.handleTwitterClick}
+              ></div>
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: FacebookSvg }}
+                onClick={this.handleFacebookClick}
+              ></div>
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: EmailSvg }}
+                onClick={this.handleEmailClick}
+              ></div>
             </div>
-          </a>
-          <Link to={`/`} className="home-link">Home</Link>
-          <a onClick={this.handleLearnMoreClick}>About</a>
-          <a href="http://www.successacademies.org/privacy-policy/" target="_blank">Privacy Policy</a>
-        </div>
-        <div
-          className="share-links"
-          style={{ backgroundColor: this.props.secondaryBackgroundColor }}
-        >
-          <label>Share</label>
-          <div className="share-icons">
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: TwitterSvg }}
-              onClick={this.handleTwitterClick}
-            ></div>
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: FacebookSvg }}
-              onClick={this.handleFacebookClick}
-            ></div>
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: EmailSvg }}
-              onClick={this.handleEmailClick}
-            ></div>
           </div>
         </div>
       </div>
