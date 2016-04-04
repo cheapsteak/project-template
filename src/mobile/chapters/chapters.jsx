@@ -18,21 +18,26 @@ export default class MobileChapters extends React.Component {
     chapters: store.getState().mobileChapters
   };
 
-  componentWillMount() {
+  unsubscribe = null;
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      const chapters = store.getState().mobileChapters;
+
+      if(!_.isEqual(chapters, this.state.chapters)) {
+        this.setState({ chapters });
+      }
+    });
+
     store.dispatch(headerActionCreators.setHeaderColors({
       color: '#565D60',
       backgroundColor: 'white'
     }));
+  }
 
-    store.subscribe(() => {
-      const chapters = store.getState().mobileChapters;
-
-      if(!_.isEqual(chapters, this.state.chapters)) {
-        this.setState({
-          chapters
-        });
-      }
-    });
+  componentWillUnmount() {
+    this.unsubscribe();
+    store.dispatch(chapterActionCreators.closeAllChapters());
   }
 
   getDistanceFromTop = (node) => {
@@ -70,8 +75,6 @@ export default class MobileChapters extends React.Component {
   };
 
   render () {
-    // To be refactored to use redux instead of state
-
     return (
       <div ref="container" className="mobile-chapters">
         {
