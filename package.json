@@ -26,6 +26,7 @@
     "background-cover": "0.0.4",
     "bezier-easing": "^1.1.1",
     "bluebird": "^3.3.4",
+    "clamp": "^1.0.1",
     "domready": "^1.0.8",
     "easy-share-popup": "^1.0.4",
     "event-emitter": "^0.3.4",

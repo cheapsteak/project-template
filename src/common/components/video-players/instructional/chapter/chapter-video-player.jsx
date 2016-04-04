@@ -13,7 +13,7 @@ import ExitFullBrowserButtonSvg from 'svgs/video-player-exit-fullbrowser.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-import calculateAnimationStates from '../calculateAnimationStates.js';
+import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 
 export default class ChapterVideoPlayer extends React.Component {
@@ -33,6 +33,7 @@ export default class ChapterVideoPlayer extends React.Component {
   videoId = 'target-video';
   cloneId = 'clone-video';
   hideControlsTimeoutId = undefined;
+  wrapperVisible = false;
 
   componentDidMount() {
 
@@ -46,13 +47,15 @@ export default class ChapterVideoPlayer extends React.Component {
       ? 'idle'
       : 'out';
 
-    animate.set(this.els.closeButton, this.animationStates[initialState].closeButton);
+    animate.set(this.els.cornerButton, this.animationStates[initialState].cornerButton);
     animate.set(this.els.overlay, this.animationStates[initialState].overlay);
     animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.els.controls, this.animationStates[initialState].controls);
     animate.set(this.els.endingOverlay, this.animationStates[endingState].endingOverlay);
 
     this.props.isPlaying && this.video && this.video.play();
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -120,6 +123,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     this.props.onVideoPause();
+    window.removeEventListener('resize', this.handleResize);
   }
 
   changeVideoTime = (time) => {
@@ -129,6 +133,19 @@ export default class ChapterVideoPlayer extends React.Component {
   get videoEnded () {
     return this.video.currentTime === this.video.duration;
   }
+
+  handleResize = () => {
+    this.animationStates = calculateAnimationStates(this.els);
+
+    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
+
+    if(this.wrapperVisible) {
+      animate.set(this.els.videoWrapper, {
+        scaleX: this.animationStates.idle.videoWrapper.scaleX,
+        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+      });
+    }
+  };
 
   handleComponentMouseMove = (e) => {
     if(this.props.init) return;
@@ -160,7 +177,6 @@ export default class ChapterVideoPlayer extends React.Component {
     this.hideControlsTimeoutId = undefined;
     return false;
   };
-
 
   setHideControlsTimeout = () => {
     clearTimeout(this.hideControlsTimeoutId);
@@ -213,11 +229,13 @@ export default class ChapterVideoPlayer extends React.Component {
   }
 
   animateInControls = () => {
+    this.wrapperVisible = true;
+
     return Promise.all([
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.els.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.els.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.els.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.els.controls, 0.3, this.animationStates.idle.controls),
     ]);
   };
@@ -225,9 +243,11 @@ export default class ChapterVideoPlayer extends React.Component {
   animateOutControls = () => {
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.els.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.els.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
+
+    this.wrapperVisible = false;
 
     return Promise.all([
       ...conditionalAnimations,
@@ -237,11 +257,13 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   animateInEndOverlay = () => {
+    this.wrapperVisible = true;
+
     return Promise.all([
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.els.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.els.closeButton, 0.3, this.animationStates.idle.closeButton),
+      animate.to(this.els.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
     ]);
@@ -250,13 +272,15 @@ export default class ChapterVideoPlayer extends React.Component {
   animateOutEndOverlay = () => {
     this.stopAnimations();
 
+    this.wrapperVisible = false;
+
     return Promise.all([
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(this.els.closeButton, 0.3, this.animationStates.out.closeButton),
+      animate.to(this.els.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
     ]);
   };
@@ -311,7 +335,7 @@ export default class ChapterVideoPlayer extends React.Component {
               : undefined
           }
           <RectangularButton
-            ref={ node => this.els.closeButton = findDOMNode(node) }
+            ref={ node => this.els.cornerButton = findDOMNode(node) }
             onClick={ this.handleCloseClick }
             className="close-button"
             text="Close"
