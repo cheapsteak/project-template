@@ -409,7 +409,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                   key={'currentId'}
                   label="See All"
                   title="Chapters"
-                  route="/"
+                  route="/grid"
                   image={`${ASSET_PATH}/narrative-ending-card.jpg`}
                 />
               : undefined
