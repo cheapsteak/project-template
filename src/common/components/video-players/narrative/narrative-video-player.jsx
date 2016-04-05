@@ -449,30 +449,38 @@ export default class NarrativeVideoPlayer extends React.Component {
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
-            <span
-              className="button play-button"
-              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-              onClick={this.handleVideoPlayPause}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-              onClick={this.handlePrevClick}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-              onClick={this.handleNextClick}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-              onClick={this.handleVolumeClick}
-            >
-            </span>
+            <div className="button-wrapper">
+              <div
+                className="button play-button"
+                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                onClick={this.handleVideoPlayPause}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+                onClick={this.handlePrevClick}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+                onClick={this.handleNextClick}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                onClick={this.handleVolumeClick}
+              >
+              </div>
+            </div>
           </div>
           <Timeline
             currentTime={this.props.currentTime}

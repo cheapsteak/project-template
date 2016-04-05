@@ -216,7 +216,7 @@ export default class GridVideoPlayer extends React.Component {
       this.props.showFullControls();
       this.setHideControlsTimeout();
     }
-    
+
     this.lastMouseCoord = mouseCoords;
   };
 
@@ -432,12 +432,14 @@ export default class GridVideoPlayer extends React.Component {
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
-            <span
-              className="button play-button"
-              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-              onClick={this.handleVideoPlayPause}
-            >
-            </span>
+            <div className="button-wrapper">
+              <div
+                className="button play-button"
+                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                onClick={this.handleVideoPlayPause}
+              >
+              </div>
+            </div>
             <div
               className="button-wrapper"
               onMouseEnter={this.handleMouseEnterPrevButton}
@@ -445,7 +447,7 @@ export default class GridVideoPlayer extends React.Component {
             >
               <Link
                 to={prevVideoRoute}
-                className="button" 
+                className="button"
                 dangerouslySetInnerHTML={{__html: BackButtonSvg}}
               >
               </Link>
@@ -486,12 +488,14 @@ export default class GridVideoPlayer extends React.Component {
                 }
               </TransitionGroup>
             </div>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-              onClick={this.handleVolumeClick}
-            >
-            </span>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                onClick={this.handleVolumeClick}
+              >
+              </div>
+            </div>
           </div>
           <Timeline
             currentTime={this.props.currentTime || 0}
