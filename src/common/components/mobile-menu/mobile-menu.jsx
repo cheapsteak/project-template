@@ -71,10 +71,7 @@ export default class MobileMenu extends React.Component {
             className="back-arrow-wrapper"
             onClick={this.props.onBackIconClick}
           >
-            <div
-              className="back-arrow"
-            >
-            </div>
+            <div className="back-arrow"></div>
           </div>
           <Link
             to="/mobile"

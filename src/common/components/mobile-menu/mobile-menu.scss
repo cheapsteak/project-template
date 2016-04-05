@@ -34,6 +34,8 @@
       width: $arrow-shaft-length;
       height: 2px;
       background-color: white;
+      left: 0;
+
       &:before {
         $arrow-head-length: $arrow-shaft-length/2.5;
         content: '';

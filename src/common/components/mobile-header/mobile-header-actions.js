@@ -1,7 +1,7 @@
 export const CLOSE_MOBILE_MENU = 'CLOSE_MOBILE_MENU';
 export const OPEN_MOBILE_MENU = 'OPEN__MOBILE_MENU';
 export const TOGGLE_MOBILE_MENU = 'TOGGLE_MOBILE_MENU';
-export const SET_MOBILE_HEADER_COLORS = 'SET_MOBILE_HEADER_COLORS';
+export const SET_MOBILE_HEADER_OPTIONS = 'SET_MOBILE_HEADER_OPTIONS';
 
 export function closeMenu() {
   return {
@@ -21,10 +21,12 @@ export function toggleMenuDisplay() {
   }
 }
 
-export function setHeaderColors({ color, backgroundColor }) {
+export function setHeaderSettings({ color, backgroundColor, title, backButton = false }) {
   return {
-    type: SET_MOBILE_HEADER_COLORS,
+    type: SET_MOBILE_HEADER_OPTIONS,
     color,
-    backgroundColor
+    backgroundColor,
+    title,
+    backButton
   }
 }

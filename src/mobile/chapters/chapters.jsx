@@ -6,107 +6,37 @@ import Button from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-addons-transition-group';
 import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
-import * as actionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as chapterActionCreators from './chapters-actions.js';
+import narrativeVideoModel from '../data/narrative-video.js';
 import store from 'common/store';
 
 export default class MobileChapters extends React.Component {
 
   state = {
-    narrativeVideo: {
-      image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`,
-      route: '/mobile',
-      duration: 22.31
-    },
-    data: [
-      {
-        isOpen: false,
-        name: 'Welcome',
-        image: `${ASSET_PATH}/mobile-chapters-kid-1.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Science',
-        image: `${ASSET_PATH}/mobile-chapters-kid-2.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Literacy &<br/>Writing',
-        image: `${ASSET_PATH}/mobile-chapters-kid-3.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Math',
-        image: `${ASSET_PATH}/mobile-chapters-kid-4.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Electives',
-        image: `${ASSET_PATH}/mobile-chapters-kid-5.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Character Development',
-        image: `${ASSET_PATH}/mobile-chapters-kid-6.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Computer<br/>Science',
-        image: `${ASSET_PATH}/mobile-chapters-kid-7.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'History',
-        image: `${ASSET_PATH}/mobile-chapters-kid-8.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-      {
-        isOpen: false,
-        name: 'Parental<br/>Investment',
-        image: `${ASSET_PATH}/mobile-chapters-kid-9.png`,
-        instructionalVideos: [{image: `${ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
-        panorama: { image: `${ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
-        article: { image: `${ASSET_PATH}/mobile-list-thumbnail-3.jpg`, route: '/mobile' },
-        podcast: { image: `${ASSET_PATH}/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
-      },
-    ]
+    chapters: store.getState().mobileChapters
   };
 
-  componentWillMount() {
-    store.dispatch(actionCreators.setHeaderColors({
+  unsubscribe = null;
+
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      const chapters = store.getState().mobileChapters;
+
+      if(!_.isEqual(chapters, this.state.chapters)) {
+        this.setState({ chapters });
+      }
+    });
+
+    store.dispatch(headerActionCreators.setHeaderSettings({
       color: '#565D60',
       backgroundColor: 'white'
     }));
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+    store.dispatch(chapterActionCreators.closeAllChapters());
   }
 
   getDistanceFromTop = (node) => {
@@ -123,7 +53,6 @@ export default class MobileChapters extends React.Component {
     const chapterNode = this.refs.container.querySelector(`#chapter-${i}`)
     const clientRect = chapterNode.getBoundingClientRect();
     const container = this.props.getTarget();
-    // const scrollTo = Math.min(chapterNode.offsetTop, this.getAvailableScrollDistance());
 
     if(!chapter.isOpened) {
       if(chapterNode.offsetTop < this.getAvailableScrollDistance()) {
@@ -141,22 +70,14 @@ export default class MobileChapters extends React.Component {
   };
 
   toggleItemDisplay = (chapter, i) => {
-    this.setState({ data:
-      [
-        ...this.state.data.slice(0, i),
-        Object.assign({}, chapter, { isOpen: !chapter.isOpen }),
-        ...this.state.data.slice(i + 1)
-      ] 
-    });
+    store.dispatch(chapterActionCreators.toggleChapterDisplay(chapter.name));
   };
 
   render () {
-    // To be refactored to use redux instead of state
-
     return (
       <div ref="container" className="mobile-chapters">
         {
-          this.state.data.map((chapter, i) => {
+          this.state.chapters.map((chapter, i) => {
             return (
               <div
                 key={chapter.name}
@@ -181,10 +102,10 @@ export default class MobileChapters extends React.Component {
                     chapter.isOpen
                     ? <ContentList
                         key={chapter.name}
-                        narrativeVideo={ this.state.narrativeVideo }
+                        narrativeVideo={ narrativeVideoModel }
                         instructionalVideos={chapter.instructionalVideos}
                         panorama={chapter.panorama}
-                        article={chapter.article}
+                        articles={chapter.articles}
                         podcast={chapter.podcast}
                       />
                     : null

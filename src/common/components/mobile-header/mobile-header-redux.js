@@ -21,6 +21,8 @@ class MobileHeaderRedux extends React.Component {
       isMenuOpen={this.props.isMenuOpen}
       color={this.props.header.color}
       backgroundColor={this.props.header.backgroundColor}
+      title={this.props.header.title}
+      backButton={this.props.header.backButton}
     />
   }
 }
