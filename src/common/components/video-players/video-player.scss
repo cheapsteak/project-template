@@ -113,7 +113,7 @@
   .control-group {
     flex-grow: 0;
     flex-shrink: 0;
-    flex-basis: 140px;
+    //flex-basis: 140px;
     display: flex;
     align-items: center;
     padding: 0 10px;
@@ -125,8 +125,10 @@
     }
 
     .button-wrapper {
+      @include flex-center;
       position: relative;
       height: 100%;
+      margin: 0 10px;
     }
 
     .button {
@@ -134,8 +136,6 @@
       justify-content: center;
       align-items: center;
       flex: 1;
-      margin: 0 10px;
-      fill: white;
       cursor: pointer;
 
       &.play-button {

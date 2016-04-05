@@ -386,32 +386,42 @@ export default class ChapterVideoPlayer extends React.Component {
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
-            <span
-              className="button play-button"
-              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-              onClick={this.handleVideoPlayPause}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-              onClick={this.handleVolumeClick}
-            >
-            </span>
+            <div className="button-wrapper">
+              <div
+                className="button play-button"
+                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                onClick={this.handleVideoPlayPause}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                onClick={this.handleVolumeClick}
+              >
+              </div>
+            </div>
             {
               isFullBrowser
-              ? <div
+                ? <div className="button-wrapper">
+                <div
                   className="button fullscreen-button"
                   onClick={ () => this.props.exitFullBrowser(route) }
                 >
-                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                  <div
+                    dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
                 </div>
-              : <Link
+              </div>
+                : <div className="button-wrapper">
+                <Link
                   className="button fullscreen-button"
                   to={route}
                 >
-                  <span dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></span>
+                  <div
+                    dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
                 </Link>
+              </div>
             }
           </div>
           {
