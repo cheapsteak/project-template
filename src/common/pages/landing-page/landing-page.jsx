@@ -175,7 +175,7 @@ export default class LandingPage extends React.Component {
           <div ref="videoContainer" className={`video-container`}>
             <video
               ref="video"
-              preload="true"
+              preload="auto"
               loop={true}
               muted={true}
               src={`http://successacademy.jam3.net/videos/history.mp4`}

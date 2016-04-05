@@ -69,7 +69,7 @@ export default class Podcast extends React.Component {
 
         <video
           ref="mediaEl"
-          preload="true"
+          preload="auto"
           src={this.props.src}
           onLoadedMetadata={this.handleLoadedMetadata}
           onTimeUpdate={this.handleTimeUpdate}
