@@ -17,6 +17,8 @@ import IconExplore from 'svgs/icon-explore.svg';
 import IconPlay from 'svgs/icon-play.svg';
 import IconPlayOutline from 'svgs/icon-playoutline.svg';
 import chaptersModel from 'common/models/chapters-model';
+import BgCover from 'background-cover';
+import detect from 'common/utils/detect';
 
 export default class Chapter extends React.Component {
 
@@ -97,11 +99,14 @@ export default class Chapter extends React.Component {
       return scene;
     });
     scrollController.addScene(scrollScenes);
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
     this.cleanupOperations.forEach(fn => fn());
     this.cleanupOperations = [];
+    window.removeEventListener('resize', this.handleResize);
   };
 
   getTarget = (component, slug) => {
@@ -116,6 +121,12 @@ export default class Chapter extends React.Component {
 
   getScrollContainer = () => {
     return this.refs.main;
+  };
+
+  handleResize = () => {
+    if (detect.isIE) {
+      BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
+    }
   };
 
   render() {
@@ -156,8 +167,14 @@ export default class Chapter extends React.Component {
         </Link>
       </nav>
       <div ref="main" className="main">
-        <div className="page-component chapter-header">
-          <video autoPlay={true} loop={true} src={this.state.data.hero.bgVideoUrl}></video>
+        <div ref="heroVideoContainer" className="page-component chapter-header">
+          <video
+            ref="heroVideo"
+            autoPlay={true}
+            loop={true}
+            src={this.state.data.hero.bgVideoUrl}
+            onLoadedMetadata={this.handleResize}
+          ></video>
           <div className={`hero-content`}>
             <div className={`hero-cta`}>{this.state.data.hero.cta}</div>
             <div className={`hero-title`}>{this.state.data.title}</div>
