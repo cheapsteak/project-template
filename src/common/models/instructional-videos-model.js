@@ -17,8 +17,7 @@ export default {
       title: chapterData.title,
       chapterRoute: chapterRoute,
       fullBrowserChapterRoute: `${chapterRoute}/instructional-videos/${videoSourceData.slug}`,
-      gridRoute: `/grid/instructional-videos/${videoSourceData.slug}`,
-      route: 'math-1'
+      gridRoute: `/grid/instructional-videos/${videoSourceData.slug}`
     };
   },
 

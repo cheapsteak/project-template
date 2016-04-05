@@ -138,7 +138,7 @@ export default class Timeline extends React.Component {
   }
 
   render () {
-    const { style, currentTime, duration, items } = this.props;
+    const { style, duration, items } = this.props;
     const progress = duration ? (this.state.time/duration * 100) : 0;
     const hideTimeStamp = this.state.time/duration > 0.94;
 
@@ -165,7 +165,7 @@ export default class Timeline extends React.Component {
           <div
             className={`timeline-cover ${hideTimeStamp ? 'hide-time' : ''}`}
             style={{ width: `${progress}%` }}
-            data-time={this.secondsToMinutes(currentTime)}
+            data-time={this.secondsToMinutes(this.state.time)}
           >
             <span ref="progressHead"></span>
           </div>
@@ -174,7 +174,7 @@ export default class Timeline extends React.Component {
             duration
               ? items.map(point => {
                   const style = { left: (point.time / duration * 100) + '%' };
-                  const className = currentTime === point.time ? ' selected' : '';
+                  const className = this.state.time === point.time ? ' selected' : '';
                   // const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
                   const isActive = false;
 
