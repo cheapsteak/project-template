@@ -5,16 +5,23 @@
   .width-11 {
     width: calc(100% / 3);
   }
+
+  $col: "(100% - 120px) / 7";
+  $gutter: 20px;
+
   .width-1 {
-    width: calc(100% / 7 - 17px);
+    //width: calc((100% - 20px) / 7);
+    width: calc(#{$col});
   }
 
   .width-2 {
-    width: calc(100% * 2 / 7 - 14px);
+    //width: calc((100% - 20px) / 7 * 2);
+    width: calc(2 * #{$col} + 1 * #{$gutter});
   }
 
   .width-3 {
-    width: calc(100% * 3 / 7 + 9px);
+    //width: calc((100% - 20px) / 7 * 3);
+    width: calc( 3 * #{$col} + 3 * #{$gutter})
   }
 
 }
