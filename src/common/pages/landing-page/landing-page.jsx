@@ -46,10 +46,7 @@ export default class LandingPage extends React.Component {
     animate.set(this.refs.contentContainer, {y: textPos});
 
     this.videoLoadPromise = new Promise((resolve, reject) => {
-      this.refs.video.addEventListener('canplaythrough', () => {
-        this.init();
-        resolve();
-      });
+      this.refs.video.addEventListener('canplaythrough', this.init.bind(this, resolve));
     });
 
     window.addEventListener('resize', this.handleWindowResize);
@@ -74,7 +71,14 @@ export default class LandingPage extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  init = () => {
+  init = (callback) => {
+    if (this.isInitialized) {
+      return
+    }
+
+    this.isInitialized = true;
+    callback();
+
     this.resize();
     this.refs.video.play();
 
@@ -171,7 +175,7 @@ export default class LandingPage extends React.Component {
           <div ref="videoContainer" className={`video-container`}>
             <video
               ref="video"
-              preload={true}
+              preload="true"
               loop={true}
               muted={true}
               src={`http://successacademy.jam3.net/videos/history.mp4`}
