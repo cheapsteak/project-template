@@ -20,8 +20,35 @@ export default class Podcast extends React.Component {
     this.containerEl = findDOMNode(this);
     this.mediaEl = this.refs.mediaEl;
     this.circles = findDOMNode(this.refs.circlesContainer).children;
+    this.circles = [].slice.call(this.circles);
 
-    this.resize();
+    this.timelines = [];
+
+    const containerSize = this.refs.playContainer.offsetWidth;
+    this.circles.forEach((circle, i) => {
+      const size = containerSize / (40 - i) * (i + 1);
+
+      const timeline = new TimelineMax({repeat: -1});
+      timeline.add(
+        TweenLite.fromTo(circle, 18,
+          {width: '0%', height: '0%'},
+          {
+            width: '100%',
+            height: '100%',
+            autoAlpha: 0,
+            ease: Quint.easeIn,
+            //delay: (i - 1) / 10
+          })
+      );
+
+      timeline.pause();
+      const progress = size * 5 / window.innerWidth * 0.5;
+      timeline.progress(progress);
+
+      this.timelines.push(timeline);
+    });
+
+    //this.resize();
     window.addEventListener('resize', this.handleWindowResize);
   }
 
@@ -46,13 +73,16 @@ export default class Podcast extends React.Component {
 
   play = () => {
     this.mediaEl.play();
+    this.timelines.forEach(t => t.play());
   };
 
   pause = () => {
     this.mediaEl.pause();
+    this.timelines.forEach(t => t.pause())
   };
 
   handleWindowResize = () => {
+    return
     const containerSize = this.refs.playContainer.offsetWidth;
 
     for (let i = 0; i < this.circles.length; i++) {
@@ -78,7 +108,7 @@ export default class Podcast extends React.Component {
         <div ref="playContainer" className={`play-container`}>
           <div ref="circlesContainer" className={`circles-container`}>
             {
-              _.range(10).map(index => {
+              _.range(15).map(index => {
                 return <div key={index} className={`circle index-${index}`}></div>
               })
             }
