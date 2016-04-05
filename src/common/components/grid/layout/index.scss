@@ -9,36 +9,36 @@ $grid-dark-blue: #131f2f;
 $grid-item-offset: 20px;
 
 $size-25: calc(100% / 4);
-$size-25-less-5: calc(100% / 4 - 5px);
-$size-25-less-10: calc(100% / 4 - 10px);
-$size-25-less-15: calc(100% / 4 - 15px);
+$size-25-less-5: calc(100% / 4 - 5.01px);
+$size-25-less-10: calc(100% / 4 - 10.01px);
+$size-25-less-15: calc(100% / 4 - 15.01px);
 
 $size-33: calc(100% / 3);
-$size-33-less-5: calc(100% / 3 - 5px);
-$size-33-less-10: calc(100% / 3 - 10px);
-$size-33-less-15: calc(100% / 3 - 15px);
+$size-33-less-5: calc(100% / 3 - 5.01px);
+$size-33-less-10: calc(100% / 3 - 10.01px);
+$size-33-less-15: calc(100% / 3 - 15.01px);
 
 $size-50: calc(100% / 2);
-$size-50-less-5: calc(100% / 2 - 5px);
-$size-50-less-10: calc(100% / 2 - 10px);
-$size-50-less-15: calc(100% / 2 - 15px);
+$size-50-less-5: calc(100% / 2 - 5.01px);
+$size-50-less-10: calc(100% / 2 - 10.01px);
+$size-50-less-15: calc(100% / 2 - 15.01px);
 
 $size-66: calc(100% * 2 / 3);
-$size-66-less-5: calc(100% * 2 / 3 - 5px);
-$size-66-less-10: calc(100% * 2 / 3 - 10px);
-$size-66-less-15: calc(100% * 2 / 3 - 15px);
-$size-66-less-20: calc(100% * 2 / 3 - 20px);
+$size-66-less-5: calc(100% * 2 / 3 - 5.01px);
+$size-66-less-10: calc(100% * 2 / 3 - 10.01px);
+$size-66-less-15: calc(100% * 2 / 3 - 15.01px);
+$size-66-less-20: calc(100% * 2 / 3 - 20.01px);
 
 $size-75: calc(100% * 3 / 4);
-$size-75-less-5: calc(100% * 3 / 4 - 5px);
-$size-75-less-10: calc(100% * 3 / 4 - 10px);
-$size-75-less-15: calc(100% * 3 / 4 - 15px);
-$size-75-less-20: calc(100% * 3 / 4 - 20px);
+$size-75-less-5: calc(100% * 3 / 4 - 5.01px);
+$size-75-less-10: calc(100% * 3 / 4 - 10.01px);
+$size-75-less-15: calc(100% * 3 / 4 - 15.01px);
+$size-75-less-20: calc(100% * 3 / 4 - 20.01px);
 
 $size-100: 100%;
-$size-100-less-5: calc(100% - 5px);
-$size-100-less-10: calc(100% - 10px);
-$size-100-less-15: calc(100% - 15px);
+$size-100-less-5: calc(100% - 5.01px);
+$size-100-less-10: calc(100% - 10.01px);
+$size-100-less-15: calc(100% - 15.01px);
 
 $sand-noise: url('#{$ASSET_PATH}/images/noise-sand.png') repeat;
 $light-blue-noise: url('#{$ASSET_PATH}/images/noise-light-blue.png') repeat;
