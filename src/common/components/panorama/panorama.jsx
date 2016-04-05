@@ -1,7 +1,11 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import PhotoSphere from 'photo-sphere-viewer';
 import THREE from 'three';
+global.THREE = THREE;
+// must use require because this line must be after THREE is defined on global
+// babel will move up imports to top of file. don't know why.
+require('three/examples/js/renderers/CanvasRenderer.js');
+import PhotoSphere from 'photo-sphere-viewer';
 import raf from 'raf';
 import deviceOrientation from '../../utils/three-device-orientation';
 import animate from 'gsap-promise';
