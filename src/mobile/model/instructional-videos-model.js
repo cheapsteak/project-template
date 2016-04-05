@@ -8,17 +8,9 @@ export default {
       console.trace('Unable to get model from slug:', slug);
     }
 
-    return {
-      ...videoSourceData,
-      route: `/mobile/videos/${videoSourceData.slug}`
-    };
+    return videoSourceData;
   },
   getAll() {
-    return data.map((video) => {
-      return {
-        ...video,
-        route: `/mobile/videos/${video.slug}`
-      }
-    });
+    return data;
   }
 };

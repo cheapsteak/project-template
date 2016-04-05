@@ -3,10 +3,18 @@ import {Link} from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
 import animate from 'gsap-promise';
 
+function ConditionalLink (props) {
+  if(props.isExternalLink) {
+    return <a className={props.className} href={props.to} target="__blank">{props.children}</a>
+  } else {
+    return <Link className={props.className} to={props.to} >{props.children}</Link>
+  }
+}
 
 function ListItem (props) {
+
   return (
-    <Link className="list-item" to={props.route}>
+    <ConditionalLink className="list-item" {...props} >
       <img src={ props.image } />
       <div className="list-text-content">
         <span>
@@ -19,7 +27,7 @@ function ListItem (props) {
           : null
         }
       </div>
-    </Link>
+    </ConditionalLink>
   )
 }
 
@@ -67,7 +75,7 @@ export default class ChapterContentList extends React.Component {
             name="Narrative Video"
             image={ this.props.narrativeVideo.image }
             duration={ this.props.narrativeVideo.duration }
-            route={ this.props.narrativeVideo.route }
+            to={ this.props.narrativeVideo.route }
           />
           <div className="list-divider">
             <span dangerouslySetInnerHTML={{ __html: IconExplore }}></span>
@@ -84,7 +92,8 @@ export default class ChapterContentList extends React.Component {
                   name={`Instructional Video${number}`}
                   image={ video.iconImage }
                   duration={ video.duration }
-                  route={ video.route }
+                  isExternalLink={true}
+                  to={ video.src }
                 />
               )
             })
@@ -93,7 +102,7 @@ export default class ChapterContentList extends React.Component {
             label="Experience"
             name="The Classroom 360"
             image={ this.props.panorama.image }
-            route={ this.props.panorama.route }
+            to={ this.props.panorama.route }
           />
           {
             this.props.articles.map(article => {
@@ -102,7 +111,7 @@ export default class ChapterContentList extends React.Component {
                 label="Read"
                 name={ article.title }
                 image={ article.image }
-                route={ article.route }
+                to={ article.route }
               />
             })
           }
@@ -110,7 +119,7 @@ export default class ChapterContentList extends React.Component {
             label="Listen"
             name="Podcast"
             image={ this.props.podcast.image }
-            route={ this.props.podcast.route }
+            to={ this.props.podcast.route }
           />
         </div>
       </div>

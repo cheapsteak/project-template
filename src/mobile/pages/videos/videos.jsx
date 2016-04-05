@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { findDOMNode } from 'react-dom';
 import PlayIconSvg from 'svgs/mobile-play-icon.svg';
 import ClockIconSvg from 'svgs/clock-icon.svg';
@@ -33,7 +32,7 @@ export default class MobileChapters extends React.Component {
         {
           this.data.map((video, i) => {
             return (
-              <Link key={i} to={video.route}>
+              <a key={i} href={video.src} target="__blank">
                 <div className="video-item">
                   <h1 dangerouslySetInnerHTML={{ __html: video.title }}></h1>
                   <img className="video-image" src={video.backgroundImage} />
@@ -46,7 +45,7 @@ export default class MobileChapters extends React.Component {
                     </div>
                   </div>
                 </div>
-              </Link>
+              </a>
             )
           })
         }
