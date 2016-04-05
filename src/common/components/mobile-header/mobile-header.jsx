@@ -1,7 +1,6 @@
 import React from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
-import BackArrowSvg from 'svgs/back-arrow.svg';
 import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 
 export default class MobileHeader extends React.Component {
