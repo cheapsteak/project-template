@@ -1,4 +1,5 @@
 .mobile-header {
+  $side-padding: 5.334vw;
   position: absolute;
   top: 0;
   left: 0;
@@ -13,23 +14,54 @@
     left: 0;
   }
 
-  .menu-title, .menu-icon {
+  .menu-title, .menu-icon, .back-arrow-wrapper, .back-arrow, {
     position: absolute;
     display: flex;
     top: 50%;
     transform: translateY(-50%);
   }
 
+  $arrow-shaft-length: 8.132vw;
+
+  .back-arrow {
+    $arrow-head-length: $arrow-shaft-length/2.5;
+    height: 50%;
+    width: $arrow-shaft-length;
+    left: $side-padding;
+
+    span {
+      position: absolute;
+      top: 50%;
+      width: $arrow-head-length;
+      height: 0.524vw;
+      background-color: red;
+      transform-origin: 0 0;
+    }
+
+    span:first-child {
+      width: $arrow-head-length * 1.125;
+      transform: rotate(45deg);
+    }
+
+    span:nth-child(2) {
+       width: $arrow-shaft-length;
+    }
+
+    span:last-child {
+      transform: rotate(-45deg);
+    }
+  }
+
   .menu-title {
     right: 5.233vw;
-    font-size: 5.333vw;
+    font-size: $side-padding;
     font-weight: bold;
   }
 
   .menu-icon {
     flex-direction: column;
     justify-content: space-around;
-    left: 5.233vw;
+    left: $side-padding;
     height: 40%;
     width: 25px;
     height: 32%;

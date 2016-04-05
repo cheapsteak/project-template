@@ -73,7 +73,6 @@ export default class ChapterContentList extends React.Component {
             <span dangerouslySetInnerHTML={{ __html: IconExplore }}></span>
             <label>Explore More Content</label>
           </div>
-          <div className=""></div>
           {
             this.props.instructionalVideos.map((item, i) => {
               return (
@@ -99,7 +98,7 @@ export default class ChapterContentList extends React.Component {
               return <ListItem
                 key={article.slug}
                 label="Read"
-                name="Field Studies"
+                name={ article.title }
                 image={ article.image }
                 route={ article.route }
               />

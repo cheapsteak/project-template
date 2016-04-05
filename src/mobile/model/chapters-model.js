@@ -1,10 +1,16 @@
-import data from '../data/chapters.js';
+import chaptersData from '../data/chapters.js';
+import articlesData from 'common/data/articles';
+import _ from 'lodash';
 
 export default {
   getAll () {
-    return data.map(chapter => ({
+    return chaptersData.map(chapter => ({
       ...chapter,
-      articles: chapter.articles.map(article => ({ ...article, route: `/mobile/article/${article.slug}`}))
+      articles: chapter.articles.map(article => ({ 
+        ...article,
+        route: `/mobile/article/${article.slug}`,
+        title: _.find(articlesData, { slug: article.slug }).title
+      }))
     }));
   }
 }

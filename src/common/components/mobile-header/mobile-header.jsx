@@ -1,6 +1,7 @@
 import React from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
+import BackArrowSvg from 'svgs/back-arrow.svg';
 import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 
 export default class MobileHeader extends React.Component {
@@ -62,11 +63,16 @@ export default class MobileHeader extends React.Component {
         className="mobile-header"
       > 
         <div
-          className="menu-back"
+          ref="backArrow"
+          className="back-arrow"
           style={ !this.props.backButton ? hiddenStyle : {} }
           onClick={this.handleBackClick}
         >
-          BACK BUTTON
+          {
+            _.range(3).map((i) => {
+              return <span key={i} className="menu-content"></span>
+            })
+          }
         </div>
         <div
           className="menu-icon"
