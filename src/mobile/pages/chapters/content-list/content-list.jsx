@@ -74,15 +74,17 @@ export default class ChapterContentList extends React.Component {
             <label>Explore More Content</label>
           </div>
           {
-            this.props.instructionalVideos.map((item, i) => {
+            this.props.instructionalVideos.map((video, i) => {
+              const number = this.props.instructionalVideos.length > 1 ? ` ${i+1}` : '';
+
               return (
                 <ListItem
                   key={i}
                   label="Play"
-                  name="Instructional Video"
-                  image={ item.image }
-                  duration={ item.duration }
-                  route={ item.route }
+                  name={`Instructional Video${number}`}
+                  image={ video.iconImage }
+                  duration={ video.duration }
+                  route={ video.route }
                 />
               )
             })

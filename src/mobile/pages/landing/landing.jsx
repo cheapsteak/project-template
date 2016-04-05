@@ -32,7 +32,7 @@ export default class Landing extends React.Component {
             style={{}}
             text="Start the Tour"
             color="#ffffff"
-            backgroundColor="#8F8F8F"
+            backgroundColor="#EB9729"
             svgIcon={IconWatch}
           />
           <Link to="/mobile/chapters">

@@ -15,7 +15,7 @@ const reducers = combineReducers(
     }
   : {
       mobileHeaderMenu: require('common/components/mobile-header/mobile-header-reducers.js'),
-      mobileChapters: require('../mobile/chapters/chapters-reducers.js')
+      mobileChapters: require('../mobile/pages/chapters/chapters-reducers.js')
     }
 );
 
