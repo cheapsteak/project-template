@@ -51,7 +51,7 @@ export default class ChapterVideoPlayer extends React.Component {
     animate.set(this.els.overlay, this.animationStates[initialState].overlay);
     animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.els.controls, this.animationStates[initialState].controls);
-    animate.set(this.els.endingOverlay, this.animationStates[endingState].endingOverlay);
+    animate.set(this.els.endingOverlay, this.animationStates.out.endingOverlay);
 
     this.props.isPlaying && this.video && this.video.play();
 
@@ -80,6 +80,10 @@ export default class ChapterVideoPlayer extends React.Component {
         this.animateOutEndOverlay();
         this.props.hideFullControls();
       }
+    }
+
+    if(this.props.isPlaying !== nextProps.isPlaying) {
+      nextProps.isPlaying ? this.video.play() : this.video.pause();
     }
   }
 
@@ -122,7 +126,7 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillUnmount() {
-    this.props.onVideoPause();
+    // this.props.onVideoPause();
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -221,10 +225,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   handleCloseClick = () => {
     if(this.props.isFullBrowser) {
-      this.context.router.push()
-    }
-    else {
-      this.props.exitFullBrowser()
+      this.props.exitFullBrowser();
     }
   }
 

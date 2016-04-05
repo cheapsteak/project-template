@@ -4,6 +4,7 @@ require('./globals.js');
 //import stats from 'common/utils/stats';
 import detect from 'common/utils/detect';
 import scrollbarSize from 'common/utils/scrollbar-size';
+import "babel-polyfill";
 
 import {render} from 'react-dom';
 import domready from 'domready';

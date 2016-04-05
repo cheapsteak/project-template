@@ -4,6 +4,7 @@ const aboveFoldSelector = 'above-fold';
 export default [
   {
     slug: 'welcome-1',
+    chapterName: 'Welcome',
     title: 'Middle School Choice',
     image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: `#${aboveFoldSelector}`,
@@ -13,6 +14,7 @@ export default [
   },
   {
     slug: 'welcome-2',
+    chapterName: 'Welcome',
     title: 'Special Needs Students at Success Academy',
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Success Academy has a strong commitment to serving children with special education needs. We devote many resources to educating students who have been identified for Individualized Education Programs (IEPs): hiring special education teachers and school psychologists, offering Integrated Co-Teaching (ICT) classes in most grades, and providing 12:1:1 classes (12 students, two adults) in schools where we have sufficient space.</p><p>We also provide extra support to scholars who need it by enrolling them in an Academic Elective course for an academic quarter. In this course, they receive high-quality academic intervention in math, literacy, or both. Academic Elective teachers regularly communicate with advisors about scholars’ progress. Here, our most vulnerable scholars develop the skills they need to be successful in a whole-class environment; regain confidence in their abilities as mathematicians, readers, and critical thinkers; and remember what it is that makes learning exciting!</p><p>With our programming, special needs scholars in our schools achieve at a high level:</p><ul><li>During the 2013-14 school year, Success Academy “graduated” or declassified 13% of its special needs scholars from their IEPs.</li>
@@ -21,6 +23,7 @@ export default [
   },
   {
     slug: 'science-1',
+    chapterName: 'Science',
     title: 'Science Olympiad',
     image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -30,6 +33,7 @@ export default [
   // FPO CONTENT: Embedded Image
   {
     slug: 'math-1',
+    chapterName: 'Math',
     title: 'Math Olympiads: Going Up Against The World’s Best Math Minds',
     image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -54,6 +58,7 @@ export default [
   },
   {
     slug: 'math-2',
+    chapterName: 'Math',
     title: 'Sample Math Problems',
     image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -66,6 +71,7 @@ export default [
   },
   {
     slug: 'math-3',
+    chapterName: 'Math',
     title: 'Aboard Sailboats, Scholars See Math in Action',
     image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -83,6 +89,7 @@ export default [
   },
   {
     slug: 'history-1',
+    chapterName: 'History',
     title: 'Field Studies',
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Field study is an integral part of middle school education. When classroom curriculum connects to real-world experiences, scholars can extend their learning and find additional wonder in their surroundings. We frequently introduce our students to new cultural experiences and institutions. Our scholars live in the greatest city in the world, and we take advantage of it!</p>
@@ -128,6 +135,7 @@ export default [
   },
   {
     slug: 'history-2',
+    chapterName: 'History',
     title: 'The Structure of History Classes',
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">The study of history in our middle schools allows scholars to gain perspective and context for understanding periods of political, economic, social, intellectual, and religious change. To make learning engaging, we structure classes in one of four ways.</p>
@@ -142,6 +150,7 @@ export default [
   },
   {
     slug: 'literacy-and-writing-1',
+    chapterName: 'Literacy And Writing',
     title: 'Sela’s Story Draft',
     aboveFoldSelector: '#above-fold',
     content: `<p id="above-fold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
@@ -149,6 +158,7 @@ export default [
   },
   {
     slug: 'electives-1',
+    chapterName: 'Electives',
     title: 'Why Debate Matters',
     aboveFoldSelector: '#above-fold',
     content: `<p id="#above-fold">In the fight for educational equality, Success Academy is doing something transformative: Our schools are changing the face of competitive debate in New York City.</p>
@@ -163,6 +173,7 @@ export default [
   },
   {
     slug: 'character-development-1',
+    chapterName: 'Character Development',
     title: 'ACTION Now',
     aboveFoldSelector: '#above-fold',
     content: `<p id="above-fold">Middle school scholars are at a crucial crossroads in their social, emotional, and academic lives. They need consistent support to navigate all of the complexities they face during these years. One of the ways we provide such support is through our social/emotional learning program, ACTION Now. The program reinforces a safe learning environment, where all scholars are consistently observed and supported by an advisor. It also provides a specific structure for monitoring and supporting each scholar’s social and emotional growth.</p> 
@@ -172,6 +183,7 @@ export default [
   },
   {
     slug: 'parental-investment-1',
+    chapterName: 'Parental Investment',
     title: 'Teaching My Son to Speak Out',
     aboveFoldSelector: '#above-fold',
     content: `<p id="#above-fold">I often remind my son, Kendric, that he can speak up for himself, but there are times when parents must help their children speak out.</p>

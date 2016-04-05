@@ -181,17 +181,24 @@ export default class Chapter extends React.Component {
           <div className={`arrow-cta`} dangerouslySetInnerHTML={{__html: IconScroll}}></div>
         </div>
 
-        <div className="page-component">
-          <h2 className="component-title">Instructional Video</h2>
-          <InstructionalVideo
-            className="margin-auto-horizontal instructional-video-component"
-            id="instructionalVideo"
-            ref='instructionalVideo'
-            slug="math-1"
-            poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
-            noZoom={true}
-          />
-        </div>
+        {
+          /***   Instructional Video  ***/
+
+          this.state.data.instructionalVideos.length ?
+          ( 
+            <div className="page-component">
+              <h2 className="component-title">Instructional Video</h2>
+              <InstructionalVideo
+                className="margin-auto-horizontal instructional-video-component"
+                id="instructionalVideo"
+                ref='instructionalVideo'
+                slug={this.state.data.instructionalVideos[0]}
+                poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
+                noZoom={true}
+              />
+            </div>
+          ) : null
+        }
         {
           /***   Panorama  ***/
 

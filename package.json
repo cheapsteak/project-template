@@ -22,7 +22,7 @@
   "license": "ISC",
   "repository": "https://github.com/Jam3/prj-success-academy",
   "dependencies": {
-    "babel-polyfill": "^6.5.0",
+    "babel-polyfill": "^6.7.4",
     "background-cover": "0.0.4",
     "bezier-easing": "^1.1.1",
     "bluebird": "^3.3.4",
