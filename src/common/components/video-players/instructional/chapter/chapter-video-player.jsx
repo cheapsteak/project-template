@@ -15,6 +15,7 @@ import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
+import BgCover from 'background-cover';
 
 export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
@@ -70,13 +71,12 @@ export default class ChapterVideoPlayer extends React.Component {
       }
     }
 
-    if(this.props.duration && nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration &&
-        nextProps.currentTime === nextProps.duration) {
+    if(nextProps.duration && this.props.currentTime !== nextProps.currentTime) {
+      if(nextProps.currentTime >= nextProps.duration) {
         this.animateInEndOverlay();
         this.props.hideFullControls();
-      } else if (this.props.currentTime === this.props.duration
-        && nextProps.currentTime !== nextProps.duration) {
+      } else if (this.props.currentTime >= this.props.duration
+        && nextProps.currentTime <= nextProps.duration) {
         this.animateOutEndOverlay();
         this.props.hideFullControls();
       }
@@ -126,7 +126,6 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillUnmount() {
-    // this.props.onVideoPause();
     window.removeEventListener('resize', this.handleResize);
   }
 
@@ -148,6 +147,14 @@ export default class ChapterVideoPlayer extends React.Component {
         scaleX: this.animationStates.idle.videoWrapper.scaleX,
         scaleY: this.animationStates.idle.videoWrapper.scaleY,
       });
+    }
+
+    animate.set(this.video, {clearProps: 'all'});
+
+    if (window.innerWidth > window.innerHeight) {
+      BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+    } else {
+      animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
     }
   };
 
@@ -192,6 +199,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   handleMetadataLoaded = () => {
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
+    this.handleResize();
   };
 
   handleTimeUpdate = () => {

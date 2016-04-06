@@ -59,9 +59,10 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
 
     // Video Finished
-    if(this.props.duration && nextProps.duration) {
+    if(this.props.duration && nextProps.duration &&
+      this.props.currentTime !== nextProps.currentTime) {
       if(this.props.currentTime !== this.props.duration &&
-        nextProps.currentTime === nextProps.duration) {
+        nextProps.currentTime >= nextProps.duration) {
         clearTimeout(this.hideControlsTimeoutId);
         this.hideControlsTimeoutId = undefined;
         this.animateInEndOverlay();
@@ -335,7 +336,6 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
       this.hideControlsTimeoutId = undefined;
-      console.log('!!!!!!')
     }, detect.isTablet? 3000: 1500);
   };
 

@@ -1,5 +1,7 @@
 .image-card {
   position: absolute;
+  // @include scale-prop('width', 350);
+  // @include scale-prop('height', 440);
   width: 350px;
   height: 440px;
   overflow: hidden;
@@ -14,6 +16,7 @@
 
   img {
     opacity: 0.6;
+    width: 100%;
   }
 
   .bottom-overlay-front, .bottom-overlay-back {
