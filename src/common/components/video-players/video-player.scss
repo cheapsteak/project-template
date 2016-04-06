@@ -128,7 +128,7 @@
       @include flex-center;
       position: relative;
       height: 100%;
-      margin: 0 10px;
+      width: 40px;
     }
 
     .button {
@@ -145,8 +145,6 @@
       }
 
       svg {
-        display: block;
-        margin: auto;
         fill: white;
         width: 20px;
         height: 15px;
