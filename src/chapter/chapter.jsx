@@ -134,10 +134,7 @@ export default class Chapter extends React.Component {
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
-    // To be removed after client feedback
-    const tempClass = this.state.data.slug === 'science' ? 'no-waste-of-space' : '';
-
-    return <section ref="chapter" className={`chapter-page ${tempClass}`}>
+    return <section ref="chapter" className={`chapter-page`}>
       <nav className="nav">
         <Link
           className={`nav-button left`}
@@ -265,7 +262,7 @@ export default class Chapter extends React.Component {
                   >
                     <Article
                       className="col-3"
-                      scrollTopPadding={60}
+                      scrollTopPadding={80}
                       title={article.title}
                       bannerImage={article.image}
                       aboveFoldSelector={article.aboveFoldSelector}
