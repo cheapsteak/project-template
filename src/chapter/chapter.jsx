@@ -173,6 +173,7 @@ export default class Chapter extends React.Component {
             autoPlay={true}
             loop={true}
             src={this.state.data.hero.bgVideoUrl}
+            poster={this.state.data.hero.poster}
             onLoadedMetadata={this.handleResize}
           ></video>
           <div className={`hero-content`}>
@@ -210,7 +211,6 @@ export default class Chapter extends React.Component {
                 id="instructionalVideo"
                 ref='instructionalVideo'
                 slug={this.state.data.instructionalVideos[0]}
-                poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
                 noZoom={true}
               />
             </div>
