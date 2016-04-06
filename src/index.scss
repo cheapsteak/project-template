@@ -4,7 +4,7 @@ body {
 }
 
 #container {
-  background-color: green;
+  background-color: #121212;
   height: 100%;
 }
 
@@ -54,10 +54,12 @@ body {
 @import 'common/pages/landing-page/landing-page';
 
 // Mobile
-@import 'mobile/landing/landing';
-@import 'mobile/chapters/chapters';
-@import 'mobile/article/article';
-@import 'mobile/chapters/content-list/content-list';
+@import 'mobile/pages/landing/landing';
+@import 'mobile/pages/chapters/chapters';
+@import 'mobile/pages/chapters/content-list/content-list';
+@import 'mobile/pages/article/article';
+@import 'mobile/pages/videos/videos';
+@import 'mobile/pages/video-page/video-page';
 @import 'common/components/mobile-header/mobile-header';
 @import 'common/components/mobile-menu/mobile-menu';
 

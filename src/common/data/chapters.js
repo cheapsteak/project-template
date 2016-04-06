@@ -10,7 +10,8 @@ export default [
       cta: '',
       description: 'Redefining What’s Possible in Public Education',
       bgVideoUrl: `http://successacademy.jam3.net/videos/welcome.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Arianne',
     instructionalVideos: [],
@@ -28,7 +29,8 @@ export default [
       cta: ctaText,
       description: 'Empowering Confident Mathematicians',
       bgVideoUrl: `http://successacademy.jam3.net/videos/math.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Quinlan',
     instructionalVideos: ['math'],
@@ -46,7 +48,8 @@ export default [
       cta: ctaText,
       description: 'The Joy of Discovery through Scientific Inquiry',
       bgVideoUrl: `http://successacademy.jam3.net/videos/science.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Idrissa',
     instructionalVideos: ['science'],
@@ -64,7 +67,8 @@ export default [
       cta: ctaText,
       description: 'Developing the Whole Child',
       bgVideoUrl: `http://successacademy.jam3.net/videos/electives.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Morgan and William',
     instructionalVideos: [],
@@ -82,7 +86,8 @@ export default [
       cta: ctaText,
       description: 'Nurturing the Next Generation of Technologists and Developers',
       bgVideoUrl: `http://successacademy.jam3.net/videos/computer.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Raquel',
     instructionalVideos: ['computer-science'],
@@ -100,7 +105,8 @@ export default [
       cta: ctaText,
       description: 'Developing Independent Learners through Literacy',
       bgVideoUrl: `http://successacademy.jam3.net/videos/literacy.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Sela',
     instructionalVideos: ['literacy', 'writing'],
@@ -119,7 +125,8 @@ export default [
       cta: ctaText,
       description: 'Studying the Past to Shape the Future',
       bgVideoUrl: `http://successacademy.jam3.net/videos/history.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Frankie',
     instructionalVideos: ['history'],
@@ -137,7 +144,8 @@ export default [
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Character Development.',
       bgVideoUrl: `http://successacademy.jam3.net/videos/character.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Lianne',
     instructionalVideos: [],
@@ -155,7 +163,8 @@ export default [
       cta: ctaText,
       description: 'At Success Academy we completely redefined how to teach Parental Investment.',
       bgVideoUrl: `http://successacademy.jam3.net/videos/parental.mp4`,
-      thumbUrl: `${config.ASSET_PATH}/learn-more.jpg`
+      poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
+      thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Alexander',
     instructionalVideos: [],

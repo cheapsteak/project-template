@@ -132,10 +132,7 @@ export default class Chapter extends React.Component {
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
-    // To be removed after client feedback
-    const tempClass = this.state.data.slug === 'science' ? 'no-waste-of-space' : '';
-
-    return <section ref="chapter" className={`chapter-page ${tempClass}`}>
+    return <section ref="chapter" className={`chapter-page`}>
       <nav className="nav">
         <Link
           className={`nav-button left`}
@@ -171,6 +168,7 @@ export default class Chapter extends React.Component {
             autoPlay={true}
             loop={true}
             src={this.state.data.hero.bgVideoUrl}
+            poster={this.state.data.hero.poster}
             onLoadedMetadata={this.handleResize}
           ></video>
           <div className={`hero-content`}>
@@ -208,7 +206,6 @@ export default class Chapter extends React.Component {
                 id="instructionalVideo"
                 ref='instructionalVideo'
                 slug={this.state.data.instructionalVideos[0]}
-                poster={`${ASSET_PATH}/chapter-video-poster.jpg`}
                 noZoom={true}
               />
             </div>
@@ -263,7 +260,7 @@ export default class Chapter extends React.Component {
                   >
                     <Article
                       className="col-3"
-                      scrollTopPadding={60}
+                      scrollTopPadding={80}
                       title={article.title}
                       bannerImage={article.image}
                       aboveFoldSelector={article.aboveFoldSelector}
