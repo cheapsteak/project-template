@@ -52,5 +52,11 @@
     width: 200px;
     height: 50px;
     margin-bottom: 14px;
+
+    &.cta-explore {
+      .button-text {
+        padding-left: 3.215vw;
+      }
+    }
   }
 }

@@ -10,6 +10,7 @@ const defState = {
   header: {
     color: 'white',
     backgroundColor: 'transparent',
+    bottomBorder: false,
     backButton: false
   }
 };
@@ -21,6 +22,7 @@ function header (state = defState.header, action) {
         color: action.color,
         backgroundColor: action.backgroundColor,
         title: action.title,
+        bottomBorder: action.bottomBorder,
         backButton: action.backButton
       });
     default:

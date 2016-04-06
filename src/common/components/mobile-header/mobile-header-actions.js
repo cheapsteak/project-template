@@ -21,12 +21,13 @@ export function toggleMenuDisplay() {
   }
 }
 
-export function setHeaderSettings({ color, backgroundColor, title, backButton = false }) {
+export function setHeaderSettings({ color, backgroundColor, title, backButton = false, bottomBorder = false }) {
   return {
     type: SET_MOBILE_HEADER_OPTIONS,
     color,
     backgroundColor,
     title,
-    backButton
+    backButton,
+    bottomBorder
   }
 }

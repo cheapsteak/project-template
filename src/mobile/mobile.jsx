@@ -2,6 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
 import Header from 'common/components/mobile-header/mobile-header-redux';
+import RotateScreen from 'common/components/rotate-screen/rotate-screen';
 const EventEmitter = require('event-emitter');
 const vent = new EventEmitter();
 
@@ -34,6 +35,7 @@ export default class Mobile extends React.Component {
     return (
       <div ref="root" className="full-height" style={{ overflow: 'scroll' }}>
         <Header />
+        <RotateScreen />
         <TransitionGroup
           component="div"
           

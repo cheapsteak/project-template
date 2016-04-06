@@ -19,10 +19,7 @@ class MobileHeaderRedux extends React.Component {
       openMenu={this.boundActionCreators.openMenu}
       onMenuClick={this.boundActionCreators.toggleMenuDisplay}
       isMenuOpen={this.props.isMenuOpen}
-      color={this.props.header.color}
-      backgroundColor={this.props.header.backgroundColor}
-      title={this.props.header.title}
-      backButton={this.props.header.backButton}
+      {...this.props.header}
     />
   }
 }

@@ -6,7 +6,13 @@
   width: 100%;
   height: 8.945vh;
   border-bottom: 1px solid rgba(255,255,255, 0.2);
+  box-sizing: content-box;
   z-index: 100;
+
+  &.thick-bottom-border {
+    background-clip: padding-box;
+    border-bottom: 2.75vh solid rgba(255,255,255, 0.1);
+  }
 
   .menu-wrapper {
     position: fixed;
