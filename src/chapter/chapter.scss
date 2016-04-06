@@ -4,22 +4,6 @@ $parallax-amplitude: 50px;
 $orange: #f99100;
 
 
-// Temporary Style to be removed
-.no-waste-of-space {
-  .main {
-    @include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
-    margin: 0 !important;
-    width: 100% !important;
-    overflow-y: auto;
-  }
-
-  .nav {
-    width: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
-}
-
 .chapter-page {
   height: 100%;
   overflow: hidden;
@@ -45,21 +29,23 @@ $orange: #f99100;
 
   .main {
     position: relative;
-    @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
-    @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
-    background-color: white;
+    @include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
 
-    overflow: auto;
+    // @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
+    // @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
+    background-color: white;
+    overflow-y: auto;
+
     @media (max-width: $break-large) {
-      width: calc(100% - 50px);
+      // width: calc(100% - 50px);
       height: calc(100% - 50px);
     }
     @media (min-width: $break-large + 1) {
-      width: calc(100% - #{(50/1400 * 100)}vw);
+      // width: calc(100% - #{(50/1400 * 100)}vw);
       height: calc(100% - #{(50/1400 * 100)}vw);
     }
     @media (min-width: $break-xlarge + 1) {
-      width: calc(100% - 70px);
+      // width: calc(100% - 70px);
       height: calc(100% - 70px);
     }
   }
@@ -68,21 +54,22 @@ $orange: #f99100;
     position: fixed;
     z-index: 100;
     @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
-    @media (max-width: $break-large) {
-      top: 50px;
-      left: 50px;
-      width: calc(100% - 50px);
-    }
-    @media (min-width: $break-large + 1) {
-      top: #{(50/1400 * 100)}vw;
-      left: #{(50/1400 * 100)}vw;
-      width: calc(100% - #{(50/1400 * 100)}vw);
-    }
-    @media (min-width: $break-xlarge + 1) {
-      top: #{(50/1400 * 100)}vw;
-      left: #{(70/1400 * 100)}vw;
-      width: calc(100% - 70px);
-    }
+    width: 100%;
+    // @media (max-width: $break-large) {
+    //   top: 50px;
+    //   left: 50px;
+    //   width: calc(100% - 50px);
+    // }
+    // @media (min-width: $break-large + 1) {
+    //   top: #{(50/1400 * 100)}vw;
+    //   left: #{(50/1400 * 100)}vw;
+    //   width: calc(100% - #{(50/1400 * 100)}vw);
+    // }
+    // @media (min-width: $break-xlarge + 1) {
+    //   top: #{(50/1400 * 100)}vw;
+    //   left: #{(70/1400 * 100)}vw;
+    //   width: calc(100% - 70px);
+    // }
     background-color: rgba(#747981, 0.7);
     display: flex;
     justify-content: space-between;
