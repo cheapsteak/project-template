@@ -7,7 +7,7 @@ import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
-import narrativeVideoModel from '../../data/narrative-video.js';
+import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 
 export default class MobileChapters extends React.Component {
@@ -101,7 +101,7 @@ export default class MobileChapters extends React.Component {
                     chapter.isOpen
                     ? <ContentList
                         key={chapter.name}
-                        narrativeVideo={ narrativeVideoModel }
+                        narrativeVideo={ narrativeVideoData }
                         instructionalVideos={chapter.instructionalVideos}
                         panorama={chapter.panorama}
                         articles={chapter.articles}

@@ -75,7 +75,8 @@ export default class ChapterContentList extends React.Component {
             name="Narrative Video"
             image={ this.props.narrativeVideo.image }
             duration={ this.props.narrativeVideo.duration }
-            to={ this.props.narrativeVideo.route }
+            isExternalLink={true}
+            to={ this.props.narrativeVideo.src }
           />
           <div className="list-divider">
             <span dangerouslySetInnerHTML={{ __html: IconExplore }}></span>
@@ -98,12 +99,16 @@ export default class ChapterContentList extends React.Component {
               )
             })
           }
-          <ListItem
-            label="Experience"
-            name="The Classroom 360"
-            image={ this.props.panorama.image }
-            to={ this.props.panorama.route }
-          />
+          {
+            this.props.panorama
+              ? <ListItem
+                label="Experience"
+                name={ `${this.props.panorama.title} 360` }
+                image={ this.props.panorama.image }
+                to={ this.props.panorama.route }
+              />
+              : null
+          }
           {
             this.props.articles.map(article => {
               return <ListItem
@@ -115,12 +120,17 @@ export default class ChapterContentList extends React.Component {
               />
             })
           }
-          <ListItem
-            label="Listen"
-            name="Podcast"
-            image={ this.props.podcast.image }
-            to={ this.props.podcast.route }
-          />
+          {
+            this.props.podcast
+            ? <ListItem
+                label="Listen"
+                name="Podcast"
+                image={ this.props.podcast.image }
+                isExternalLink={true}
+                to={ this.props.podcast.src }
+              />
+            : null
+          }
         </div>
       </div>
     )
