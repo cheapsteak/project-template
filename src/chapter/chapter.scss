@@ -81,13 +81,13 @@ $orange: #f99100;
     background-color: #fff;
 
     @media (max-width: $break-large) {
-      height: calc(100vh - 50px);
+      height: calc(72.5vh - 50px);
     }
     @media (min-width: $break-large + 1) {
-      height: calc(100vh - #{(50/1400 * 100)}vw);
+      height: calc(72.5vh - #{(50/1400 * 100)}vw);
     }
     @media (min-width: $break-xlarge + 1) {
-      height: calc(100vh - 70px);
+      height: calc(72.5vh - 70px);
     }
 
     video {
@@ -191,6 +191,7 @@ $orange: #f99100;
     }
 
     .arrow-cta {
+      display: none;
       position: absolute;
       bottom: #{(25/1400*100)}vw;
       @include scale-prop(width, 25);
@@ -291,4 +292,9 @@ $orange: #f99100;
 
 .instructional-video-component {
   width: calc(100% - #{(115/1400*100*2)}vw);
+
+  .chapter-video-poster img {
+    margin-top: -50px;
+    margin-bottom: -50px;
+  }
 }
