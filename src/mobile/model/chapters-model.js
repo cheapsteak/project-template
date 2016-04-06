@@ -10,7 +10,7 @@ export default {
       ...chapter,
       articles: chapter.articles.map(article => ({ 
         ...article,
-        route: `/mobile/article/${article.slug}`,
+        route: `/mobile/articles/${article.slug}`,
         title: _.find(articlesData, { slug: article.slug }).title
       })),
       instructionalVideos: chapter.instructionalVideos.map(videoModel.get),

@@ -31,13 +31,9 @@ export default [
     },
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'science-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
+      }
     ],
     podcast: undefined
   },
@@ -51,13 +47,9 @@ export default [
     },
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'literacy-and-writing-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
+      }
     ],
     podcast: undefined
   },
@@ -71,13 +63,17 @@ export default [
     },
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'math-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
-        slug: 'welcome-2',
+        slug: 'math-2',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
+      {
+        slug: 'math-3',
+        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+      }
     ],
     podcast: undefined
   },
@@ -88,13 +84,9 @@ export default [
     panorama: undefined,
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'electives-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
+      }
     ],
     podcast: undefined
   },
@@ -105,13 +97,9 @@ export default [
     panorama: undefined,
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'character-development-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
+      }
     ],
     podcast: undefined
   },
@@ -120,16 +108,7 @@ export default [
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-7.png`,
     instructionalVideos: ['computer-science'],
     panorama: undefined,
-    articles: [
-      {
-        slug: 'welcome-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-    ],
+    articles: [],
     podcast: undefined
   },
   {
@@ -139,11 +118,11 @@ export default [
     panorama: undefined,
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'history-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
-        slug: 'welcome-2',
+        slug: 'history-2',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
@@ -156,13 +135,9 @@ export default [
     panorama: undefined,
     articles: [
       {
-        slug: 'welcome-1',
+        slug: 'parental-investment-1',
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
-      {
-        slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
-      },
+      }
     ],
     podcast: undefined
   },
