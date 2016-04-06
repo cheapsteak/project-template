@@ -1,11 +1,12 @@
 import { combineReducers, createStore } from 'redux';
 import config from '../../config.js';
+import detect from 'common/utils/detect';
 
 const MobileDetect = require('mobile-detect');
 const md = new MobileDetect(window.navigator.userAgent);
 
 const reducers = combineReducers(
-  !md.mobile() 
+  !detect.isPhone
   ? {
       photoEssay: require('common/components/photo-essay/photo-essay-reducers.js'),
       panorama: require('common/components/panorama/panorama-reducers.js'),

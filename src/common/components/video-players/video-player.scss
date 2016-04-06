@@ -10,29 +10,29 @@
     height: 100%;
     width: 100%;
 
-    @media (min-aspect-ratio: 16/9) {
-      & {
-        height: 300%;
-        top: -100%;
-      }
-    }
+    //@media (min-aspect-ratio: 16/9) {
+    //  & {
+    //    height: 300%;
+    //    top: -100%;
+    //  }
+    //}
+    //
+    //@media (max-aspect-ratio: 16/9) {
+    //  & {
+    //    width: 300%;
+    //    left: -100%;
+    //  }
+    //}
 
-    @media (max-aspect-ratio: 16/9) {
-      & {
-        width: 300%;
-        left: -100%;
-      }
-    }
-
-    @supports (object-fit: cover) {
-      & {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
+    //@supports (object-fit: cover) {
+    //  & {
+    //    top: 0;
+    //    left: 0;
+    //    width: 100%;
+    //    height: 100%;
+    //    object-fit: cover;
+    //  }
+    //}
   }
 
   &.no-zoom {

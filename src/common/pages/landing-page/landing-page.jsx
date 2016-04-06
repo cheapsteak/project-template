@@ -14,6 +14,7 @@ import BgCover from 'background-cover';
 import landingData  from '../../data/landing';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
+import detect from 'common/utils/detect';
 
 export default class LandingPage extends React.Component {
 
@@ -45,8 +46,9 @@ export default class LandingPage extends React.Component {
     animate.set([this.refs.video, this.refs.title], {scale: 1.25});
     animate.set(this.refs.contentContainer, {y: textPos});
 
+    const event = detect.isTablet ? 'loadedmetadata' : 'canplaythrough';
     this.videoLoadPromise = new Promise((resolve, reject) => {
-      this.refs.video.addEventListener('canplaythrough', this.init.bind(this, resolve));
+      this.refs.video.addEventListener(event, this.init.bind(this, resolve));
     });
 
     window.addEventListener('resize', this.handleWindowResize);
@@ -67,7 +69,8 @@ export default class LandingPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.refs.video.removeEventListener('canplaythrough', this.init);
+    const event = detect.isTablet ? 'loadedmetadata' : 'canplaythrough';
+    this.refs.video.removeEventListener(event, this.init);
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
@@ -165,11 +168,18 @@ export default class LandingPage extends React.Component {
       .then(() => callback && callback())
   };
 
+  handleTouchStart = () => {
+    this.refs.video.play()
+  };
+
   render() {
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
     return (
-      <div className={`landing-page ${this.props.className}`}>
+      <div
+        className={`landing-page ${this.props.className}`}
+        onTouchStart={this.handleTouchStart}
+      >
         <div ref="mainContainer" className={`main-container`}>
 
           <div ref="videoContainer" className={`video-container`}>

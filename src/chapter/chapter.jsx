@@ -124,9 +124,7 @@ export default class Chapter extends React.Component {
   };
 
   handleResize = () => {
-    if (detect.isIE) {
-      BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
-    }
+    BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
   };
 
   render() {
