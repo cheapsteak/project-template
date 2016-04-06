@@ -19,6 +19,7 @@ import VideoCard from '../../components/video-card/video-card.jsx';
 import HoverCard from './grid-hover-card/grid-hover-card.jsx';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
+import BgCover from 'background-cover';
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -80,9 +81,8 @@ export default class GridVideoPlayer extends React.Component {
   componentWillReceiveProps(nextProps) {
 
     // Video Finished
-    if(nextProps.duration) {
-      if(this.props.currentTime !== this.props.duration &&
-        nextProps.currentTime === nextProps.duration) {
+    if(nextProps.duration && this.props.currentTime !== nextProps.currentTime) {
+      if(nextProps.currentTime >= nextProps.duration) {
         this.animateInEndOverlay();
         this.props.hideFullControls();
         this.clearCountdown();
@@ -93,8 +93,8 @@ export default class GridVideoPlayer extends React.Component {
             this.context.router.push(this.props.nextVideo.gridRoute);
           }
         }, 1000);
-      } else if (this.props.currentTime === this.props.duration
-        && nextProps.currentTime !== nextProps.duration) {
+      } else if (this.props.currentTime >= this.props.duration
+        && nextProps.currentTime <= nextProps.duration) {
 
         // Video going to replay
         this.clearCountdown();
@@ -144,6 +144,14 @@ export default class GridVideoPlayer extends React.Component {
         scaleY: this.animationStates.idle.videoWrapper.scaleY,
       });
     }
+
+    animate.set(this.video, {clearProps: 'all'});
+
+    if (window.innerWidth > window.innerHeight) {
+      BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+    } else {
+      animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
+    }
   };
 
   handleMetadataLoaded = () => {
@@ -153,6 +161,8 @@ export default class GridVideoPlayer extends React.Component {
     if(this.props.isPlaying) {
       this.video.play();
     }
+
+    this.handleResize();
   };
 
   handleTimeUpdate = () => {

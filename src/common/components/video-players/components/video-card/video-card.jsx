@@ -3,6 +3,7 @@ import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import PlayButton from '../../../play-button/play-button.jsx';
+import BgCover from 'background-cover';
 
 function calculateAnimationStates(els) {
   const zoomedInRect = els.card.parentNode.getBoundingClientRect();
@@ -84,6 +85,8 @@ export default class NextVideoCard extends React.Component {
     animate.set(button, this.animationStates.out.button);
     animate.set(title, this.animationStates.out.title);
     animate.set(counterText, this.animationStates.out.counterText);
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillEnter (callback) {
@@ -112,12 +115,20 @@ export default class NextVideoCard extends React.Component {
     .then(callback);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);  
+  }
+
   handleMouseEnter = () => {
     this.video.play();
   };
 
   handleMouseLeave = () => {
     this.video.pause();
+  };
+
+  handleResize = () => {
+    BgCover.BackgroundCover(this.video, this.refs.card);
   };
 
   render() {
@@ -132,6 +143,7 @@ export default class NextVideoCard extends React.Component {
           <video
             ref={ node => this.video = node }
             src={this.props.video}
+            onLoadedMetadata={this.handleResize}
           >
           </video>
           <span ref="topUI">
