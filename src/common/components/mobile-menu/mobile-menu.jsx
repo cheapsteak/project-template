@@ -20,7 +20,7 @@ export default class MobileMenu extends React.Component {
       svgIcon: IconExplore
     },
     {
-      route: '/mobile',
+      route: '/mobile/videos',
       name: 'Instructional Videos',
       svgIcon: IconWatch
     },

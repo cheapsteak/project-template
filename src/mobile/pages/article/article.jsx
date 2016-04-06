@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
-import model from '../model/article-model.js';
+import model from '../../model/article-model.js';
 import store from 'common/store';
 
 export default class MobileArticle extends React.Component {

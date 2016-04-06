@@ -2,13 +2,12 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
-import Button from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-addons-transition-group';
 import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
-import narrativeVideoModel from '../data/narrative-video.js';
+import narrativeVideoModel from '../../data/narrative-video.js';
 import store from 'common/store';
 
 export default class MobileChapters extends React.Component {

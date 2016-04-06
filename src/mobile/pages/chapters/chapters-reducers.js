@@ -3,7 +3,7 @@ import {
   TOGGLE_CHAPTER_DISPLAY,
 } from './chapters-actions.js';
 
-import model from '../model/chapters-model.js';
+import model from '../../model/chapters-model.js';
 
 const defState = model.getAll().map((chapter) => ({ ...chapter, isOpen: false }));
 

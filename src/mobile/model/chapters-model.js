@@ -1,5 +1,6 @@
 import chaptersData from '../data/chapters.js';
 import articlesData from 'common/data/articles';
+import videoModel from './instructional-videos-model.js';
 import _ from 'lodash';
 
 export default {
@@ -10,7 +11,8 @@ export default {
         ...article,
         route: `/mobile/article/${article.slug}`,
         title: _.find(articlesData, { slug: article.slug }).title
-      }))
+      })),
+      instructionalVideos: chapter.instructionalVideos.map(videoModel.get)
     }));
   }
 }

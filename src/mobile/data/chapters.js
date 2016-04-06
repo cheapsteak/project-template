@@ -4,7 +4,7 @@ export default [
   {
     name: 'Welcome',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-1.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: [],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -21,7 +21,7 @@ export default [
   {
     name: 'Science',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-2.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: ['science'],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -38,7 +38,7 @@ export default [
   {
     name: 'Literacy &<br/>Writing',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-3.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: ['literacy', 'writing'],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -55,7 +55,7 @@ export default [
   {
     name: 'Math',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-4.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: ['math'],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -72,7 +72,7 @@ export default [
   {
     name: 'Electives',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-5.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: [],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -89,7 +89,7 @@ export default [
   {
     name: 'Character Development',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-6.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: [],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -106,7 +106,7 @@ export default [
   {
     name: 'Computer<br/>Science',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-7.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: ['computer-science'],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -123,7 +123,7 @@ export default [
   {
     name: 'History',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-8.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: [],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
@@ -140,7 +140,7 @@ export default [
   {
     name: 'Parental<br/>Investment',
     image: `${config.ASSET_PATH}/mobile-chapters-kid-9.png`,
-    instructionalVideos: [{image: `${config.ASSET_PATH}/mobile-list-thumbnail-1.jpg`, route: '/url', duration: 7.34 }],
+    instructionalVideos: [],
     panorama: { image: `${config.ASSET_PATH}/mobile-list-thumbnail-2.jpg`, route: '/mobile' },
     articles: [
       {
