@@ -5,6 +5,7 @@ import IconExplore from 'svgs/icon-explore.svg';
 import Button from 'common/components/rectangular-button/rectangular-button';
 import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 import * as actionCreators from 'common/components/mobile-header/mobile-header-actions';
+import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 
 export default class Landing extends React.Component {
@@ -28,15 +29,18 @@ export default class Landing extends React.Component {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit,
             sed do eiusmod tempor incididunt ut labore.
           </p>
-          <Button
-            style={{}}
-            text="Start the Tour"
-            color="#ffffff"
-            backgroundColor="#EB9729"
-            svgIcon={IconWatch}
-          />
+          <a href={narrativeVideoData.src} target="__blank">
+            <Button
+              text="Start the Tour"
+              color="#ffffff"
+              backgroundColor="#EB9729"
+              hoverBackgroundColor="#EB9729"
+              svgIcon={IconWatch}
+            />
+          </a>
           <Link to="/mobile/chapters">
             <Button
+              className="cta-explore"
               style={{border: "1px solid rgba(255,255,255,0.2)"}}
               text="Explore"
               color="#ffffff"

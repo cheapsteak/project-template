@@ -19,26 +19,34 @@ export default class MobileHeader extends React.Component {
   }
 
   componentDidMount() {
-    this.setColor(this.props.color, this.props.backgroundColor);
+    this.setStyle(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setColor(nextProps.color, nextProps.backgroundColor);
+    this.setStyle(nextProps);
   }
 
-  setColor = (color, backgroundColor) => {
+  setStyle = (props) => {
     const content = this.refs.header.querySelectorAll('.menu-content');
 
     _.forEach(content, (node) => {
       if(node.firstChild) {
-        node.firstChild.style.fill = color;
+        node.firstChild.style.fill = props.color;
       } else {
-        node.style.backgroundColor = color;
+        node.style.backgroundColor = props.color;
       }
     });
 
-    this.refs.header.style.color = color;
-    this.refs.header.style.backgroundColor = backgroundColor;
+    this.refs.header.style.color = props.color;
+    this.refs.header.style.backgroundColor = props.backgroundColor;
+
+    if (props.bottomBorder) {
+      console.log('HERE');
+          
+      this.refs.header.classList.add('thick-bottom-border');
+    } else {
+      this.refs.header.classList.remove('thick-bottom-border');
+    }
   };
 
   handleBackClick = () => {

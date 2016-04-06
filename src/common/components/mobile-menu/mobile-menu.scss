@@ -66,9 +66,8 @@
     color: white;
     font-weight: bold;
     width: 100%;
+    box-sizing: border-box;
     height: $menu-item-height;
-    
-    
 
     &:after {
       content: '';
@@ -129,6 +128,7 @@
     background-color: rgba(255,255,255,0.1);
     justify-content: flex-end;
     align-items: center;
+    box-sizing: border-box;
     padding: 0 $side-padding;
 
     label {

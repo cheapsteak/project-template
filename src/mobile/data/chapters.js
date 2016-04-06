@@ -16,7 +16,10 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: {
+      image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1'
+    }
   },
   {
     name: 'Science',
@@ -33,7 +36,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Literacy &<br/>Writing',
@@ -50,7 +53,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Math',
@@ -67,7 +70,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Electives',
@@ -84,7 +87,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Character Development',
@@ -101,7 +104,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Computer<br/>Science',
@@ -118,7 +121,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'History',
@@ -135,7 +138,7 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
   {
     name: 'Parental<br/>Investment',
@@ -152,6 +155,6 @@ export default [
         image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
-    podcast: { image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`, route: '/mobile',}
+    podcast: null
   },
 ]

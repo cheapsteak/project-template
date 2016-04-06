@@ -17,7 +17,8 @@ export default class MobileArticle extends React.Component {
       color: '#565D60',
       backgroundColor: 'rgba(255,255,255,0.8)',
       title: article.chapterName,
-      backButton: true
+      backButton: true,
+      bottomBorder: true
     }));
 
     this.setState({
