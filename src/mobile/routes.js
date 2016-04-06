@@ -4,13 +4,15 @@ import MobileApp from './mobile.jsx';
 import MobileLanding from './pages/landing/landing.jsx';
 import MobileChapters from './pages/chapters/chapters.jsx';
 import MobileArticle from './pages/article/article.jsx';
+import MobilePanorama from './pages/panorama/panorama.jsx';
 import MobileVideos from './pages/videos/videos.jsx';
 import MobileLearnMore from './pages/learn-more/learn-more.jsx';
 
 export default <Route path="mobile" component={MobileApp}>
   <IndexRoute component={MobileLanding}/>
   <Route path="chapters" component={MobileChapters} />
-  <Route path="article/:slug" component={MobileArticle} />
+  <Route path="articles/:slug" component={MobileArticle} />
   <Route path="videos"  component={MobileVideos} />
+  <Route path="panoramas/:slug" component={MobilePanorama} />
   <Route path="learn-more" component={MobileLearnMore} />
 </Route>

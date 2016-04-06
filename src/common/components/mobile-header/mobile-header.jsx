@@ -41,8 +41,6 @@ export default class MobileHeader extends React.Component {
     this.refs.header.style.backgroundColor = props.backgroundColor;
 
     if (props.bottomBorder) {
-      console.log('HERE');
-          
       this.refs.header.classList.add('thick-bottom-border');
     } else {
       this.refs.header.classList.remove('thick-bottom-border');
