@@ -47,8 +47,7 @@ export default class LearnMoreModal extends React.Component {
   render() {
     const {className, style, paragraphs} = this.props;
     const items = paragraphs || [];
-console.log(this.props);
-    
+
     return (
       <div
         ref="modal"
