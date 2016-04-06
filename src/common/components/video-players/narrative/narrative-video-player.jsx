@@ -17,6 +17,8 @@ import { Link } from 'react-router';
 import ImageCard from '../components/image-card/image-card.jsx';
 import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
+import BgCover from 'background-cover';
+import detect from 'common/utils/detect';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -42,7 +44,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     const el = findDOMNode(this);
 
     if(this.props.useFullControls !== nextProps.useFullControls
-       && !this.videoEnded && this.lastMouseCoord) {
+       && !this.videoEnded && (this.lastMouseCoord || detect.isTablet)) {
       if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
@@ -66,6 +68,10 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
     }
+
+    if(this.props.isPlaying !== nextProps.isPlaying) {
+      nextProps.isPlaying ? this.video.play() : this.video.pause();
+    }
   }
 
   componentDidMount() {
@@ -85,12 +91,16 @@ export default class NarrativeVideoPlayer extends React.Component {
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
     animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
 
-    this.props.isPlaying && this.video.play();
-
     if(!this.props.isPlaying) {
       if(!this.props.useFullControls) {
         this.props.showFullControls();
       }
+    }
+
+    if (detect.isTablet && !this.video.paused) { // TODO: make sure no double click needed when coming from other pages0
+      this.userInteractionHappened = true;
+    } else {
+      this.props.isPlaying && this.video.play();
     }
 
     window.addEventListener('resize', this.handleResize);
@@ -228,6 +238,8 @@ export default class NarrativeVideoPlayer extends React.Component {
         scaleY: this.animationStates.idle.videoWrapper.scaleY,
       });
     }
+
+    this.videoResize();
   };
 
   handleMetadataLoaded = () => {
@@ -246,7 +258,18 @@ export default class NarrativeVideoPlayer extends React.Component {
       this.props.unmute();
     }
 
+    this.videoResize();
     this.setTimeStorageInterval();
+  };
+
+  videoResize = () => {
+    animate.set(this.video, {clearProps: 'all'});
+
+    if (window.innerWidth > window.innerHeight) {
+      BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+    } else {
+      animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
+    }
   };
 
   handleTimeUpdate = () => {
@@ -300,15 +323,20 @@ export default class NarrativeVideoPlayer extends React.Component {
       this.props.showFullControls();
     }
 
+    this.setHideControlsTimeout();
+
+    this.lastMouseCoord = mouseCoords;
+  };
+
+  setHideControlsTimeout = () => {
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = setTimeout(() => {
       if(this.props.isPlaying) {
         this.props.hideFullControls();
       }
       this.hideControlsTimeoutId = undefined;
-    }, 1500);
-
-    this.lastMouseCoord = mouseCoords;
+      console.log('!!!!!!')
+    }, detect.isTablet? 3000: 1500);
   };
 
   handleReplayClick = (e) => {
@@ -321,6 +349,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleOverlayClick = (e) => {
+    if (detect.isTablet) return;
+
     if(e.target.id === 'videoOverlay') {
       this.props.hideFullControls();
       !this.props.isPlaying && this.video.play();
@@ -338,6 +368,16 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
   };
 
+  handleTouchStart = () => {
+    if (this.userInteractionHappened) {
+      this.props.showFullControls();
+      this.setHideControlsTimeout();
+    } else {
+      this.userInteractionHappened = true;
+      this.video.play();
+      this.props.onVideoPlay();
+    }
+  };
 
   render() {
     const { style, className } = this.props;
@@ -349,6 +389,7 @@ export default class NarrativeVideoPlayer extends React.Component {
         className="video-player narrative-video-player ${className || ''}"
         style={style}
         onMouseMove={this.handleComponentMouseMove}
+        onTouchStart={this.handleTouchStart}
       >
         <div
           ref="videoWrapper"

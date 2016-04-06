@@ -21,7 +21,8 @@ export default function calculateAnimationStates (els) {
         cursor: 'none'
       },
       overlay: {
-        opacity: 0
+        opacity: 0,
+        visibility: 'hidden'
       },
       endingOverlay: {
         delay: 0.1,
@@ -49,7 +50,7 @@ export default function calculateAnimationStates (els) {
       controls: {
         y: zoomedOutVideoMargin * 2,
         height: zoomedOutVideoMargin * 2,
-        display: 'none'
+        visibility: 'hidden'
       }
     },
     idle: {
@@ -63,7 +64,8 @@ export default function calculateAnimationStates (els) {
         cursor: 'default'
       },
       overlay: {
-        opacity: 0.4
+        opacity: 0.4,
+        visibility: 'visible'
       },
       endingOverlay: {
         display: 'block',
@@ -94,7 +96,7 @@ export default function calculateAnimationStates (els) {
       controls: {
         y: 0,
         height: zoomedOutVideoMargin * 2,
-        display: 'flex'
+        visibility: 'visible'
       }
     },
     end: {
