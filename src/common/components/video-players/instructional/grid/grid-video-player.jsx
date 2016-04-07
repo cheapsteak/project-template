@@ -32,6 +32,7 @@ export default class GridVideoPlayer extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
   };
 
   static nextVideoCountdownTime = 15;
@@ -125,8 +126,8 @@ export default class GridVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
     this.props.onVideoPause();
-    this.stopAnimations();
     window.removeEventListener('resize', this.handleResize);
+    this.stopAnimations();
   }
 
   get videoEnded () {
@@ -235,6 +236,14 @@ export default class GridVideoPlayer extends React.Component {
       this.props.unmute();
     } else {
       this.props.mute();
+    }
+  };
+
+  handleCloseButtonClick = () => {
+    if(this.context.previousRoute) {
+      history.back();
+    } else {
+      this.context.router.replace('/grid');
     }
   };
 
@@ -406,17 +415,16 @@ export default class GridVideoPlayer extends React.Component {
               </label>
             </div>
           </div>
-          <Link to={'/grid'}>
-            <RectangularButton
-              ref={ node => this.refs.cornerButton = findDOMNode(node) }
-              className="close-button"
-              text="Close"
-              color="#ffffff"
-              backgroundColor="#f99100"
-              hoverBackgroundColor="#f99100"
-              svgIcon={CloseSvg}
-            />
-          </Link>
+          <RectangularButton
+            ref={ node => this.refs.cornerButton = findDOMNode(node) }
+            className="close-button"
+            text="Close"
+            color="#ffffff"
+            backgroundColor="#f99100"
+            hoverBackgroundColor="#f99100"
+            svgIcon={CloseSvg}
+            onClick={this.handleCloseButtonClick}
+          />
           <Link
             onClick={this.props.onVideoPause}
             className="more-about-cta"

@@ -1,6 +1,7 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
+import TransitionGroup from 'react-addons-transition-group';
 import Layout890 from '../../components/grid/layout/layout-890';
 import Layout1060 from '../../components/grid/layout/layout-1060';
 import Layout1230 from '../../components/grid/layout/layout-1230';
@@ -131,6 +132,12 @@ export default class GridPage extends React.Component {
           <GridMenu ref="menu"/>
           {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
         </div>
+        <TransitionGroup
+          component="div"
+          className="route-content-wrapper full-height"
+        >
+          { React.cloneElement(this.props.children || <div />, { key: this.props.params.slug })}
+        </TransitionGroup>
       </div>
     );
   }
