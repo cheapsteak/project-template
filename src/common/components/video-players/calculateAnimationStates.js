@@ -49,8 +49,7 @@ export default function calculateAnimationStates (els) {
       },
       controls: {
         y: zoomedOutVideoMargin * 2,
-        height: zoomedOutVideoMargin * 2,
-        visibility: 'hidden'
+        height: zoomedOutVideoMargin * 2
       }
     },
     idle: {
@@ -95,8 +94,7 @@ export default function calculateAnimationStates (els) {
       },
       controls: {
         y: 0,
-        height: zoomedOutVideoMargin * 2,
-        visibility: 'visible'
+        height: zoomedOutVideoMargin * 2
       }
     },
     end: {
