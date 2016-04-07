@@ -15,35 +15,56 @@
     .circle-cta {
       position: absolute;
       right: 18%;
+      opacity: 0;
       top: calc(50% - 102px);
       transform: translate(50%, -50%);
-      width: 215px;
-      height: 215px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.15);
-      color: white;
-      font-weight: bold;
+      @include scale-prop('width', 195);
+      @include scale-prop('height', 195);
       cursor: pointer;
-      opacity: 0;
       z-index: 100;
+
+      .circle-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+        font-weight: bold;
+        transition: all 0.3s ease-out;
+      }
+
+      &:hover {
+        .circle-wrapper {
+          background-color: rgba(255, 255, 255, 0.2);
+          transform: scale(1.1);
+        }
+      }
 
       .circle-cta-text {
         position: absolute;
-        left: 32px;
+        left: 10%;
         top: 40%;
-        width: 50%;
         text-align: left;
         color: white;
+      }
+
+      .cta-arrow {
+        position: absolute;
+        transform: translateY(-50%);
+        top: 50%;
+        right: 12%;
+        width: 5%;
       }
 
       label {
         display: block;
         color: rgba(255,255,255,0.5);
-        font-size: 14px;
+        @include scale-prop('font-size', 14);
       }
 
       h3 {
-        font-size: 22px;
+        @include scale-prop('font-size', 22);
       }
     }
   }
