@@ -43,6 +43,8 @@
 
     .panel-label {
       position: absolute;
+      display: flex;
+      align-items: center;
       bottom: 0;
       left: 0;
       width: 100%;
@@ -50,12 +52,19 @@
       font-size: 4vw;
       color: white;
       z-index: 5;
+      padding: 0 5.334vw;
+
+      .toggle-icon {
+        width: 8.3vw;
+
+        svg {
+          vertical-align: middle;
+        }
+      }
 
       span {
-        position: absolute;
-        top: 50%;
-        left: 10%;
-        transform: translateY(-50%);
+        margin-top: 0.9vw;
+        margin-left: 3.325vw;
       }
     }
 
