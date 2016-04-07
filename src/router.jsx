@@ -29,8 +29,9 @@ export default <Provider store={store}>
   <Router history={appHistory} onUpdate={handleRouteUpdate}>
     <Route path="/" component={App}>
       <IndexRoute component={LandingPage}/>
-      <Route path="grid" component={GridPage}/>
-      <Route path="grid/instructional-videos/:slug" component={InstructionalVideoPlayer}/>
+      <Route path="grid" component={GridPage}>
+        <Route path="instructional-videos/:slug" component={InstructionalVideoPlayer}/>
+      </Route>
       <Route path="narrative-video*" components={NarrativeVideoPlayer} />
       <Route path="chapters/:chapter_slug" component={Chapter}>
         <Route
