@@ -1,6 +1,6 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import PhotoSphere from 'photo-sphere-viewer';
+import PhotoSphere from 'photo-sphere-viewer-sa';
 import raf from 'raf';
 import deviceOrientation from '../../utils/three-device-orientation';
 import animate from 'gsap-promise';
