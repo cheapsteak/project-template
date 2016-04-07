@@ -85,6 +85,10 @@ export default class ChapterVideoPlayer extends React.Component {
     if(this.props.isPlaying !== nextProps.isPlaying) {
       nextProps.isPlaying ? this.video.play() : this.video.pause();
     }
+
+    if(this.props.isMuted !== nextProps.isMuted) {
+      nextProps.isMuted ? this.mute() : this.unmute();
+    }
   }
 
   componentWillEnterFullBrowser = () => {
@@ -176,6 +180,7 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying) {
+      clearTimeout(this.hideControlsTimeoutId);
       this.setHideControlsTimeout();
     }
   };
@@ -195,7 +200,7 @@ export default class ChapterVideoPlayer extends React.Component {
       this.props.hideFullControls();
       this.hideControlsTimeoutId = undefined;
     }, 1500);
-  }
+  };
 
   handleMetadataLoaded = () => {
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
@@ -236,6 +241,14 @@ export default class ChapterVideoPlayer extends React.Component {
       this.props.exitFullBrowser();
     }
   }
+
+  unmute = () => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  };
+
+  mute = () => {
+    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+  };
 
   animateInControls = () => {
     this.wrapperVisible = true;
@@ -337,7 +350,6 @@ export default class ChapterVideoPlayer extends React.Component {
                 onLoadedMetadata={this.handleMetadataLoaded}
                 onEnded={this.handleVideoPlayPause}
                 onTimeUpdate={this.handleTimeUpdate}
-                muted={this.props.isMuted}
                 poster={this.props.poster}
               >
               </video>
@@ -391,7 +403,7 @@ export default class ChapterVideoPlayer extends React.Component {
           className="controls"
           ref={ node => this.els.controls = node }
           onMouseEnter={this.handleControlsMouseEnter}
-          onMouseMove={ (e) => e.stopPropagation() }
+          onMouseMove={this.handleControlsMouseEnter}
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">

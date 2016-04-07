@@ -41,40 +41,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   setLocalStorageIntervalId = undefined;
   wrapperVisible = false;
 
-  componentWillReceiveProps(nextProps) {
-    const el = findDOMNode(this);
-
-    if(this.props.useFullControls !== nextProps.useFullControls
-       && !this.videoEnded && (this.lastMouseCoord || detect.isTablet)) {
-      if(nextProps.useFullControls) {
-        this.animateInControls();
-      } else {
-        this.animateOutControls();
-      }
-    }
-
-    if(this.props.currentChapter.title !== nextProps.currentChapter.title)  {
-      if(nextProps.currentChapter.title) {
-        this.animateCircleCTAText();
-      }
-    }
-
-    // Video Finished
-    if(this.props.duration && nextProps.duration &&
-      this.props.currentTime !== nextProps.currentTime) {
-      if(this.props.currentTime !== this.props.duration &&
-        nextProps.currentTime >= nextProps.duration) {
-        clearTimeout(this.hideControlsTimeoutId);
-        this.hideControlsTimeoutId = undefined;
-        this.animateInEndOverlay();
-        this.props.hideFullControls();
-      }
-    }
-
-    if(this.props.isPlaying !== nextProps.isPlaying) {
-      nextProps.isPlaying ? this.video.play() : this.video.pause();
-    }
-  }
 
   componentDidMount() {
     this.animationStates = calculateAnimationStates(this.refs);
@@ -108,6 +74,45 @@ export default class NarrativeVideoPlayer extends React.Component {
     window.addEventListener('resize', this.handleResize);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const el = findDOMNode(this);
+
+    if(this.props.useFullControls !== nextProps.useFullControls
+       && !this.videoEnded && (this.lastMouseCoord || detect.isTablet)) {
+      if(nextProps.useFullControls) {
+        this.animateInControls();
+      } else {
+        this.animateOutControls();
+      }
+    }
+
+    if(this.props.currentChapter.title !== nextProps.currentChapter.title)  {
+      if(nextProps.currentChapter.title) {
+        this.animateCircleCTAText();
+      }
+    }
+
+    // Video Finished
+    if(this.props.duration && nextProps.duration &&
+      this.props.currentTime !== nextProps.currentTime) {
+      if(this.props.currentTime !== this.props.duration &&
+        nextProps.currentTime >= nextProps.duration) {
+        clearTimeout(this.hideControlsTimeoutId);
+        this.hideControlsTimeoutId = undefined;
+        this.animateInEndOverlay();
+        this.props.hideFullControls();
+      }
+    }
+
+    if(this.props.isPlaying !== nextProps.isPlaying) {
+      nextProps.isPlaying ? this.video.play() : this.video.pause();
+    }
+
+    if(this.props.isMuted !== nextProps.isMuted) {
+      nextProps.isMuted ? this.mute() : this.unmute();
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
     this.props.hideFullControls();
@@ -132,6 +137,14 @@ export default class NarrativeVideoPlayer extends React.Component {
   clearTimeStorageInterval = () => {
     clearInterval(this.localStorageIntervalId);
     this.localStorageIntervalId = undefined;
+  };
+
+  unmute = () => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  };
+
+  mute = () => {
+    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
   };
 
   /************************/
@@ -256,6 +269,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     if(isMuted === "true") {
       this.props.mute();
+      this.video.volume = 0;
     } else {
       this.props.unmute();
     }
@@ -423,7 +437,6 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
-            muted={this.props.isMuted}
           >
           </video>
           <Link
