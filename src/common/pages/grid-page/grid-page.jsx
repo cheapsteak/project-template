@@ -57,28 +57,39 @@ export default class GridPage extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  setGridPosY = () => {
+    if (!this.state.isMenuAnimated) {
+      const menuHeight = this.refs.menu.containerEl.offsetHeight * 1.25;
+      animate.set(this.refs.grid.containerEl, {y: -menuHeight});
+    }
+  };
+
   resize = () => {
     this.handleWindowResize();
   };
 
   animateIn = (callback) => {
+    this.setState({isMenuAnimated: true});
     return animate.all([
-        animate.to(this.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, paddingTop: this.menuHeight + 20}),
+        animate.to(this.refs.grid.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, y: '0%'}),
         this.refs.menu.animateIn(0.5, 1.7, Expo.easeOut)
       ])
       .then(() => {
-        this.setState({isMenuAnimated: true});
         callback && callback()
       });
   };
 
   animateOut = (callback) => {
+    const duration = 1;
+    const ease = Expo.easeOut;
+
+    animate.set(this.containerEl, {overflow: 'hidden'});
+
     return animate.all([
-        animate.to(this.containerEl, 0, {autoAlpha: 0})
+        animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
+        animate.to(this.refs.pageWrapper, duration, {x: '100%', ease: ease})
       ])
-      .then(() => {
-        callback && callback()
-      });
+      .then(() => callback && callback());
   };
 
   handleClickFilter = () => {
@@ -89,9 +100,7 @@ export default class GridPage extends React.Component {
   handleWindowResize = () => {
     const screenWidth = window.innerWidth;
     this.setState({screenWidth});
-
-    this.menuHeight = this.refs.menu.containerEl.offsetHeight * 1.25;
-    if (this.state.isMenuAnimated) animate.set(this.containerEl, {paddingTop: this.menuHeight + 20});
+    this.setGridPosY();
   };
 
   render() {
@@ -118,8 +127,10 @@ export default class GridPage extends React.Component {
 
     return (
       <div className={`grid-page ${this.props.className}`}>
-        <GridMenu ref="menu"/>
-        {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
+        <div ref="pageWrapper" className={`page-wrapper`}>
+          <GridMenu ref="menu"/>
+          {React.cloneElement(currLayout || <div />, {ref: 'grid'})}
+        </div>
       </div>
     );
   }
