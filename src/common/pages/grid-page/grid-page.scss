@@ -4,6 +4,7 @@
   padding: 30px;
   padding-top: 0;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   .grid {
     @include scale-prop(padding-top, 120);

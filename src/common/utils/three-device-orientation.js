@@ -1,5 +1,3 @@
-import THREE from 'three';
-
 /**
  * @author richt / http://richt.me
  * @author WestLangley / http://github.com/WestLangley

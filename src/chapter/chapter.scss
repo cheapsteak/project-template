@@ -35,6 +35,7 @@ $orange: #f99100;
     // @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
     background-color: white;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 
     @media (max-width: $break-large) {
       // width: calc(100% - 50px);
