@@ -155,7 +155,7 @@ export default class LandingPage extends React.Component {
   };
 
   animateOutToVideo = (callback) => {
-    const duration = 0.8;
+    const duration = 1;
     const ease = Expo.easeOut;
 
     //this.setState({shouldShowFooter: false});
