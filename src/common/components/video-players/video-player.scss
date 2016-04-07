@@ -108,8 +108,21 @@
       @include flex-center;
       position: relative;
       height: 100%;
-      // width: 40px;
-      @include scale-prop('width', 40);
+
+      // When there is only 3 buttons (grid, chapter)
+      &:nth-child(1):nth-last-child(3),
+      &:nth-child(2):nth-last-child(2),
+      &:nth-child(3):nth-last-child(1) {
+          width: 25%;
+      }
+
+      // When there is only 4 buttons (narrative)
+      &:nth-child(1):nth-last-child(4),
+      &:nth-child(2):nth-last-child(3),
+      &:nth-child(3):nth-last-child(2),
+      &:nth-child(4):nth-last-child(1) {
+          width: 22%;
+      }
     }
 
     .button {
@@ -138,7 +151,7 @@
   }
 
   .timeline {
-    width: 86.428vw;
+    width: 86.428%;
   }
 
   .end-overlay {

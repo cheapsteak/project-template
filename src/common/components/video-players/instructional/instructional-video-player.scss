@@ -89,3 +89,10 @@
     transform: translate(-50%,-50%);
   }
 }
+
+.chapter-player {
+  video {
+    // This is to to prevent BgCover moving video
+    top: 0 !important;
+  }
+}

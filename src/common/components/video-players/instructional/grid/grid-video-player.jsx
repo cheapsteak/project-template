@@ -77,6 +77,10 @@ export default class GridVideoPlayer extends React.Component {
     animate.set(this.refs.replayLabel, this.animationStates[endingState].replayLabel);
 
     window.addEventListener('resize', this.handleResize);
+
+    if(this.props.isMuted) {
+      this.video.volume = 0;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -118,6 +122,10 @@ export default class GridVideoPlayer extends React.Component {
       this.animateOutEndOverlay();
       this.props.hideFullControls();
       this.video.play();
+    }
+
+    if(this.props.isMuted !== nextProps.isMuted) {
+      nextProps.isMuted ? this.mute() : this.unmute();
     }
   }
 
@@ -265,6 +273,14 @@ export default class GridVideoPlayer extends React.Component {
     }, 3000);
   }
 
+  unmute = () => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  };
+
+  mute = () => {
+    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+  };
+
   animateInControls = () => {
     this.wrapperVisible = true;
 
@@ -364,7 +380,6 @@ export default class GridVideoPlayer extends React.Component {
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
             poster={this.props.poster}
-            muted={this.props.isMuted}
           >
           </video>
           <div
