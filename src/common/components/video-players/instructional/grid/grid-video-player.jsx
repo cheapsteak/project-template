@@ -16,9 +16,7 @@ import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
 import ImageCard from '../../components/image-card/image-card.jsx';
 import VideoCard from '../../components/video-card/video-card.jsx';
-// import HoverCard from './grid-hover-card/grid-hover-card.jsx';
 import HoverCard from 'common/components/timeline/timeline-hover-card/timeline-hover-card';
-
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
