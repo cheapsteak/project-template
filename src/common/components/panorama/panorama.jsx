@@ -1,10 +1,5 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import THREE from 'three';
-global.THREE = THREE;
-// must use require because this line must be after THREE is defined on global
-// babel will move up imports to top of file. don't know why.
-require('three/examples/js/renderers/CanvasRenderer.js');
 import PhotoSphere from 'photo-sphere-viewer';
 import raf from 'raf';
 import deviceOrientation from '../../utils/three-device-orientation';
@@ -13,7 +8,6 @@ import detect from '../../utils/detect';
 import TransitionGroup from 'react-addons-transition-group';
 import IconClose from 'svgs/icon-close.svg';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
-
 import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
 import PanoramaMenu from './panorama-menu/panorama-menu';
