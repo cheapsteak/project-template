@@ -81,7 +81,6 @@ export default function calculateAnimationStates (els) {
         y: 0
       },
       cornerButton: {
-        delay: 0.5,
         y: -1
       },
       moreAboutCTA: {

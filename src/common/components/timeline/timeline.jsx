@@ -137,6 +137,10 @@ export default class Timeline extends React.Component {
     return srcNumber >= targetNumber - variance && srcNumber <= targetNumber + (lowerRangeOnly ? 0 : variance);
   }
 
+  getTimelineNode = () => {
+    return this.refs.timeline;
+  };
+
   render () {
     const { style, duration, items } = this.props;
     const progress = duration ? (this.state.time/duration * 100) : 0;
@@ -175,7 +179,6 @@ export default class Timeline extends React.Component {
               ? items.map(point => {
                   const style = { left: (point.time / duration * 100) + '%' };
                   const className = this.state.time === point.time ? ' selected' : '';
-                  // const isActive = this.isWithinVariance(currentTime, point.time, 0.3, true)
                   const isActive = false;
 
                   return (
@@ -186,7 +189,7 @@ export default class Timeline extends React.Component {
                       route={point.route}
                       onClick={this.handlePointClick.bind(this, point.time)}
                     >
-                      <HoverCard src={point.img} ctaText={point.title} />
+                      <HoverCard src={point.img} ctaText={point.title} getContainer={this.getTimelineNode} />
                     </HotSpot>
                   )
                 })
