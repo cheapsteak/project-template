@@ -34,8 +34,12 @@
 
   .video-overlay {
     @include absolute-100;
-    width: 100%;
-    height: 100%;
+
+    // This is a fix for video overlay leaving a small gap (not being able to cover whats behind it)
+    top: -1px;
+    left: -1px;
+    width: 101%;
+    height: 101%;
     background-color: rgba(0,0,0,0.9);
     z-index: 10;
   }
@@ -87,12 +91,12 @@
   }
 
   .control-group {
-    flex-grow: 0;
-    flex-shrink: 0;
-    //flex-basis: 140px;
+    // flex-grow: 0;
+    // flex-shrink: 0;
     display: flex;
+    flex: 1;
     align-items: center;
-    padding: 0 10px;
+    justify-content: center;
     background-color: #8F8F8F;
 
     a {
@@ -104,7 +108,8 @@
       @include flex-center;
       position: relative;
       height: 100%;
-      width: 40px;
+      // width: 40px;
+      @include scale-prop('width', 40);
     }
 
     .button {
@@ -133,7 +138,7 @@
   }
 
   .timeline {
-    flex: 1;
+    width: 86.428vw;
   }
 
   .end-overlay {

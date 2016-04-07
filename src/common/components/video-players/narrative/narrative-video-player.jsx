@@ -9,6 +9,7 @@ import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
+import RightArrowSvg from 'svgs/icon-rightarrow.svg';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
@@ -430,9 +431,12 @@ export default class NarrativeVideoPlayer extends React.Component {
             className="circle-cta"
             to={`/chapters/${this.props.currentChapter.slug}`}
           >
-            <div className="circle-cta-text">
-              <label className="stagger-cta">Discover More:</label>
-              <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+            <div className="circle-wrapper">
+              <div className="circle-cta-text">
+                <label className="stagger-cta">Discover More:</label>
+                <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+              </div>
+              <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
             </div>
           </Link>
           <div

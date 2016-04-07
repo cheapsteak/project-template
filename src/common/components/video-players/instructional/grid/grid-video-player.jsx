@@ -16,7 +16,7 @@ import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
 import ImageCard from '../../components/image-card/image-card.jsx';
 import VideoCard from '../../components/video-card/video-card.jsx';
-import HoverCard from './grid-hover-card/grid-hover-card.jsx';
+import HoverCard from 'common/components/timeline/timeline-hover-card/timeline-hover-card';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
@@ -32,6 +32,7 @@ export default class GridVideoPlayer extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
   };
 
   static nextVideoCountdownTime = 15;
@@ -125,8 +126,8 @@ export default class GridVideoPlayer extends React.Component {
     clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
     this.props.onVideoPause();
-    this.stopAnimations();
     window.removeEventListener('resize', this.handleResize);
+    this.stopAnimations();
   }
 
   get videoEnded () {
@@ -235,6 +236,14 @@ export default class GridVideoPlayer extends React.Component {
       this.props.unmute();
     } else {
       this.props.mute();
+    }
+  };
+
+  handleCloseButtonClick = () => {
+    if(this.context.previousRoute) {
+      history.back();
+    } else {
+      this.context.router.replace('/grid');
     }
   };
 
@@ -406,17 +415,16 @@ export default class GridVideoPlayer extends React.Component {
               </label>
             </div>
           </div>
-          <Link to={'/grid'}>
-            <RectangularButton
-              ref={ node => this.refs.cornerButton = findDOMNode(node) }
-              className="close-button"
-              text="Close"
-              color="#ffffff"
-              backgroundColor="#f99100"
-              hoverBackgroundColor="#f99100"
-              svgIcon={CloseSvg}
-            />
-          </Link>
+          <RectangularButton
+            ref={ node => this.refs.cornerButton = findDOMNode(node) }
+            className="close-button"
+            text="Close"
+            color="#ffffff"
+            backgroundColor="#f99100"
+            hoverBackgroundColor="#f99100"
+            svgIcon={CloseSvg}
+            onClick={this.handleCloseButtonClick}
+          />
           <Link
             onClick={this.props.onVideoPause}
             className="more-about-cta"
@@ -451,6 +459,7 @@ export default class GridVideoPlayer extends React.Component {
               </div>
             </div>
             <div
+              ref="prevButton"
               className="button-wrapper"
               onMouseEnter={this.handleMouseEnterPrevButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
@@ -466,15 +475,15 @@ export default class GridVideoPlayer extends React.Component {
                   this.state.showHoverCard === 'prev' && prevVideo
                   ? <HoverCard
                       key="prev-card"
-                      src={prevVideo.hoverCardImage}
+                      getContainer={ () => this.refs.prevButton }
                       ctaText={prevVideo.title}
-                      label="Previous"
                     />
                   : undefined
                 }
               </TransitionGroup>
             </div>
             <div
+              ref="nextButton"
               className="button-wrapper"
               onMouseEnter={this.handleMouseEnterNextButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
@@ -490,9 +499,8 @@ export default class GridVideoPlayer extends React.Component {
                   this.state.showHoverCard === 'next' && nextVideo
                   ? <HoverCard
                       key="next-card"
-                      src={nextVideo.hoverCardImage}
+                      getContainer={ () => this.refs.prevButton }
                       ctaText={nextVideo.title}
-                      label="Next"
                     />
                   : undefined
                 }

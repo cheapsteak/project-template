@@ -2,6 +2,7 @@ import React from 'react';
 import { findDOMNode } from 'react-dom';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
+import ToggleIcon from 'svgs/mobile-toggle-icon.svg';
 import TransitionGroup from 'react-addons-transition-group';
 import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
@@ -93,6 +94,12 @@ export default class MobileChapters extends React.Component {
                   </div>
                   <img className="chapter-image" src={chapter.image} />
                   <div className="panel-label">
+                    <div
+                      className="toggle-icon"
+                      style={chapter.isOpen ? {transform: 'rotate(180deg)'} : {}}
+                      dangerouslySetInnerHTML={{ __html: ToggleIcon }}
+                    >
+                    </div>
                     <span>{ chapter.isOpen ? 'Close' : 'Expand' }</span>
                   </div>
                 </div>
