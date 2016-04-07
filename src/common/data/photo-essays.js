@@ -123,19 +123,16 @@ export default [
         description: 'Scholars learn the latest moves during dance class.',
         image: `${config.ASSET_PATH}/images/sample-photo-1.jpg`
       },
-      ,
       { 
         id: '7',
         description: 'Two scholars go head to head in their chess elective.',
         image: `${config.ASSET_PATH}/images/sample-photo-2.jpg`
       },
-      ,
       { 
         id: '8',
         description: 'Scholars fill the room with music in band class.',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
       },
-      ,
       { 
         id: '9',
         description: 'Our entrepreneurship scholars pitch their business ideas to a panel.',
@@ -146,13 +143,11 @@ export default [
         description: 'Scholars learn strategy and perseverance in their soccer class.',
         image: `${config.ASSET_PATH}/images/sample-photo-2.jpg`
       },
-      ,
       { 
         id: '8',
         description: 'Our volleyball players compete and master coordination in their sports elective.',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
       },
-      ,
       { 
         id: '9',
         description: 'Scholars learn proper technique in their fencing elective.',
@@ -199,8 +194,7 @@ export default [
         id: '2',
         description: 'Elective Choice: In middle school, scholars can choose elective courses from many options. They can follow their passions, and discover new ones too!',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
-      }
-      ,
+      },
       { 
         id: '3',
         description: 'Technology: Our scholars are prepared for the future and adept in their use of technology. They use Chromebooks for much of their classwork, research and writing, and all scholars have a  school email account for communication.',
