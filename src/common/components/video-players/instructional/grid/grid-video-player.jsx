@@ -14,7 +14,7 @@ import PillButton from 'common/components/pill-button/pill-button';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
-import ImageCard from '../../components/image-card/image-card.jsx';
+import ImageCard from '../../components/image-card-one/image-card-one.jsx';
 import VideoCard from '../../components/video-card/video-card.jsx';
 import HoverCard from 'common/components/timeline/timeline-hover-card/timeline-hover-card';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
