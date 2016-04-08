@@ -21,6 +21,7 @@ import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
+import PlayButton from 'common/components/play-button/play-button';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -36,7 +37,8 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   state = {
     showEndingCTA: false,
-    isReady: false
+    isReady: false,
+    isMobile: detect.isMobile
   };
 
   hideControlsTimeoutId = undefined;
@@ -67,9 +69,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       }
     }
 
-    if (detect.isTablet && !this.video.paused) { // TODO: make sure no double click needed when coming from other pages0
-      this.userInteractionHappened = true;
-    } else {
+    if (!detect.isMobile) {
       this.props.isPlaying && this.video.play();
     }
 
@@ -399,14 +399,15 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleTouchStart = () => {
-    if (this.userInteractionHappened) {
-      this.props.showFullControls();
-      this.setHideControlsTimeout();
-    } else {
-      this.userInteractionHappened = true;
+    if (!this.userHasInteracted) {
+      this.userHasInteracted = true;
       this.video.play();
       this.props.onVideoPlay();
+      animate.to(this.refs.playButton.containerEl, 0.3, {autoAlpha: 0});
     }
+
+    this.props.showFullControls();
+    this.setHideControlsTimeout();
   };
 
   render() {
@@ -447,14 +448,20 @@ export default class NarrativeVideoPlayer extends React.Component {
             ref={(node) => this.video = node }
             src={this.props.src}
             preload="auto"
-            autoPlay={true}
+            autoPlay={false}
             onLoadedMetadata={this.handleMetadataLoaded}
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
+            poster={this.state.isMobile && !localStorage.getItem('narrative-video-time') ? this.props.poster : ''}
             style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
+
+          {
+            this.state.isMobile ? <PlayButton ref="playButton" label="Play"/> : null
+          }
+
           <Link
             ref={node => this.refs.circleCTA = findDOMNode(node)}
             className="circle-cta"
@@ -528,7 +535,8 @@ export default class NarrativeVideoPlayer extends React.Component {
           className="controls"
           onMouseEnter={ this.handleMouseEnterControls }
           onMouseMove={ e => e.stopPropagation() }
-          onMouseLeave={ this.handleMouseLeaveControls }
+          onTouchMove={ this.handleMouseEnterControls }
+          onTouchEnd={ this.setHideControlsTimeout }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">

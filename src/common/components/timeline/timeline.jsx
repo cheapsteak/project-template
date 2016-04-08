@@ -4,6 +4,7 @@ import HotSpot from './timeline-hotspot/timeline-hotspot.jsx';
 import HoverCard from './timeline-hover-card/timeline-hover-card.jsx';
 import animate from 'gsap-promise';
 import _ from 'lodash';
+import detect from '../../utils/detect/';
 
 export default class Timeline extends React.Component {
 
@@ -45,10 +46,11 @@ export default class Timeline extends React.Component {
     this.changeCurrentTime(newTime);
   };
 
-  getCurrentTime(mouseEvent) {
+  getCurrentTime(e) {
     // Gets current time based on the mouses positionX on the timeline
     const el = findDOMNode(this)
-    const positionX = mouseEvent.clientX - el.getBoundingClientRect().left;
+    const coordX = (detect.isMobile) ? e.targetTouches[0].clientX : e.clientX;
+    const positionX = coordX - el.getBoundingClientRect().left;
 
     return positionX >= 0 ? positionX / el.offsetWidth * this.props.duration : 0;
   }
@@ -61,6 +63,7 @@ export default class Timeline extends React.Component {
   };
 
   handleMouseEnter = (e) => {
+    if (detect.isMobile) return;
     const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
 
     animate.to(hoveredTimeStamp, 0.3, { top: -22});
@@ -69,6 +72,7 @@ export default class Timeline extends React.Component {
   };
 
   handleMouseLeave = (e) => {
+    if (detect.isMobile) return;
     const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
 
     this.mouseDown = false;
@@ -82,24 +86,26 @@ export default class Timeline extends React.Component {
     const el = findDOMNode(this)
     const { hoveredTimeStampContainer, progressHead } = this.refs;
     const componentClientRect = el.getBoundingClientRect();
-    const positionX = e.clientX - componentClientRect.left;
+    const coordX = (detect.isMobile) ? e.targetTouches[0].clientX : e.clientX;
+    const positionX = coordX - componentClientRect.left;
     const mousePositionTime = this.getCurrentTime(e);
     const styledTime = this.secondsToMinutes(mousePositionTime);
     const progressHeadX = progressHead.getBoundingClientRect().left;
     const pointEls = el.querySelectorAll('.timeline-hotspot');
 
-    this.styledCurrentTime !== this.state.hoveredTime && this.setState({ hoveredTime: styledTime });
+    if (!detect.isMobile) {
+      this.styledCurrentTime !== this.state.hoveredTime && this.setState({ hoveredTime: styledTime });
+      animate.set(hoveredTimeStampContainer, { x: coordX - componentClientRect.left - hoveredTimeStampContainer.clientWidth/2 });
 
-    animate.set(hoveredTimeStampContainer, { x: e.clientX - componentClientRect.left - hoveredTimeStampContainer.clientWidth/2 });
-
-    if(_.some(pointEls, (point) => this.isWithinVariance(e.clientX, point.getBoundingClientRect().left, 12))
-      || this.isWithinVariance(e.clientX, progressHeadX, 40)
-      || this.isWithinVariance(e.clientX, componentClientRect.left, 15)
-      || this.isWithinVariance(e.clientX, componentClientRect.right, 50)
+      if(_.some(pointEls, (point) => this.isWithinVariance(coordX, point.getBoundingClientRect().left, 12))
+        || this.isWithinVariance(coordX, progressHeadX, 40)
+        || this.isWithinVariance(coordX, componentClientRect.left, 15)
+        || this.isWithinVariance(coordX, componentClientRect.right, 50)
       ) {
-      animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
-    } else {
-      animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
+        animate.to(hoveredTimeStampContainer, 0.1, { opacity: 0 });
+      } else {
+        animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
+      }
     }
 
     if(this.mouseDown) {
@@ -108,6 +114,7 @@ export default class Timeline extends React.Component {
   };
 
   handlePointClick = (time) => {
+    if (detect.isMobile) return;
     this.changeCurrentTime(time);
   };
 
@@ -155,6 +162,9 @@ export default class Timeline extends React.Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           onMouseMove={this.handleMouseMove}
+          onTouchMove={this.handleMouseMove}
+          onTouchStart={this.handleMouseDown}
+          onTouchEnd={this.handleMouseUp}
         >
           { /* The Scrubber / The element to appears when mouse hovers over the timeline */ }
           <div

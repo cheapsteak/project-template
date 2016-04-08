@@ -217,7 +217,8 @@ export default class Panorama extends React.Component {
       time_anim: false,
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
-      mousewheel: false
+      mousewheel: false,
+      //mousemove: false
     });
 
     this.panorama.on('ready', () => {
