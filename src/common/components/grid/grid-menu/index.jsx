@@ -109,7 +109,7 @@ export default class GridMenu extends React.Component {
     if (this.context.previousRoute) {
       this.context.router.goBack();
     } else {
-      this.context.router.replace('/narrative-video');
+      this.context.router.replace('/');
     }
   };
 
