@@ -61,7 +61,15 @@ function calculateAnimationStates(els) {
   };
 };
 
-export default class LearnMoreCard extends React.Component {
+export default class ImageCardOne extends React.Component {
+
+  static propTypes = {
+    routes: React.PropTypes.string,
+    image: React.PropTypes.string,
+    label: React.PropTypes.string,
+    title: React.PropTypes.string,
+    gridButton: React.PropTypes.bool,
+  };
 
   componentDidMount() {
     const { card, frontOverlay, backOverlay, button, label, title } = this.refs;
@@ -102,7 +110,7 @@ export default class LearnMoreCard extends React.Component {
     return (
       <div
         ref="card"
-        className="image-card"
+        className="image-card-one"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />

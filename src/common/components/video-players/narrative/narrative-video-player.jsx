@@ -15,7 +15,8 @@ import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import ImageCard from '../components/image-card/image-card.jsx';
+import ChaptersImageCard from '../components/image-card-one/image-card-one.jsx';
+import CareerImageCard from '../components/image-card-two/image-card-two.jsx';
 import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
@@ -477,19 +478,28 @@ export default class NarrativeVideoPlayer extends React.Component {
             >
             {
               this.state.showEndingCTA
-              ? <ImageCard
-                  gridButton={true}
-                  key={'currentId'}
-                  label="See All"
-                  title="Chapters"
-                  route="/grid"
-                  image={`${ASSET_PATH}/narrative-ending-card.jpg`}
-                />
+              ? [
+                  <ChaptersImageCard
+                    gridButton={true}
+                    key={'chapter-card'}
+                    label="See All"
+                    title="Chapters"
+                    route="/grid"
+                    image={`${ASSET_PATH}/narrative-ending-card.jpg`}
+                  />,
+                  <CareerImageCard
+                    key={'careers-card'}
+                    label="Careers"
+                    title="Join Our<br/>Team"
+                    route="/grid"
+                    image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                  />
+                ]
               : undefined
             }
             </TransitionGroup>
             <div
-              className="replay-group replay-group-grid"
+              className="replay-group"
             >
               <div
                 ref="replayButton"

@@ -76,7 +76,11 @@
     z-index: 100;
   }
 
-  .image-card {
-    left: calc(50% - 175px);
+  .image-card-one {
+    left: calc(50% - 375px);
+  }
+
+  .image-card-two {
+    left: calc(50% + 20px);
   }
 }
