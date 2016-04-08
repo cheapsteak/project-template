@@ -95,7 +95,7 @@ export default class GridVideoPlayer extends React.Component {
           if(this.state.nextVideoTimeLeft > 0) {
             this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
-            this.context.router.push(this.props.nextVideo.gridRoute);
+            this.context.router.replace(this.props.nextVideo.gridRoute);
           }
         }, 1000);
       } else if (this.props.currentTime >= this.props.duration

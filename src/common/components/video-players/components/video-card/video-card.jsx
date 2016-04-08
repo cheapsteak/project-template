@@ -1,6 +1,5 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import PlayButton from '../../../play-button/play-button.jsx';
 import BgCover from 'background-cover';
@@ -75,6 +74,10 @@ function calculateAnimationStates(els) {
 
 export default class NextVideoCard extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
   componentDidMount() {
     const { card, topUI, button, buttonShadow, title, counterText } = this.refs;
 
@@ -123,8 +126,13 @@ export default class NextVideoCard extends React.Component {
     this.video.play();
   };
 
+
   handleMouseLeave = () => {
     this.video.pause();
+  };
+
+  handleClick = () => {
+    this.context.router.replace(this.props.route);
   };
 
   handleResize = () => {
@@ -139,7 +147,7 @@ export default class NextVideoCard extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Link to={this.props.route || '/'}>
+        <div onClick={this.handleClick}>
           <video
             ref={ node => this.video = node }
             src={this.props.video}
@@ -166,7 +174,7 @@ export default class NextVideoCard extends React.Component {
           >
             {`Starting in ${this.props.timeLeft || 0}...`}
           </div>
-        </Link>
+        </div>
       </div>
     )
   }
