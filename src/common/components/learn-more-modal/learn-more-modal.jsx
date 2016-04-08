@@ -7,6 +7,11 @@ import RectangularButton from 'common/components/rectangular-button/rectangular-
 
 export default class LearnMoreModal extends React.Component {
 
+  static propTypes = {
+    title: React.PropTypes.string,
+    content: React.PropTypes.string
+  }
+
   componentDidMount() {
     animate.set(this.refs.modal, {opacity: 0});
     animate.set(this.refs.content, {opacity: 0});
@@ -69,20 +74,8 @@ export default class LearnMoreModal extends React.Component {
           ref="content"
           className="modal-content"
         >
-          <h1>About</h1>
-          <div className="text-wrapper">
-            {
-              items.map((paragraph, i) => {
-                return (
-                  <p
-                    key={i}
-                  >
-                    {paragraph}
-                  </p>
-                )
-              })
-            }
-          </div>
+          <h1 dangerouslySetInnerHTML={{ __html: this.props.title }}></h1>
+          <div className="text-wrapper" dangerouslySetInnerHTML={{ __html: this.props.content }}></div>
         </div>
       </div>
     )
