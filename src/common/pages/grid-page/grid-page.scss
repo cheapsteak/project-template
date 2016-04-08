@@ -1,12 +1,19 @@
 .grid-page {
   @include absolute-100;
   background-color: #000;
-  padding: 30px;
-  padding-top: 0;
+  overflow-x: hidden;
   overflow-y: scroll;
+  box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
 
+  .page-wrapper {
+    @include absolute-100;
+    height: auto;
+  }
+
   .grid {
-    @include scale-prop(padding-top, 120);
+    width: calc(100% - 60px);
+    margin: 30px;
+    @include scale-prop(padding-top, 90);
   }
 }

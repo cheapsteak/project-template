@@ -26,6 +26,10 @@ export default class ChapterVideoPlayer extends React.Component {
     timeline: React.PropTypes.array
   };
 
+  state = {
+    isReady: false
+  }
+
   static contextTypes = {
     router: React.PropTypes.object
   };
@@ -212,6 +216,7 @@ console.log('resize');
   handleMetadataLoaded = () => {
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
     this.handleResize();
+    this.setState({isReady: true});
   };
 
   handleTimeUpdate = () => {
@@ -358,6 +363,7 @@ console.log('resize');
                 onEnded={this.handleVideoPlayPause}
                 onTimeUpdate={this.handleTimeUpdate}
                 poster={this.props.poster}
+                style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
               >
               </video>
               : undefined

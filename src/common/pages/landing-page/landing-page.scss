@@ -14,7 +14,7 @@ $orange: #f99100;
     @include gpu;
   }
 
-  .main-container {
+  .page-wrapper {
     @include absolute-100;
     @include flex-center;
   }
