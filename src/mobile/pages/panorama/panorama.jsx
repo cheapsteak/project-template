@@ -4,7 +4,9 @@ import * as headerActionCreators from 'common/components/mobile-header/mobile-he
 import Panorama from 'common/components/panorama/panorama-redux.jsx';
 import model from '../../model/panorama-model.js';
 import store from 'common/store';
+import pageTransitions from '../page-transitions.jsx';
 
+@pageTransitions
 export default class MobileArticle extends React.Component {
 
   state = {
