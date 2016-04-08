@@ -41,6 +41,10 @@ export default class TimelineHoverCard extends React.Component {
     .then(callback)
   }
 
+  componentWillUnmount() {
+    TweenMax.killTweensOf([ this.refs.line, this.refs.background ]);
+  }
+
   render() {
     return (
         <div

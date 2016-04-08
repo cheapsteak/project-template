@@ -12,6 +12,7 @@ import { ERROR } from 'common/actions/handle-error.js';
 
 const defState = {
   currentVideo: undefined,
+  prevVideo: undefined,
   nextVideo: undefined
 };
 
@@ -34,7 +35,7 @@ function video(state = {}, action) {
       return Object.assign({}, state, { isPlaying: false });
 
     case SET_INSTRUCTIONAL_VIDEO:
-      return Object.assign({}, defVideoValues, action.video);
+      return Object.assign({}, defVideoValues, action.video, action.options || {});
 
     case SET_INSTRUCTIONAL_VIDEO_OPTIONS:
       return Object.assign({}, state, action.options);
@@ -54,9 +55,9 @@ function videos(state = defState, action) {
   switch (action.type) {
     case SET_INSTRUCTIONAL_VIDEO:
       return Object.assign({}, state, { 
-        currentVideo: video(state.currentVideo, { type: action.type, video: action.currentVideo }),
-        prevVideo: video(state.currentVideo, { type: action.type, video: action.prevVideo }),
-        nextVideo: video(state.currentVideo, { type: action.type, video: action.nextVideo })
+        currentVideo: video(state.currentVideo, { type: action.type, video: action.currentVideo, options: action.options }),
+        prevVideo: video(state.currentVideo, { type: action.type, video: action.prevVideo, options: action.options }),
+        nextVideo: video(state.currentVideo, { type: action.type, video: action.nextVideo, options: action.options })
       });
 
     case PLAY_INSTRUCTIONAL_VIDEO:
