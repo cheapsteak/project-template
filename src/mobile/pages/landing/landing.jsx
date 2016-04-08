@@ -31,10 +31,7 @@ export default class Landing extends React.Component {
           <h3>Welcome to our</h3>
           <h1>Middle</h1>
           <h1>School Tour</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore.
-          </p>
+          <p>Take an inside look at our culture and curriculum through the eyes of our scholars.</p>
           <a href={narrativeVideoData.src} target="__blank">
             <Button
               text="Start the Tour"

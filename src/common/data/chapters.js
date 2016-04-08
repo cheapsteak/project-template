@@ -14,7 +14,7 @@ export default [
       thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
     },
     scholar: 'Arianne',
-    instructionalVideos: [],
+    instructionalVideos: ['welcome'],
     panoramas: ['hallway', 'science', 'math', 'literacy-and-writing'],
     photoEssays: [],
     articles: ['welcome-1', 'welcome-2'],
@@ -142,7 +142,7 @@ export default [
     time: 240,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Character Development.',
+      description: 'Building the skills for a lifetime of success',
       bgVideoUrl: `http://successacademy.jam3.net/videos/character.mp4`,
       poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
       thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
@@ -161,7 +161,7 @@ export default [
     time: 275,
     hero: {
       cta: ctaText,
-      description: 'At Success Academy we completely redefined how to teach Parental Investment.',
+      description: 'Working together to support our scholars',
       bgVideoUrl: `http://successacademy.jam3.net/videos/parental.mp4`,
       poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
       thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`

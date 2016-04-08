@@ -38,7 +38,6 @@ class PhotoEssay extends React.Component {
           <img src={photo.image}/>
         </div>
         <div className="photo-description">
-          <h3>About this picture</h3>
           <p>{ photo.description }</p>
         </div>
         <div className="photo-controls">
