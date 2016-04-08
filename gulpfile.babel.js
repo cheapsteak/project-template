@@ -8,7 +8,6 @@ import sass from 'gulp-sass';
 import notifier from 'node-notifier';
 import path from 'path';
 import prefix from 'gulp-autoprefixer';
-import rev from 'gulp-rev';
 import source from 'vinyl-source-stream';
 import exorcist from 'exorcist';
 import transform from 'vinyl-transform';
@@ -94,7 +93,6 @@ gulp.task('scripts', () => {
   if(production) {
     pipeline = pipeline
       .pipe(streamify(uglify()))
-      .pipe(streamify(rev()));
   } else {
     pipeline = pipeline.pipe(transform(() => {
       return exorcist(path.join(paths.scripts.destination, paths.scripts.filename) + '.map');
@@ -160,9 +158,7 @@ gulp.task('styles', () => {
   .pipe(prefix(paths.styles.browserVersions))
   .pipe(concat(paths.styles.filename));
 
-  if(production) {
-    pipeline = pipeline.pipe(rev());
-  } else {
+  if(!production) {
     pipeline = pipeline.pipe(sourcemaps.write('.'));
   }
 
