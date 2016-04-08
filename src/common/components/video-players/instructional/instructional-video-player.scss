@@ -11,6 +11,7 @@
     @include scale-prop('bottom', 65);
     @include scale-prop('right', 20);
     z-index: 100;
+    @include autoAlpha-0;
   }
 
   .close-button {

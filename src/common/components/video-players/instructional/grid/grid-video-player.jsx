@@ -44,7 +44,8 @@ export default class GridVideoPlayer extends React.Component {
   state = {
     showEndingCTA: false,
     nextVideoTimeLeft: GridVideoPlayer.nextVideoCountdownTime,
-    showHoverCard: undefined
+    showHoverCard: undefined,
+    isReady: false
   };
 
   componentWillMount() {
@@ -172,6 +173,7 @@ export default class GridVideoPlayer extends React.Component {
     }
 
     this.handleResize();
+    this.setState({isReady: true});
   };
 
   handleTimeUpdate = () => {
@@ -353,6 +355,17 @@ export default class GridVideoPlayer extends React.Component {
     TweenMax.killTweensOf(_.values(this.refs));
   }
 
+  handleTouchStart = () => {
+    if (this.userInteractionHappened) {
+      this.props.showFullControls();
+      this.setHideControlsTimeout();
+    } else {
+      this.userInteractionHappened = true;
+      this.video.play();
+      this.props.onVideoPlay();
+    }
+  };
+
 
   render() {
     const { style, modelSlug, prevVideo, nextVideo, className } = this.props;
@@ -366,6 +379,7 @@ export default class GridVideoPlayer extends React.Component {
         className={`video-player instructional-video-player grid-player ${className || ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
+        onTouchStart={this.handleTouchStart}
       >
         <div
           ref="videoWrapper"
@@ -373,13 +387,14 @@ export default class GridVideoPlayer extends React.Component {
         >
           <video
             id={this.videoId}
-            preload="metadata"
+            preload="auto"
             ref={(node) => this.video = node }
             src={this.props.src}
             onLoadedMetadata={this.handleMetadataLoaded}
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
             poster={this.props.poster}
+            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
           <div

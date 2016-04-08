@@ -34,7 +34,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   static muteStorageId = 'narrative-video-mute-status';
 
   state = {
-    showEndingCTA: false
+    showEndingCTA: false,
+    isReady: false
   };
 
   hideControlsTimeoutId = undefined;
@@ -130,7 +131,11 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   setTimeStorageInterval = () => {
     this.localStorageIntervalId = setInterval(() => {
-      localStorage.setItem(NarrativeVideoPlayer.timeStorageId, this.video.currentTime);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.timeStorageId, this.video.currentTime);
+      } catch (error) {
+        return false;
+      }
     }, 1000);
   };
 
@@ -276,6 +281,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     this.videoResize();
     this.setTimeStorageInterval();
+    this.setState({isReady: true});
   };
 
   videoResize = () => {
@@ -375,10 +381,18 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleVolumeClick = (e) => {
     if(this.props.isMuted) {
-      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, false);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.muteStorageId, false);
+      } catch (error) {
+        return false;
+      }
       this.props.unmute();
     } else {
-      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, true);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.muteStorageId, true);
+      } catch (error) {
+        return false;
+      }
       this.props.mute();
     }
   };
@@ -431,12 +445,13 @@ export default class NarrativeVideoPlayer extends React.Component {
           <video
             ref={(node) => this.video = node }
             src={this.props.src}
-            preload="metadata"
+            preload="auto"
             autoPlay={true}
             onLoadedMetadata={this.handleMetadataLoaded}
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
+            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
           <Link

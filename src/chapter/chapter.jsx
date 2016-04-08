@@ -22,6 +22,10 @@ import detect from 'common/utils/detect';
 
 export default class Chapter extends React.Component {
 
+  state = {
+    isReady: false
+  };
+
   cleanupOperations = [];
 
   componentWillMount() {
@@ -127,6 +131,11 @@ export default class Chapter extends React.Component {
     BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
   };
 
+  handleMetadataLoaded = () => {
+    this.handleResize();
+    this.setState({isReady: true});
+  };
+
   render() {
     if (!this.state.data) return <div/>;
 
@@ -169,7 +178,8 @@ export default class Chapter extends React.Component {
             loop={true}
             src={this.state.data.hero.bgVideoUrl}
             poster={this.state.data.hero.poster}
-            onLoadedMetadata={this.handleResize}
+            onLoadedMetadata={this.handleMetadataLoaded}
+            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           ></video>
           <div className={`hero-content`}>
             <div className={`hero-cta`}>{this.state.data.hero.cta}</div>

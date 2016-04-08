@@ -8,6 +8,7 @@
 
   .page-wrapper {
     @include absolute-100;
+    height: auto;
   }
 
   .grid {

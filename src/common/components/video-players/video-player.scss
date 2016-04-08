@@ -93,6 +93,7 @@
   .control-group {
     // flex-grow: 0;
     // flex-shrink: 0;
+    @include scale-prop(min-width, 180); // needed for tablet portrait
     display: flex;
     flex: 1;
     align-items: center;

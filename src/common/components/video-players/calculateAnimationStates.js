@@ -27,24 +27,29 @@ export default function calculateAnimationStates (els) {
       endingOverlay: {
         delay: 0.1,
         display: 'none',
-        opacity: 0
+        opacity: 0,
+        visibility: 'hidden',
       },
       replayButton: {
         opacity: 0,
+        visibility: 'hidden',
         y: 100
       },
       replayLabel: {
         opacity: 0,
+        visibility: 'hidden',
         y: 100
       },
       cornerButton: {
         y: -els.cornerButton.offsetHeight
       },
       moreAboutCTA: {
-        opacity: 0
+        opacity: 0,
+        visibility: 'hidden',
       },
       circleCTA: {
         opacity: 0,
+        visibility: 'hidden',
         y: 50
       },
       controls: {
@@ -73,11 +78,13 @@ export default function calculateAnimationStates (els) {
       replayButton: {
         delay: 0.8,
         opacity: 1,
+        visibility: 'visible',
         y: 0
       },
       replayLabel: {
         delay: 1.2,
         opacity: 1,
+        visibility: 'visible',
         y: 0
       },
       cornerButton: {
@@ -85,10 +92,12 @@ export default function calculateAnimationStates (els) {
       },
       moreAboutCTA: {
         delay: 0.3,
-        opacity: 1
+        opacity: 1,
+        visibility: 'visible',
       },
       circleCTA: {
         opacity: 1,
+        visibility: 'visible',
         y: 0
       },
       controls: {
@@ -98,7 +107,8 @@ export default function calculateAnimationStates (els) {
     },
     end: {
       overlay: {
-        opacity: 1
+        opacity: 1,
+        visibility: 'visible',
       }
     }
   };
