@@ -26,7 +26,6 @@ export default function calculateAnimationStates (els) {
       },
       endingOverlay: {
         delay: 0.1,
-        display: 'none',
         opacity: 0,
         visibility: 'hidden',
       },
@@ -41,7 +40,7 @@ export default function calculateAnimationStates (els) {
         y: 100
       },
       cornerButton: {
-        y: -els.cornerButton.offsetHeight
+        y: -els.cornerButton.offsetHeight - 5
       },
       moreAboutCTA: {
         opacity: 0,
@@ -72,7 +71,7 @@ export default function calculateAnimationStates (els) {
         visibility: 'visible'
       },
       endingOverlay: {
-        display: 'block',
+        visibility: 'visible',
         opacity: 0.99
       },
       replayButton: {

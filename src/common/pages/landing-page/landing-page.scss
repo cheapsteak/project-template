@@ -52,7 +52,7 @@ $orange: #f99100;
 
     .title {
       @include scale-prop(font-size, 100);
-      @include scale-prop(margin-top, 100);
+      @include scale-prop(margin-top, 60);
       @include scale-prop(margin-bottom, 40);
       color: $orange;
       text-transform: capitalize;

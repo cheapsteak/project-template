@@ -14,7 +14,7 @@ import PillButton from 'common/components/pill-button/pill-button';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
-import ImageCard from '../../components/image-card/image-card.jsx';
+import ImageCard from '../../components/image-card-one/image-card-one.jsx';
 import VideoCard from '../../components/video-card/video-card.jsx';
 import HoverCard from 'common/components/timeline/timeline-hover-card/timeline-hover-card';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
@@ -96,7 +96,7 @@ export default class GridVideoPlayer extends React.Component {
           if(this.state.nextVideoTimeLeft > 0) {
             this.setState({ nextVideoTimeLeft: this.state.nextVideoTimeLeft - 1 })
           } else {
-            this.context.router.push(this.props.nextVideo.gridRoute);
+            this.context.router.replace(this.props.nextVideo.gridRoute);
           }
         }, 1000);
       } else if (this.props.currentTime >= this.props.duration
@@ -134,7 +134,7 @@ export default class GridVideoPlayer extends React.Component {
     clearInterval(this.nextVideoIntervalId);
     clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
-    this.props.onVideoPause();
+    // this.props.onVideoPause();
     window.removeEventListener('resize', this.handleResize);
     this.stopAnimations();
   }
@@ -200,6 +200,16 @@ export default class GridVideoPlayer extends React.Component {
   handleMouseEnterNextButton = () => {
     this.state.showHoverCard !== 'next' && this.setState({ showHoverCard: 'next' });
   }
+
+  handlePrevClick = () => {
+    const prevVideoRoute = this.props.prevVideo ? this.props.prevVideo.gridRoute : '/';
+    this.context.router.replace(prevVideoRoute);
+  };
+
+  handleNextClick = () => {
+    const nextVideoRoute = this.props.nextVideo ? this.props.nextVideo.gridRoute : '/';
+    this.context.router.replace(nextVideoRoute);
+  };
 
   handleMouseLeaveNextPrevButtons = () => {
     this.setState({ showHoverCard: undefined });
@@ -494,12 +504,12 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterPrevButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link
-                to={prevVideoRoute}
+              <div
                 className="button"
+                onClick={this.handlePrevClick}
                 dangerouslySetInnerHTML={{__html: BackButtonSvg}}
               >
-              </Link>
+              </div>
               <TransitionGroup>
                 {
                   this.state.showHoverCard === 'prev' && prevVideo
@@ -518,12 +528,12 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterNextButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link
-                to={nextVideoRoute}
+              <div
                 className="button"
+                onClick={this.handleNextClick}
                 dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
               >
-              </Link>
+              </div>
               <TransitionGroup>
                 {
                   this.state.showHoverCard === 'next' && nextVideo
