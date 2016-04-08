@@ -7,19 +7,25 @@ import * as headerActionCreators from 'common/components/mobile-header/mobile-he
 import store from 'common/store';
 import model from '../../model/instructional-videos-model.js';
 import config from '../../../../config.js';
+import pageTransitions from '../page-transitions.jsx';
 
-export default class MobileChapters extends React.Component {
+@pageTransitions
+export default class MobileVideos extends React.Component {
 
   data = model.getAll();
 
   componentDidMount() {
     store.dispatch(headerActionCreators.setHeaderSettings({
       color: '#565D60',
-      backgroundColor: 'white'
+      backgroundColor: '#ffffff'
     }));
   }
 
-  componentWillUnmount() {
+  componentWillReceiveProps(nextProps) {
+    store.dispatch(headerActionCreators.setHeaderSettings({
+      color: '#565D60',
+      backgroundColor: '#ffffff'
+    }));
   }
 
   render () {

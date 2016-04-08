@@ -10,7 +10,9 @@ import * as headerActionCreators from 'common/components/mobile-header/mobile-he
 import * as chapterActionCreators from './chapters-actions.js';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
+import pageTransitions from '../page-transitions.jsx';
 
+@pageTransitions
 export default class MobileChapters extends React.Component {
 
   state = {
@@ -28,15 +30,28 @@ export default class MobileChapters extends React.Component {
       }
     });
 
-    store.dispatch(headerActionCreators.setHeaderSettings({
-      color: '#565D60',
-      backgroundColor: 'white'
-    }));
+    this.setHeader(this.props);
   }
 
   componentWillUnmount() {
     this.unsubscribe();
     store.dispatch(chapterActionCreators.closeAllChapters());
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setHeader(nextProps);
+  }
+
+  setHeader = (props) => {
+    const { pathname } = props.location;
+    let key = pathname.split('/')[3];
+
+    if(!key) {
+      store.dispatch(headerActionCreators.setHeaderSettings({
+        color: '#565D60',
+        backgroundColor: 'white'
+      }));
+    }
   }
 
   getDistanceFromTop = (node) => {
@@ -74,6 +89,9 @@ export default class MobileChapters extends React.Component {
   };
 
   render () {
+    const { pathname } = this.props.location;
+    let key = pathname.split('/')[3] || 'root';
+
     return (
       <div ref="container" className="mobile-chapters">
         {
@@ -114,13 +132,20 @@ export default class MobileChapters extends React.Component {
                         articles={chapter.articles}
                         podcast={chapter.podcast}
                       />
-                    : null
+                    : <div />
                   }
                 </TransitionGroup>
               </div>
             )
           })
         }
+        <TransitionGroup component="div">
+          {
+            this.props.children
+            ? React.cloneElement(this.props.children, { key: key, className: 'overlay-content' })
+            : <div />
+          }
+        </TransitionGroup>
       </div>
     )
   }
