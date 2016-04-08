@@ -20,6 +20,8 @@ import HoverCard from 'common/components/timeline/timeline-hover-card/timeline-h
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
+import PlayButton from 'common/components/play-button/play-button';
+import detect from 'common/utils/detect';
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -45,7 +47,8 @@ export default class GridVideoPlayer extends React.Component {
     showEndingCTA: false,
     nextVideoTimeLeft: GridVideoPlayer.nextVideoCountdownTime,
     showHoverCard: undefined,
-    isReady: false
+    isReady: false,
+    isMobile: detect.isMobile
   };
 
   componentWillMount() {
@@ -168,7 +171,7 @@ export default class GridVideoPlayer extends React.Component {
     this.video.currentTime = this.props.currentTime;
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
 
-    if(this.props.isPlaying) {
+    if(this.props.isPlaying && !detect.isMobile) {
       this.video.play();
     }
 
@@ -366,14 +369,15 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   handleTouchStart = () => {
-    if (this.userInteractionHappened) {
-      this.props.showFullControls();
-      this.setHideControlsTimeout();
-    } else {
-      this.userInteractionHappened = true;
+    if (!this.userHasInteracted) {
+      this.userHasInteracted = true;
       this.video.play();
       this.props.onVideoPlay();
+      animate.to(this.refs.playButton.containerEl, 0.3, {autoAlpha: 0});
     }
+
+    this.props.showFullControls();
+    this.setHideControlsTimeout();
   };
 
 
@@ -407,6 +411,11 @@ export default class GridVideoPlayer extends React.Component {
             style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
+
+          {
+            this.state.isMobile ? <PlayButton ref="playButton" label="Play"/> : null
+          }
+
           <div
             ref="endingOverlay"
             className="end-overlay"
@@ -487,6 +496,8 @@ export default class GridVideoPlayer extends React.Component {
          ref="controls"
          className="controls"
          onMouseEnter={this.handleControlsMouseEnter}
+         onTouchMove={ this.handleControlsMouseEnter}
+         onTouchEnd={ this.setHideControlsTimeout }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">

@@ -83,4 +83,14 @@
   .image-card-two {
     left: calc(50% + 20px);
   }
+
+  .progress-play-button {
+    @include scale-prop('width', 110);
+    @include scale-prop('height', 110);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
 }
