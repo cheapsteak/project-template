@@ -66,13 +66,13 @@ export default class GridMenu extends React.Component {
     const ctaItems = [this.refs.returnIcon, this.refs.returnText, this.refs.filterIcon, this.refs.filterText, this.refs.closeIcon, this.refs.closeText];
     const afterTabs = [this.refs.returnTabAfter, this.refs.filterTabAfter, this.refs.closeTabAfter];
 
-    animate.set(ctaItems, {y: 20, autoAlpha: 0});
+    animate.set(ctaItems, {y: 20, autoAlpha: 0, transition: 'none'});
     animate.set(afterTabs, {y: '-100%'});
 
     return animate.all([
       animate.to(this.containerEl, duration, {y: '0%', ease: ease, delay: delay}),
       animate.to(afterTabs, 0.6, {y: '0%', ease: ease, delay: delay + 0.1}),
-      animate.staggerTo(ctaItems, 0.08, {y: 0, autoAlpha: 0.8, delay: delay + 0.2, ease: ease}, 0.1)
+      animate.staggerTo(ctaItems, 0.8, {y: 0, autoAlpha: 0.8, delay: delay + 0.3, ease: ease}, 0.1)
         .then(() => animate.set(ctaItems, {clearProps: 'all'}))
     ])
   };

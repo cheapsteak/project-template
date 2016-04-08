@@ -10,6 +10,7 @@ import Layout1570 from '../../components/grid/layout/layout-1570';
 import Layout1740 from '../../components/grid/layout/layout-1740';
 import Layout1920 from '../../components/grid/layout/layout-1920';
 import GridMenu from '../../components/grid/grid-menu';
+import scrollbarSize from 'common/utils/scrollbar-size';
 
 const breakpoints = [890, 1060, 1230, 1400, 1570, 1740, 1920];
 
@@ -42,15 +43,15 @@ export default class GridPage extends React.Component {
   }
 
   componentWillAppear(callback) {
-    this.animateIn(callback);
+    this.animateIn().then(() => callback && callback());
   }
 
   componentWillEnter(callback) {
-    this.animateIn(callback);
+    this.animateIn().then(() => callback && callback());
   }
 
   componentWillLeave(callback) {
-    this.animateOut(callback);
+    this.animateOut().then(() => callback && callback());
   }
 
   componentWillUnmount() {
@@ -69,28 +70,30 @@ export default class GridPage extends React.Component {
     this.handleWindowResize();
   };
 
-  animateIn = (callback) => {
+  animateIn = () => {
     this.setState({isMenuAnimated: true});
+
+    const ease = Expo.easeOut;
+    const duration = 0.6;
+    const delay = 1.5;
+
     return animate.all([
-        animate.to(this.refs.grid.containerEl, 0.6, {ease: Expo.easeOut, delay: 1.7, y: '0%'}),
-        this.refs.menu.animateIn(0.5, 1.7, Expo.easeOut)
-      ])
-      .then(() => {
-        callback && callback()
-      });
+      animate.to(this.refs.grid.containerEl, duration, {ease, delay, y: '0%'}),
+      this.refs.menu.animateIn(duration, delay, ease)
+    ])
   };
 
-  animateOut = (callback) => {
+  animateOut = () => {
     const duration = 1;
     const ease = Expo.easeOut;
 
     animate.set(this.containerEl, {overflow: 'hidden'});
+    animate.set(this.refs.pageWrapper, {overflow: 'hidden', paddingRight: scrollbarSize.get()});
 
     return animate.all([
-        animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
-        animate.to(this.refs.pageWrapper, duration, {x: '100%', ease: ease})
-      ])
-      .then(() => callback && callback());
+      animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
+      animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease: ease})
+    ])
   };
 
   handleClickFilter = () => {
@@ -136,7 +139,7 @@ export default class GridPage extends React.Component {
           component="div"
           className="route-content-wrapper"
         >
-          { React.cloneElement(this.props.children || <div />, { key: this.props.params.slug })}
+          { React.cloneElement(this.props.children || <div />, {key: this.props.params.slug})}
         </TransitionGroup>
       </div>
     );

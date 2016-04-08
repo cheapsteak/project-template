@@ -146,12 +146,13 @@ export default class GridTile extends React.Component {
     const ease = Expo.easeOut;
 
     animate.set(this.containerEl, {autoAlpha: 0, scaleX: scaleX, scaleY: scaleY});
-    animate.set(this.textContainer, {scale: 1.3, transformOrigin: 'top left'});
+    animate.set([this.textContainer, this.refs.ctaContainer], {scale: 1.3});
+    animate.set(this.textContainer, {transformOrigin: 'top left'});
     animate.set(this.imageContainer, {scale: 1.6});
 
     return animate.all([
       animate.to(this.containerEl, 1, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
-      animate.to(this.textContainer, 1.5, {scale: 1, delay: delay, ease: ease}),
+      animate.to([this.textContainer, this.refs.ctaContainer], 1.5, {scale: 1, delay: delay, ease: ease}),
       animate.to(this.imageContainer, 2, {scale: 1, delay: delay, ease: ease})
     ])
   };
@@ -213,7 +214,7 @@ export default class GridTile extends React.Component {
               const width = links.length > 1 ? 'half-width' : 'full-width';
               return (
                 <Link className={`${width}`} to={`${link}`} key={index}>
-                  <div className={`cta`}>
+                  <div ref="ctaContainer" className={`cta`}>
                     <div
                       ref={`ctaIcon${index}`}
                       className={`icon ${isFiltered ? 'watch' : 'explore'}`}

@@ -24,6 +24,7 @@
 
   .article-content {
     flex: 0.66;
+    @include scale-prop('padding-left', 20);
 
     img {
       @include scale-prop('margin-top', 20);

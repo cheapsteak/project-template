@@ -158,12 +158,9 @@ export default class LandingPage extends React.Component {
     const duration = 1;
     const ease = Expo.easeOut;
 
-    //this.setState({shouldShowFooter: false});
-
     return animate.all([
         animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
-        animate.to(this.refs.mainContainer, duration, {x: '100%', ease: ease}),
-        animate.to(this.refs.contentContainer, 0.2, {autoAlpha: 0})
+        animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease: ease})
       ])
       .then(() => callback && callback())
   };
@@ -180,7 +177,7 @@ export default class LandingPage extends React.Component {
         className={`landing-page ${this.props.className}`}
         onTouchStart={this.handleTouchStart}
       >
-        <div ref="mainContainer" className={`main-container`}>
+        <div ref="pageWrapper" className={`page-wrapper`}>
 
           <div ref="videoContainer" className={`video-container`}>
             <video
@@ -188,7 +185,8 @@ export default class LandingPage extends React.Component {
               preload="auto"
               loop={true}
               muted={true}
-              src={`http://successacademy.jam3.net/videos/history.mp4`}
+              poster={this.state.data.posterUrl}
+              src={this.state.data.videoUrl}
             >
             </video>
             <div ref="gradient" className={`gradient`}></div>

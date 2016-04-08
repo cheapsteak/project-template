@@ -41,6 +41,14 @@
     width: 160vw;
     height: 160vw;
 
+    @media (max-width: 1024px) {
+      left: 35vw;
+    }
+
+    @media (max-width: 768px) {
+      left: 25vw;
+    }
+
     .progress-play-button {
       .icon-container {
         box-shadow: 5px 5px 110px rgba(0, 0, 0, 0.15), -5px -5px 110px rgba(0, 0, 0, 0.15);
