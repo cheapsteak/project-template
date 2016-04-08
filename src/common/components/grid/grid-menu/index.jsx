@@ -32,7 +32,8 @@ export default class GridMenu extends React.Component {
 
   static contextTypes = {
     eventBus: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    previousRoute: React.PropTypes.string
   };
 
   componentDidMount() {
@@ -104,7 +105,12 @@ export default class GridMenu extends React.Component {
 
     audio.play('button-click');
     this.setState({closeTabState: states.ACTIVE});
-    this.context.router.goBack();
+
+    if (this.context.previousRoute) {
+      this.context.router.goBack();
+    } else {
+      this.context.router.replace('/narrative-video');
+    }
   };
 
   handleReturnClick = () => {
