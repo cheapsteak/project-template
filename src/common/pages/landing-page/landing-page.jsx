@@ -15,6 +15,7 @@ import landingData  from '../../data/landing';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
 import detect from 'common/utils/detect';
+import bodymovin from 'bodymovin';
 
 export default class LandingPage extends React.Component {
 
@@ -113,7 +114,7 @@ export default class LandingPage extends React.Component {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.loaderContainer];
     animate.set(staggerEls, {autoAlpha: 0, scale: 1.6});
 
-    return animate.staggerTo(staggerEls, 1.7, {
+    const scalingAnimation = animate.staggerTo(staggerEls, 1.7, {
         autoAlpha: 1,
         y: 0,
         scale: 1.2,
@@ -121,6 +122,20 @@ export default class LandingPage extends React.Component {
         delay: 0.3 + delay
       }, 0.3)
       .then(() => callback && callback())
+
+    this.logoAnimation = bodymovin.loadAnimation({
+      container: this.refs.title, // the dom element
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      animationData: JSON.parse(require('./logo-animation-string.js')) // the animation data
+    });
+
+    this.logoAnimation.setSpeed(1);
+    this.logoAnimation.play();
+    animate.set(this.refs.title.querySelectorAll('svg g g g g g path'), {stroke: '#f99100'});
+
+    return Promise.all([scalingAnimation]);
   };
 
   animateOnVideoLoaded = () => {
@@ -134,7 +149,7 @@ export default class LandingPage extends React.Component {
       animate.to(this.refs.coverBg, 0.8, {autoAlpha: 0}),
       animate.to(this.refs.contentContainer, 1.5, {y: 0, ease: ease}),
       animate.to([this.refs.subtitle, this.refs.title], 1.7, {scale: 1, ease: ease}),
-      animate.to(this.refs.title, 0.6, {color: '#fff'}),
+      animate.to(this.refs.title.querySelectorAll('svg g g g g g path'), 0.6, {stroke: '#fff'}),
       animate.to(this.refs.video, 2, {scale: 1, ease: ease}),
       animate.staggerTo(staggerEls, 1, {autoAlpha: 1, y: 0, delay: 0.3, ease: ease}, 0.2)
     ])
@@ -196,7 +211,7 @@ export default class LandingPage extends React.Component {
 
           <div ref="contentContainer" className={`content-container`}>
             <div ref="subtitle" className={`subtitle`}>{this.state.data.subtitle}</div>
-            <div ref="title" className={`title`}>{this.state.data.title}</div>
+            <div ref="title" className={`title`} data-bodymovin-target></div>
             <div ref="description" className={`description`}>
               {this.state.data.description}
             </div>
