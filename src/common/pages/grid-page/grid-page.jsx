@@ -134,7 +134,7 @@ export default class GridPage extends React.Component {
         </div>
         <TransitionGroup
           component="div"
-          className="route-content-wrapper full-height"
+          className="route-content-wrapper"
         >
           { React.cloneElement(this.props.children || <div />, { key: this.props.params.slug })}
         </TransitionGroup>
