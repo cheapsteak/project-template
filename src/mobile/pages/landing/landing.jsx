@@ -7,15 +7,21 @@ import MobileMenu from 'common/components/mobile-menu/mobile-menu';
 import * as actionCreators from 'common/components/mobile-header/mobile-header-actions';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
+import pageTransitions from '../page-transitions.jsx';
 
+@pageTransitions
 export default class Landing extends React.Component {
 
   componentWillMount() {
+    this.setHeader();
+  }
+
+  setHeader = () => {
     store.dispatch(actionCreators.setHeaderSettings({
       color: 'white',
       backgroundColor: 'transparent'
     }));
-  }
+  };
 
   render () {
     return (

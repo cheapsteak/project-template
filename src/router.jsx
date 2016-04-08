@@ -12,7 +12,7 @@ import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
 import ChapterVideoPlayer from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
 import NarrativeVideoPlayer from 'common/components/video-players/narrative/narrative-video-player-redux.jsx';
 import InstructionalVideoPlayer from 'common/components/video-players/instructional/grid/grid-video-player-redux.jsx';
-import mobileRoutes from './mobile/routes.js';
+import mobileRoutes from './mobile/routes.jsx';
 
 function handleRouteUpdate() {
   console.log('route updated');

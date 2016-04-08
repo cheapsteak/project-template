@@ -1,0 +1,12 @@
+$mobile-header-height: 8.945vh;
+$mobile-side-padding: 5.334vw;
+
+.overlay-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4000;
+  overflow: scroll;
+}

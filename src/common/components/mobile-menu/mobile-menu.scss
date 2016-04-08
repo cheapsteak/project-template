@@ -1,13 +1,17 @@
 .mobile-menu {
   $menu-item-height: 8.945vh;
   $side-padding: 5.334vw;
-
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   width: 100vw;
   height: 100vh;
   background: url('#{$ASSET_PATH}/mobile-menu-background.jpg');
   background-size: cover;
+  padding-top: $mobile-header-height;
+  z-index: 5000;
 
   .menu-header {
     $arrow-shaft-length: 8.132vw;

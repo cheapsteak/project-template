@@ -3,7 +3,8 @@
   $item-height: 36.234vh;
   overflow-x: hidden;
   position: relative;
-  top: calc(8.945vh);
+  padding-top: calc(8.945vh);
+  background-color: white;
 
   .header {
     @include flex-center;

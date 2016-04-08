@@ -12,7 +12,6 @@ import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
 
 const EaseType = Quad;
-const duration = 0.75;
 
 export default class MobileMenu extends React.Component {
 
@@ -55,11 +54,11 @@ export default class MobileMenu extends React.Component {
   };
 
   animateInMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: 0, ease: EaseType.easeOut });
+    return animate.to(this.refs.menu, 0.4, { x: 0, ease: EaseType.easeOut });
   };
 
   animateOutMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth*2, ease: EaseType.easeIn });
+    return animate.to(this.refs.menu, 0.4, { delay: 0.1, x: -this.refs.menu.offsetWidth, ease: EaseType.easeOut });
   };
 
   handleFacebookClick = () => {
@@ -82,24 +81,6 @@ export default class MobileMenu extends React.Component {
         ref="menu"
         className="mobile-menu"
       >
-        <div className="menu-header">
-          <div
-            className="back-arrow-wrapper"
-            onClick={this.props.onBackIconClick}
-          >
-            <div className="back-arrow"></div>
-          </div>
-          <Link
-            to="/mobile"
-            onClick={this.props.closeMenu}
-          >
-            <div
-              className="logo-icon"
-              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
-            >
-            </div>
-          </Link>
-        </div>
         {
           this.data.map((item, i) => {
             return (

@@ -28,8 +28,10 @@ export default class MobileArticle extends React.Component {
   }
 
   render () {
+    const { className = '' } = this.props;
+
     return (
-      <div className="mobile-panorama">
+      <div className={`mobile-panorama ${className}`}>
         {
           this.state.data
           ? <Panorama
