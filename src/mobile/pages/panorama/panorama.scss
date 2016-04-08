@@ -1,7 +1,9 @@
 .mobile-panorama {
-  position: relative;
-  top: calc(8.945vh);
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: calc(100% - 8.945vh);
+  min-height: 100%;
+  padding-top: calc(8.945vh);
   background-color: white;
 }

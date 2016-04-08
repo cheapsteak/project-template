@@ -3,7 +3,9 @@ import { findDOMNode } from 'react-dom';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
 import model from '../../model/article-model.js';
 import store from 'common/store';
+import pageTransitions from '../page-transitions.jsx';
 
+@pageTransitions
 export default class MobileArticle extends React.Component {
 
   state = {
@@ -27,8 +29,9 @@ export default class MobileArticle extends React.Component {
   }
 
   render () {
+    const { className = '' } = this.props;
     return (
-      <div className="mobile-article">
+      <div className={`mobile-article ${className}`}>
         {
           this.state.data.image
           ? <img src={this.state.data.image} />
