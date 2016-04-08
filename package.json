@@ -32,6 +32,7 @@
     "event-emitter": "^0.3.4",
     "fastclick": "^1.0.6",
     "gsap-promise": "^1.4.1",
+    "gulp-replace": "^0.5.4",
     "history": "^2.0.0",
     "howler": "^1.1.29",
     "inject-prefetch": "^0.1.1",

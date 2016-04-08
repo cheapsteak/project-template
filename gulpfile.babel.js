@@ -8,6 +8,7 @@ import sass from 'gulp-sass';
 import notifier from 'node-notifier';
 import path from 'path';
 import prefix from 'gulp-autoprefixer';
+import replace from 'gulp-replace';
 import source from 'vinyl-source-stream';
 import exorcist from 'exorcist';
 import transform from 'vinyl-transform';
@@ -107,6 +108,7 @@ gulp.task('templates', ['styles', 'scripts'], () => {
 
   const pipeline = gulp.src(paths.templates.source)
   .on('error', handleError)
+  .pipe(replace(/#{basePath}/g, CONFIG.basePath))
   .pipe(inject(resources, {
     ignorePath: 'build',
     removeTags: true,
