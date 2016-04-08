@@ -133,7 +133,7 @@ export default class GridVideoPlayer extends React.Component {
     clearInterval(this.nextVideoIntervalId);
     clearTimeout(this.hideControlsTimeoutId);
     this.video.pause();
-    this.props.onVideoPause();
+    // this.props.onVideoPause();
     window.removeEventListener('resize', this.handleResize);
     this.stopAnimations();
   }
@@ -198,6 +198,16 @@ export default class GridVideoPlayer extends React.Component {
   handleMouseEnterNextButton = () => {
     this.state.showHoverCard !== 'next' && this.setState({ showHoverCard: 'next' });
   }
+
+  handlePrevClick = () => {
+    const prevVideoRoute = this.props.prevVideo ? this.props.prevVideo.gridRoute : '/';
+    this.context.router.replace(prevVideoRoute);
+  };
+
+  handleNextClick = () => {
+    const nextVideoRoute = this.props.nextVideo ? this.props.nextVideo.gridRoute : '/';
+    this.context.router.replace(nextVideoRoute);
+  };
 
   handleMouseLeaveNextPrevButtons = () => {
     this.setState({ showHoverCard: undefined });
@@ -479,12 +489,12 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterPrevButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link
-                to={prevVideoRoute}
+              <div
                 className="button"
+                onClick={this.handlePrevClick}
                 dangerouslySetInnerHTML={{__html: BackButtonSvg}}
               >
-              </Link>
+              </div>
               <TransitionGroup>
                 {
                   this.state.showHoverCard === 'prev' && prevVideo
@@ -503,12 +513,12 @@ export default class GridVideoPlayer extends React.Component {
               onMouseEnter={this.handleMouseEnterNextButton}
               onMouseLeave={this.handleMouseLeaveNextPrevButtons}
             >
-              <Link
-                to={nextVideoRoute}
+              <div
                 className="button"
+                onClick={this.handleNextClick}
                 dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
               >
-              </Link>
+              </div>
               <TransitionGroup>
                 {
                   this.state.showHoverCard === 'next' && nextVideo

@@ -155,8 +155,6 @@ export default class ChapterVideoPlayer extends React.Component {
       });
     }
 
-console.log('resize');
-    
     animate.set(this.video, {clearProps: 'all'});
 
     // if(this.props.isFullBrowser) {
@@ -186,7 +184,6 @@ console.log('resize');
     }
 
     if(this.props.isPlaying) {
-      // console.log('settimeout');
       clearTimeout(this.hideControlsTimeoutId);
       this.setHideControlsTimeout();
     }
