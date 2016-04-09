@@ -31,8 +31,8 @@ function ListItem (props) {
   )
 }
 
-const easeType = Quad;
-const duration = 0.5;
+const easeType = Expo;
+const duration = 0.3;
 
 export default class ChapterContentList extends React.Component {
 
@@ -53,11 +53,11 @@ export default class ChapterContentList extends React.Component {
   }
 
   animateIn () {
-    return animate.to(this.refs.list, duration, { height: this.refs.content.offsetHeight, ease: easeType.easeOut });
+    return animate.to(this.refs.list, duration, { height: this.refs.content.offsetHeight, ease: easeType.easeInOut });
   }
 
   animateOut () {
-    return animate.to(this.refs.list, duration/1.5, { height: 0, ease: easeType.easeIn });
+    return animate.to(this.refs.list, duration/1.5, { height: 0, ease: easeType.easeOut });
   }
 
   render () {

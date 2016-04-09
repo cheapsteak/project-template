@@ -23,40 +23,58 @@ export default class Mobile extends React.Component {
   };
 
   previousRoute = undefined;
-  lastHeaderStyles = undefined;
+  lastHeaderStyles = {};
 
   componentDidMount() {
+    this.currentRoute = this.props.location.pathname;
+
     store.subscribe(() => {
       const { mobileHeader, mobileMenu } = store.getState();
       const isMenuOpen = mobileMenu.isOpen;
+      const menuStyle = {
+        type: 'menu',
+        color: '#ffffff',
+        backButton: true,
+        bottomBorder: false
+      };
 
       if(isMenuOpen !== this.state.isMenuOpen) {
+        let nextStyle;
+
         this.setState({ isMenuOpen });
 
-        if(isMenuOpen) {
-          this.lastHeaderStyles = isMenuOpen ? mobileHeader : this.lastHeaderStyles ;
-
-          const nextStyle = isMenuOpen
-            ? {
-                color: '#ffffff',
-                backButton: true
-              }
-            : this.lastHeaderStyles;
-
-          setTimeout(() => {
-            store.dispatch(headerActionCreators.setHeaderSettings(nextStyle));
-          });
-        }
+        // Timeout fixes 2 problems
+        // 1: A race condition between this.setState and dispatch
+        // 2: A race condition between closing the menu, reusing previousHeader
+        //    and a new one if they are going to a new route
+        setTimeout(() => {
+          if(isMenuOpen) {
+            this.lastHeaderStyles = mobileHeader;
+            nextStyle = menuStyle;
+          } else {
+            console.log();
+                
+            nextStyle = this.lastHeaderStyles;
+            this.lastHeaderStyles = {};
+          }
+          store.dispatch(headerActionCreators.setHeaderSettings(nextStyle));
+        }, 100);
       }
     });
   }
 
   componentWillReceiveProps(nextProps) {
     const nextKey = nextProps.location.pathname.split('/')[2];
-    this.previousRoute = nextProps.location.pathname;
+    this.previousRoute = this.props.location.pathname;
 
     if(nextKey === 'videos') {
       this.refs.root.scrollTop = 0;
+    }
+
+
+    if(this.props.location.pathname !== nextProps.location.pathname) {
+      this.lastHeaderStyles = {};
+      store.dispatch(menuActionCreators.closeMenu());
     }
   }
 
@@ -72,7 +90,7 @@ export default class Mobile extends React.Component {
     let key = pathname.split('/')[2] || 'root';
 
     return (
-      <div ref="root" className="mobile full-height" style={{ overflow: 'scroll' }}>
+      <div ref="root" className="mobile full-height">
         <Header />
         <RotateScreen />
         <TransitionGroup

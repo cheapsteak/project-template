@@ -6,7 +6,7 @@ import model from '../../model/panorama-model.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
 
-@pageTransitions
+@pageTransitions({isModal: true})
 export default class MobileArticle extends React.Component {
 
   state = {
@@ -17,6 +17,7 @@ export default class MobileArticle extends React.Component {
     const panoramaData = model.get(this.props.params.slug);
 
     store.dispatch(headerActionCreators.setHeaderSettings({
+      type: 'panorama',
       color: '#565D60',
       backgroundColor: '#ffffff',
       title: panoramaData.title,
@@ -34,6 +35,7 @@ export default class MobileArticle extends React.Component {
 
     return (
       <div className={`mobile-panorama ${className}`}>
+        <div className="top-overlay"></div>
         {
           this.state.data
           ? <Panorama

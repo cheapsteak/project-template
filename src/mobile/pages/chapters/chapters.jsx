@@ -48,8 +48,12 @@ export default class MobileChapters extends React.Component {
 
     if(!key) {
       store.dispatch(headerActionCreators.setHeaderSettings({
+        type: 'chapters',
         color: '#565D60',
-        backgroundColor: 'white'
+        title: 'SA',
+        // backgroundColor: 'white',
+        bottomBorder: false,
+        backButton: false,
       }));
     }
   }
@@ -60,31 +64,31 @@ export default class MobileChapters extends React.Component {
   };
 
   getAvailableScrollDistance = () => {
-    const container = this.props.getTarget();
+    const container = this.refs.container;
     return container.scrollHeight - container.offsetHeight;
   };
 
   handleItemClick = async (chapter, i) => {
     const chapterNode = this.refs.container.querySelector(`#chapter-${i}`)
     const clientRect = chapterNode.getBoundingClientRect();
-    const container = this.props.getTarget();
+    const container = this.refs.container;
 
-    if(!chapter.isOpened) {
+    if(!chapter.isOpen) {
       if(chapterNode.offsetTop < this.getAvailableScrollDistance()) {
-        await animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop, ease: Quad.easeOut });
-        this.toggleItemDisplay(chapter, i);
+        animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop - this.refs.topOverlay.offsetHeight, ease: Expo.easeInOut });
+        this.toggleItemDisplay(chapter);
       } else {
-        this.toggleItemDisplay(chapter, i);
+        this.toggleItemDisplay(chapter);
         setTimeout(() =>
-          animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop, ease: Quad.easeOut })
-        , 500)
+          animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop - this.refs.topOverlay.offsetHeight, ease: Expo.easeOut })
+        , 100)
       }
     } else {
-      this.toggleItemDisplay(chapter, i);
+      this.toggleItemDisplay(chapter);
     }
   };
 
-  toggleItemDisplay = (chapter, i) => {
+  toggleItemDisplay = (chapter) => {
     store.dispatch(chapterActionCreators.toggleChapterDisplay(chapter.name));
   };
 
@@ -94,6 +98,7 @@ export default class MobileChapters extends React.Component {
 
     return (
       <div ref="container" className="mobile-chapters">
+        <div ref="topOverlay" className="top-overlay"></div>
         {
           this.state.chapters.map((chapter, i) => {
             return (
@@ -113,8 +118,7 @@ export default class MobileChapters extends React.Component {
                   <img className="chapter-image" src={chapter.image} />
                   <div className="panel-label">
                     <div
-                      className="toggle-icon"
-                      style={chapter.isOpen ? {transform: 'rotate(180deg)'} : {}}
+                      className={`toggle-icon ${chapter.isOpen ? 'open' : ''}`}
                       dangerouslySetInnerHTML={{ __html: ToggleIcon }}
                     >
                     </div>

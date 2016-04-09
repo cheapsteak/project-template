@@ -6,6 +6,16 @@
   padding-top: calc(8.945vh);
   background-color: white;
 
+  .top-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(8.945vh);
+    background-color: white;
+    z-index: 10;
+  }
+
   .header {
     @include flex-center;
     flex-direction: column;

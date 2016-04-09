@@ -11,7 +11,7 @@ import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
 
-const EaseType = Quad;
+const EaseType = Expo;
 
 export default class MobileMenu extends React.Component {
 

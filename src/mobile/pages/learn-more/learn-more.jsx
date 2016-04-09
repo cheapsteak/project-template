@@ -11,8 +11,8 @@ export default class MobileLearnMore extends React.Component {
 
   componentDidMount() {
     store.dispatch(headerActionCreators.setHeaderSettings({
+      type: 'learn-more',
       color: '#ffffff',
-      backgroundColor: '#606060',
       title: 'Learn More',
       bottomBorder: true,
       backButton: true
@@ -22,6 +22,7 @@ export default class MobileLearnMore extends React.Component {
   render () {
     return (
       <div className="mobile-learn-more">
+        <div className="top-overlay"></div>
         <main>
           <h1 dangerouslySetInnerHTML={{ __html: data.title }}></h1>
           <div dangerouslySetInnerHTML={{ __html: data.content }}></div>

@@ -42,16 +42,12 @@ export default class MobileHeader extends React.Component {
       animate.to(this.refs.header, 0.1, { color: props.color, ease: Cubic.easeOut });
     }
 
-    if(props.backgroundColor) {
-      this.refs.backCover.style.backgroundColor = props.backgroundColor;
-    }
+    TweenMax.killTweensOf(this.refs.coverBorder);
 
     if (props.bottomBorder) {
       this.refs.header.classList.add('no-border');
-      animate.set(this.refs.coverBorder, { opacity: 0.2 });
     } else {
       this.refs.header.classList.remove('no-border');
-      animate.set(this.refs.coverBorder, { opacity: 0 });
     }
 
     if(props.backButton) {
@@ -101,20 +97,17 @@ export default class MobileHeader extends React.Component {
           </div>
           <div
             ref="title"
-            style={ !this.props.title ? hiddenStyle : {} }
+            style={ this.props.title === 'SA' ? hiddenStyle : {} }
             className="menu-title"
           >
             {this.props.title}
           </div>
           <div
             className="logo-icon menu-content"
-            style={ this.props.title ? hiddenStyle : {} }
+            style={ this.props.title === 'SA' ? {} : hiddenStyle }
             dangerouslySetInnerHTML={{ __html: SALogoSvg }}
           >
           </div>
-        </div>
-        <div ref="backCover" className="back-cover">
-          <div ref="coverBorder" className="cover-border"></div>
         </div>
       </div>
     )

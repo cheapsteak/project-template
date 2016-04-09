@@ -16,8 +16,11 @@ export default class MobileVideos extends React.Component {
 
   componentDidMount() {
     store.dispatch(headerActionCreators.setHeaderSettings({
+      type: 'videos',
       color: '#565D60',
-      backgroundColor: '#ffffff'
+      backButton: false,
+      bottomBorder: false,
+      title: 'SA'
     }));
   }
 
@@ -31,6 +34,7 @@ export default class MobileVideos extends React.Component {
   render () {
     return (
       <div ref="container" className="mobile-videos">
+        <div className="top-overlay"></div>
         <div className="header">
           <h1>Instructional Videos</h1>
           <p>Lorem ipsum dolor sit amet, consect adipiscing elit. Suspendisse id.</p>

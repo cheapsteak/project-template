@@ -8,6 +8,7 @@ import * as actionCreators from 'common/components/mobile-header/mobile-header-a
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
+import detect from 'common/utils/detect';
 
 @pageTransitions
 export default class Landing extends React.Component {
@@ -18,9 +19,19 @@ export default class Landing extends React.Component {
 
   setHeader = () => {
     store.dispatch(actionCreators.setHeaderSettings({
+      type: 'landing',
       color: 'white',
+      title: 'SA',
+      backButton: false,
+      bottomBorder: false,
       backgroundColor: 'transparent'
     }));
+  };
+
+  playVideo = () => {
+    if(detect.md.is('iPhone')) {
+      this.refs.video.play();
+    }
   };
 
   render () {
@@ -32,20 +43,22 @@ export default class Landing extends React.Component {
           <h1>Middle</h1>
           <h1>School Tour</h1>
           <p>Take an inside look at our culture and curriculum through the eyes of our scholars.</p>
-          <a href={narrativeVideoData.src} target="__blank">
+          <div href={narrativeVideoData.src} target="__blank">
+            <video ref="video" src={narrativeVideoData.src} />
             <Button
               text="Start the Tour"
               color="#ffffff"
               backgroundColor="#EB9729"
               hoverBackgroundColor="#EB9729"
               svgIcon={IconWatch}
+              onClick={this.playVideo}
             />
-          </a>
+          </div>
           <Link to="/mobile/chapters">
             <Button
               className="cta-explore"
               style={{border: "1px solid rgba(255,255,255,0.2)"}}
-              text="Explore"
+              text="Chapter Menu"
               color="#ffffff"
               svgIcon={IconExplore}
             />

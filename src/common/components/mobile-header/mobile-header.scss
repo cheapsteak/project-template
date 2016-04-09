@@ -111,14 +111,15 @@
     left: 0;
     width: 100%;
     height: 8.945vh;
-    z-index: 5000;
 
+  }
     .cover-border {
       position: absolute;
       top: 8.945vh;
       width: 100%;
       height: 2.75vh;
+      opacity: 0;
       background-color: #ffffff;
+      z-index: 5000;
     }
-  }
 }
