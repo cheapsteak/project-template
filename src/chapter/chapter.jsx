@@ -182,7 +182,6 @@ export default class Chapter extends React.Component {
             style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           ></video>
           <div className={`hero-content`}>
-            <div className={`hero-cta`}>{this.state.data.hero.cta}</div>
             <div className={`hero-title`}>{this.state.data.title}</div>
             <div className={`hero-description`}>{this.state.data.hero.description}</div>
             <Link
@@ -207,19 +206,22 @@ export default class Chapter extends React.Component {
         {
           /***   Instructional Video  ***/
 
-          this.state.data.instructionalVideos.length ?
-          ( 
-            <div className="page-component">
-              <h2 className="component-title">Instructional Video</h2>
-              <InstructionalVideo
-                className="margin-auto-horizontal instructional-video-component"
-                id="instructionalVideo"
-                ref='instructionalVideo'
-                slug={this.state.data.instructionalVideos[0]}
-                noZoom={true}
-              />
-            </div>
-          ) : null
+          this.state.data.instructionalVideos.length
+          ? this.state.data.instructionalVideos.map(video => {
+              return (
+                <div className="page-component" key={video.slug}>
+                  <h2 className="component-title">{ video.title }</h2>
+                  <InstructionalVideo
+                    className="margin-auto-horizontal instructional-video-component"
+                    id="instructionalVideo"
+                    ref='instructionalVideo'
+                    slug={video.slug}
+                    noZoom={true}
+                  />
+                </div>
+              )
+            })
+          : null
         }
         {
           /***   Panorama  ***/
@@ -243,11 +245,11 @@ export default class Chapter extends React.Component {
           this.state.data.photoEssays.length
             ? <div className="page-component">
             <h2 className="component-title">
-              Photo Essay
+              {this.state.data.photoEssays[0].title}
             </h2>
             <PhotoEssay
               ref="photoEssay"
-              slug={this.state.data.photoEssays[0]}
+              slug={this.state.data.photoEssays[0].slug}
             />
           </div>
             : null
@@ -290,6 +292,9 @@ export default class Chapter extends React.Component {
 
           this.state.data.slug === 'welcome'
             ? <div className="page-component">
+            <h2 className="component-title">
+              A Message From Eva: (Podcast name or title)
+            </h2>
             <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
           </div>
             : null
