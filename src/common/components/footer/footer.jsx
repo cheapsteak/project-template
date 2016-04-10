@@ -55,18 +55,30 @@ export default class Footer extends React.Component {
 
   handleFacebookClick = () => {
     this.share.facebook();
+    this.playClickSound();
   };
 
   handleTwitterClick = () => {
     this.share.twitter('', 'Visit Success Academy website.');
+    this.playClickSound();
   };
 
   handleEmailClick = () => {
     window.location.href = 'mailto:mail@example.org';
+    this.playClickSound();
   };
 
   handleLearnMoreClick = () => {
     store.dispatch(actionCreators.openModal());
+    this.playClickSound();
+  };
+
+  playClickSound = () => {
+    audio.play('button-click');
+  };
+
+  playMouseEnterSound = () => {
+    audio.play('button-rollover');
   };
 
   render() {
@@ -89,7 +101,12 @@ export default class Footer extends React.Component {
             className="main-links"
             style={{ backgroundColor: this.props.primaryBackgroundColor }}
           >
-            <a className="logo-link" href="http://www.successacademies.org" target="_blank">
+            <a
+              className="logo-link"
+              href="http://www.successacademies.org" target="_blank"
+              onClick={this.playClickSound}
+              onMouseEnter={this.playMouseEnterSound}
+            >
               <div
                 className="svg-logo"
                 dangerouslySetInnerHTML={{ __html: SALogoSvg }}
@@ -97,8 +114,20 @@ export default class Footer extends React.Component {
               </div>
             </a>
             <Link to={`/`} className="home-link">Home</Link>
-            <a onClick={this.handleLearnMoreClick}>About</a>
-            <a href="http://www.successacademies.org/privacy-policy/" target="_blank">Privacy Policy</a>
+            <a
+              onClick={this.handleLearnMoreClick}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              About
+            </a>
+            <a
+              href="http://www.successacademies.org/privacy-policy/"
+              target="_blank"
+              onClick={this.playClickSound}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              Privacy Policy
+            </a>
           </div>
           <div
             className="share-links"
@@ -110,16 +139,19 @@ export default class Footer extends React.Component {
                 className="svg-icon"
                 dangerouslySetInnerHTML={{ __html: TwitterSvg }}
                 onClick={this.handleTwitterClick}
+                onMouseEnter={this.playMouseEnterSound}
               ></div>
               <div
                 className="svg-icon"
                 dangerouslySetInnerHTML={{ __html: FacebookSvg }}
                 onClick={this.handleFacebookClick}
+                onMouseEnter={this.playMouseEnterSound}
               ></div>
               <div
                 className="svg-icon"
                 dangerouslySetInnerHTML={{ __html: EmailSvg }}
                 onClick={this.handleEmailClick}
+                onMouseEnter={this.playMouseEnterSound}
               ></div>
             </div>
           </div>
