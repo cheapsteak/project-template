@@ -25,20 +25,18 @@ function makeTransitionedPage (Component, options = {}) {
       const el = findDOMNode(this);
       TweenMax.killTweensOf(el);
       animate.set(el, { css: {zIndex: 100 }});
-      return animate.fromTo(el,
-        0.3,
-        this.animationStates.enter,
-        _.extend({},
-          this.animationStates.idle,
-          { ease: easeType.easeOut, clearProps: 'transform' })
-        );
+      return animate.fromTo(el, 0.3, this.animationStates.enter,
+        _.extend({}, this.animationStates.idle, { ease: easeType.easeOut, clearProps: 'transform' })
+      );
     }
 
     animateOut () {
       const el = findDOMNode(this);
       TweenMax.killTweensOf(el);
       animate.set(el, { css: {zIndex: 10 }});
-      return animate.to(el, 0.3, this.animationStates.out )
+      return animate.to(el, 0.35,
+        _.extend({}, this.animationStates.out, { ease: easeType.easeOut })
+      );
     }
 
     componentWillAppear(callback) {

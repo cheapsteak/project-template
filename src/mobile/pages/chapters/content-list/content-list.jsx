@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
+import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
 
 function ConditionalLink (props) {
@@ -23,7 +24,10 @@ function ListItem (props) {
         </span>
         {
           props.duration
-          ? <span className="item-duration">{ props.duration }</span>
+          ? <div className="item-duration">
+              <div className="clock-svg" dangerouslySetInnerHTML={{ __html: ClockIconSvg }}></div>
+              { props.duration }
+            </div>
           : null
         }
       </div>

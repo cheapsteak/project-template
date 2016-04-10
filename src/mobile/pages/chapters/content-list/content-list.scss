@@ -74,6 +74,24 @@
         margin-left: auto;
         font-size: 3.333vw;
         color: rgba(255,255,255,0.4);
+        display: flex;
+        align-items: center;
+
+        .clock-svg {
+          margin-top: 1px;
+          margin-right: 1.954vw;
+          height: 100%;
+          width: 3.634vw;
+        }
+
+        svg {
+          width: 100%;
+          height: 100%;
+
+          circle {
+            opacity: 0.3;
+          }
+        }
       }
     }
   }

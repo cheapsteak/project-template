@@ -24,13 +24,6 @@ export default class MobileVideos extends React.Component {
     }));
   }
 
-  componentWillReceiveProps(nextProps) {
-    store.dispatch(headerActionCreators.setHeaderSettings({
-      color: '#565D60',
-      backgroundColor: '#ffffff'
-    }));
-  }
-
   render () {
     return (
       <div ref="container" className="mobile-videos">

@@ -1,11 +1,11 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import TransitionGroup from 'react-addons-transition-group';
-import Header from 'common/components/mobile-header/mobile-header-redux';
-import RotateScreen from 'common/components/rotate-screen/rotate-screen';
-import MobileMenu from 'common/components/mobile-menu/mobile-menu';
-import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
-import * as menuActionCreators from 'common/components/mobile-menu/mobile-menu-actions.js';
+import Header from './components/mobile-header/mobile-header-redux';
+import RotateScreen from './components/rotate-screen/rotate-screen';
+import MobileMenu from './components/mobile-menu/mobile-menu';
+import * as headerActionCreators from './components/mobile-header/mobile-header-actions';
+import * as menuActionCreators from './components/mobile-menu/mobile-menu-actions.js';
 import store from 'common/store';
 const EventEmitter = require('event-emitter');
 const vent = new EventEmitter();
@@ -40,6 +40,7 @@ export default class Mobile extends React.Component {
   };
 
   previousRoute = undefined;
+  currentRoute = undefined;
   lastHeaderStyles = {};
 
   componentDidMount() {
@@ -69,8 +70,6 @@ export default class Mobile extends React.Component {
             this.lastHeaderStyles = mobileHeader;
             nextStyle = menuStyle;
           } else {
-            console.log();
-                
             nextStyle = this.lastHeaderStyles;
             this.lastHeaderStyles = {};
           }
@@ -83,11 +82,11 @@ export default class Mobile extends React.Component {
   componentWillReceiveProps(nextProps) {
     const nextKey = nextProps.location.pathname.split('/')[2];
     this.previousRoute = this.props.location.pathname;
+    this.currentRoute = nextProps.location.pathname;
 
     if(nextKey === 'videos') {
       this.refs.root.scrollTop = 0;
     }
-
 
     if(this.props.location.pathname !== nextProps.location.pathname) {
       this.lastHeaderStyles = {};
@@ -104,7 +103,7 @@ export default class Mobile extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    let key = pathname.split('/')[2] || 'root';
+    const key = pathname.split('/')[2] || 'root';
 
     return (
       <div ref="root" className="mobile full-height">
@@ -118,6 +117,7 @@ export default class Mobile extends React.Component {
             this.state.isMenuOpen
             ? <MobileMenu
                 key="mobile-menu"
+                currentRoute={this.props.location.pathname}
                 closeMenu={() => store.dispatch(menuActionCreators.closeMenu())}
               />
             : null
