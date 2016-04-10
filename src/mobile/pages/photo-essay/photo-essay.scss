@@ -1,10 +1,10 @@
-.mobile-article {
+.mobile-photo-essay {
   width: 100%;
   min-height: 100%;
   background-color: white;
 
   .top-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -22,21 +22,17 @@
     }
   }
 
-  .content-wrapper {
-    width: 100vw;
-    height: 100vh;
-    padding-top: calc(8.945vh);
-    overflow-x: hidden;
-    overflow-y: scroll;
-  }
-
   h1 {
     font-size: 7.333vw;
     font-weight: bold;
   }
 
   main {
-    padding: 6.667vw 5.334vw ;
+    width: 100vw;
+    height: 100vh;
+    // padding-top: calc(8.945vh);
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   section {
@@ -44,11 +40,25 @@
   }
 
   p {
-    margin: 5.667vw 0;
+    padding: 6.667vw 5.334vw;
+    color: rgba(0,0,0,0.5);
     word-wrap: break-word;
+    font-size: 4.4vw;
   }
 
   img {
     width: 100%;
+  }
+
+  .photo-item {
+    display: flex;
+    flex-direction: column;
+
+    &:nth-child(even) {
+      p {
+        color: rgba(255,255,255,0.5);
+        background-color: black;
+      }
+    }
   }
 }

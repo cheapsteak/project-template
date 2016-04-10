@@ -4,7 +4,7 @@ const aboveFoldSelector = 'above-fold';
 export default [
   {
     slug: 'welcome-1',
-    chapterName: 'Welcome',
+    chapterSlug: 'welcome',
     title: 'Middle School Choice',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: `#${aboveFoldSelector}`,
@@ -14,7 +14,7 @@ export default [
   },
   {
     slug: 'welcome-2',
-    chapterName: 'Welcome',
+    chapterSlug: 'welcome',
     title: 'Special Needs Students at Success Academy',
     aboveFoldSelector: '#above-fold',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
@@ -24,7 +24,7 @@ export default [
   },
   {
     slug: 'science-1',
-    chapterName: 'Science',
+    chapterSlug: 'science',
     title: 'Science Olympiad',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -33,7 +33,7 @@ export default [
   },
   {
     slug: 'math-1',
-    chapterName: 'Math',
+    chapterSlug: 'math',
     title: 'Math Olympiads: Going Up Against The World’s Best Math Minds',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -57,7 +57,7 @@ export default [
   },
   {
     slug: 'math-2',
-    chapterName: 'Math',
+    chapterSlug: 'math',
     title: 'Sample Math Problems',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -70,7 +70,7 @@ export default [
   },
   {
     slug: 'math-3',
-    chapterName: 'Math',
+    chapterSlug: 'math',
     title: 'Aboard Sailboats, Scholars See Math in Action',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -88,7 +88,7 @@ export default [
   },
   {
     slug: 'history-1',
-    chapterName: 'History',
+    chapterSlug: 'history',
     title: 'Field Studies',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -135,7 +135,7 @@ export default [
   },
   {
     slug: 'history-2',
-    chapterName: 'History',
+    chapterSlug: 'history',
     title: 'The Structure of History Classes',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -151,7 +151,7 @@ export default [
   },
   {
     slug: 'computer-science-1',
-    chapterName: 'Computer Science',
+    chapterSlug: 'computer-science',
     title: 'Scholar Code',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -160,7 +160,7 @@ export default [
   },
   {
     slug: 'literacy-and-writing-1',
-    chapterName: 'Literacy And Writing',
+    chapterSlug: 'literacy-and-writing',
     title: 'Sela’s Story Draft',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -169,7 +169,7 @@ export default [
   },
   {
     slug: 'electives-1',
-    chapterName: 'Electives',
+    chapterSlug: 'electives',
     title: 'Why Debate Matters',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -185,7 +185,7 @@ export default [
   },
   {
     slug: 'character-development-1',
-    chapterName: 'Character Development',
+    chapterSlug: 'character-development',
     title: 'ACTION Now',
     aboveFoldSelector: '#above-fold',
     content: `<p id="above-fold">Middle school scholars are at a crucial crossroads in their social, emotional, and academic lives. They need consistent support to navigate all of the complexities they face during these years. One of the ways we provide such support is through our social/emotional learning program, ACTION Now. The program reinforces a safe learning environment, where all scholars are consistently observed and supported by an advisor. It also provides a specific structure for monitoring and supporting each scholar’s social and emotional growth.</p>
@@ -195,7 +195,7 @@ export default [
   },
   {
     slug: 'parental-investment-1',
-    chapterName: 'Parental Investment',
+    chapterSlug: 'parental-investment',
     title: 'Teaching My Son to Speak Out',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',

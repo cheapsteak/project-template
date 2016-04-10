@@ -10,10 +10,13 @@ import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
+import config from '../../../../config.js';
 
 const EaseType = Expo;
 
 export default class MobileMenu extends React.Component {
+
+  static backgroundImage = `${config.ASSET_PATH}/mobile-menu-background.jpg`;
 
   data = [
     {
@@ -80,6 +83,7 @@ export default class MobileMenu extends React.Component {
       <div
         ref="menu"
         className="mobile-menu"
+        style={{ backgroundImage: `url('${MobileMenu.backgroundImage}')` }}
       >
         {
           this.data.map((item, i) => {

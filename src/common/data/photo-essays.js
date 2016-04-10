@@ -23,11 +23,6 @@ export default [
       },
       {
         id: '3',
-        description: '',
-        image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
-      },
-      {
-        id: '4',
         description: 'Scholars have a blast making galaxy goo in science class!',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
       }

@@ -39,6 +39,15 @@ export default class MobileChapters extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { pathname } = nextProps.location;
+    let key = pathname.split('/')[3];
+    
+    if(key) {
+      animate.set(this.refs.container, {overflowY: 'hidden'});
+    } else {
+      animate.set(this.refs.container, {overflowY: 'scroll'});
+    }
+
     this.setHeader(nextProps);
   }
 
@@ -132,6 +141,7 @@ export default class MobileChapters extends React.Component {
                         key={chapter.name}
                         narrativeVideo={ narrativeVideoData }
                         instructionalVideos={chapter.instructionalVideos}
+                        photoEssay={chapter.photoEssay}
                         panorama={chapter.panorama}
                         articles={chapter.articles}
                         podcast={chapter.podcast}

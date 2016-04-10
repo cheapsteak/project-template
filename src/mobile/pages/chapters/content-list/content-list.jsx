@@ -73,7 +73,7 @@ export default class ChapterContentList extends React.Component {
           <ListItem
             label="Play"
             name="Narrative Video"
-            image={ this.props.narrativeVideo.image }
+            image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
             isExternalLink={true}
             to={ this.props.narrativeVideo.src }
@@ -100,11 +100,21 @@ export default class ChapterContentList extends React.Component {
             })
           }
           {
+            this.props.photoEssay
+              ? <ListItem
+                label="View"
+                name={ `${this.props.photoEssay.title}` }
+                image={ this.props.photoEssay.iconImage }
+                to={ this.props.photoEssay.route }
+              />
+              : null
+          }
+          {
             this.props.panorama
               ? <ListItem
                 label="Experience"
                 name={ `${this.props.panorama.title} 360` }
-                image={ this.props.panorama.image }
+                image={ this.props.panorama.iconImage }
                 to={ this.props.panorama.route }
               />
               : null
@@ -115,7 +125,7 @@ export default class ChapterContentList extends React.Component {
                 key={article.slug}
                 label="Read"
                 name={ article.title }
-                image={ article.image }
+                image={ article.iconImage }
                 to={ article.route }
               />
             })
@@ -125,7 +135,7 @@ export default class ChapterContentList extends React.Component {
             ? <ListItem
                 label="Listen"
                 name="Podcast"
-                image={ this.props.podcast.image }
+                image={ this.props.podcast.iconImage }
                 isExternalLink={true}
                 to={ this.props.podcast.src }
               />

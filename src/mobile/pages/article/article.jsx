@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
-import model from '../../model/article-model.js';
+import model from '../../model/articles-model.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
 
@@ -33,16 +33,18 @@ export default class MobileArticle extends React.Component {
     return (
       <div className={`mobile-article ${className}`}>
         <div className="top-overlay"></div>
-        {
-          this.state.data.image
-          ? <img src={this.state.data.image} />
-          : null
-        }
-        <main>
-          <h1>{ this.state.data.title }</h1>
-          <section dangerouslySetInnerHTML={{ __html: this.state.data.content }}>
-          </section>
-        </main>
+        <div className="content-wrapper">
+          {
+            this.state.data.image
+            ? <img src={this.state.data.image} />
+            : null
+          }
+          <main>
+            <h1>{ this.state.data.title }</h1>
+            <section dangerouslySetInnerHTML={{ __html: this.state.data.content }}>
+            </section>
+          </main>
+        </div>
       </div>
     )
   }
