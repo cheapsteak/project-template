@@ -29,7 +29,8 @@ $orange: #f99100;
 
   .main {
     position: relative;
-    @include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
+    height: 100%;
+    //@include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
 
     // @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
     // @include scale('margin-left', 50px, #{(50/1400 * 100)}vw, 70px);
@@ -37,23 +38,24 @@ $orange: #f99100;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 
-    @media (max-width: $break-large) {
-      // width: calc(100% - 50px);
-      height: calc(100% - 50px);
-    }
-    @media (min-width: $break-large + 1) {
-      // width: calc(100% - #{(50/1400 * 100)}vw);
-      height: calc(100% - #{(50/1400 * 100)}vw);
-    }
-    @media (min-width: $break-xlarge + 1) {
-      // width: calc(100% - 70px);
-      height: calc(100% - 70px);
-    }
+    //@media (max-width: $break-large) {
+    //  // width: calc(100% - 50px);
+    //  height: calc(100% - 50px);
+    //}
+    //@media (min-width: $break-large + 1) {
+    //  // width: calc(100% - #{(50/1400 * 100)}vw);
+    //  height: calc(100% - #{(50/1400 * 100)}vw);
+    //}
+    //@media (min-width: $break-xlarge + 1) {
+    //  // width: calc(100% - 70px);
+    //  height: calc(100% - 70px);
+    //}
   }
 
   .nav {
     position: fixed;
-    //z-index: 100;
+    top: 0;
+    z-index: 100;
     @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
     width: 100%;
     // @media (max-width: $break-large) {
@@ -80,16 +82,17 @@ $orange: #f99100;
   .chapter-header {
     overflow: hidden;
     background-color: #fff;
+    height: 72.5vh;
 
-    @media (max-width: $break-large) {
-      height: calc(72.5vh - 50px);
-    }
-    @media (min-width: $break-large + 1) {
-      height: calc(72.5vh - #{(50/1400 * 100)}vw);
-    }
-    @media (min-width: $break-xlarge + 1) {
-      height: calc(72.5vh - 70px);
-    }
+    //@media (max-width: $break-large) {
+    //  height: calc(72.5vh - 50px);
+    //}
+    //@media (min-width: $break-large + 1) {
+    //  height: calc(72.5vh - #{(50/1400 * 100)}vw);
+    //}
+    //@media (min-width: $break-xlarge + 1) {
+    //  height: calc(72.5vh - 70px);
+    //}
 
     video {
       width: 100%;
@@ -293,9 +296,12 @@ $orange: #f99100;
 
 .instructional-video-component {
   width: calc(100% - #{(115/1400*100*2)}vw);
+  @include scale-calc-deduct('height', 100vw*9/16, 115);
+  overflow: hidden;
 
   .chapter-video-poster img {
-    margin-top: -50px;
-    margin-bottom: -50px;
+    margin-top: -$parallax-amplitude;
+    margin-bottom: -$parallax-amplitude;
+    height: calc(100vw*9/16 + #{$parallax-amplitude*2});
   }
 }

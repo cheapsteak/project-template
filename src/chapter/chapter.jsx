@@ -19,11 +19,14 @@ import IconPlayOutline from 'svgs/icon-playoutline.svg';
 import chaptersModel from 'common/models/chapters-model';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
+import scrollbarSize from 'common/utils/scrollbar-size';
+import animate from 'gsap-promise';
 
 export default class Chapter extends React.Component {
 
   state = {
-    isReady: false
+    isReady: false,
+    isMobile: detect.isMobile
   };
 
   cleanupOperations = [];
@@ -128,6 +131,8 @@ export default class Chapter extends React.Component {
   };
 
   handleResize = () => {
+    const scrollbarWidth = scrollbarSize.get();
+    animate.set(this.refs.nav, {width: window.innerWidth - scrollbarWidth});
     BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
   };
 
@@ -142,7 +147,7 @@ export default class Chapter extends React.Component {
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
     return <section ref="chapter" className={`chapter-page`}>
-      <nav className="nav">
+      <nav ref="nav" className="nav">
         <Link
           className={`nav-button left`}
           to={`/narrative-video`}

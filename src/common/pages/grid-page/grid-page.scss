@@ -5,6 +5,7 @@
   overflow-y: scroll;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
+  z-index: 200;
 
   .page-wrapper {
     @include absolute-100;

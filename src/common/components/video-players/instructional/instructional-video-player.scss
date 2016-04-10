@@ -93,7 +93,10 @@
 
 .chapter-player {
   video {
-    // This is to to prevent BgCover moving video
-    top: 0 !important;
+
+    @media (orientation: landscape)  {
+      // This is to to prevent BgCover moving video
+      top: 0 !important;
+    }
   }
 }

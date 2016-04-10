@@ -106,8 +106,9 @@ export default class LandingPage extends React.Component {
   preloadNextContent = () => {
     const gridImages = gridData.getImages();
     const documentaryVideo = videoData.src;
+    const documentaryPoster = videoData.poster;
 
-    Preload(gridImages.concat(documentaryVideo));
+    Preload(gridImages.concat(documentaryVideo).concat(documentaryPoster));
   };
 
   animateIn = (callback, {delay=0}) => {
