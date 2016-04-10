@@ -28,30 +28,32 @@ export default class MobileVideos extends React.Component {
     return (
       <div ref="container" className="mobile-videos">
         <div className="top-overlay"></div>
-        <div className="header">
-          <h1>Instructional Videos</h1>
-          <p>Lorem ipsum dolor sit amet, consect adipiscing elit. Suspendisse id.</p>
-        </div>
-        {
-          this.data.map((video, i) => {
-            return (
-              <a key={i} href={video.src} target="__blank">
-                <div className="video-item">
-                  <h1 dangerouslySetInnerHTML={{ __html: video.title }}></h1>
-                  <img className="video-image" src={video.backgroundImage} />
-                  <div className="panel-label">
-                    <div className="play-svg" dangerouslySetInnerHTML={{ __html: PlayIconSvg }}></div>
-                    <label>Play Video</label>
-                    <div className="duration-group">
-                      <div className="clock-svg" dangerouslySetInnerHTML={{ __html: ClockIconSvg }}></div>
-                      <label>{video.duration}</label>
+        <div className="content-wrapper">
+          <div className="header">
+            <h1>Instructional Videos</h1>
+            <p>Lorem ipsum dolor sit amet, consect adipiscing elit. Suspendisse id.</p>
+          </div>
+          {
+            this.data.map((video, i) => {
+              return (
+                <a key={i} href={video.src} target="__blank">
+                  <div className="video-item">
+                    <h1 dangerouslySetInnerHTML={{ __html: video.title }}></h1>
+                    <img className="video-image" src={video.backgroundImage} />
+                    <div className="panel-label">
+                      <div className="play-svg" dangerouslySetInnerHTML={{ __html: PlayIconSvg }}></div>
+                      <label>Play Video</label>
+                      <div className="duration-group">
+                        <div className="clock-svg" dangerouslySetInnerHTML={{ __html: ClockIconSvg }}></div>
+                        <label>{video.duration}</label>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            )
-          })
-        }
+                </a>
+              )
+            })
+          }
+        </div>
       </div>
     )
   }

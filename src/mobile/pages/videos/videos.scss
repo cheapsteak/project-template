@@ -3,17 +3,24 @@
   $item-height: 36.234vh;
   overflow-x: hidden;
   position: relative;
-  padding-top: calc(8.945vh);
   background-color: white;
 
   .top-overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: calc(8.945vh);
     background-color: white;
     z-index: 10;
+  }
+
+  .content-wrapper {
+    width: 100vw;
+    height: 100vh;
+    padding-top: calc(8.945vh);
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
 
   .header {

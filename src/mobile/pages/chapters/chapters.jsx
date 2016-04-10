@@ -60,7 +60,6 @@ export default class MobileChapters extends React.Component {
         type: 'chapters',
         color: '#565D60',
         title: 'SA',
-        // backgroundColor: 'white',
         bottomBorder: false,
         backButton: false,
       }));
@@ -80,7 +79,7 @@ export default class MobileChapters extends React.Component {
   handleItemClick = async (chapter, i) => {
     const chapterNode = this.refs.container.querySelector(`#chapter-${i}`)
     const clientRect = chapterNode.getBoundingClientRect();
-    const container = this.refs.container;
+    const container = this.refs.content;
 
     if(!chapter.isOpen) {
       if(chapterNode.offsetTop < this.getAvailableScrollDistance()) {
@@ -108,6 +107,7 @@ export default class MobileChapters extends React.Component {
     return (
       <div ref="container" className="mobile-chapters">
         <div ref="topOverlay" className="top-overlay"></div>
+        <div ref="content" className="content-wrapper">
         {
           this.state.chapters.map((chapter, i) => {
             return (
@@ -160,6 +160,7 @@ export default class MobileChapters extends React.Component {
             : <div />
           }
         </TransitionGroup>
+        </div>
       </div>
     )
   }

@@ -34,7 +34,7 @@ function makeTransitionedPage (Component, options = {}) {
       const el = findDOMNode(this);
       TweenMax.killTweensOf(el);
       animate.set(el, { css: {zIndex: 10 }});
-      return animate.to(el, 0.35,
+      return animate.to(el, 0.3,
         _.extend({}, this.animationStates.out, { ease: easeType.easeOut })
       );
     }
