@@ -6,7 +6,7 @@ import ToggleIcon from 'svgs/mobile-toggle-icon.svg';
 import TransitionGroup from 'react-addons-transition-group';
 import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
-import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';

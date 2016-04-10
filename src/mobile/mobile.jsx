@@ -15,18 +15,18 @@ import chaptersModel from './model/chapters-model.js';
 import instructionalVideosModel from './model/instructional-videos-model.js';
 
 
-Preload([
-  MobileMenu.backgroundImage,
-  ...(_.flatten(chaptersModel.getAll().map(chapter => {
-    return [
-      ...chapter.articles.map(article => article.iconImage),
-      ...chapter.instructionalVideos.map(video => video.iconImage),
-      chapter.photoEssay && chapter.photoEssay.iconImage,
-      chapter.panorama && chapter.panorama.iconImage,
-      chapter.podcast && chapter.podcast.iconImage,
-    ].filter(Boolean)
-  })))
-]);
+// Preload([
+//   MobileMenu.backgroundImage,
+//   ...(_.flatten(chaptersModel.getAll().map(chapter => {
+//     return [
+//       ...chapter.articles.map(article => article.iconImage),
+//       ...chapter.instructionalVideos.map(video => video.iconImage),
+//       chapter.photoEssay && chapter.photoEssay.iconImage,
+//       chapter.panorama && chapter.panorama.iconImage,
+//       chapter.podcast && chapter.podcast.iconImage,
+//     ].filter(Boolean)
+//   })))
+// ]);
 
 export default class Mobile extends React.Component {
   static childContextTypes = {

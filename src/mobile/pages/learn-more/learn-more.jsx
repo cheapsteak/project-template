@@ -1,6 +1,6 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import store from 'common/store';
 import data from 'common/data/learn-more.js';
 import pageTransitions from '../page-transitions.jsx';

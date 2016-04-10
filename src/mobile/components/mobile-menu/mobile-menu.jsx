@@ -65,7 +65,7 @@ export default class MobileMenu extends React.Component {
   };
 
   animateInMenu = () => {
-    return animate.to(this.refs.menu, 0.6, { x: 0, ease: EaseType.easeOut });
+    return animate.to(this.refs.menu, 0.4, { x: 0, ease: EaseType.easeOut });
   };
 
   animateOutMenu = () => {

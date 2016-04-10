@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom';
 import PlayIconSvg from 'svgs/mobile-play-icon.svg';
 import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
-import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import store from 'common/store';
 import model from '../../model/instructional-videos-model.js';
 import config from '../../../../config.js';

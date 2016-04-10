@@ -12,8 +12,8 @@ const reducers = combineReducers(
       showLearnMoreModal: require('common/components/learn-more-modal/learn-more-modal-reducers.js'),
     }
   : {
-      mobileHeader: require('common/components/mobile-header/mobile-header-reducers.js'),
-      mobileMenu: require('common/components/mobile-menu/mobile-menu-reducers.js'),
+      mobileHeader: require('../mobile/components/mobile-header/mobile-header-reducers.js'),
+      mobileMenu: require('../mobile/components/mobile-menu/mobile-menu-reducers.js'),
       mobileChapters: require('../mobile/pages/chapters/chapters-reducers.js')
     }
 );

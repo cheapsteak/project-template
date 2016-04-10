@@ -3,8 +3,8 @@ import {Link} from 'react-router';
 import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import Button from 'common/components/rectangular-button/rectangular-button';
-import MobileMenu from 'common/components/mobile-menu/mobile-menu';
-import * as actionCreators from 'common/components/mobile-header/mobile-header-actions';
+import MobileMenu from '../../components/mobile-menu/mobile-menu';
+import * as actionCreators from '../../components/mobile-header/mobile-header-actions';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
@@ -31,6 +31,8 @@ export default class Landing extends React.Component {
   playVideo = () => {
     if(detect.md.is('iPhone')) {
       this.refs.video.play();
+    } else {
+      window.open(this.refs.video.src);
     }
   };
 
