@@ -16,6 +16,7 @@ import animate from 'gsap-promise';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
+import detect from 'common/utils/detect';
 
 export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
@@ -27,7 +28,8 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   state = {
-    isReady: false
+    isReady: false,
+    isMobile: detect.isMobile
   }
 
   static contextTypes = {
@@ -320,6 +322,17 @@ export default class ChapterVideoPlayer extends React.Component {
     TweenMax.killTweensOf(_.values(this.els));
   }
 
+  handleTouchStart = () => {
+    if (!this.userHasInteracted) {
+      this.userHasInteracted = true;
+      this.video.play();
+      this.props.onVideoPlay();
+    }
+
+    this.props.showFullControls();
+    this.setHideControlsTimeout();
+  };
+
   render() {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className = '', noZoom, init } = this.props;
@@ -335,6 +348,7 @@ export default class ChapterVideoPlayer extends React.Component {
         style={style}
         onMouseLeave={this.handleComponentMouseMove}
         onMouseMove={this.handleComponentMouseMove}
+        onTouchStart={this.handleTouchStart}
       >
         <div
           className={`chapter-video-poster`}
@@ -342,7 +356,7 @@ export default class ChapterVideoPlayer extends React.Component {
           <img src={this.props.poster} />
           <PlayButton
             label="Play"
-            onPlay={this.handleVideoPlayPause}
+            onPlay={this.state.isMobile ? this.handleTouchStart : this.handleVideoPlayPause}
           />
         </div>
         <div
@@ -353,7 +367,7 @@ export default class ChapterVideoPlayer extends React.Component {
             !isFullBrowser ?
               <video
                 id={this.videoId}
-                preload="metadata"
+                preload="auto"
                 ref={(node) => this.video = node }
                 src={this.props.src}
                 onLoadedMetadata={this.handleMetadataLoaded}
@@ -416,6 +430,8 @@ export default class ChapterVideoPlayer extends React.Component {
           ref={ node => this.els.controls = node }
           onMouseEnter={this.handleControlsMouseEnter}
           onMouseMove={ (e) => e.stopPropagation() }
+          onTouchMove={ this.handleControlsMouseEnter }
+          onTouchEnd={ this.setHideControlsTimeout }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">

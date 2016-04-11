@@ -1,17 +1,17 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import IconWatch from 'svgs/icon-playoutline.svg';
-import IconExplore from 'svgs/icon-explore.svg';
-import IconLoader from 'svgs/icon-sa_monogram.svg';
+import IconWatch from '../../assets/svgs/icon-playoutline.svg';
+import IconExplore from '../../assets/svgs/icon-explore.svg';
+import IconLoader from '../../assets/svgs/icon-sa_monogram.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
 import Promise from 'bluebird';
 import Preload from 'inject-prefetch';
-import gridData  from '../../models/grid-model';
-import videoData  from '../../data/narrative-video';
-import RectangularButton  from '../../../../node_modules/common/components/rectangular-button/rectangular-button.jsx';
+import gridData  from 'common/models/grid-model';
+import videoData  from 'common/data/narrative-video';
+import RectangularButton  from 'common/components/rectangular-button/rectangular-button.jsx';
 import BgCover from 'background-cover';
-import landingData  from '../../data/landing';
+import landingData  from 'common/data/landing';
 import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
 import detect from 'common/utils/detect';
@@ -106,8 +106,9 @@ export default class LandingPage extends React.Component {
   preloadNextContent = () => {
     const gridImages = gridData.getImages();
     const documentaryVideo = videoData.src;
+    const documentaryPoster = videoData.poster;
 
-    Preload(gridImages.concat(documentaryVideo));
+    Preload(gridImages.concat(documentaryVideo).concat(documentaryPoster));
   };
 
   animateIn = (callback, {delay=0}) => {

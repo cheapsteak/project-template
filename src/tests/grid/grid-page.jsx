@@ -1,5 +1,5 @@
 import React from 'react';
-import GridManager from 'common/pages/grid-page/grid-page.jsx';
+import GridManager from 'grid/grid.jsx';
 
 export default function () {
   return (

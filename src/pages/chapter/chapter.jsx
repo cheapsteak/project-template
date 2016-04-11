@@ -1,13 +1,13 @@
 import React from 'react';
-import InstructionalVideo from 'common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
-import Panorama from 'common/components/panorama/panorama-redux.jsx';
-import PhotoEssay from 'common/components/photo-essay/photo-essay-redux.jsx';
-import Podcast from 'common/components/podcast/podcast.jsx';
-import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
-import IconLeftArrow from 'svgs/icon-left-arrow.svg';
-import IconScroll from 'svgs/icon-scroll.svg';
-import Article from 'common/components/article/article';
-import Footer from 'common/components/footer/footer';
+import InstructionalVideo from '../../common/components/video-players/instructional/chapter/chapter-video-player-redux.jsx';
+import Panorama from '../../common/components/panorama/panorama-redux.jsx';
+import PhotoEssay from '../../common/components/photo-essay/photo-essay-redux.jsx';
+import Podcast from '../../../node_modules/common/components/podcast/podcast.jsx';
+import RectangularButton from '../../../node_modules/common/components/rectangular-button/rectangular-button.jsx';
+import IconLeftArrow from '../../../node_modules/svgs/icon-left-arrow.svg';
+import IconScroll from '../../assets/svgs/icon-scroll.svg';
+import Article from '../../../node_modules/common/components/article/article';
+import Footer from '../../../node_modules/common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
 import unwrapComponent from 'common/utils/unwrap-component.js';
 import {findDOMNode} from 'react-dom';
@@ -16,14 +16,17 @@ import ScrollMagic from 'scrollmagic';
 import IconExplore from 'svgs/icon-explore.svg';
 import IconPlay from 'svgs/icon-play.svg';
 import IconPlayOutline from 'svgs/icon-playoutline.svg';
-import chaptersModel from 'common/models/chapters-model';
+import chaptersModel from '../../common/models/chapters-model';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
+import scrollbarSize from '../../common/utils/scrollbar-size';
+import animate from 'gsap-promise';
 
 export default class Chapter extends React.Component {
 
   state = {
-    isReady: false
+    isReady: false,
+    isMobile: detect.isMobile
   };
 
   cleanupOperations = [];
@@ -128,6 +131,8 @@ export default class Chapter extends React.Component {
   };
 
   handleResize = () => {
+    const scrollbarWidth = scrollbarSize.get();
+    animate.set(this.refs.nav, {width: window.innerWidth - scrollbarWidth});
     BgCover.BackgroundCover(this.refs.heroVideo, this.refs.heroVideoContainer);
   };
 
@@ -142,7 +147,7 @@ export default class Chapter extends React.Component {
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
     return <section ref="chapter" className={`chapter-page`}>
-      <nav className="nav">
+      <nav ref="nav" className="nav">
         <Link
           className={`nav-button left`}
           to={`/narrative-video`}
