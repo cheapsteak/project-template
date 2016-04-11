@@ -12,9 +12,11 @@
   }
 
   h1 {
-    font-size: 15.7vw;
+    font-size: 14vw;
     font-weight: bold;
     color: white;
+    text-transform: capitalize;
+    text-align:center;
   }
 
   h3 {
@@ -62,7 +64,7 @@
   }
 
   .rectangular-button {
-    width: 58vw;
+    width: 60vw;
     max-width: 250px;
     height: 14vw;
     margin-bottom: 14px;

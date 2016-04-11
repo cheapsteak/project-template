@@ -10,6 +10,7 @@ import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
 import detect from 'common/utils/detect';
+import landingData from 'common/data/landing.js';
 
 @pageTransitions
 export default class Landing extends React.Component {
@@ -58,10 +59,9 @@ export default class Landing extends React.Component {
       <div className="mobile-landing">
         <div className="cover-bg"></div>
         <div className="main-content">
-          <h3>Welcome to our</h3>
-          <h1>Middle</h1>
-          <h1>School Tour</h1>
-          <p>Take an inside look at our culture and curriculum through the eyes of our scholars.</p>
+          <h3>{landingData.subtitle}</h3>
+          <h1>{landingData.title}</h1>
+          <p>{landingData.description}</p>
           <Link to="/mobile/chapters">
             <Button
               className="cta-explore"
@@ -71,21 +71,15 @@ export default class Landing extends React.Component {
               svgIcon={IconExplore}
             />
           </Link>
-          <div href={narrativeVideoData.src} target="__blank">
-            <VideoPlayer
-              status={this.state.videoStatus}
-              src={narrativeVideoData.src}
-              onExitFullscreen={this.pauseVideo}
-            />
+          <Link to="/mobile/videos">
             <Button
-              text="Start the Tour"
+              text="See Classes In Action"
               color="#ffffff"
               backgroundColor="#EB9729"
               hoverBackgroundColor="#EB9729"
               svgIcon={IconWatch}
-              onClick={this.playVideo}
             />
-          </div>
+          </Link>
         </div>
       </div>
     )

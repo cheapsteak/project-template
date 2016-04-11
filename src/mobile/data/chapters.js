@@ -4,9 +4,8 @@ export default [
   {
     name: 'Welcome',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-1.png`,
-    instructionalVideos: [],
+    instructionalVideos: ['welcome'],
     photoEssay: undefined,
-    panorama: undefined,
     articles: [
       {
         slug: 'welcome-1',

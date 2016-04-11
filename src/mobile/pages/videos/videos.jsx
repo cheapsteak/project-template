@@ -30,11 +30,10 @@ export default class MobileVideos extends React.Component {
         <div className="top-overlay"></div>
         <div className="content-wrapper">
           <div className="header">
-            <h1>Instructional Videos</h1>
-            <p>Lorem ipsum dolor sit amet, consect adipiscing elit. Suspendisse id.</p>
+            <h1>See Classes in Action</h1>
           </div>
           {
-            this.data.map((video, i) => {
+            this.data.filter(video => video.slug !== 'welcome').map((video, i) => {
               return (
                 <a key={i} href={video.src} target="__blank">
                   <div className="video-item">

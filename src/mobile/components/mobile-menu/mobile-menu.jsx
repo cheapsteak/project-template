@@ -34,12 +34,12 @@ export default class MobileMenu extends React.Component {
     },
     {
       route: '/mobile/videos',
-      name: 'Instructional Videos',
+      name: 'See Classes In Action',
       svgIcon: PlayIcon
     },
     {
       route: '/mobile/learn-more',
-      name: 'Learn More',
+      name: 'About',
       svgIcon: LearnMoreIcon
     }
   ];

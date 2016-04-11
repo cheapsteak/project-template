@@ -126,31 +126,44 @@
   a {
     &:nth-child(2) {
       .video-item  .panel-label {
-        background-color: rgba(134,102,56,0.5);
+        background-color: rgba(134,102,56,0.5); // Yellow
       }
     }
 
     &:nth-child(3) {
       .video-item  .panel-label {
-        background-color: rgba(63,69,72,0.5);
+        // background-color: rgba(63,69,72,0.5); // Grey
+        background-color: rgba(72,115,150,0.5); // Light Blue
+
       }
     }
 
     &:nth-child(4) {
       .video-item  .panel-label {
-        background-color: rgba(12,19,31,0.5);
+        // background-color: rgba(12,19,31,0.5); // Red
+        background-color: rgba(12,18,32,0.5); // Navy
       }
     }
 
     &:nth-child(5) {
       .video-item  .panel-label {
-        background-color: rgba(72,115,150,0.5);
+        // background-color: rgba(72,115,150,0.5); // Light Blue
+        background-color: rgba(63,69,72,0.5); // Grey
+        
       }
     }
 
     &:nth-child(6) {
       .video-item  .panel-label {
-        background-color: rgba(12,18,32,0.5);
+        background-color: rgba(72,115,150,0.5); // Light Blue
+      }
+    }
+
+
+    &:nth-child(7) {
+      .video-item  .panel-label {  
+        // background-color: rgba(12,18,32,0.5); // Red
+        background-color: rgba(63,69,72,0.5); // Grey
       }
     }
   }

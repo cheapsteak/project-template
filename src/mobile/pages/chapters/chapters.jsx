@@ -103,7 +103,7 @@ export default class MobileChapters extends React.Component {
   render () {
     const { pathname } = this.props.location;
     let key = pathname.split('/')[3] || 'root';
-
+    
     return (
       <div ref="container" className="mobile-chapters">
         <div ref="topOverlay" className="top-overlay"></div>
@@ -121,7 +121,6 @@ export default class MobileChapters extends React.Component {
                   onClick={this.handleItemClick.bind(null, chapter, i)}
                 >
                   <div className="chapter-text">
-                    <label>Chapter</label>
                     <h1 dangerouslySetInnerHTML={{ __html: chapter.name }}></h1>
                   </div>
                   <img className="chapter-image" src={chapter.image} />
@@ -139,6 +138,7 @@ export default class MobileChapters extends React.Component {
                     chapter.isOpen
                     ? <ContentList
                         key={chapter.name}
+                        name={chapter.name}
                         narrativeVideo={ narrativeVideoData }
                         instructionalVideos={chapter.instructionalVideos}
                         photoEssay={chapter.photoEssay}
