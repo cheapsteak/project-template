@@ -188,8 +188,16 @@
       background-color: rgba(143,143,143,0.3);
       cursor: pointer;
 
+      &:hover {
+        svg {
+          transform: rotate(180deg) translateZ(0);
+          transition: transform 0.3s ease;
+        }
+      }
+
       svg {
         width: 50%;
+        transition: transform 0.3s ease;
       }
     }
 
