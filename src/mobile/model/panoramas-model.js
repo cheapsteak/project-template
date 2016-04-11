@@ -10,7 +10,7 @@ export default {
 
     return {
       ...panoramaSourceData,
-      route: `/mobile/chapters/panoramas/${panoramaSourceData.slug}`
+      route: `/chapters/panoramas/${panoramaSourceData.slug}`
     };
   }
 };

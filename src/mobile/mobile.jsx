@@ -80,7 +80,7 @@ export default class Mobile extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const nextKey = nextProps.location.pathname.split('/')[2];
+    const nextKey = nextProps.location.pathname.split('/')[1];
     this.previousRoute = this.props.location.pathname;
     this.currentRoute = nextProps.location.pathname;
 
@@ -103,7 +103,7 @@ export default class Mobile extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    const key = pathname.split('/')[2] || 'root';
+    const key = pathname.split('/')[1] || 'root';
 
     return (
       <div ref="root" className="mobile full-height">

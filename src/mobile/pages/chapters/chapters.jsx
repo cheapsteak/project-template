@@ -40,7 +40,7 @@ export default class MobileChapters extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { pathname } = nextProps.location;
-    let key = pathname.split('/')[3];
+    let key = pathname.split('/')[2];
     
     if(key) {
       animate.set(this.refs.container, {overflowY: 'hidden'});
@@ -53,7 +53,7 @@ export default class MobileChapters extends React.Component {
 
   setHeader = (props) => {
     const { pathname } = props.location;
-    let key = pathname.split('/')[3];
+    let key = pathname.split('/')[2];
 
     if(!key) {
       store.dispatch(headerActionCreators.setHeaderSettings({
@@ -102,7 +102,7 @@ export default class MobileChapters extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    let key = pathname.split('/')[3] || 'root';
+    let key = pathname.split('/')[2] || 'root';
 
     return (
       <div ref="container" className="mobile-chapters">
