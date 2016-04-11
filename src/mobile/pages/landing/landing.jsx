@@ -62,6 +62,15 @@ export default class Landing extends React.Component {
           <h1>Middle</h1>
           <h1>School Tour</h1>
           <p>Take an inside look at our culture and curriculum through the eyes of our scholars.</p>
+          <Link to="/mobile/chapters">
+            <Button
+              className="cta-explore"
+              style={{border: "1px solid rgba(255,255,255,0.2)"}}
+              text="Main Menu"
+              color="#ffffff"
+              svgIcon={IconExplore}
+            />
+          </Link>
           <div href={narrativeVideoData.src} target="__blank">
             <VideoPlayer
               status={this.state.videoStatus}
@@ -77,15 +86,6 @@ export default class Landing extends React.Component {
               onClick={this.playVideo}
             />
           </div>
-          <Link to="/mobile/chapters">
-            <Button
-              className="cta-explore"
-              style={{border: "1px solid rgba(255,255,255,0.2)"}}
-              text="Chapter Menu"
-              color="#ffffff"
-              svgIcon={IconExplore}
-            />
-          </Link>
         </div>
       </div>
     )

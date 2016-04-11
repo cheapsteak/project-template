@@ -437,7 +437,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             <RectangularButton
               ref={ node => this.refs.cornerButton = findDOMNode(node) }
               className="explore-button"
-              text="Chapter Menu"
+              text="Main Menu"
               color="#ffffff"
               backgroundColor="#f99100"
               hoverBackgroundColor="#f99100"
@@ -469,8 +469,8 @@ export default class NarrativeVideoPlayer extends React.Component {
           >
             <div className="circle-wrapper">
               <div className="circle-cta-text">
-                <label className="stagger-cta">Discover More:</label>
                 <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+                <label className="stagger-cta">Learn More</label>
               </div>
               <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
             </div>

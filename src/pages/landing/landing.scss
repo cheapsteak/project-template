@@ -79,7 +79,7 @@ $orange: #f99100;
         @include scale-prop(height, 50);
 
         &.explore {
-          @include scale-prop(margin-top, 10);
+          @include scale-prop(margin-bottom, 10);
           border: 2px solid rgba(255, 255, 255, 0.2);
 
           .button-text {
