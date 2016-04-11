@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import IconWatch from 'svgs/icon-play.svg';
 import ExploreIcon from 'svgs/icon-explore.svg';
@@ -10,10 +9,22 @@ import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
 import Share from 'easy-share-popup';
+import config from '../../../../config.js';
 
-const EaseType = Quad;
+const EaseType = Expo;
 
 export default class MobileMenu extends React.Component {
+
+  static propTypes = {
+    currentRoute: React.PropTypes.string,
+    onMenuClose: React.PropTypes.func
+  };
+
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
+  static backgroundImage = `${config.ASSET_PATH}/mobile-menu-background.jpg`;
 
   data = [
     {
@@ -34,7 +45,7 @@ export default class MobileMenu extends React.Component {
   ];
 
   componentDidMount () {
-    animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth*2 });
+    animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth });
     this.share = new Share(location.origin + '/middleschool');
   }
 
@@ -73,6 +84,14 @@ export default class MobileMenu extends React.Component {
     window.location.href = 'mailto:mail@example.org';
   };
 
+  handleMenuItemClick = (route, e) => {
+    if(this.props.currentRoute !== route) {
+      this.context.router.push(route);
+    }
+
+    this.props.closeMenu();
+  };
+
   render () {
     const { className, style } = this.props;
 
@@ -84,11 +103,11 @@ export default class MobileMenu extends React.Component {
         {
           this.data.map((item, i) => {
             return (
-              <Link
+              <div
                 key={i}
                 to={item.route}
                 className="menu-item"
-                onClick={this.props.closeMenu}
+                onClick={this.handleMenuItemClick.bind(_, item.route)}
               >
                 <span
                   className="menu-item-svg"
@@ -98,7 +117,7 @@ export default class MobileMenu extends React.Component {
                 <div className="menu-item-title">
                   { item.name }
                 </div>
-              </Link>
+              </div>
             )
           })
         }

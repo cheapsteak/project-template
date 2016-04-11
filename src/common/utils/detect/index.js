@@ -116,6 +116,7 @@ module.exports = {
   isFirefox: (checkBrowser().indexOf('firefox') >= 0),
   isSafari: (checkBrowser().indexOf("safari") >= 0 && checkVendor().indexOf("apple") >= 0),
   isSupported: checkIsSupported(),
+  md: md,
 
   get orientation() {
     var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);

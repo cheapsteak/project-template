@@ -5,19 +5,20 @@ export default [
     name: 'Welcome',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-1.png`,
     instructionalVideos: [],
+    photoEssay: undefined,
     panorama: undefined,
     articles: [
       {
         slug: 'welcome-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
         slug: 'welcome-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
     podcast: {
-      image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`,
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`,
       src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1'
     }
   },
@@ -25,14 +26,18 @@ export default [
     name: 'Science',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-2.png`,
     instructionalVideos: ['science'],
+    photoEssay: {
+      slug: 'science-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panorama: {
       slug: 'science',
-      image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
     },
     articles: [
       {
         slug: 'science-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined
@@ -41,14 +46,15 @@ export default [
     name: 'Literacy &<br/>Writing',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-3.png`,
     instructionalVideos: ['literacy', 'writing'],
+    photoEssay: undefined,
     panorama: {
       slug: 'literacy-and-writing',
-      image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
     },
     articles: [
       {
         slug: 'literacy-and-writing-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined
@@ -57,22 +63,23 @@ export default [
     name: 'Math',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-4.png`,
     instructionalVideos: ['math'],
+    photoEssay: undefined,
     panorama: {
       slug: 'math',
-      image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
     },
     articles: [
       {
         slug: 'math-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
         slug: 'math-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
         slug: 'math-3',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined
@@ -81,11 +88,12 @@ export default [
     name: 'Electives',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-5.png`,
     instructionalVideos: [],
+    photoEssay: undefined,
     panorama: undefined,
     articles: [
       {
         slug: 'electives-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined
@@ -94,11 +102,15 @@ export default [
     name: 'Character Development',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-6.png`,
     instructionalVideos: [],
+    photoEssay: {
+      slug: 'character-development-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panorama: undefined,
     articles: [
       {
         slug: 'character-development-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined
@@ -107,6 +119,10 @@ export default [
     name: 'Computer<br/>Science',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-7.png`,
     instructionalVideos: ['computer-science'],
+    photoEssay: {
+      slug: 'computer-science-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panorama: undefined,
     articles: [],
     podcast: undefined
@@ -115,15 +131,19 @@ export default [
     name: 'History',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-8.png`,
     instructionalVideos: [],
+    photoEssay: {
+      slug: 'history-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panorama: undefined,
     articles: [
       {
         slug: 'history-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
       {
         slug: 'history-2',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       },
     ],
     podcast: undefined
@@ -132,11 +152,15 @@ export default [
     name: 'Parental<br/>Investment',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-9.png`,
     instructionalVideos: [],
+    photoEssay: {
+      slug: 'parental-investment-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panorama: undefined,
     articles: [
       {
         slug: 'parental-investment-1',
-        image: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
       }
     ],
     podcast: undefined

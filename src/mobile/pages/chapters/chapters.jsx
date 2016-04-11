@@ -6,7 +6,7 @@ import ToggleIcon from 'svgs/mobile-toggle-icon.svg';
 import TransitionGroup from 'react-addons-transition-group';
 import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
-import * as headerActionCreators from 'common/components/mobile-header/mobile-header-actions';
+import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
@@ -39,6 +39,15 @@ export default class MobileChapters extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { pathname } = nextProps.location;
+    let key = pathname.split('/')[3];
+    
+    if(key) {
+      animate.set(this.refs.container, {overflowY: 'hidden'});
+    } else {
+      animate.set(this.refs.container, {overflowY: 'scroll'});
+    }
+
     this.setHeader(nextProps);
   }
 
@@ -48,8 +57,11 @@ export default class MobileChapters extends React.Component {
 
     if(!key) {
       store.dispatch(headerActionCreators.setHeaderSettings({
+        type: 'chapters',
         color: '#565D60',
-        backgroundColor: 'white'
+        title: 'SA',
+        bottomBorder: false,
+        backButton: false,
       }));
     }
   }
@@ -60,31 +72,31 @@ export default class MobileChapters extends React.Component {
   };
 
   getAvailableScrollDistance = () => {
-    const container = this.props.getTarget();
+    const container = this.refs.container;
     return container.scrollHeight - container.offsetHeight;
   };
 
   handleItemClick = async (chapter, i) => {
     const chapterNode = this.refs.container.querySelector(`#chapter-${i}`)
     const clientRect = chapterNode.getBoundingClientRect();
-    const container = this.props.getTarget();
+    const container = this.refs.content;
 
-    if(!chapter.isOpened) {
+    if(!chapter.isOpen) {
       if(chapterNode.offsetTop < this.getAvailableScrollDistance()) {
-        await animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop, ease: Quad.easeOut });
-        this.toggleItemDisplay(chapter, i);
+        animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop - this.refs.topOverlay.offsetHeight, ease: Expo.easeInOut });
+        this.toggleItemDisplay(chapter);
       } else {
-        this.toggleItemDisplay(chapter, i);
+        this.toggleItemDisplay(chapter);
         setTimeout(() =>
-          animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop, ease: Quad.easeOut })
-        , 500)
+          animate.to(container, 0.3, { scrollTop: chapterNode.offsetTop - this.refs.topOverlay.offsetHeight, ease: Expo.easeOut })
+        , 100)
       }
     } else {
-      this.toggleItemDisplay(chapter, i);
+      this.toggleItemDisplay(chapter);
     }
   };
 
-  toggleItemDisplay = (chapter, i) => {
+  toggleItemDisplay = (chapter) => {
     store.dispatch(chapterActionCreators.toggleChapterDisplay(chapter.name));
   };
 
@@ -94,6 +106,8 @@ export default class MobileChapters extends React.Component {
 
     return (
       <div ref="container" className="mobile-chapters">
+        <div ref="topOverlay" className="top-overlay"></div>
+        <div ref="content" className="content-wrapper">
         {
           this.state.chapters.map((chapter, i) => {
             return (
@@ -113,8 +127,7 @@ export default class MobileChapters extends React.Component {
                   <img className="chapter-image" src={chapter.image} />
                   <div className="panel-label">
                     <div
-                      className="toggle-icon"
-                      style={chapter.isOpen ? {transform: 'rotate(180deg)'} : {}}
+                      className={`toggle-icon ${chapter.isOpen ? 'open' : ''}`}
                       dangerouslySetInnerHTML={{ __html: ToggleIcon }}
                     >
                     </div>
@@ -128,6 +141,7 @@ export default class MobileChapters extends React.Component {
                         key={chapter.name}
                         narrativeVideo={ narrativeVideoData }
                         instructionalVideos={chapter.instructionalVideos}
+                        photoEssay={chapter.photoEssay}
                         panorama={chapter.panorama}
                         articles={chapter.articles}
                         podcast={chapter.podcast}
@@ -146,6 +160,7 @@ export default class MobileChapters extends React.Component {
             : <div />
           }
         </TransitionGroup>
+        </div>
       </div>
     )
   }

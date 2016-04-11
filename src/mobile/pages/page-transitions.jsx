@@ -8,31 +8,35 @@ const animationStates = {
   out: { delay: 0.1, x: -window.innerWidth }
 };
 
-const easeType = Quad;
+const easeType = Expo;
 
-function makeTransitionedPage (Component) {
+function makeTransitionedPage (Component, options = {}) {
   return class TransitionedPage extends React.Component {
     static defaultProps = Component.defaultProps;
     static propTypes = Component.defaultProps;
+
+    animationStates = _.extend({}, !options.isModal ? animationStates : {
+      enter: animationStates.out,
+      idle: animationStates.idle,
+      out: animationStates.out
+    });
 
     animateIn () {
       const el = findDOMNode(this);
       TweenMax.killTweensOf(el);
       animate.set(el, { css: {zIndex: 100 }});
-      return animate.fromTo(el,
-        0.4,
-        animationStates.enter,
-        _.extend({},
-          animationStates.idle,
-          { ease: easeType.easeOut, clearProps: 'transform' })
-        );
+      return animate.fromTo(el, 0.3, this.animationStates.enter,
+        _.extend({}, this.animationStates.idle, { ease: easeType.easeOut, clearProps: 'transform' })
+      );
     }
 
     animateOut () {
       const el = findDOMNode(this);
       TweenMax.killTweensOf(el);
       animate.set(el, { css: {zIndex: 10 }});
-      return animate.to(el, 0.6, animationStates.out )
+      return animate.to(el, 0.3,
+        _.extend({}, this.animationStates.out, { ease: easeType.easeOut })
+      );
     }
 
     componentWillAppear(callback) {
