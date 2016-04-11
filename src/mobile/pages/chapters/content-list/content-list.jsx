@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
+import IconPlay from 'svgs/icon-thumbnail-play.svg';
+import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
 
 function ConditionalLink (props) {
   if(props.isExternalLink) {
     return <a className={props.className} href={props.to} target="__blank">{props.children}</a>
   } else {
-    return <Link className={props.className} to={props.to} >{props.children}</Link>
+    return <Link className={props.className} to={props.to}>{props.children}</Link>
   }
 }
 
@@ -23,7 +25,10 @@ function ListItem (props) {
         </span>
         {
           props.duration
-          ? <span className="item-duration">{ props.duration }</span>
+          ? <div className="item-duration">
+              <div className="clock-svg" dangerouslySetInnerHTML={{ __html: ClockIconSvg }}></div>
+              { props.duration }
+            </div>
           : null
         }
       </div>
@@ -31,8 +36,8 @@ function ListItem (props) {
   )
 }
 
-const easeType = Quad;
-const duration = 0.5;
+const easeType = Expo;
+const duration = 0.3;
 
 export default class ChapterContentList extends React.Component {
 
@@ -53,11 +58,11 @@ export default class ChapterContentList extends React.Component {
   }
 
   animateIn () {
-    return animate.to(this.refs.list, duration, { height: this.refs.content.offsetHeight, ease: easeType.easeOut });
+    return animate.to(this.refs.list, duration, { height: this.refs.content.offsetHeight, ease: easeType.easeInOut });
   }
 
   animateOut () {
-    return animate.to(this.refs.list, duration/1.5, { height: 0, ease: easeType.easeIn });
+    return animate.to(this.refs.list, duration/1.5, { height: 0, ease: easeType.easeOut });
   }
 
   render () {
@@ -73,7 +78,8 @@ export default class ChapterContentList extends React.Component {
           <ListItem
             label="Play"
             name="Narrative Video"
-            image={ this.props.narrativeVideo.image }
+            isVideo={true}
+            image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
             isExternalLink={true}
             to={ this.props.narrativeVideo.src }
@@ -91,6 +97,7 @@ export default class ChapterContentList extends React.Component {
                   key={i}
                   label="Play"
                   name={`Instructional Video${number}`}
+                  isVideo={true}
                   image={ video.iconImage }
                   duration={ video.duration }
                   isExternalLink={true}
@@ -100,11 +107,21 @@ export default class ChapterContentList extends React.Component {
             })
           }
           {
+            this.props.photoEssay
+              ? <ListItem
+                label="View"
+                name={ `${this.props.photoEssay.title}` }
+                image={ this.props.photoEssay.iconImage }
+                to={ this.props.photoEssay.route }
+              />
+              : null
+          }
+          {
             this.props.panorama
               ? <ListItem
                 label="Experience"
                 name={ `${this.props.panorama.title} 360` }
-                image={ this.props.panorama.image }
+                image={ this.props.panorama.iconImage }
                 to={ this.props.panorama.route }
               />
               : null
@@ -115,7 +132,7 @@ export default class ChapterContentList extends React.Component {
                 key={article.slug}
                 label="Read"
                 name={ article.title }
-                image={ article.image }
+                image={ article.iconImage }
                 to={ article.route }
               />
             })
@@ -125,7 +142,7 @@ export default class ChapterContentList extends React.Component {
             ? <ListItem
                 label="Listen"
                 name="Podcast"
-                image={ this.props.podcast.image }
+                image={ this.props.podcast.iconImage }
                 isExternalLink={true}
                 to={ this.props.podcast.src }
               />

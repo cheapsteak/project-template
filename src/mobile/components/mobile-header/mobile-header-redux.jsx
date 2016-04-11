@@ -1,6 +1,6 @@
 import React from 'react';
 import MobileHeader from './mobile-header.jsx'
-import * as menuActionCreators from 'common/components/mobile-menu/mobile-menu-actions.js';
+import * as menuActionCreators from '../mobile-menu/mobile-menu-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 

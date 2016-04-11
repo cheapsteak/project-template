@@ -51,15 +51,24 @@
     background-color: #121212;
   }
 
+  // An invisible video to trigger iOS native player
+  video {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+  }
+
   .rectangular-button {
-    width: 200px;
-    height: 50px;
+    width: 58vw;
+    max-width: 250px;
+    height: 14vw;
     margin-bottom: 14px;
 
-    &.cta-explore {
-      .button-text {
-        padding-left: 3.215vw;
-      }
+    .button-text {
+      font-size: 4.667vw;
     }
   }
 }

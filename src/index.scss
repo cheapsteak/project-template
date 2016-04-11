@@ -12,6 +12,7 @@ body {
   height: 100%;
 }
 
+// Desktop
 @import 'common/styles/globals';
 @import 'tests/tests';
 @import 'common/components/parallax-video-wrapper/parallax-video-wrapper';
@@ -58,11 +59,12 @@ body {
 @import 'mobile/pages/landing/landing';
 @import 'mobile/pages/chapters/chapters';
 @import 'mobile/pages/chapters/content-list/content-list';
-@import 'mobile/pages/article/article';
 @import 'mobile/pages/videos/videos';
+@import 'mobile/pages/article/article';
+@import 'mobile/pages/photo-essay/photo-essay';
 @import 'mobile/pages/panorama/panorama';
 @import 'mobile/pages/learn-more/learn-more';
-@import 'common/components/mobile-header/mobile-header';
-@import 'common/components/mobile-menu/mobile-menu';
-@import 'common/components/rotate-screen/rotate-screen';
+@import 'mobile/components/mobile-header/mobile-header';
+@import 'mobile/components/mobile-menu/mobile-menu';
+@import 'mobile/components/rotate-screen/rotate-screen';
 

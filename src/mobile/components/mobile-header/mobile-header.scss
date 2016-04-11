@@ -11,7 +11,6 @@
     left: 0;
     width: 100%;
     height: 8.945vh;
-    // background-clip: border-box;
     border-bottom: 1px solid rgba(255,255,255, 0.2);
     z-index: 6000;
     padding: 0 $side-padding;
@@ -42,6 +41,14 @@
       cursor: pointer;
     }
 
+    .mobile-menu-icon span {
+      transition: all 0.3s ease-out;
+    }
+    
+    .mobile-menu-icon.arrow-mode span {
+      transition: all 0.3s ease-out;
+    }
+
     .mobile-menu-icon span:nth-child(1) {
       position: absolute;
       top: 50%;
@@ -50,7 +57,6 @@
       width: 100%;
       height: 0.101em;
       user-select: none;
-      transition: all 0.3s ease-out;
     }
 
     .mobile-menu-icon span:nth-child(2),
@@ -61,7 +67,6 @@
       top: 50%;
       width: 100%;
       height: 0.101em;
-      transition: all 0.3s ease-out;
     }
 
     .mobile-menu-icon span:nth-child(2) {
@@ -111,14 +116,15 @@
     left: 0;
     width: 100%;
     height: 8.945vh;
-    z-index: 5000;
 
+  }
     .cover-border {
       position: absolute;
       top: 8.945vh;
       width: 100%;
       height: 2.75vh;
+      opacity: 0;
       background-color: #ffffff;
+      z-index: 5000;
     }
-  }
 }

@@ -1,6 +1,11 @@
 $mobile-header-height: 8.945vh;
 $mobile-side-padding: 5.334vw;
 
+.mobile {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
 .overlay-content {
   position: fixed;
   top: 0;
