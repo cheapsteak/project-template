@@ -13,6 +13,7 @@ import ChapterVideoPlayer from 'common/components/video-players/instructional/ch
 import NarrativeVideoPlayer from 'common/components/video-players/narrative/narrative-video-player-redux.jsx';
 import InstructionalVideoPlayer from 'common/components/video-players/instructional/grid/grid-video-player-redux.jsx';
 import mobileRoutes from './mobile/routes.jsx';
+import detect from 'common/utils/detect';
 
 function handleRouteUpdate() {
   console.log('route updated');
@@ -27,26 +28,29 @@ const testRoutes = process.env.NODE_ENV !== 'production' ?
 
 export default <Provider store={store}>
   <Router history={appHistory} onUpdate={handleRouteUpdate}>
-    <Route path="/" component={App}>
-      <IndexRoute component={LandingPage}/>
-      <Route path="grid" component={GridPage}>
-        <Route path="instructional-videos/:slug" component={InstructionalVideoPlayer}/>
-      </Route>
-      <Route path="narrative-video*" components={NarrativeVideoPlayer} />
-      <Route path="chapters/:chapter_slug" component={Chapter}>
-        <Route
-          path="instructional-videos/:slug"
-          component={FullBrowserWrapper}
-          childComponent={ChapterVideoPlayer}
-        />
-        <Route
-          path="photo-essay/:slug"
-          component={FullBrowserWrapper}
-          childComponent={PhotoEssay}
-        />
-      </Route>
-    </Route>
-    {mobileRoutes}
+    {
+      !detect.isPhone
+        ? <Route path="/" component={App}>
+            <IndexRoute component={LandingPage}/>
+            <Route path="grid" component={GridPage}>
+              <Route path="instructional-videos/:slug" component={InstructionalVideoPlayer}/>
+            </Route>
+            <Route path="narrative-video*" components={NarrativeVideoPlayer} />
+            <Route path="chapters/:chapter_slug" component={Chapter}>
+              <Route
+                path="instructional-videos/:slug"
+                component={FullBrowserWrapper}
+                childComponent={ChapterVideoPlayer}
+              />
+              <Route
+                path="photo-essay/:slug"
+                component={FullBrowserWrapper}
+                childComponent={PhotoEssay}
+              />
+            </Route>
+          </Route>
+      : mobileRoutes
+    }
     {testRoutes}
   </Router>
 </Provider>

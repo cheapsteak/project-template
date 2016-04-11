@@ -17,7 +17,7 @@
 
   .content-wrapper {
     width: 100vw;
-    height: 100vh;
+    max-height: 100vh;
     padding-top: calc(8.945vh);
     overflow-x: hidden;
     overflow-y: scroll;

@@ -28,17 +28,17 @@ export default class MobileMenu extends React.Component {
 
   data = [
     {
-      route: '/mobile/chapters',
+      route: '/chapters',
       name: 'Main Menu',
       svgIcon: ExploreIcon
     },
     {
-      route: '/mobile/videos',
+      route: '/videos',
       name: 'See Classes In Action',
       svgIcon: PlayIcon
     },
     {
-      route: '/mobile/learn-more',
+      route: '/learn-more',
       name: 'About',
       svgIcon: LearnMoreIcon
     }
