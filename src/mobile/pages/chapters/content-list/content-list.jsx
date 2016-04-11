@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
+import IconPlay from 'svgs/icon-thumbnail-play.svg';
 import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
 
@@ -8,7 +9,7 @@ function ConditionalLink (props) {
   if(props.isExternalLink) {
     return <a className={props.className} href={props.to} target="__blank">{props.children}</a>
   } else {
-    return <Link className={props.className} to={props.to} >{props.children}</Link>
+    return <Link className={props.className} to={props.to}>{props.children}</Link>
   }
 }
 
@@ -77,6 +78,7 @@ export default class ChapterContentList extends React.Component {
           <ListItem
             label="Play"
             name="Narrative Video"
+            isVideo={true}
             image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
             isExternalLink={true}
@@ -95,6 +97,7 @@ export default class ChapterContentList extends React.Component {
                   key={i}
                   label="Play"
                   name={`Instructional Video${number}`}
+                  isVideo={true}
                   image={ video.iconImage }
                   duration={ video.duration }
                   isExternalLink={true}

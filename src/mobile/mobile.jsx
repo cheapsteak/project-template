@@ -4,6 +4,7 @@ import TransitionGroup from 'react-addons-transition-group';
 import Header from './components/mobile-header/mobile-header-redux';
 import RotateScreen from './components/rotate-screen/rotate-screen';
 import MobileMenu from './components/mobile-menu/mobile-menu';
+import VideoPlayer from './components/video-player/video-player';
 import * as headerActionCreators from './components/mobile-header/mobile-header-actions';
 import * as menuActionCreators from './components/mobile-menu/mobile-menu-actions.js';
 import store from 'common/store';
@@ -14,19 +15,18 @@ import _ from 'lodash';
 import chaptersModel from './model/chapters-model.js';
 import instructionalVideosModel from './model/instructional-videos-model.js';
 
-
-// Preload([
-//   MobileMenu.backgroundImage,
-//   ...(_.flatten(chaptersModel.getAll().map(chapter => {
-//     return [
-//       ...chapter.articles.map(article => article.iconImage),
-//       ...chapter.instructionalVideos.map(video => video.iconImage),
-//       chapter.photoEssay && chapter.photoEssay.iconImage,
-//       chapter.panorama && chapter.panorama.iconImage,
-//       chapter.podcast && chapter.podcast.iconImage,
-//     ].filter(Boolean)
-//   })))
-// ]);
+Preload([
+  MobileMenu.backgroundImage,
+  ...(_.flatten(chaptersModel.getAll().slice(0, 3).map(chapter => {
+    return [
+      ...chapter.articles.map(article => article.iconImage),
+      ...chapter.instructionalVideos.map(video => video.iconImage),
+      chapter.photoEssay && chapter.photoEssay.iconImage,
+      chapter.panorama && chapter.panorama.iconImage,
+      chapter.podcast && chapter.podcast.iconImage,
+    ].filter(Boolean)
+  })))
+]);
 
 export default class Mobile extends React.Component {
   static childContextTypes = {

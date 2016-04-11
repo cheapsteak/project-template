@@ -49,6 +49,8 @@
   }
 
   img {
+    position: relative;
     width: 100%;
+    transform: translateZ(0);
   }
 }

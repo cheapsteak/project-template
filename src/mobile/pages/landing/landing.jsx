@@ -4,6 +4,7 @@ import IconWatch from 'svgs/icon-play.svg';
 import IconExplore from 'svgs/icon-explore.svg';
 import Button from 'common/components/rectangular-button/rectangular-button';
 import MobileMenu from '../../components/mobile-menu/mobile-menu';
+import VideoPlayer from '../../components/video-player/video-player';
 import * as actionCreators from '../../components/mobile-header/mobile-header-actions';
 import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
@@ -12,6 +13,10 @@ import detect from 'common/utils/detect';
 
 @pageTransitions
 export default class Landing extends React.Component {
+
+  state = {
+    videoStatus: 'paused'
+  };
 
   componentWillMount() {
     this.setHeader();
@@ -29,11 +34,23 @@ export default class Landing extends React.Component {
   };
 
   playVideo = () => {
+    this.refs.video.currentTime = 0;
+
     if(detect.md.is('iPhone')) {
       this.refs.video.play();
     } else {
-      window.open(this.refs.video.src);
+      this.requestFullscreen(this.refs.video);
+      this.refs.video.style.opacity = 1;
+      this.refs.video.play();
     }
+  };
+
+  playVideo = () => {
+    this.setState({ videoStatus: 'play' });
+  };
+
+  pauseVideo = () => {
+    this.setState({ videoStatus: 'pause' });
   };
 
   render () {
@@ -46,7 +63,11 @@ export default class Landing extends React.Component {
           <h1>School Tour</h1>
           <p>Take an inside look at our culture and curriculum through the eyes of our scholars.</p>
           <div href={narrativeVideoData.src} target="__blank">
-            <video ref="video" src={narrativeVideoData.src} />
+            <VideoPlayer
+              status={this.state.videoStatus}
+              src={narrativeVideoData.src}
+              onExitFullscreen={this.pauseVideo}
+            />
             <Button
               text="Start the Tour"
               color="#ffffff"

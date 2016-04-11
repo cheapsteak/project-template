@@ -99,7 +99,6 @@ export default class MobileMenu extends React.Component {
       <div
         ref="menu"
         className="mobile-menu"
-        style={{ backgroundImage: `url('${MobileMenu.backgroundImage}')` }}
       >
         {
           this.data.map((item, i) => {
