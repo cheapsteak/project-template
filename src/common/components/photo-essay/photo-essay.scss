@@ -34,7 +34,9 @@
 
   .photo-description {
     width: 50%;
-    @include scale('height', 260px, #{(260/1400*100)}vw, #{(260/1400*100)}vw);
+    // copy from client is longer than anticipated, but we might still change this back
+    // @include scale('height', 260px, #{(260/1400*100)}vw, #{(260/1400*100)}vw);
+    @include scale('max-height', 300px, #{(300/1400*100)}vw, #{(300/1400*100)}vw);
     background-color: rgba(255, 255, 255, 0.85);
     background-clip: padding-box;
     border-top: 40px solid rgba(255, 255, 255, 0.5);

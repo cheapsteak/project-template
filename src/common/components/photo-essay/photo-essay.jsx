@@ -84,6 +84,7 @@ class PhotoEssay extends React.Component {
                 enter: Sine.easeIn,
                 leave: Sine.easeOut,
               }}
+              shouldTransitionParentNodeHeight={true}
             >
               <p>{ photo.description }</p>
             </TransitionItem>
