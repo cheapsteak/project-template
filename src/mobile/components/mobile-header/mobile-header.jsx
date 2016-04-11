@@ -62,7 +62,7 @@ export default class MobileHeader extends React.Component {
       if(this.context.previousRoute) {
         this.context.router.goBack();
       } else {
-        this.context.router.replace('/mobile');
+        this.context.router.replace('/');
       }
 
       this.props.closeMenu();

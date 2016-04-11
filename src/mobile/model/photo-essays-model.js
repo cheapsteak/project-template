@@ -13,7 +13,7 @@ export default {
     return {
       ...photoEssaySourceData,
       chapterName: chapterSourceData.title,
-      route: `/mobile/chapters/photo-essays/${photoEssaySourceData.slug}`
+      route: `/chapters/photo-essays/${photoEssaySourceData.slug}`
     };
   }
 };
