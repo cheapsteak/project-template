@@ -167,7 +167,7 @@ export default class Chapter extends React.Component {
         >
           <RectangularButton
             style={{height: '100%'}}
-            text={`Explore Chapters`}
+            text={`Main Menu`}
             color={`#adafaf`}
             svgIcon={IconExplore}
             backgroundColor={`#565d60`}
@@ -200,7 +200,7 @@ export default class Chapter extends React.Component {
                 <div className={`icon`} dangerouslySetInnerHTML={{__html: IconPlay}}></div>
               </div>
               <div className={`button`} style={{ width: 'auto', padding: '0 20px' }}>
-                <p>{ `Watch ${this.state.data.scholar}'s Chapter` }</p>
+                <p>{ `Meet ${this.state.data.scholar}` }</p>
               </div>
             </Link>
           </div>
@@ -297,11 +297,11 @@ export default class Chapter extends React.Component {
 
           this.state.data.slug === 'welcome'
             ? <div className="page-component">
-            <h2 className="component-title">
-              A Message From Eva: (Podcast name or title)
-            </h2>
-            <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
-          </div>
+                <h2 className="component-title">
+                  A Message From Eva
+                </h2>
+                <Podcast src="http://successacademy.jam3.net/temp-assets/planet-money-664.mp4"></Podcast>
+              </div>
             : null
         }
         <TransitionGroup

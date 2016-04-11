@@ -27,7 +27,7 @@ export default [
     time: 35,
     hero: {
       cta: ctaText,
-      description: 'Empowering Confident Mathematicians',
+      description: 'Empowering confident mathematicians',
       bgVideoUrl: `http://successacademy.jam3.net/videos/math.mp4`,
       poster: `${config.ASSET_PATH}/images/temp-hero-poster.jpg`,
       thumbUrl: `${config.ASSET_PATH}/images/learn-more.jpg`
@@ -93,7 +93,7 @@ export default [
     instructionalVideos: ['computer-science'],
     panoramas: [],
     photoEssays: ['computer-science-1'],
-    articles: [],
+    articles: ['computer-science-1'],
     podcast: '',
     infographics: ''
   },

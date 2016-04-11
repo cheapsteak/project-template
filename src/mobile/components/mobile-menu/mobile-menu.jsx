@@ -29,7 +29,7 @@ export default class MobileMenu extends React.Component {
   data = [
     {
       route: '/mobile/chapters',
-      name: 'Explore More Content',
+      name: 'Main Menu',
       svgIcon: ExploreIcon
     },
     {
@@ -123,10 +123,13 @@ export default class MobileMenu extends React.Component {
         }
         <div className="menu-bottom">
           <a className="bottom-item" href="http://www.successacademies.org/privacy-policy/" target="_blank">
-            Privacy and Terms
+            Privacy Policy
           </a>
           <a className="bottom-item"  href="http://www.successacademies.org" target="_blank">
-            Successacademy.org
+            Successacademies.org
+          </a>
+          <a className="bottom-item"  href="http://jobs.successacademies.org/" target="_blank">
+            Careers
           </a>
           <div className="menu-footer">
             <label>Share</label>

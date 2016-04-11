@@ -46,6 +46,13 @@
 
     img {
       height: 100%;
+
+      // Temporary fix for ios
+      @media (-webkit-min-device-pixel-ratio: 3),
+             (min-resolution: 192dpi) {
+          height: auto;
+          width: 25vw;
+      }
     }
 
     .list-text-content {

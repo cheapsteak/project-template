@@ -219,6 +219,20 @@ export default class LandingPage extends React.Component {
 
             <div ref="ctaContainer" className={`cta-container ${isReturn ? 'resume' : ''}`}>
               <Link
+                ref="ctaExplore"
+                className={`cta explore`}
+                to={`grid`}
+              >
+                <RectangularButton
+                  style={{width: '100%', height: '100%'}}
+                  text={`Main Menu`}
+                  color={`#fff`}
+                  svgIcon={IconExplore}
+                  backgroundColor={`rgba(255,255,255,0)`}
+                  hoverBackgroundColor={`rgba(255,255,255,0.2)`}
+                />
+              </Link>
+              <Link
                 ref="ctaWatch"
                 className={`cta watch`}
                 to={`narrative-video`}
@@ -230,20 +244,6 @@ export default class LandingPage extends React.Component {
                   svgIcon={IconWatch}
                   backgroundColor={`#f7910b`}
                   hoverBackgroundColor={`#de8209`}
-                />
-              </Link>
-              <Link
-                ref="ctaExplore"
-                className={`cta explore`}
-                to={`grid`}
-              >
-                <RectangularButton
-                  style={{width: '100%', height: '100%'}}
-                  text={`Chapter Menu`}
-                  color={`#fff`}
-                  svgIcon={IconExplore}
-                  backgroundColor={`rgba(255,255,255,0)`}
-                  hoverBackgroundColor={`rgba(255,255,255,0.2)`}
                 />
               </Link>
             </div>
