@@ -58,7 +58,8 @@ export default class Panorama extends React.Component {
     rotation: {x: 0, y: 0},
     mode: modes.ENTER_IDLE,
     cursorPos: {x: 0, y: 0},
-    cursorIsVisible: true
+    cursorIsVisible: true,
+    isMobile: detect.isMobile
   };
 
   static contextTypes = {
@@ -154,6 +155,7 @@ export default class Panorama extends React.Component {
       .then(() => {
         animate.set(this.containerEl, {clearProps: 'all'});
         this.setState({mode: modes.ENTER_IDLE});
+        if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 1});
       })
   };
 
@@ -218,7 +220,7 @@ export default class Panorama extends React.Component {
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
       mousewheel: false,
-      //mousemove: false
+      mousemove: true
     });
 
     this.panorama.on('ready', () => {
@@ -250,10 +252,12 @@ export default class Panorama extends React.Component {
       status = states.INIT;
       this.orientationControls.disconnect();
       this.panorama.rotate(this.props.initLong, this.props.initLat);
+      if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 1});
     } else {
       this.updateZoomLevel(0);
       status = states.ACCELEROMETER;
       this.orientationControls.connect();
+      if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 0});
     }
     this.setState({status});
   };
@@ -276,10 +280,20 @@ export default class Panorama extends React.Component {
     });
   };
 
-  render() {
-    const isMobile = detect.isPhone;
+  handleMobileOverlayClick = () => {
+    if (detect.isMobile && this.state.mode === modes.ENTER_IDLE) {
+      animate.set(this.refs.touchOverlay, {autoAlpha: 0});
+      this.handleLeaveIdle();
+      setTimeout(() => {
+        this.handleEnterFullBrowser();
+      }, 300);
+    }
+  };
 
-    const controls = isMobile ? null : (
+  render() {
+    const isMobile = this.state.isMobile;
+
+    const controls = /*isMobile ? null :*/ (
       <PanoramaControls
         zoomLevel={this.state.zoomLevel}
         modes={{...modes}}
@@ -296,7 +310,7 @@ export default class Panorama extends React.Component {
       </div>
     );
 
-    const closeButton = isMobile ? null : (
+    const closeButton = /*isMobile ? null :*/ (
       <div
         ref="closeButton"
         className={`close-btn`}
@@ -318,12 +332,13 @@ export default class Panorama extends React.Component {
         modes={{...modes}}
         currMode={this.state.mode}
         setPanorama={this.props.setPanorama}
+        className={isMobile?'is-mobile':''}
       />
     ) : null;
 
     return (
       <div
-        className={`panorama ${this.state.status} ${this.props.className}`}
+        className={`panorama ${this.state.status} ${this.props.className} ${isMobile ? 'is-mobile' : ''}`}
         onMouseMove={this.handleMouseMove}
       >
         <PanoramaCompass
@@ -352,6 +367,16 @@ export default class Panorama extends React.Component {
           <div ref="psvInjectTarget" className="parallax-target psv-inject-target">
           </div>
         </div>
+
+        {isMobile && <div
+          ref="touchOverlay"
+          className={`touch-overlay`}
+          onClick={this.handleMobileOverlayClick}
+        >
+          Click to interact
+        </div>
+        }
+
       </div>
     );
   }

@@ -4,7 +4,8 @@ $width: 560;
   position: absolute;
   top: 0;
   left: 50%;
-  @include scale-prop(margin-left, -$width/2);
+  //@include scale-prop(margin-left, -$width/2);
+  @include scale-prop(margin-top, -40);
   @include scale-prop(width, $width);
   @include scale-prop(height, 120);
   z-index: 1000;
@@ -12,6 +13,11 @@ $width: 560;
   @include scale-prop(font-size, 17);
   overflow: hidden;
   @include gpu;
+
+  &.is-mobile {
+    left: auto;
+    right: 0;
+  }
 
   &:focus {
     outline: none;
@@ -24,7 +30,7 @@ $width: 560;
   .heading {
     position: relative;
     @include flex-center;
-    @include scale-prop(height, 50);
+    @include scale-prop(height, 40);
     color: rgba(255, 255, 255, 1);
     background-color: rgba(43, 43, 43, 1);
     z-index: 2000;
@@ -69,6 +75,10 @@ $width: 560;
         cursor: default;
       }
     }
+  }
+
+  .wrapper {
+    overflow: hidden;
   }
 
 }

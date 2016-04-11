@@ -68,5 +68,18 @@
   .psv-inject-target, .psv-inject-target-wrapper {
     height: 100%;
   }
-}
 
+  .touch-overlay {
+    @include absolute-100;
+    background-color: rgba(0, 0, 0, 0);
+    @include flex-center;
+    color: #fff;
+    font-size: 40px;
+  }
+
+  &.is-mobile {
+    .panorama-controls {
+      display: none;
+    }
+  }
+}

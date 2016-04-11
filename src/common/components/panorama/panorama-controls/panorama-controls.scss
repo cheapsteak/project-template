@@ -111,7 +111,7 @@ $responsiveWidth: $controlsWidth/1400 * 100;
 
       .slider-indicator {
         position: absolute;
-        @include scale-prop(width, 85);
+        @include scale-prop(width, 82);
         height: 100%;
         cursor: pointer;
 
@@ -120,7 +120,7 @@ $responsiveWidth: $controlsWidth/1400 * 100;
           @include scale-prop(height, 15);
           border-radius: 50%;
           border: 2px solid rgba(255, 255, 255, 0.8);
-          transition: border-color 0.3s, transform 0.3s;
+          transition: border-color 0.3s, transform 0.2s;
           pointer-events: none;
         }
 
