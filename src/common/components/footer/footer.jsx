@@ -22,7 +22,7 @@ export default class Footer extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.share = new Share(location.origin + '/middleschool');
+    this.share = new Share(location.origin + CONFIG.basePath);
   }
 
   componentWillAppear(callback) {

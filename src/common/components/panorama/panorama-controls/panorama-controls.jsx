@@ -90,7 +90,7 @@ export default class PanoramaControls extends React.Component {
   stopDrag = () => {
     if (this.state.isDraggingSlider) {
       this.setState({isDraggingSlider: false});
-      audio.play('button-click');
+      //audio.play('button-click');
     }
   };
 
@@ -114,7 +114,7 @@ export default class PanoramaControls extends React.Component {
   };
 
   handleMouseEnter = () => {
-    audio.play('button-rollover');
+    if (!this.state.isDraggingSlider) audio.play('button-rollover');
   };
 
   handleZoomIn = () => {

@@ -46,7 +46,7 @@ export default class MobileMenu extends React.Component {
 
   componentDidMount () {
     animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth });
-    this.share = new Share(location.origin + '/middleschool');
+    this.share = new Share(location.origin + CONFIG.basePath);
   }
 
   componentWillAppear (callback) {

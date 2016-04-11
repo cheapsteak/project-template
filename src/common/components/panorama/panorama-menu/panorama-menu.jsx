@@ -3,6 +3,7 @@ import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import panData  from '../../../data/panorama';
 import panModel  from '../../../models/panorama-model';
+import detect from 'common/utils/detect';
 
 export default class PanoramaMenu extends React.Component {
 
@@ -56,9 +57,9 @@ export default class PanoramaMenu extends React.Component {
 
   animateIn = () => {
     if (this.props.currMode === this.props.modes.LEAVE_IDLE) {
-      animate.set(this.containerEl, {y: -this.refs.heading.offsetHeight});
+      if (!detect.isTablet) animate.set(this.containerEl, {x: '-50%'});
     } else {
-      animate.set(this.containerEl, {y: '0%'});
+      animate.set(this.containerEl, {x: '0%'});
     }
 
     return animate.all([
@@ -76,8 +77,8 @@ export default class PanoramaMenu extends React.Component {
 
     return animate.all([
       animate.to(this.items, 0.3, {autoAlpha: 0}),
-      animate.to(this.refs.container, 0.8, {y: '-180%', autoAlpha: 1, ease: Expo.easeOut, delay: delay}),
-      animate.to(this.refs.heading, 0.6, {y: '-100%', autoAlpha: 1, ease: Expo.easeOut, delay: delay})
+      animate.to(this.refs.container, 0.8, {y: '-100%', autoAlpha: 1, ease: Expo.easeOut, delay: delay}),
+      animate.to(this.refs.heading, 0.6, {y: '100%', autoAlpha: 1, ease: Expo.easeOut, delay: delay})
     ])
   };
 
@@ -109,13 +110,13 @@ export default class PanoramaMenu extends React.Component {
 
   handleMouseEnter = () => {
     if (this.props.currMode === this.props.modes.ENTER_FB) {
-      animate.to(this.containerEl, 0.5, {y: 0, ease: Expo.easeOut});
+      animate.to(this.containerEl, 0.5, {y: this.refs.heading.offsetHeight, ease: Expo.easeOut});
     }
   };
 
   handleMouseLeave = () => {
     if (this.props.currMode === this.props.modes.ENTER_FB) {
-      animate.to(this.containerEl, 0.5, {y: -50, ease: Expo.easeOut});
+      animate.to(this.containerEl, 0.5, {y: 0, ease: Expo.easeOut});
     }
   };
 
@@ -126,28 +127,32 @@ export default class PanoramaMenu extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <div ref="heading" className={`heading`}>
-          Select a Room
+        <div ref="headingWrapper" className={`wrapper`}>
+          <div ref="heading" className={`heading`}>
+            Select a Room
+          </div>
         </div>
 
-        <div ref="container" className={`items-container`}>
+        <div ref="buttonsWrapper" className={`wrapper`}>
+          <div ref="container" className={`items-container`}>
 
-          {
-            this.state.data.map((item, index) => {
-              return (
-                <div
-                  className={`item ${index == 0 ? 'selected': ''}`}
-                  onClick={this.handleTabClick}
-                  onMouseEnter={this.handleTabMouseEnter}
-                  key={index}
-                  data-slug={item.slug}
-                >
-                  <span>{item.title}</span>
-                </div>
-              )
-            })
-          }
+            {
+              this.state.data.map((item, index) => {
+                return (
+                  <div
+                    className={`item ${index == 0 ? 'selected': ''}`}
+                    onClick={this.handleTabClick}
+                    onMouseEnter={this.handleTabMouseEnter}
+                    key={index}
+                    data-slug={item.slug}
+                  >
+                    <span>{item.title}</span>
+                  </div>
+                )
+              })
+            }
 
+          </div>
         </div>
       </div>
     );
