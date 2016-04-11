@@ -4,6 +4,12 @@ export default [
   {
     name: 'Welcome',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-1.png`,
+    scholar: 'Arianne',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: ['welcome'],
     photoEssay: undefined,
     articles: [
@@ -24,6 +30,12 @@ export default [
   {
     name: 'Science',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-2.png`,
+    scholar: 'Idrissa',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: ['science'],
     photoEssay: {
       slug: 'science-1',
@@ -44,6 +56,12 @@ export default [
   {
     name: 'Literacy &<br/>Writing',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-3.png`,
+    scholar: 'Sela',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: ['literacy', 'writing'],
     photoEssay: undefined,
     panorama: {
@@ -61,6 +79,12 @@ export default [
   {
     name: 'Math',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-4.png`,
+    scholar: 'Quinlan',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: ['math'],
     photoEssay: undefined,
     panorama: {
@@ -86,6 +110,12 @@ export default [
   {
     name: 'Electives',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-5.png`,
+    scholar: 'Morgan and William',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: [],
     photoEssay: undefined,
     panorama: undefined,
@@ -100,6 +130,12 @@ export default [
   {
     name: 'Character Development',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-6.png`,
+    scholar: 'Lianne',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: [],
     photoEssay: {
       slug: 'character-development-1',
@@ -117,6 +153,12 @@ export default [
   {
     name: 'Computer<br/>Science',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-7.png`,
+    scholar: 'Raquel',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: ['computer-science'],
     photoEssay: {
       slug: 'computer-science-1',
@@ -129,6 +171,12 @@ export default [
   {
     name: 'History',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-8.png`,
+    scholar: 'Frankie',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: [],
     photoEssay: {
       slug: 'history-1',
@@ -150,6 +198,12 @@ export default [
   {
     name: 'Parental<br/>Investment',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-9.png`,
+    scholar: 'Alexander',
+    narrativeVideo: {
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-1.jpg`,
+      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1',
+      duration: '10:13'
+    },
     instructionalVideos: [],
     photoEssay: {
       slug: 'parental-investment-1',

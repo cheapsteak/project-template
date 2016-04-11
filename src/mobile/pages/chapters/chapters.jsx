@@ -8,7 +8,6 @@ import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
 import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
-import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
 
@@ -139,7 +138,8 @@ export default class MobileChapters extends React.Component {
                     ? <ContentList
                         key={chapter.name}
                         name={chapter.name}
-                        narrativeVideo={ narrativeVideoData }
+                        scholar={chapter.scholar}
+                        narrativeVideo={ chapter.narrativeVideo }
                         instructionalVideos={chapter.instructionalVideos}
                         photoEssay={chapter.photoEssay}
                         panorama={chapter.panorama}

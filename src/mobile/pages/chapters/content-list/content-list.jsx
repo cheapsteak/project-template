@@ -66,8 +66,6 @@ export default class ChapterContentList extends React.Component {
   }
 
   render () {
-    console.log(this.props.slug);
-        
     return (
       <div
         ref="list"
@@ -79,7 +77,7 @@ export default class ChapterContentList extends React.Component {
         >
           <ListItem
             label="Play"
-            name="Narrative Video"
+            name={`Meet ${this.props.scholar}`}
             isVideo={true}
             image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
