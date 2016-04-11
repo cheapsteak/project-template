@@ -142,7 +142,7 @@ export default class MobileChapters extends React.Component {
                         narrativeVideo={ chapter.narrativeVideo }
                         instructionalVideos={chapter.instructionalVideos}
                         photoEssay={chapter.photoEssay}
-                        panorama={chapter.panorama}
+                        panoramas={chapter.panoramas}
                         articles={chapter.articles}
                         podcast={chapter.podcast}
                       />

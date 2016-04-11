@@ -117,14 +117,18 @@ export default class ChapterContentList extends React.Component {
               : null
           }
           {
-            this.props.panorama
-              ? <ListItem
-                label="Experience"
-                name={ `${this.props.panorama.title} 360` }
-                image={ this.props.panorama.iconImage }
-                to={ this.props.panorama.route }
-              />
-              : null
+            this.props.panoramas.map((panorama, i) => {
+              return (
+                <ListItem
+                  key={i}
+                  label="Experience"
+                  name={ `${panorama.title} 360` }
+                  isVideo={true}
+                  image={ panorama.iconImage }
+                  to={ panorama.route }
+                />
+              )
+            })
           }
           {
             this.props.articles.map(article => {

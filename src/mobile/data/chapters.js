@@ -12,6 +12,24 @@ export default [
     },
     instructionalVideos: ['welcome'],
     photoEssay: undefined,
+    panoramas: [
+      {
+        slug: 'science',
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      },
+      {
+        slug: 'literacy-and-writing',
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      },
+      {
+        slug: 'math',
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      },
+      {
+        slug: 'hallway',
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
+      }
+    ],
     articles: [
       {
         slug: 'welcome-1',
@@ -41,10 +59,7 @@ export default [
       slug: 'science-1',
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
-    panorama: {
-      slug: 'science',
-      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
-    },
+    panoramas: [],
     articles: [
       {
         slug: 'science-1',
@@ -64,10 +79,7 @@ export default [
     },
     instructionalVideos: ['literacy', 'writing'],
     photoEssay: undefined,
-    panorama: {
-      slug: 'literacy-and-writing',
-      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
-    },
+    panoramas: [],
     articles: [
       {
         slug: 'literacy-and-writing-1',
@@ -87,10 +99,7 @@ export default [
     },
     instructionalVideos: ['math'],
     photoEssay: undefined,
-    panorama: {
-      slug: 'math',
-      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-2.jpg`,
-    },
+    panoramas: [],
     articles: [
       {
         slug: 'math-1',
@@ -118,7 +127,7 @@ export default [
     },
     instructionalVideos: [],
     photoEssay: undefined,
-    panorama: undefined,
+    panoramas: [],
     articles: [
       {
         slug: 'electives-1',
@@ -141,7 +150,7 @@ export default [
       slug: 'character-development-1',
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
-    panorama: undefined,
+    panoramas: [],
     articles: [
       {
         slug: 'character-development-1',
@@ -164,7 +173,7 @@ export default [
       slug: 'computer-science-1',
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
-    panorama: undefined,
+    panoramas: [],
     articles: [],
     podcast: undefined
   },
@@ -182,7 +191,7 @@ export default [
       slug: 'history-1',
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
-    panorama: undefined,
+    panoramas: [],
     articles: [
       {
         slug: 'history-1',
@@ -209,7 +218,7 @@ export default [
       slug: 'parental-investment-1',
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
-    panorama: undefined,
+    panoramas: [],
     articles: [
       {
         slug: 'parental-investment-1',
@@ -218,4 +227,4 @@ export default [
     ],
     podcast: undefined
   },
-]
+];

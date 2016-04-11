@@ -15,12 +15,10 @@ export default {
         title: _.find(articlesData, { slug: article.slug }).title
       })),
       instructionalVideos: chapter.instructionalVideos.map(videoModel.get),
-      panorama: chapter.panorama
-        ? {
-            ...panoramaModel.get(chapter.panorama.slug),
-            iconImage: chapter.panorama.iconImage
-          } 
-        : undefined,
+      panoramas: chapter.panoramas.map(panorama => ({
+        ...panoramaModel.get(panorama.slug),
+        iconImage: panorama.iconImage
+      })),
       photoEssay: chapter.photoEssay
         ? {
             ...photoEssayModel.get(chapter.photoEssay.slug),
