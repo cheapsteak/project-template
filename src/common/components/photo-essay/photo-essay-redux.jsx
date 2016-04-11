@@ -14,7 +14,7 @@ class PhotoEssayRedux extends React.Component {
   }
 
   componentWillMount () {
-    this.boundActionCreators.setPhotoEssay(this.props.slug);
+    this.boundActionCreators.setPhotoEssay(this.props.slug, this.props.photoEssay.index || 0);
   }
 
   render () {

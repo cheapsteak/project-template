@@ -5,6 +5,9 @@ import NextButtonSvg from 'svgs/photo-essay-next-button.svg';
 import FullscreenButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
+import TransitionGroup from 'react-transition-group-plus';
+
+import TransitionItem from './transition-item.jsx';
 
 class PhotoEssay extends React.Component {
   constructor(props) {
@@ -34,11 +37,58 @@ class PhotoEssay extends React.Component {
 
     return (
       <div className={`photo-essay ${className || ''}`} style={style}>
-        <div className="image-wrapper">
-          <img src={photo.image}/>
+        {/* need a wrapper for scrollmagic / parallax effect */}
+        <div className="parallax-target">
+          {/* need another wrapper for slideshow */}
+          <div
+            className="photo-slider"
+            style={{
+              transform: `translateX( ${-100 * index}%)`,
+              transition: `transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)`,
+            }}
+          >
+            {
+              photos && photos.map((photo, index) => {
+                const style = index === 0
+                  ? {
+                    position:  'static'
+                  }
+                  : {
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    transform: `translateX(${100 * index}%)`
+                  };
+
+                return <div
+                    key={index}
+                    className="image-wrapper"
+                    style={style}
+                  >
+                    <img src={photo.image}/>
+                  </div>
+              })
+            }
+          </div>
         </div>
         <div className="photo-description">
-          <p>{ photo.description }</p>
+          <h3>About this picture</h3>
+          <TransitionGroup component="div" className="is-relative pin-non-first-children">
+            <TransitionItem
+              duration={0.3}
+              key={index}
+              beforeEnter={{ opacity: 0 }}
+              idle={{ opacity: 1 }}
+              afterLeave={{ opacity: 0 }}
+              ease={{
+                enter: Sine.easeIn,
+                leave: Sine.easeOut,
+              }}
+              shouldTransitionParentNodeHeight={true}
+            >
+              <p>{ photo.description }</p>
+            </TransitionItem>
+          </TransitionGroup>
         </div>
         <div className="photo-controls">
           <div

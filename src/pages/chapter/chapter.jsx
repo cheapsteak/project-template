@@ -38,6 +38,35 @@ export default class Chapter extends React.Component {
   }
 
   componentDidMount() {
+    this.setupParallax();
+  }
+
+  componentDidUpdate () {
+    this.setupParallax();
+  }
+
+  componentWillUnmount() {
+    this.cleanup();
+    window.removeEventListener('resize', this.handleResize);
+  };
+
+  getTarget = (component, slug) => {
+    if (component instanceof InstructionalVideo) {
+
+      return this.refs.instructionalVideo;
+    }
+    if (component instanceof PhotoEssay) {
+      return this.refs.photoEssay;
+    }
+  };
+
+  getContainer = () => {
+    return this.refs.chapter;
+  };
+
+  setupParallax = () => {
+    this.cleanup();
+
     const el = findDOMNode(this);
     const scrollController = new ScrollMagic.Controller({
       //container: el,
@@ -60,13 +89,15 @@ export default class Chapter extends React.Component {
     };
 
     const parallaxTargetSelectors = [
-      '.photo-essay .image-wrapper',
+      '.photo-essay .parallax-target',
       '.panorama-container .parallax-target',
       '.podcast .text-container',
       '.chapter-video-poster img'
     ];
 
-    const scrollScenes = Array.from(el.querySelectorAll(parallaxTargetSelectors.join(', '))).map((el, i) => {
+    const scrollScenes = Array
+      .from(el.querySelectorAll(parallaxTargetSelectors.join(', ')))
+      .map((el, i) => {
 
       if (i === 10) {
         el.style.color = 'red';
@@ -110,19 +141,12 @@ export default class Chapter extends React.Component {
     window.addEventListener('resize', this.handleResize);
   }
 
-  componentWillUnmount() {
-    this.cleanupOperations.forEach(fn => fn());
-    this.cleanupOperations = [];
-    window.removeEventListener('resize', this.handleResize);
-  };
-
-  getTarget = (component, slug) => {
-    if (component instanceof InstructionalVideo) {
-
-      return this.refs.instructionalVideo;
-    }
-    if (component instanceof PhotoEssay) {
-      return this.refs.photoEssay;
+  cleanup = () => {
+    try {
+      this.cleanupOperations.forEach(fn => fn());
+      this.cleanupOperations = [];
+    } catch (e) {
+      console.error(e);
     }
   };
 

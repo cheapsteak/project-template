@@ -58,6 +58,18 @@
   @extend .margin-auto-vertical;
 }
 
+.is-relative {
+  position: relative;
+}
+
+.pin-non-first-children {
+  *:not(:first-child) {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
 @mixin gpu {
   backface-visibility: hidden;
   perspective: 1000px;
