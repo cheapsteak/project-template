@@ -34,8 +34,9 @@ export default class GridTile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.state.data) return;
 
-    const hasInstrVideo = this.state.data.instructionalVideos[0];
-    if (nextProps.isFiltered !== this.lastFilteredState && !hasInstrVideo) {
+    const instrVideo = this.state.data.instructionalVideos[0];
+
+    if (nextProps.isFiltered !== this.lastFilteredState && (!instrVideo || instrVideo.slug === 'welcome')) {
       nextProps.isFiltered ? this.applyFilter() : this.removeFilter();
       this.lastFilteredState = nextProps.isFiltered;
     }
