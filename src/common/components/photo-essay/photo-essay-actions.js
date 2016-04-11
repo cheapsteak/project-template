@@ -9,7 +9,7 @@ export function setPhotoEssay(slug, index) {
   return {
     type: SET_PHOTO_ESSAY,
     data: {
-      photos: data.get(slug),
+      photoEssay: data.get(slug),
       index
     }
   }
