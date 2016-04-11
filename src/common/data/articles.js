@@ -253,7 +253,6 @@ export default [
               <p>I also have seen the difference that great teachers and great schools can make from my son’s experience. Kendric went to a district school for pre-k because I knew the teacher was great. But I also knew the school did not provide the same quality education to all its students. Kendric’s teacher had high standards and made the children curious about learning, but the other pre-k class just did busy work.</p>
               <p>When it came time for kindergarten, I didn’t want Kendric doing busy work. I chose Success Academy because the teachers in every classroom and in every school all expect a lot from their students and work hard to help them achieve their goals. I know this because Kendric is now in the fifth grade and he is learning what I remember doing in high school. College is years away but he is already thinking about the SATs!</p>
               <p>I am grateful for great charter schools giving many parents like me the power to choose the education we want for our children. But the 143,000 kids in New York City who are stuck in failing schools and the 800,000 students across New York State who are not being equipped to do grade-level work, have no choice.</p>
-              <p>I was proud to speak out against this social injustice with Kendric by my side.</p>
-              <p>- See more at: http://www.successacademies.org/education-blog-post/teaching-my-son-to-speak-out/#sthash.GzaHmF1z.dpuf</p>`,
+              <p>I was proud to speak out against this social injustice with Kendric by my side.</p>`,
   }
 ];

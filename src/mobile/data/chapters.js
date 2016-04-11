@@ -126,7 +126,10 @@ export default [
       duration: '10:13'
     },
     instructionalVideos: [],
-    photoEssay: undefined,
+    photoEssay: {
+      slug: 'electives-1',
+      iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+    },
     panoramas: [],
     articles: [
       {
@@ -174,7 +177,12 @@ export default [
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
     },
     panoramas: [],
-    articles: [],
+    articles: [
+      {
+        slug: 'computer-science-1',
+        iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-3.jpg`,
+      }
+    ],
     podcast: undefined
   },
   {
