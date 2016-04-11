@@ -2,7 +2,6 @@ import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import duration from 'gulp-duration';
 import gulp from 'gulp';
-import hmr from 'browserify-hmr';
 import gutil from 'gulp-util';
 import sass from 'gulp-sass';
 import notifier from 'node-notifier';
@@ -208,7 +207,7 @@ gulp.task('watch', () => {
     });
   });
 
-  const bundle = watchify(browserify(browserifyConfig).plugin(hmr));
+  const bundle = watchify(browserify(browserifyConfig));
 
   bundle.on('update', () => {
     const build = bundle.bundle()
