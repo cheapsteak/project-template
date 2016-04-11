@@ -13,6 +13,16 @@
   cursor: pointer;
   top: calc(50% - 280px);
 
+  &:hover {
+    label {
+      color: rgba(255,255,255,0.8);
+    }
+
+    h3 {
+      color: rgba(255,255,255,1);
+    }
+  }
+
   img {
     position: absolute;
     top: 0;
@@ -35,7 +45,7 @@
   }
 
   h3 {
-    color: white;
+    color: rgba(255,255,255,0.8);
     font-weight: 600;
     @include scale-prop('font-size', 38);
     text-align: center;
