@@ -67,6 +67,7 @@ export default class Article extends React.Component {
       }
     } else {
       this.collapse();
+      await animate.to(container, 0.3, {scrollTop: this.getDistanceFromTop()});
     }
 
     this.collapsed = !this.collapsed;

@@ -1,0 +1,27 @@
+.mobile-learn-more {
+  position: absolute;
+  top: calc(8.945vh);
+  left: 0;
+  width: 100%;
+  background: url('#{$ASSET_PATH}/images/mobile-learn-more-bg.jpg') no-repeat center;
+  color: white;
+
+  main {
+    width: 100%;
+    padding: 0 5.334vw;
+    height: calc(100vh - 8.945vh);
+    overflow-y: scroll;
+  }
+
+  h1 {
+    padding-top: 8.333vh;
+    font-size: 7.334vw;
+    font-weight: bold;
+  }
+
+  p {
+    margin: 4.667vh 0;
+    opacity: 0.5;
+    line-height: 3.122vh;
+  }
+}

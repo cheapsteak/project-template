@@ -1,30 +1,12 @@
-export const CLOSE_MOBILE_MENU = 'CLOSE_MOBILE_MENU';
-export const OPEN_MOBILE_MENU = 'OPEN__MOBILE_MENU';
-export const TOGGLE_MOBILE_MENU = 'TOGGLE_MOBILE_MENU';
-export const SET_MOBILE_HEADER_COLORS = 'SET_MOBILE_HEADER_COLORS';
+export const SET_MOBILE_HEADER_OPTIONS = 'SET_MOBILE_HEADER_OPTIONS';
 
-export function closeMenu() {
+export function setHeaderSettings({ color, backgroundColor, title, backButton = false, bottomBorder = false }) {
   return {
-    type: CLOSE_MOBILE_MENU
-  }
-}
-
-export function openMenu() {
-  return {
-    type: OPEN_MOBILE_MENU
-  }
-}
-
-export function toggleMenuDisplay() {
-  return {
-    type: TOGGLE_MOBILE_MENU
-  }
-}
-
-export function setHeaderColors({ color, backgroundColor }) {
-  return {
-    type: SET_MOBILE_HEADER_COLORS,
+    type: SET_MOBILE_HEADER_OPTIONS,
     color,
-    backgroundColor
-  }
+    backgroundColor,
+    title,
+    backButton,
+    bottomBorder
+  };
 }

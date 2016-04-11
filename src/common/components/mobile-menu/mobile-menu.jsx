@@ -1,15 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router';
 import animate from 'gsap-promise';
-import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import IconWatch from 'svgs/icon-play.svg';
-import IconExplore from 'svgs/icon-explore.svg';
+import ExploreIcon from 'svgs/icon-explore.svg';
+import PlayIcon from 'svgs/mobile-play-icon-2.svg';
+import LearnMoreIcon from 'svgs/learn-more-icon-2.svg';
+import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
+import Share from 'easy-share-popup';
 
 const EaseType = Quad;
-const duration = 0.75;
 
 export default class MobileMenu extends React.Component {
 
@@ -17,22 +19,23 @@ export default class MobileMenu extends React.Component {
     {
       route: '/mobile/chapters',
       name: 'Explore More Content',
-      svgIcon: IconExplore
+      svgIcon: ExploreIcon
     },
     {
-      route: '/mobile',
+      route: '/mobile/videos',
       name: 'Instructional Videos',
-      svgIcon: IconWatch
+      svgIcon: PlayIcon
     },
     {
-      route: '/mobile',
+      route: '/mobile/learn-more',
       name: 'Learn More',
-      svgIcon: SALogoSvg
+      svgIcon: LearnMoreIcon
     }
   ];
 
   componentDidMount () {
     animate.set(this.refs.menu, { x: -this.refs.menu.offsetWidth*2 });
+    this.share = new Share(location.origin + '/middleschool');
   }
 
   componentWillAppear (callback) {
@@ -51,11 +54,23 @@ export default class MobileMenu extends React.Component {
   };
 
   animateInMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: 0, ease: EaseType.easeOut });
+    return animate.to(this.refs.menu, 0.4, { x: 0, ease: EaseType.easeOut });
   };
 
   animateOutMenu = () => {
-    return animate.to(this.refs.menu, duration, { x: -this.refs.menu.offsetWidth*2, ease: EaseType.easeIn });
+    return animate.to(this.refs.menu, 0.4, { delay: 0.1, x: -this.refs.menu.offsetWidth, ease: EaseType.easeOut });
+  };
+
+  handleFacebookClick = () => {
+    this.share.facebook();
+  };
+
+  handleTwitterClick = () => {
+    this.share.twitter('', 'Visit Success Academy website.');
+  };
+
+  handleEmailClick = () => {
+    window.location.href = 'mailto:mail@example.org';
   };
 
   render () {
@@ -66,27 +81,6 @@ export default class MobileMenu extends React.Component {
         ref="menu"
         className="mobile-menu"
       >
-        <div className="menu-header">
-          <div
-            className="back-arrow-wrapper"
-            onClick={this.props.onBackIconClick}
-          >
-            <div
-              className="back-arrow"
-            >
-            </div>
-          </div>
-          <Link
-            to="/mobile"
-            onClick={this.props.closeMenu}
-          >
-            <div
-              className="logo-icon"
-              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
-            >
-            </div>
-          </Link>
-        </div>
         {
           this.data.map((item, i) => {
             return (
@@ -109,27 +103,30 @@ export default class MobileMenu extends React.Component {
           })
         }
         <div className="menu-bottom">
-          <Link className="bottom-item" to="/mobile">
+          <a className="bottom-item" href="http://www.successacademies.org/privacy-policy/" target="_blank">
             Privacy and Terms
-          </Link>
-          <Link className="bottom-item" to="/mobile">
+          </a>
+          <a className="bottom-item"  href="http://www.successacademies.org" target="_blank">
             Successacademy.org
-          </Link>
+          </a>
           <div className="menu-footer">
             <label>Share</label>
             <span
               className="menu-share-icon"
               dangerouslySetInnerHTML={{ __html: TwitterSvg }}
+              onClick={this.handleTwitterClick}
             >
             </span>
             <span
               className="menu-share-icon"
               dangerouslySetInnerHTML={{ __html: FacebookSvg }}
+              onClick={this.handleFacebookClick}
             >
             </span>
             <span
               className="menu-share-icon"
               dangerouslySetInnerHTML={{ __html: EmailSvg }}
+              onClick={this.handleEmailClick}
             >
             </span>
           </div>

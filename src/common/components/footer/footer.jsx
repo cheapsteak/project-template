@@ -5,6 +5,7 @@ import SALogoSvg from 'svgs/icon-sa_monogram.svg';
 import EmailSvg from 'svgs/icon-email.svg';
 import FacebookSvg from 'svgs/icon-facebook.svg';
 import TwitterSvg from 'svgs/icon-twitter.svg';
+import FibonacciSVG from 'svgs/fibonacci.svg';
 import Share from 'easy-share-popup';
 import store from 'common/store';
 import * as actionCreators from 'common/actions/learn-more-modal-actions';
@@ -21,7 +22,7 @@ export default class Footer extends React.Component {
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.share = new Share(location.origin);
+    this.share = new Share(location.origin + '/middleschool');
   }
 
   componentWillAppear(callback) {
@@ -54,18 +55,30 @@ export default class Footer extends React.Component {
 
   handleFacebookClick = () => {
     this.share.facebook();
+    this.playClickSound();
   };
 
   handleTwitterClick = () => {
     this.share.twitter('', 'Visit Success Academy website.');
+    this.playClickSound();
   };
 
   handleEmailClick = () => {
     window.location.href = 'mailto:mail@example.org';
+    this.playClickSound();
   };
 
   handleLearnMoreClick = () => {
     store.dispatch(actionCreators.openModal());
+    this.playClickSound();
+  };
+
+  playClickSound = () => {
+    audio.play('button-click');
+  };
+
+  playMouseEnterSound = () => {
+    audio.play('button-rollover');
   };
 
   render() {
@@ -77,42 +90,70 @@ export default class Footer extends React.Component {
         className={`footer ${className}`}
         style={style}
       >
-        <div
-          className="main-links"
-          style={{ backgroundColor: this.props.primaryBackgroundColor }}
-        >
-          <a href="http://successacademy.org" target="_blank">
-            <div
-              className="svg-logo"
-              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
-            >
-            </div>
-          </a>
-          <Link to={`/`} className="home-link">Home</Link>
-          <a onClick={this.handleLearnMoreClick}>About</a>
-          <a href="http://successacademy.org/privacy_policy.html" target="_blank">Privacy Policy</a>
+        <div className="fibonacci-container">
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
+          <div className="fibonacci" dangerouslySetInnerHTML={{ __html: FibonacciSVG }}></div>
         </div>
-        <div
-          className="share-links"
-          style={{ backgroundColor: this.props.secondaryBackgroundColor }}
-        >
-          <label>Share</label>
-          <div className="share-icons">
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: TwitterSvg }}
-              onClick={this.handleTwitterClick}
-            ></div>
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: FacebookSvg }}
-              onClick={this.handleFacebookClick}
-            ></div>
-            <div
-              className="svg-icon"
-              dangerouslySetInnerHTML={{ __html: EmailSvg }}
-              onClick={this.handleEmailClick}
-            ></div>
+
+        <div className="footer-wrapper">
+          <div
+            className="main-links"
+            style={{ backgroundColor: this.props.primaryBackgroundColor }}
+          >
+            <a
+              className="logo-link"
+              href="http://www.successacademies.org" target="_blank"
+              onClick={this.playClickSound}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              <div
+                className="svg-logo"
+                dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+              >
+              </div>
+            </a>
+            <Link to={`/`} className="home-link">Home</Link>
+            <a
+              onClick={this.handleLearnMoreClick}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              About
+            </a>
+            <a
+              href="http://www.successacademies.org/privacy-policy/"
+              target="_blank"
+              onClick={this.playClickSound}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              Privacy Policy
+            </a>
+          </div>
+          <div
+            className="share-links"
+            style={{ backgroundColor: this.props.secondaryBackgroundColor }}
+          >
+            <label>Share</label>
+            <div className="share-icons">
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: TwitterSvg }}
+                onClick={this.handleTwitterClick}
+                onMouseEnter={this.playMouseEnterSound}
+              ></div>
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: FacebookSvg }}
+                onClick={this.handleFacebookClick}
+                onMouseEnter={this.playMouseEnterSound}
+              ></div>
+              <div
+                className="svg-icon"
+                dangerouslySetInnerHTML={{ __html: EmailSvg }}
+                onClick={this.handleEmailClick}
+                onMouseEnter={this.playMouseEnterSound}
+              ></div>
+            </div>
           </div>
         </div>
       </div>

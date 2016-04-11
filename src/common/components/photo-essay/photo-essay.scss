@@ -26,6 +26,10 @@
   .photo-controls, .photo-description {
     position: absolute;
     bottom: 0;
+    // required for edge. children widths don't take effect if parent has display flex
+    .unknown &, .edge &, .ie & {
+      width: 15vw;
+    }
   }
 
   .photo-description {

@@ -2,13 +2,12 @@ import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import duration from 'gulp-duration';
 import gulp from 'gulp';
-import hmr from 'browserify-hmr';
 import gutil from 'gulp-util';
 import sass from 'gulp-sass';
 import notifier from 'node-notifier';
 import path from 'path';
 import prefix from 'gulp-autoprefixer';
-import rev from 'gulp-rev';
+import replace from 'gulp-replace';
 import source from 'vinyl-source-stream';
 import exorcist from 'exorcist';
 import transform from 'vinyl-transform';
@@ -94,7 +93,6 @@ gulp.task('scripts', () => {
   if(production) {
     pipeline = pipeline
       .pipe(streamify(uglify()))
-      .pipe(streamify(rev()));
   } else {
     pipeline = pipeline.pipe(transform(() => {
       return exorcist(path.join(paths.scripts.destination, paths.scripts.filename) + '.map');
@@ -109,6 +107,7 @@ gulp.task('templates', ['styles', 'scripts'], () => {
 
   const pipeline = gulp.src(paths.templates.source)
   .on('error', handleError)
+  .pipe(replace(/#{basePath}/g, CONFIG.basePath))
   .pipe(inject(resources, {
     ignorePath: 'build',
     removeTags: true,
@@ -160,9 +159,7 @@ gulp.task('styles', () => {
   .pipe(prefix(paths.styles.browserVersions))
   .pipe(concat(paths.styles.filename));
 
-  if(production) {
-    pipeline = pipeline.pipe(rev());
-  } else {
+  if(!production) {
     pipeline = pipeline.pipe(sourcemaps.write('.'));
   }
 
@@ -210,7 +207,7 @@ gulp.task('watch', () => {
     });
   });
 
-  const bundle = watchify(browserify(browserifyConfig).plugin(hmr));
+  const bundle = watchify(browserify(browserifyConfig));
 
   bundle.on('update', () => {
     const build = bundle.bundle()

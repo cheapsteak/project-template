@@ -1,12 +1,13 @@
 .video-card {
   position: absolute;
+  // @include scale-prop('width', 350);
+  // @include scale-prop('height', 440);
   width: 350px;
   height: 440px;
   overflow: hidden;
   cursor: pointer;
   left: 50%;
   top: calc(50% - 280px);
-  background-color: #444;
 
   .next-video-button {
     position: absolute;
@@ -51,23 +52,12 @@
     left: 50%;
     top: 260px;
     transform: translate(-50%, -50%);
-    width: 110px;
-    height: 110px;
+    @include scale-prop(width, 110);
+    @include scale-prop(height, 110);
 
     .progress-play-button {
       width: 100%;
       height: 100%;
-    }
-
-    .spinner-shadow {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      width: 178px;
-      height: 178px;
-      background-color: rgba(255,255,255,0.1);
     }
 
     svg {

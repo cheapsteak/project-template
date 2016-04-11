@@ -10,6 +10,12 @@ html, body {
   overflow: hidden;
   font-family: "akkurat", sans-serif;
   -webkit-font-smoothing: antialiased;
+
+  &.safari {
+    * {
+      perspective: none !important;
+    }
+  }
 }
 
 .scrollbar-measure {
@@ -22,6 +28,7 @@ html, body {
 
 a {
   text-decoration: none;
+  outline: none;
 }
 
 svg {

@@ -10,7 +10,7 @@ export const PLAY_INSTRUCTIONAL_VIDEO = 'PLAY_INSTRUCTIONAL_VIDEO';
 export const STOP_INSTRUCTIONAL_VIDEO = 'STOP_INSTRUCTIONAL_VIDEO';
 export const SET_INSTRUCTIONAL_VIDEO_OPTIONS = 'SET_INSTRUCTIONAL_VIDEO_OPTIONS';
 
-export function setVideo(slug) {
+export function setVideo(slug, options = {}) {
   const currentVideo = model.get(slug);
   let action;
 
@@ -21,7 +21,8 @@ export function setVideo(slug) {
       type: SET_INSTRUCTIONAL_VIDEO,
       currentVideo: currentVideo,
       prevVideo: model.getPrev(slug),
-      nextVideo: model.getNext(slug)
+      nextVideo: model.getNext(slug),
+      options
     };
   } 
 

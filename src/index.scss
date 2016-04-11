@@ -4,7 +4,7 @@ body {
 }
 
 #container {
-  background-color: green;
+  background-color: #121212;
   height: 100%;
 }
 
@@ -27,8 +27,8 @@ body {
 @import 'common/components/video-players/video-player.scss';
 @import 'common/components/video-players/narrative/narrative-video-player';
 @import 'common/components/video-players/instructional/instructional-video-player';
-@import 'common/components/video-players/instructional/grid/grid-hover-card/grid-hover-card';
-@import 'common/components/video-players/components/image-card/image-card';
+@import 'common/components/video-players/components/image-card-one/image-card-one';
+@import 'common/components/video-players/components/image-card-two/image-card-two';
 @import 'common/components/video-players/components/video-card/video-card';
 @import 'common/components/photo-essay/photo-essay';
 @import 'common/components/fullbrowser-wrapper/fullbrowser-wrapper';
@@ -47,16 +47,22 @@ body {
 @import 'common/components/grid/layout/layout-1740/index';
 @import 'common/components/grid/layout/layout-1920/index';
 @import 'common/components/grid/grid-menu/index';
-@import 'common/pages/grid-page/grid-page';
-@import 'chapter/chapter.scss';
+@import 'pages/grid/grid';
+@import 'pages/chapter/chapter.scss';
 @import 'common/components/podcast/podcast';
 @import 'common/components/play-button/play-button';
-@import 'common/pages/landing-page/landing-page';
+@import 'pages/landing/landing';
 
 // Mobile
-@import 'mobile/landing/landing';
-@import 'mobile/chapters/chapters';
-@import 'mobile/chapters/content-list/content-list';
+@import 'mobile/mobile';
+@import 'mobile/pages/landing/landing';
+@import 'mobile/pages/chapters/chapters';
+@import 'mobile/pages/chapters/content-list/content-list';
+@import 'mobile/pages/article/article';
+@import 'mobile/pages/videos/videos';
+@import 'mobile/pages/panorama/panorama';
+@import 'mobile/pages/learn-more/learn-more';
 @import 'common/components/mobile-header/mobile-header';
 @import 'common/components/mobile-menu/mobile-menu';
+@import 'common/components/rotate-screen/rotate-screen';
 

@@ -1,71 +1,33 @@
 .timeline-hover-card {
   position: absolute;
-
-  /* TODO: To be corrected after alpha. For now it is a quick way to show client - Benson */
   pointer-events: none;
+  width: 100%;
+  transform: translateX(-50%);
 
-  .card {
+  .background {
     position: absolute;
+    display: inline-block;
     text-align: center;
     overflow: hidden;
-    cursor: pointer;
-    width: 120px;
-  }
-
-  .image {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center center;
+    background-color: rgba(85,85,85,0.8);
+    @include scale-prop('padding-left', 18);
+    @include scale-prop('padding-right', 18);
+    @include scale-prop('padding-top', 10);
+    @include scale-prop('padding-bottom', 10);
   }
 
   .line {
-    position: absolute;
+    // position: absolute;
     width: 2px;
     height: 35px;
     background-color: white;
     z-index: 1;
   }
 
-  .cta-text, .cta-label {
+  .cta-text {
     font-weight: bold;
     color: white;
-  }
-
-  .cta-text {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    font-size: 19px;
-    transform: translate(-50%, 50%);
+    @include scale-prop('font-size', 16);
     z-index: 1;
-  }
-
-  .cta-label {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    font-size: 13px;
-    transform: translate(-50%, 50%);
-    z-index: 3;
-  }
-
-  .front-label-bg, .back-label-bg {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2
-  }
-
-  .front-label-bg {
-    background-color: rgba(144,114,68, 0.8);
-    height: 30px;
-  }
-
-  .back-label-bg {
-    background-color: rgba(144,114,68, 0.5);
-    height: 40px
   }
 }

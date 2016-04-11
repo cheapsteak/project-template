@@ -1,20 +1,63 @@
 .footer {
   $transition: all 0.3s ease;
-
-  position: relative;
-  display: flex;
-  align-content: center;
   left: 0;
   width: 100%;
-  @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
   @include scale-prop('font-size', 14);
   color: #8f8f8f;
   font-weight: bold;
   user-select: none;
+  overflow: hidden;
   @include gpu;
 
   * {
     @include gpu;
+  }
+
+  .fibonacci-container {
+    width: 100%;
+    @include scale-prop('height', 20);
+
+    .fibonacci {
+      position: absolute;
+      top: 0;
+      width: 1350px;
+
+      &:nth-of-type(2) {
+        left: 1350px;
+      }
+
+      &:nth-of-type(3) {
+        left: 2700px;
+      }
+    }
+
+    svg {
+      width: 100%;
+      @include scale-prop('height', 20);
+
+      rect {
+        @include scale-prop('height', 20);
+      }
+    }
+  }
+
+  .footer-wrapper {
+    display: flex;
+    align-content: center;
+    width: 100%;
+    //@include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
+    @include scale('height', 50px, #{(50/1400 * 100)}vw, 70px);
+    font-weight: bold;
+    user-select: none;
+  }
+
+  &.landing-footer {
+    .fibonacci {
+      display: none;
+    }
+    .footer-wrapper {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
   }
 
   a {
@@ -24,18 +67,28 @@
     margin: 0;
     display: flex;
     align-content: center;
-    height: 100%;
+    //height: 100%;
     @include scale-prop('margin-left', 15);
     @include scale-prop('margin-right', 15);
     transition: opacity 0.3s ease;
     cursor: pointer;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 1;
     }
 
     &.active {
       opacity: 1;
+    }
+
+    &.logo-link {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+      margin-right: 0;
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 

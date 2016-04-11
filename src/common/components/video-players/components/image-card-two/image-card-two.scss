@@ -1,0 +1,60 @@
+.image-card-two {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  // @include scale-prop('width', 350);
+  // @include scale-prop('height', 440);
+  width: 350px;
+  height: 440px;
+  overflow: hidden;
+  background-color: #444444;
+  cursor: pointer;
+  top: calc(50% - 280px);
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.6;
+    width: 100%;
+    z-index: 0;
+  }
+
+  label, h3, .icon {
+    z-index: 1;
+  }
+
+  label {
+    color: rgba(255,255,255,0.6);
+    @include scale-prop('font-size', 16);
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+
+  h3 {
+    color: white;
+    font-weight: 600;
+    @include scale-prop('font-size', 38);
+    text-align: center;
+  }
+
+  .icon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8F8F8F;
+    width: 28px;
+    height: 28px;
+    line-height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: #2B2B2B;
+
+    svg {
+      width: 40%;
+      fill: #8F8F8F;
+    }
+  }
+}

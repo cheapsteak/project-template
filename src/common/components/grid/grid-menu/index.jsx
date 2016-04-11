@@ -2,7 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import IconBack from 'svgs/icon-zoom-arrow-left.svg';
-import IconPlay from 'svgs/icon-play.svg';
+import IconPlay from 'svgs/icon-playoutline.svg';
 import IconClose from 'svgs/icon-close.svg';
 import IconFilter from 'svgs/icon-check.svg';
 import {Link} from 'react-router';
@@ -32,7 +32,8 @@ export default class GridMenu extends React.Component {
 
   static contextTypes = {
     eventBus: React.PropTypes.object.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    previousRoute: React.PropTypes.string
   };
 
   componentDidMount() {
@@ -66,13 +67,13 @@ export default class GridMenu extends React.Component {
     const ctaItems = [this.refs.returnIcon, this.refs.returnText, this.refs.filterIcon, this.refs.filterText, this.refs.closeIcon, this.refs.closeText];
     const afterTabs = [this.refs.returnTabAfter, this.refs.filterTabAfter, this.refs.closeTabAfter];
 
-    animate.set(ctaItems, {y: 20, autoAlpha: 0});
+    animate.set(ctaItems, {y: 20, autoAlpha: 0, transition: 'none'});
     animate.set(afterTabs, {y: '-100%'});
 
     return animate.all([
       animate.to(this.containerEl, duration, {y: '0%', ease: ease, delay: delay}),
       animate.to(afterTabs, 0.6, {y: '0%', ease: ease, delay: delay + 0.1}),
-      animate.staggerTo(ctaItems, 0.08, {y: 0, autoAlpha: 0.8, delay: delay + 0.2, ease: ease}, 0.1)
+      animate.staggerTo(ctaItems, 0.8, {y: 0, autoAlpha: 0.8, delay: delay + 0.3, ease: ease}, 0.1)
         .then(() => animate.set(ctaItems, {clearProps: 'all'}))
     ])
   };
@@ -104,7 +105,12 @@ export default class GridMenu extends React.Component {
 
     audio.play('button-click');
     this.setState({closeTabState: states.ACTIVE});
-    this.context.router.goBack();
+
+    if (this.context.previousRoute) {
+      this.context.router.goBack();
+    } else {
+      this.context.router.replace('/');
+    }
   };
 
   handleReturnClick = () => {

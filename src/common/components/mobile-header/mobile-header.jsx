@@ -1,7 +1,7 @@
 import React from 'react';
 import TransitionGroup from 'react-addons-transition-group';
 import SALogoSvg from 'svgs/icon-sa_monogram.svg';
-import MobileMenu from 'common/components/mobile-menu/mobile-menu';
+import animate from 'gsap-promise';
 
 export default class MobileHeader extends React.Component {
 
@@ -9,68 +9,113 @@ export default class MobileHeader extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     color: React.PropTypes.string,
-    backgroundColor: React.PropTypes.string
+    backgroundColor: React.PropTypes.string,
+    title: React.PropTypes.string
   };
 
+  static contextTypes = {
+    router: React.PropTypes.object,
+    previousRoute: React.PropTypes.string
+  }
+
   componentDidMount() {
-    this.setColor(this.props.color, this.props.backgroundColor);
+    this.setStyle(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setColor(nextProps.color, nextProps.backgroundColor);
+    this.setStyle(nextProps);
   }
 
-  setColor = (color, backgroundColor) => {
+  setStyle = (props) => {
     const content = this.refs.header.querySelectorAll('.menu-content');
 
-    _.forEach(content, (node) => {
-      if(node.firstChild) {
-        node.firstChild.style.fill = color;
-      } else {
-        node.style.backgroundColor = color;
-      }
-    });
+    if(props.color) {
+      _.forEach(content, (node) => {
+        if(node.firstChild) {
+          // For SVGs
+          animate.to(node.firstChild, 0.1, { fill: props.color, ease: Cubic.easeOut });
+        } else {
+          animate.to(node, 0.1, { backgroundColor: props.color, ease: Cubic.easeOut });
+        }
+      });
 
-    this.refs.header.style.backgroundColor = backgroundColor;
+      animate.to(this.refs.header, 0.1, { color: props.color, ease: Cubic.easeOut });
+    }
+
+    if(props.backgroundColor) {
+      this.refs.backCover.style.backgroundColor = props.backgroundColor;
+    }
+
+    if (props.bottomBorder) {
+      this.refs.header.classList.add('no-border');
+      animate.set(this.refs.coverBorder, { opacity: 0.2 });
+    } else {
+      this.refs.header.classList.remove('no-border');
+      animate.set(this.refs.coverBorder, { opacity: 0 });
+    }
+
+    if(props.backButton) {
+      this.refs.menuIcon.classList.add('arrow-mode');
+    } else {
+      this.refs.menuIcon.classList.remove('arrow-mode');
+    }
+  };
+
+  handleMenuIconClick = () => {
+    if(this.props.backButton && !this.props.menuOpened) {
+      if(this.context.previousRoute) {
+        this.context.router.goBack();
+      } else {
+        this.context.router.replace('/mobile');
+      }
+
+      this.props.closeMenu();
+    } else {
+      this.props.toggleMenu();
+    }
   };
 
   render () {
     const { className, style, color = '', backgroundColor = '' } = this.props;
+    const hiddenStyle = {
+      opacity: 0,
+      pointerEvents: 'none'
+    };
 
     return (
-      <div
-        ref="header"
-        className="mobile-header"
-      >
+      <div className="mobile-header-wrapper">
         <div
-          className="menu-icon"
-          onClick={this.props.onMenuClick}
-        >
-          {
-            _.range(3).map((i) => {
-              return <span key={i} className="menu-content"></span>
-            })
-          }
+          ref="header"
+          className="mobile-header"
+        > 
+          <div
+            ref="menuIcon"
+            className="mobile-menu-icon"
+            onClick={this.handleMenuIconClick}
+          >
+            {
+              _.range(3).map((i) => {
+                return <span key={i} className="menu-content"></span>
+              })
+            }
+          </div>
+          <div
+            ref="title"
+            style={ !this.props.title ? hiddenStyle : {} }
+            className="menu-title"
+          >
+            {this.props.title}
+          </div>
+          <div
+            className="logo-icon menu-content"
+            style={ this.props.title ? hiddenStyle : {} }
+            dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+          >
+          </div>
         </div>
-        <div
-          className="logo-icon menu-content"
-          data-color={color}
-          dangerouslySetInnerHTML={{ __html: SALogoSvg }}>
+        <div ref="backCover" className="back-cover">
+          <div ref="coverBorder" className="cover-border"></div>
         </div>
-        <TransitionGroup
-          component="div"
-          className="menu-wrapper"
-        >
-          {
-            this.props.isMenuOpen
-            ? <MobileMenu
-                closeMenu={this.props.closeMenu}
-                openMenu={this.props.openMenu}
-                onBackIconClick={this.props.onMenuClick}
-              />
-            : null
-          }
-        </TransitionGroup>
       </div>
     )
   }

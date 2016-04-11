@@ -3,6 +3,7 @@
   position: relative;
   background-color: rgba(143,143,143,0.3);
   cursor: pointer;
+  @include scale-prop('font-size', 12);
 
   .timeline-container {
     position: absolute;
@@ -23,11 +24,19 @@
     &:before {
       content: attr(data-time);
       color: white;
-      font-size: 12px;
+      @include scale-prop('font-size', 12);
+      @include scale-prop('bottom', 50);
       position: absolute;
-      bottom: 50px;
       left: 100%;
-      transform: translateX(-50%)
+      transform: translateX(-50%);
+      transition: opacity 0.5s ease-out;
+    }
+
+    &.hide-time {
+      &:before {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
     }
 
     & > span {
@@ -60,7 +69,7 @@
       top: 0;
       left: 50%;
       color: white;
-      font-size: 12px;
+      @include scale-prop('font-size', 12);
       transform: translateX(-50%);
       opacity: 0.6;
     }

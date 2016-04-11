@@ -1,8 +1,8 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import PlayButton from '../../../play-button/play-button.jsx';
+import BgCover from 'background-cover';
 
 function calculateAnimationStates(els) {
   const zoomedInRect = els.card.parentNode.getBoundingClientRect();
@@ -74,6 +74,10 @@ function calculateAnimationStates(els) {
 
 export default class NextVideoCard extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object
+  };
+
   componentDidMount() {
     const { card, topUI, button, buttonShadow, title, counterText } = this.refs;
 
@@ -84,6 +88,8 @@ export default class NextVideoCard extends React.Component {
     animate.set(button, this.animationStates.out.button);
     animate.set(title, this.animationStates.out.title);
     animate.set(counterText, this.animationStates.out.counterText);
+
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillEnter (callback) {
@@ -112,12 +118,25 @@ export default class NextVideoCard extends React.Component {
     .then(callback);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);  
+  }
+
   handleMouseEnter = () => {
     this.video.play();
   };
 
+
   handleMouseLeave = () => {
     this.video.pause();
+  };
+
+  handleClick = () => {
+    this.context.router.replace(this.props.route);
+  };
+
+  handleResize = () => {
+    BgCover.BackgroundCover(this.video, this.refs.card);
   };
 
   render() {
@@ -128,10 +147,11 @@ export default class NextVideoCard extends React.Component {
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Link to={this.props.route || '/'}>
+        <div onClick={this.handleClick}>
           <video
             ref={ node => this.video = node }
             src={this.props.video}
+            onLoadedMetadata={this.handleResize}
           >
           </video>
           <span ref="topUI">
@@ -141,8 +161,8 @@ export default class NextVideoCard extends React.Component {
           <h2 ref="title">{this.props.title}</h2>
 
           <div className={`spinner-button`}>
-            <div className={`spinner-shadow`}></div>
             <PlayButton
+              circleColor={`#f99100`}
               progress={1 - this.props.timeLeft/15}
               isCountDown={true}
             />
@@ -154,7 +174,7 @@ export default class NextVideoCard extends React.Component {
           >
             {`Starting in ${this.props.timeLeft || 0}...`}
           </div>
-        </Link>
+        </div>
       </div>
     )
   }

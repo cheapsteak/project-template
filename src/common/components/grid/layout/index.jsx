@@ -11,6 +11,7 @@ const states = {
 export default class Layout extends React.Component {
 
   static propTypes = {
+    isShortDelay: React.PropTypes.bool,
     isFiltered: React.PropTypes.bool,
     className: React.PropTypes.string,
   };
@@ -71,10 +72,10 @@ export default class Layout extends React.Component {
   animateIn = () => {
     setTimeout(() => {
       this.tiles.forEach((tile, index) => {
-        const delay = (0.1 * index) + 0.7;
+        const delay = (0.1 * index) + (this.props.isShortDelay ? 0.3 : 0.7);
         tile.animateIn(delay)
       });
-      this.animateFillers(0.9);
+      this.animateFillers(this.props.isShortDelay ? 0.5 : 0.9);
     });
   };
 

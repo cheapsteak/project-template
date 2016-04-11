@@ -1,17 +1,25 @@
 import { combineReducers, createStore } from 'redux';
 import config from '../../config.js';
+import detect from 'common/utils/detect';
 
 const MobileDetect = require('mobile-detect');
 const md = new MobileDetect(window.navigator.userAgent);
 
-const reducers = combineReducers({
-  photoEssay: require('common/components/photo-essay/photo-essay-reducers.js'),
-  panorama: require('common/components/panorama/panorama-reducers.js'),
-  narrativeVideo: require('common/components/video-players/narrative/narrative-video-player-reducers.js'),
-  instructionalVideos: require('common/components/video-players/instructional/instructional-video-player-reducers.js'),
-  showLearnMoreModal: require('common/components/learn-more-modal/learn-more-modal-reducers.js'),
-  mobileHeaderMenu: md.mobile() && require('common/components/mobile-header/mobile-header-reducers.js')
-});
+const reducers = combineReducers(
+  !detect.isPhone
+  ? {
+      photoEssay: require('common/components/photo-essay/photo-essay-reducers.js'),
+      panorama: require('common/components/panorama/panorama-reducers.js'),
+      narrativeVideo: require('common/components/video-players/narrative/narrative-video-player-reducers.js'),
+      instructionalVideos: require('common/components/video-players/instructional/instructional-video-player-reducers.js'),
+      showLearnMoreModal: require('common/components/learn-more-modal/learn-more-modal-reducers.js'),
+    }
+  : {
+      mobileHeader: require('common/components/mobile-header/mobile-header-reducers.js'),
+      mobileMenu: require('common/components/mobile-menu/mobile-menu-reducers.js'),
+      mobileChapters: require('../mobile/pages/chapters/chapters-reducers.js')
+    }
+);
 
 const store = createStore(
   reducers,

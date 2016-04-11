@@ -210,13 +210,23 @@ class PhotoEssay extends React.Component {
             onMouseEnter={this.handleButtonMouseOver}
             dangerouslySetInnerHTML={{ __html: NextButtonSvg }}
           ></div>
-          <Link
-            className="button fullscreen-button"
-            onMouseEnter={this.handleButtonMouseOver}
-            to={route}
-          >
-            <span dangerouslySetInnerHTML={{ __html: FullscreenButtonSvg }}></span>
-          </Link>
+          {
+            isFullBrowser
+            ? <div
+                className="button fullscreen-button"
+                onMouseEnter={this.handleButtonMouseOver}
+                onClick={ () => this.props.exitFullBrowser(route) }
+              >
+                <span dangerouslySetInnerHTML={{ __html: FullscreenButtonSvg }}></span>
+              </div>
+            : <Link
+                className="button fullscreen-button"
+                onMouseEnter={this.handleButtonMouseOver}
+                to={route}
+              >
+                <span dangerouslySetInnerHTML={{ __html: FullscreenButtonSvg }}></span>
+              </Link>
+          }
           <div className="page-display">{`${currentPhotoNumber} of ${maxPhotoNumber}`}</div>
         </div>
       </div>

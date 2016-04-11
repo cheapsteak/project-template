@@ -1,7 +1,6 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import PhotoSphere from 'photo-sphere-viewer';
-import THREE from 'three';
+import PhotoSphere from 'photo-sphere-viewer-sa';
 import raf from 'raf';
 import deviceOrientation from '../../utils/three-device-orientation';
 import animate from 'gsap-promise';
@@ -9,7 +8,6 @@ import detect from '../../utils/detect';
 import TransitionGroup from 'react-addons-transition-group';
 import IconClose from 'svgs/icon-close.svg';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button.jsx';
-
 import PanoramaCompass from './panorama-compass/panorama-compass';
 import PanoramaControls from './panorama-controls/panorama-controls';
 import PanoramaMenu from './panorama-menu/panorama-menu';
@@ -219,7 +217,8 @@ export default class Panorama extends React.Component {
       time_anim: false,
       min_fov: minZoomNum,
       max_fov: maxZoomNum,
-      mousewheel: false
+      mousewheel: false,
+      //mousemove: false
     });
 
     this.panorama.on('ready', () => {

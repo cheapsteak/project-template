@@ -4,8 +4,9 @@ const aboveFoldSelector = 'above-fold';
 export default [
   {
     slug: 'welcome-1',
+    chapterName: 'Welcome',
     title: 'Middle School Choice',
-    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: `#${aboveFoldSelector}`,
     content: `<p id="${aboveFoldSelector}">All of our middle schools offer the same rigorous curriculum and provide scholars with an excellent education. But some students have to commute long distances to get to their middle schools. Additionally, some parents prefer their children attend school closer to where they work so they can more easily attend student events. Our middle school choice process allows families the chance to have their scholar attend a more conveniently located middle school.</p>
               <p>In addition to convenience, we think it is important for scholars to have an opportunity to socialize with different children. With middle school choice, kids are able to go to a school with new classmates to make new friends.</p>
@@ -13,29 +14,32 @@ export default [
   },
   {
     slug: 'welcome-2',
+    chapterName: 'Welcome',
     title: 'Special Needs Students at Success Academy',
     aboveFoldSelector: '#above-fold',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     content: `<p id="${aboveFoldSelector}">Success Academy has a strong commitment to serving children with special education needs. We devote many resources to educating students who have been identified for Individualized Education Programs (IEPs): hiring special education teachers and school psychologists, offering Integrated Co-Teaching (ICT) classes in most grades, and providing 12:1:1 classes (12 students, two adults) in schools where we have sufficient space.</p><p>We also provide extra support to scholars who need it by enrolling them in an Academic Elective course for an academic quarter. In this course, they receive high-quality academic intervention in math, literacy, or both. Academic Elective teachers regularly communicate with advisors about scholars’ progress. Here, our most vulnerable scholars develop the skills they need to be successful in a whole-class environment; regain confidence in their abilities as mathematicians, readers, and critical thinkers; and remember what it is that makes learning exciting!</p><p>With our programming, special needs scholars in our schools achieve at a high level:</p><ul><li>During the 2013-14 school year, Success Academy “graduated” or declassified 13% of its special needs scholars from their IEPs.</li>
               <li>On the most recent state exams, more than 11% of all Success Academy test-takers were children with special needs, and 82% of them passed math (compared to 11.4% of citywide special needs students) and 33% passed English (compared to 6.7% citywide).
               <li>Students with disabilities at Success Academy outperformed the NYC average for all students in ELA (33% vs. 29%), and they were nearly twice as likely to pass math as New York State’s students without disabilities (82% vs. 41%).</li></ul>`,
   },
   {
     slug: 'science-1',
+    chapterName: 'Science',
     title: 'Science Olympiad',
-    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Science Olympiad is one of the premier science competitions in the nation, with over 7,300 teams in 50 states taking on rigorous challenges from all STEM disciplines. Learning-by-doing is essential to science education, and Science Olympiad provides scholars unique ways to practice science in a hands-on, inquiry-driven, collaborative environment.</p>
               <p>Scholars work in teams of two or three on projects related to a specific area of science or engineering. Their projects can range anywhere from constructing a glider to becoming expert meteorologists! Our scholars work and train for months on their projects, all in preparation for the NYC regional tournament held each spring.</p>`,
   },
-  // FPO CONTENT: Embedded Image
   {
     slug: 'math-1',
+    chapterName: 'Math',
     title: 'Math Olympiads: Going Up Against The World’s Best Math Minds',
-    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Recently, a group of middle school scholars from SA Harlem East were given a set of five math problems to solve. The problems were difficult and unusual. Some, like the one below, puzzled even the adults at the school:</p>
               <p>Soshana looks in a mirror and sees the reflection of a clock behind her as shown in figure A. How many minutes later will the reflection in the mirror of the same clock next show the image shown in figure B?</p>
-              <p><img src="${config.ASSET_PATH}/sample-article-image.jpg" />This question appeared in the Math Olympiads, a five-question monthly test given from November to March. Last year, 150,000 students worldwide participated, including Success Academy elementary and middle school scholars. Working individually, without any help from teachers, contestants must find creative ways to solve these problems.</p>
+              <p>This question appeared in the Math Olympiads, a five-question monthly test given from November to March. Last year, 150,000 students worldwide participated, including Success Academy elementary and middle school scholars. Working individually, without any help from teachers, contestants must find creative ways to solve these problems.</p>
               <p>“They really like the Math Olympiads,” said Jun Yoon, a math teacher at SA Harlem East. “It challenges them, and they get to put all the pieces together and feel good when they do well.”</p>
               <p>In January, Mr. Yoon’s seventh-graders competed against 16,577 students from the U.S. and other countries, all of them taking the same five-question test. Only 9 percent of those students were able to correctly answer every question. Three of them — Bennett Boakye, Messiah Desisso, and Branden Williams — were in Mr. Yoo’s honors math class.</p>
               <p>Never before had any Success Academy middle school scholar earned a perfect score. The news spread quickly and was cause for celebration.</p>
@@ -49,13 +53,13 @@ export default [
               <h4>What do you do when you come across challenging problems?</h4>
               <p>I need to remember all the strategies that I already know and piece them together into a new strategy, like into a puzzle.</p>
               <h4>What advice can you give to people who want to do well in Math Olympiad?</h4>
-              <p>You have to keep in mind that it will not be easy at first, but you have to keep working through the problems and figure out what you need to do. Remember the strategies that you already know and use what you know.</p>
-              <img src="${config.ASSET_PATH}/sample-article-image.jpg" />`,
+              <p>You have to keep in mind that it will not be easy at first, but you have to keep working through the problems and figure out what you need to do. Remember the strategies that you already know and use what you know.</p>`
   },
   {
     slug: 'math-2',
+    chapterName: 'Math',
     title: 'Sample Math Problems',
-    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Curious about the math our scholars practice? Here are some sample problems that 7th graders may encounter on a typical day:</p>
               <p>There are 125% more third graders than fifth graders. If there are 243 third and fifth graders altogether, how many are third graders and how many are fifth graders?</p>
@@ -66,8 +70,9 @@ export default [
   },
   {
     slug: 'math-3',
+    chapterName: 'Math',
     title: 'Aboard Sailboats, Scholars See Math in Action',
-    image: `${config.ASSET_PATH}/article-welcome-1.jpg`,
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">For three days at the end of May, two dozen seventh-grade scholars from three Success Academy middle schools — Harlem East, Harlem West, and Harlem Central — traveled to Oyster Bay, L.I., to study marine biology, ecosystems, winds, tides, and sailing at the Waterfront Center.</p>
               <p>The scholars learned about different types of sea animals, and the natural and man-made forces that affect their life cycles. Every day, they went sailing, crewing small boats and — on the last day — a historic 40-foot sloop, the Christeen.</p>
@@ -83,7 +88,9 @@ export default [
   },
   {
     slug: 'history-1',
+    chapterName: 'History',
     title: 'Field Studies',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">Field study is an integral part of middle school education. When classroom curriculum connects to real-world experiences, scholars can extend their learning and find additional wonder in their surroundings. We frequently introduce our students to new cultural experiences and institutions. Our scholars live in the greatest city in the world, and we take advantage of it!</p>
               <p>Here are some recent field studies designed to deepen scholar understanding of past and future topics of study:</p>
@@ -128,7 +135,9 @@ export default [
   },
   {
     slug: 'history-2',
+    chapterName: 'History',
     title: 'The Structure of History Classes',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="${aboveFoldSelector}">The study of history in our middle schools allows scholars to gain perspective and context for understanding periods of political, economic, social, intellectual, and religious change. To make learning engaging, we structure classes in one of four ways.</p>
               <h4>1. Source Analysis</h4>
@@ -141,15 +150,28 @@ export default [
               <p>History projects invite scholars to apply a wide range of creative and critical-thinking skills to a topic, giving them a richer understanding of their subject. While project-based learning is part of our daily instruction, longer-term comprehensive projects come at the end of many units. These group-based projects are not only engaging, but help develop teamwork and social skills beyond the history classroom.</p>`,
   },
   {
+    slug: 'computer-science-1',
+    chapterName: 'Computer Science',
+    title: 'Scholar Code',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
+    aboveFoldSelector: '#above-fold',
+    content: `<p id="above-fold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>`,
+  },
+  {
     slug: 'literacy-and-writing-1',
+    chapterName: 'Literacy And Writing',
     title: 'Sela’s Story Draft',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="above-fold">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
               <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>`,
   },
   {
     slug: 'electives-1',
+    chapterName: 'Electives',
     title: 'Why Debate Matters',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="#above-fold">In the fight for educational equality, Success Academy is doing something transformative: Our schools are changing the face of competitive debate in New York City.</p>
               <p>For the past three years, Success Academy has been sending middle school students to compete in local and national debate tournaments that were once exclusively dominated by elite schools.</p>
@@ -163,16 +185,19 @@ export default [
   },
   {
     slug: 'character-development-1',
+    chapterName: 'Character Development',
     title: 'ACTION Now',
     aboveFoldSelector: '#above-fold',
-    content: `<p id="above-fold">Middle school scholars are at a crucial crossroads in their social, emotional, and academic lives. They need consistent support to navigate all of the complexities they face during these years. One of the ways we provide such support is through our social/emotional learning program, ACTION Now. The program reinforces a safe learning environment, where all scholars are consistently observed and supported by an advisor. It also provides a specific structure for monitoring and supporting each scholar’s social and emotional growth.</p> 
+    content: `<p id="above-fold">Middle school scholars are at a crucial crossroads in their social, emotional, and academic lives. They need consistent support to navigate all of the complexities they face during these years. One of the ways we provide such support is through our social/emotional learning program, ACTION Now. The program reinforces a safe learning environment, where all scholars are consistently observed and supported by an advisor. It also provides a specific structure for monitoring and supporting each scholar’s social and emotional growth.</p>
               <p>Each school day begins with a 20-minute morning session called ACTION Now AM. This is a vital time of day when scholars participate in brief activities that help them prepare for the day ahead. Scholars set goals, get organized, practice focusing and make whatever other personal adjustments are needed (speaking volume, body language, etc.) to have a successful day at school.</p>
               <p>At the end of every school day, scholars have a 10-minute reflection time called ACTION Now PM. This session allows scholars to reflect on choices they made or could have made, and the effects those choices had on making their day successful or unsuccessful. Scholars document their thoughts in a Reflection Journal each day.</p>
               <p>The third component of the program is called ACTION Now Forum, which occurs most Wednesdays. The Forum creates a safe space for scholars to share their thoughts on issues relevant to their middle school experience. These group conversations are a great training ground for scholars to practice their ability to articulate their thoughts and feelings and to learn patience and grow in their capacity to listen to the opinions of others. ACTION Now Forum is a fertile ground for the awakening of personal insights, risk-taking through sharing, and self-discovery through expression.</p>`,
   },
   {
     slug: 'parental-investment-1',
+    chapterName: 'Parental Investment',
     title: 'Teaching My Son to Speak Out',
+    image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
     content: `<p id="#above-fold">I often remind my son, Kendric, that he can speak up for himself, but there are times when parents must help their children speak out.</p>
               <p>Kendric and I went to Albany last week to speak out against a school system in crisis. We were not the only ones. Thousands of other families were there, too.</p>
@@ -183,4 +208,4 @@ export default [
               <p>I was proud to speak out against this social injustice with Kendric by my side.</p>
               <p>- See more at: http://www.successacademies.org/education-blog-post/teaching-my-son-to-speak-out/#sthash.GzaHmF1z.dpuf</p>`,
   }
-]
+];

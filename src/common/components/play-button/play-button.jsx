@@ -3,6 +3,7 @@ import {findDOMNode} from 'react-dom';
 import ProgressBar from 'progressbar.js';
 import IconPlay from 'svgs/icon-play.svg';
 import IconPause from 'svgs/icon-pause.svg';
+import animate from 'gsap-promise';
 
 export default class PlayButton extends React.Component {
 
@@ -15,10 +16,13 @@ export default class PlayButton extends React.Component {
     onPause: React.PropTypes.func,
     //onUpdate: React.PropTypes.func,
     onEnd: React.PropTypes.func,
-    isCountDown: React.PropTypes.bool
+    isCountDown: React.PropTypes.bool,
+    shouldHideHalo: React.PropTypes.bool,
+    isReplay: React.PropTypes.bool
   };
 
   static defaultProps = {
+    icon: IconPlay,
     circleColor: '#6d7880',
     onPlay: () => console.log('PlayButton.onPlay()'),
     onPause: () => console.log('PlayButton.onPause()'),
@@ -86,7 +90,19 @@ export default class PlayButton extends React.Component {
   togglePlay = () => {
     const isPlaying = !this.state.isPlaying;
     this.setState({isPlaying});
-    (isPlaying) ? this.props.onPlay() : this.props.onPause();
+
+    if (this.props.isReplay) {
+      this.props.onPlay()
+    } else {
+      (isPlaying) ? this.props.onPlay() : this.props.onPause();
+    }
+  };
+
+  replayAnimation = () => {
+    animate.to(this.refs.icon, 0.5, {rotation: 360, ease: Expo.easeOut})
+      .then(() => {
+        animate.set(this.refs.icon, {rotation: 0})
+      })
   };
 
   handleOnclick = () => {
@@ -105,6 +121,12 @@ export default class PlayButton extends React.Component {
 
   handleMouseEnter = () => {
     audio.play('button-rollover');
+
+    if (this.props.isReplay) {
+      this.replayAnimation();
+      return;
+    }
+
     if (this.props.isCountDown || this.state.playProgress === undefined) {
       this.setState({isHovered: true});
       this.colorCircle.animate(1, {
@@ -115,6 +137,7 @@ export default class PlayButton extends React.Component {
   };
 
   handleMouseLeave = () => {
+
     const easing = 'easeInOut';
     const progress = this.state.playProgress;
 
@@ -143,12 +166,13 @@ export default class PlayButton extends React.Component {
   };
 
   render() {
-    const icon = this.state.isPlaying ? IconPause : IconPlay;
+    const icon = this.state.isPlaying && !this.props.isReplay ? IconPause : this.props.icon;
     const isRoundLineCap = this.state.isHovered || this.state.playProgress;
     const componentClassName = (isRoundLineCap ? 'round-line-cap ' : ' ' ) + (this.props.className || '');
 
     return (
       <div className={`progress-play-button ${componentClassName}`}>
+        {!this.props.shouldHideHalo && <div className={`play-button-shadow`}></div>}
         <div
           ref="iconContainer"
           className={`icon-container`}
@@ -157,7 +181,8 @@ export default class PlayButton extends React.Component {
           onMouseLeave={this.handleMouseLeave}
         >
           <div
-            className={`icon ${!this.state.isPlaying?'play' : ''}`}
+            ref="icon"
+            className={`icon ${!this.state.isPlaying && !this.props.isReplay ? 'play' : ''}`}
             dangerouslySetInnerHTML={{ __html: icon }}></div>
         </div>
 

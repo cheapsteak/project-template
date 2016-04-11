@@ -26,6 +26,10 @@ export default class RectangularButton extends React.Component {
     this.props.backgroundColor && animate.set(this.refs.button, {backgroundColor: this.props.backgroundColor});
   }
 
+  componentWillUnmount() {
+    this.stopAnimations();  
+  }
+
   handleClick = () => {
     audio.play('button-click');
     this.props.onClick && this.props.onClick();

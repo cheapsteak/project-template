@@ -9,112 +9,19 @@ import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
+import RightArrowSvg from 'svgs/icon-rightarrow.svg';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import ImageCard from '../components/image-card/image-card.jsx';
+import ChaptersImageCard from '../components/image-card-one/image-card-one.jsx';
+import CareerImageCard from '../components/image-card-two/image-card-two.jsx';
+import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
-
-function calculateAnimationStates (els) {
-  const zoomedInRect = els.component.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width - zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height - zoomedOutVideoMargin * 2
-  }
-
-  return {
-    out: {
-      simpleProgressBar: {
-        y: els.simpleProgressBar.offsetHeight
-      },
-      videoWrapper: {
-        delay: 0.3,
-        scaleX: 1,
-        scaleY: 1,
-        cursor: 'none'
-      },
-      overlay: {
-        delay: 0.1,
-        display: 'none',
-        opacity: 0
-      },
-      endingOverlay: {
-        display: 'none',
-        opacity: 0
-      },
-      replayButton: {
-        opacity: 0,
-        y: 100
-      },
-      replayLabel: {
-        opacity: 0,
-        y: 100
-      },
-      exploreButton: {
-        y: -els.exploreButton.offsetHeight
-      },
-      circleCTA: {
-        opacity: 0,
-        y: 50
-      },
-      controls: {
-        y: els.controls.offsetHeight,
-        display: 'none'
-      }
-    },
-    idle: {
-      simpleProgressBar: {
-        delay: 0.5,
-        y: 0
-      },
-      videoWrapper: {
-        scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height,
-        cursor: 'default'
-      },
-      overlay: {
-        display: 'block',
-        delay: 0.3,
-        opacity: 0.5
-      },
-      endingOverlay: {
-        display: 'block',
-        opacity: 1
-      },
-      replayButton: {
-        delay: 0.8,
-        opacity: 1,
-        y: 0
-      },
-      replayLabel: {
-        delay: 1.2,
-        opacity: 1,
-        y: 0
-      },
-      exploreButton: {
-        delay: 0.5,
-        y: -1
-      },
-      circleCTA: {
-        opacity: 1,
-        y: 0
-      },
-      controls: {
-        y: 0,
-        display: 'flex'
-      }
-    },
-    end: {
-      overlay: {
-        display: 'block',
-        opacity: 1
-      }
-    }
-  };
-};
+import BgCover from 'background-cover';
+import detect from 'common/utils/detect';
+import PlayButton from 'common/components/play-button/play-button';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -129,17 +36,51 @@ export default class NarrativeVideoPlayer extends React.Component {
   static muteStorageId = 'narrative-video-mute-status';
 
   state = {
-    showEndingCTA: false
+    showEndingCTA: false,
+    isReady: false,
+    isMobile: detect.isMobile
   };
 
   hideControlsTimeoutId = undefined;
   setLocalStorageIntervalId = undefined;
+  wrapperVisible = false;
+
+
+  componentDidMount() {
+    this.animationStates = calculateAnimationStates(this.refs);
+
+    const initialState = this.props.useFullControls
+      ? 'idle'
+      : 'out';
+
+    animate.set(this.refs.cornerButton, this.animationStates[initialState].cornerButton);
+    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
+    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
+    animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
+    animate.set(this.refs.controls, this.animationStates[initialState].controls);
+
+    animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
+    animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
+    animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
+
+    if(!this.props.isPlaying) {
+      if(!this.props.useFullControls) {
+        this.props.showFullControls();
+      }
+    }
+
+    if (!detect.isMobile) {
+      this.props.isPlaying && this.video.play();
+    }
+
+    window.addEventListener('resize', this.handleResize);
+  }
 
   componentWillReceiveProps(nextProps) {
     const el = findDOMNode(this);
 
     if(this.props.useFullControls !== nextProps.useFullControls
-       && !this.videoEnded && this.lastMouseCoord) {
+       && !this.videoEnded && (this.lastMouseCoord || detect.isTablet)) {
       if(nextProps.useFullControls) {
         this.animateInControls();
       } else {
@@ -154,43 +95,24 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
 
     // Video Finished
-    if(this.props.duration && nextProps.duration) {
+    if(this.props.duration && nextProps.duration &&
+      this.props.currentTime !== nextProps.currentTime) {
       if(this.props.currentTime !== this.props.duration &&
-        nextProps.currentTime === nextProps.duration) {
+        nextProps.currentTime >= nextProps.duration) {
         clearTimeout(this.hideControlsTimeoutId);
         this.hideControlsTimeoutId = undefined;
         this.animateInEndOverlay();
         this.props.hideFullControls();
       }
     }
-  }
 
-  componentDidMount() {
-    this.animationStates = calculateAnimationStates(this.refs);
-
-    const initialState = this.props.useFullControls
-      ? 'idle'
-      : 'out';
-
-    animate.set(this.refs.exploreButton, this.animationStates[initialState].exploreButton);
-    animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
-    animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
-    animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
-    animate.set(this.refs.controls, this.animationStates[initialState].controls);
-
-    animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
-    animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
-    animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
-
-    this.props.isPlaying && this.video.play();
-
-    if(!this.props.isPlaying) {
-      if(!this.props.useFullControls) {
-        this.props.showFullControls();
-      }
+    if(this.props.isPlaying !== nextProps.isPlaying) {
+      nextProps.isPlaying ? this.video.play() : this.video.pause();
     }
 
-    window.addEventListener('resize', this.handleResize);
+    if(this.props.isMuted !== nextProps.isMuted) {
+      nextProps.isMuted ? this.mute() : this.unmute();
+    }
   }
 
   componentWillUnmount() {
@@ -210,7 +132,11 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   setTimeStorageInterval = () => {
     this.localStorageIntervalId = setInterval(() => {
-      localStorage.setItem(NarrativeVideoPlayer.timeStorageId, this.video.currentTime);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.timeStorageId, this.video.currentTime);
+      } catch (error) {
+        return false;
+      }
     }, 1000);
   };
 
@@ -219,13 +145,23 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.localStorageIntervalId = undefined;
   };
 
+  unmute = () => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  };
+
+  mute = () => {
+    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+  };
+
   /************************/
   /*     Animatations     */
   /************************/
 
   animateInControls = () => {
-    const buttons = this.refs.component.querySelectorAll('.button');
-    const dots = this.refs.component.querySelectorAll('.dot');
+    const buttons = this.refs.root.querySelectorAll('.button');
+    const dots = this.refs.root.querySelectorAll('.dot');
+
+    this.wrapperVisible = true;
 
     this.stopAnimations();
     animate.staggerFrom(dots, 0.1, { delay: 0.5, opacity: 0 }, 0.1);
@@ -234,7 +170,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.idle.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA),
       animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
       _.map(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})})
@@ -243,10 +179,11 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateOutControls = () => {
     this.stopAnimations();
+    this.wrapperVisible = false;
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
 
@@ -268,6 +205,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateInEndOverlay = () => {
     this.stopAnimations();
+    this.wrapperVisible = true;
 
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
@@ -275,7 +213,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
       animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
@@ -286,6 +224,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   animateOutEndOverlay = () => {
     this.setState({ showEndingCTA: false });
     this.stopAnimations();
+    this.wrapperVisible = false;
 
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
@@ -294,7 +233,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(this.refs.exploreButton, 0.3, this.animationStates.out.exploreButton),
+      animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
     ]);
@@ -311,6 +250,17 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleResize = () => {
     this.animationStates = calculateAnimationStates(this.refs);
+
+    animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
+
+    if(this.wrapperVisible) {
+      animate.set(this.refs.videoWrapper, {
+        scaleX: this.animationStates.idle.videoWrapper.scaleX,
+        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+      });
+    }
+
+    this.videoResize();
   };
 
   handleMetadataLoaded = () => {
@@ -325,11 +275,24 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     if(isMuted === "true") {
       this.props.mute();
+      this.video.volume = 0;
     } else {
       this.props.unmute();
     }
 
+    this.videoResize();
     this.setTimeStorageInterval();
+    this.setState({isReady: true});
+  };
+
+  videoResize = () => {
+    animate.set(this.video, {clearProps: 'all'});
+
+    if (window.innerWidth > window.innerHeight) {
+      BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+    } else {
+      animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
+    }
   };
 
   handleTimeUpdate = () => {
@@ -383,15 +346,19 @@ export default class NarrativeVideoPlayer extends React.Component {
       this.props.showFullControls();
     }
 
+    this.setHideControlsTimeout();
+
+    this.lastMouseCoord = mouseCoords;
+  };
+
+  setHideControlsTimeout = () => {
     clearTimeout(this.hideControlsTimeoutId);
     this.hideControlsTimeoutId = setTimeout(() => {
       if(this.props.isPlaying) {
         this.props.hideFullControls();
       }
       this.hideControlsTimeoutId = undefined;
-    }, 1500);
-
-    this.lastMouseCoord = mouseCoords;
+    }, detect.isTablet? 3000: 1500);
   };
 
   handleReplayClick = (e) => {
@@ -404,6 +371,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleOverlayClick = (e) => {
+    if (detect.isTablet) return;
+
     if(e.target.id === 'videoOverlay') {
       this.props.hideFullControls();
       !this.props.isPlaying && this.video.play();
@@ -413,14 +382,33 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleVolumeClick = (e) => {
     if(this.props.isMuted) {
-      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, false);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.muteStorageId, false);
+      } catch (error) {
+        return false;
+      }
       this.props.unmute();
     } else {
-      localStorage.setItem(NarrativeVideoPlayer.muteStorageId, true);
+      try {
+        localStorage.setItem(NarrativeVideoPlayer.muteStorageId, true);
+      } catch (error) {
+        return false;
+      }
       this.props.mute();
     }
   };
 
+  handleTouchStart = () => {
+    if (!this.userHasInteracted) {
+      this.userHasInteracted = true;
+      this.video.play();
+      this.props.onVideoPlay();
+      animate.to(this.refs.playButton.containerEl, 0.3, {autoAlpha: 0});
+    }
+
+    this.props.showFullControls();
+    this.setHideControlsTimeout();
+  };
 
   render() {
     const { style, className } = this.props;
@@ -428,10 +416,11 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     return (
       <div
-        ref="component"
+        ref="root"
         className="video-player narrative-video-player ${className || ''}"
         style={style}
         onMouseMove={this.handleComponentMouseMove}
+        onTouchStart={this.handleTouchStart}
       >
         <div
           ref="videoWrapper"
@@ -446,7 +435,7 @@ export default class NarrativeVideoPlayer extends React.Component {
           </div>
           <Link to="/grid">
             <RectangularButton
-              ref={ node => this.refs.exploreButton = findDOMNode(node) }
+              ref={ node => this.refs.cornerButton = findDOMNode(node) }
               className="explore-button"
               text="Chapter Menu"
               color="#ffffff"
@@ -458,23 +447,32 @@ export default class NarrativeVideoPlayer extends React.Component {
           <video
             ref={(node) => this.video = node }
             src={this.props.src}
-            preload="metadata"
-            autoPlay={true}
+            preload="auto"
+            autoPlay={false}
             onLoadedMetadata={this.handleMetadataLoaded}
             onTimeUpdate={this.handleTimeUpdate}
             onPlay={this.props.onVideoPlay}
             onPause={this.props.onVideoPause}
-            muted={this.props.isMuted}
+            poster={this.state.isMobile && !localStorage.getItem('narrative-video-time') ? this.props.poster : ''}
+            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
+
+          {
+            this.state.isMobile ? <PlayButton ref="playButton" label="Play"/> : null
+          }
+
           <Link
             ref={node => this.refs.circleCTA = findDOMNode(node)}
             className="circle-cta"
             to={`/chapters/${this.props.currentChapter.slug}`}
           >
-            <div className="circle-cta-text">
-              <label className="stagger-cta">Discover More:</label>
-              <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+            <div className="circle-wrapper">
+              <div className="circle-cta-text">
+                <label className="stagger-cta">Discover More:</label>
+                <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+              </div>
+              <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
             </div>
           </Link>
           <div
@@ -487,19 +485,28 @@ export default class NarrativeVideoPlayer extends React.Component {
             >
             {
               this.state.showEndingCTA
-              ? <ImageCard
-                  gridButton={true}
-                  key={'currentId'}
-                  label="See All"
-                  title="Chapters"
-                  route="/"
-                  image={`${ASSET_PATH}/narrative-ending-card.jpg`}
-                />
+              ? [
+                  <ChaptersImageCard
+                    gridButton={true}
+                    key={'chapter-card'}
+                    label="See All"
+                    title="Chapters"
+                    route="/grid"
+                    image={`${ASSET_PATH}/narrative-ending-card.jpg`}
+                  />,
+                  <CareerImageCard
+                    key={'careers-card'}
+                    label="Careers"
+                    title="Join Our<br/>Team"
+                    route="/grid"
+                    image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                  />
+                ]
               : undefined
             }
             </TransitionGroup>
             <div
-              className="replay-group replay-group-grid"
+              className="replay-group"
             >
               <div
                 ref="replayButton"
@@ -528,34 +535,43 @@ export default class NarrativeVideoPlayer extends React.Component {
           className="controls"
           onMouseEnter={ this.handleMouseEnterControls }
           onMouseMove={ e => e.stopPropagation() }
-          onMouseLeave={ this.handleMouseLeaveControls }
+          onTouchMove={ this.handleMouseEnterControls }
+          onTouchEnd={ this.setHideControlsTimeout }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
           <div className="control-group">
-            <span
-              className="button play-button"
-              dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-              onClick={this.handleVideoPlayPause}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-              onClick={this.handlePrevClick}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-              onClick={this.handleNextClick}
-            >
-            </span>
-            <span
-              className="button"
-              dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-              onClick={this.handleVolumeClick}
-            >
-            </span>
+            <div className="button-wrapper">
+              <div
+                className="button play-button"
+                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                onClick={this.handleVideoPlayPause}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+                onClick={this.handlePrevClick}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+                onClick={this.handleNextClick}
+              >
+              </div>
+            </div>
+            <div className="button-wrapper">
+              <div
+                className="button"
+                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                onClick={this.handleVolumeClick}
+              >
+              </div>
+            </div>
           </div>
           <Timeline
             currentTime={this.props.currentTime}
