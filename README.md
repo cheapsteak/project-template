@@ -97,7 +97,9 @@ deploy/preview
 deploy/production
 ```
 
-We also have manual deployment tasks that we can use as a fail-safe if Codeship goes offline
+We also have manual deployment tasks that we can use as a fail-safe if Codeship goes offline.
+This requires you to have `sshpass` installed. Instructions for installation here:  
+https://gist.github.com/arunoda/7790979
 
 ```bash
 npm run deploy:dev
