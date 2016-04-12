@@ -4,6 +4,9 @@ $mobile-side-padding: 5.334vw;
 .mobile {
   overflow: scroll;
   -webkit-overflow-scrolling: touch;
+  height: 100%;
+  width: 100%;
+  background-color: #222;
 }
 
 .overlay-content {
