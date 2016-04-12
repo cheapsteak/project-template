@@ -1,5 +1,5 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
+import {findDOMNode} from 'react-dom';
 import Timeline from 'common/components/timeline/timeline';
 import PlayButtonSvg from 'svgs/icon-play.svg';
 import PauseButtonSvg from 'svgs/icon-pause.svg';
@@ -14,7 +14,7 @@ import RectangularButton from 'common/components/rectangular-button/rectangular-
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import ChaptersImageCard from '../components/image-card-one/image-card-one.jsx';
 import CareerImageCard from '../components/image-card-two/image-card-two.jsx';
 import calculateAnimationStates from '../calculateAnimationStates.js';
@@ -45,8 +45,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   setLocalStorageIntervalId = undefined;
   wrapperVisible = false;
 
-
   componentDidMount() {
+    this.containerEl = findDOMNode(this);
     this.animationStates = calculateAnimationStates(this.refs);
 
     const initialState = this.props.useFullControls
@@ -63,14 +63,25 @@ export default class NarrativeVideoPlayer extends React.Component {
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
     animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
 
-    if(!this.props.isPlaying) {
-      if(!this.props.useFullControls) {
-        this.props.showFullControls();
-      }
-    }
+    //if(!this.props.isPlaying) {
+    //if(!this.props.useFullControls) {
+    //this.props.showFullControls();
+    //}
+    //}
+
+    // const fakeVideoObj = {clientWidth: 1920, clientHeight: 1080, style: {}};
+    // BgCover.BackgroundCover(fakeVideoObj, this.refs.videoWrapper);
+    // this.video.width = parseFloat(fakeVideoObj.style.width);
+    // this.video.height = parseFloat(fakeVideoObj.style.height);
+    // this.video.style.width = fakeVideoObj.style.width;
+    // this.video.style.height = fakeVideoObj.style.height;
+    // this.video.style.top = fakeVideoObj.style.width.top;
+    // this.video.style.left = fakeVideoObj.style.left;
 
     if (!detect.isMobile) {
-      this.props.isPlaying && this.video.play();
+      setTimeout(() => {
+        //this.props.isPlaying && this.video.play();
+      }, 600);
     }
 
     window.addEventListener('resize', this.handleResize);
@@ -115,6 +126,33 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
   }
 
+  componentWillAppear(callback) {
+    if (!detect.isMobile) {
+      this.video.play();
+      this.props.onVideoPlay();
+    }
+    callback();
+  }
+
+  componentWillEnter(callback) {
+    setTimeout(() => {
+      if (!detect.isMobile) {
+        this.video.play();
+        this.props.onVideoPlay();
+      }
+      callback();
+    }, 1500);
+  }
+
+  componentWillLeave(callback) {
+    animate.set(this.containerEl, {zIndex: 999999});
+    this.isAnimatingOut = true;
+    this.props.onVideoPause();
+    this.props.hideFullControls();
+    const path = location.pathname.replace(CONFIG.basePath + '/', '');
+    (path === 'grid') ? this.animateOutFade(callback) : this.animateOutSwipe(callback);
+  }
+
   componentWillUnmount() {
     clearTimeout(this.hideControlsTimeoutId);
     this.props.hideFullControls();
@@ -122,7 +160,34 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.clearTimeStorageInterval();
   }
 
-  get videoEnded () {
+  animateOutSwipe = (callback) => {
+    const duration = 1.2;
+    const ease = Expo.easeOut;
+    const delay = 0.8;
+
+    animate.to(this.video, 1, {autoAlpha: 0});
+
+    return animate.all([
+        animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
+        animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
+        animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease, delay})
+      ])
+      .then(() => callback && callback())
+  };
+
+  animateOutFade = (callback) => {
+    const duration = 1.2;
+    const ease = Expo.easeOut;
+
+    this.props.hideFullControls();
+
+    return animate.all([
+        animate.to(this.containerEl, duration, {autoAlpha: 0, ease: ease, delay: 0.5})
+      ])
+      .then(() => callback && callback())
+  };
+
+  get videoEnded() {
     return this.video.currentTime === this.video.duration;
   }
 
@@ -240,7 +305,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   stopAnimations = () => {
-    TweenMax.killTweensOf(_.values(this.refs));
+    if (!this.isAnimatingOut) TweenMax.killTweensOf(_.values(this.refs));
   };
 
 
@@ -332,12 +397,14 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   handleComponentMouseMove = (e) => {
+    if (this.isAnimatingOut) return;
+
     const mouseCoords = {
       x: e.clientX,
       y: e.clientY
     };
 
-    if(this.videoEnded || !this.lastMouseCoord) {
+    if (this.isAnimatingOut || this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
       return;
     }
@@ -411,8 +478,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   };
 
   render() {
-    const { style, className } = this.props;
-    const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
+    const {style, className} = this.props;
+    const progressWidth = (this.video && this.video.duration ? this.video.currentTime / this.video.duration * 100 : 0) + '%';
 
     return (
       <div
@@ -422,163 +489,165 @@ export default class NarrativeVideoPlayer extends React.Component {
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
       >
-        <div
-          ref="videoWrapper"
-          className="video-wrapper"
-        >
+        <div ref="pageWrapper" className={`page-wrapper`}>
           <div
-            id="videoOverlay"
-            ref="overlay"
-            className="video-overlay"
-            onClick={this.handleOverlayClick}
+            ref="videoWrapper"
+            className="video-wrapper"
           >
-          </div>
-          <Link to="/grid">
-            <RectangularButton
-              ref={ node => this.refs.cornerButton = findDOMNode(node) }
-              className="explore-button"
-              text="Main Menu"
-              color="#ffffff"
-              backgroundColor="#f99100"
-              hoverBackgroundColor="#f99100"
-              svgIcon={IconExplore}
-            />
-          </Link>
-          <video
-            ref={(node) => this.video = node }
-            src={this.props.src}
-            preload="auto"
-            autoPlay={false}
-            onLoadedMetadata={this.handleMetadataLoaded}
-            onTimeUpdate={this.handleTimeUpdate}
-            onPlay={this.props.onVideoPlay}
-            onPause={this.props.onVideoPause}
-            poster={this.state.isMobile && !localStorage.getItem('narrative-video-time') ? this.props.poster : ''}
-            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
-          >
-          </video>
-
-          {
-            this.state.isMobile ? <PlayButton ref="playButton" label="Play"/> : null
-          }
-
-          <Link
-            ref={node => this.refs.circleCTA = findDOMNode(node)}
-            className="circle-cta"
-            to={`/chapters/${this.props.currentChapter.slug}`}
-          >
-            <div className="circle-wrapper">
-              <div className="circle-cta-text">
-                <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
-                <label className="stagger-cta">Learn More</label>
-              </div>
-              <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
-            </div>
-          </Link>
-          <div
-            ref="endingOverlay"
-            className="end-overlay"
-          >
-            <TransitionGroup
-              component="div"
-              className="route-content-wrapper full-height"
-            >
-            {
-              this.state.showEndingCTA
-              ? [
-                  <ChaptersImageCard
-                    gridButton={true}
-                    key={'chapter-card'}
-                    label="See All"
-                    title="Chapters"
-                    route="/grid"
-                    image={`${ASSET_PATH}/narrative-ending-card.jpg`}
-                  />,
-                  <CareerImageCard
-                    key={'careers-card'}
-                    label="Careers"
-                    title="Join Our<br/>Team"
-                    route="/grid"
-                    image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
-                  />
-                ]
-              : undefined
-            }
-            </TransitionGroup>
             <div
-              className="replay-group"
+              id="videoOverlay"
+              ref="overlay"
+              className="video-overlay"
+              onClick={this.handleOverlayClick}
             >
-              <div
-                ref="replayButton"
-                className="replay-button"
-                onClick={this.handleReplayClick}
-                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-              >
+
+            </div>
+            <Link to="/grid">
+              <RectangularButton
+                ref={ node => this.refs.cornerButton = findDOMNode(node) }
+                className="explore-button"
+                text="Chapter Menu"
+                color="#ffffff"
+                backgroundColor="#f99100"
+                hoverBackgroundColor="#f99100"
+                svgIcon={IconExplore}
+              />
+            </Link>
+            <video
+              ref={(node) => this.video = node }
+              src={this.props.src}
+              preload="auto"
+              autoPlay={false}
+              onLoadedMetadata={this.handleMetadataLoaded}
+              onTimeUpdate={this.handleTimeUpdate}
+              onPlay={this.props.onVideoPlay}
+              onPause={this.props.onVideoPause}
+              poster={this.state.isMobile && !localStorage.getItem('narrative-video-time') ? this.props.poster : ''}
+            >
+            </video>
+
+            {
+              this.state.isMobile ? <PlayButton ref="playButton" label="Play"/> : null
+            }
+
+            <Link
+              ref={node => this.refs.circleCTA = findDOMNode(node)}
+              className="circle-cta"
+              to={`/chapters/${this.props.currentChapter.slug}`}
+            >
+              <div className="circle-wrapper">
+                <div className="circle-cta-text">
+                  <label className="stagger-cta">Discover More:</label>
+                  <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+                </div>
+                <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
               </div>
-              <label
-                ref="replayLabel"
-                className="replay-label"
+            </Link>
+            <div
+              ref="endingOverlay"
+              className="end-overlay"
+            >
+              <TransitionGroup
+                component="div"
+                className="route-content-wrapper full-height"
               >
-                Replay
-              </label>
+                {
+                  this.state.showEndingCTA
+                    ? [
+                    <ChaptersImageCard
+                      gridButton={true}
+                      key={'chapter-card'}
+                      label="See All"
+                      title="Chapters"
+                      route="/grid"
+                      image={`${ASSET_PATH}/narrative-ending-card.jpg`}
+                    />,
+                    <CareerImageCard
+                      key={'careers-card'}
+                      label="Careers"
+                      title="Join Our<br/>Team"
+                      route="/grid"
+                      image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                    />
+                  ]
+                    : undefined
+                }
+              </TransitionGroup>
+              <div
+                className="replay-group"
+              >
+                <div
+                  ref="replayButton"
+                  className="replay-button"
+                  onClick={this.handleReplayClick}
+                  dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                >
+                </div>
+                <label
+                  ref="replayLabel"
+                  className="replay-label"
+                >
+                  Replay
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          ref="simpleProgressBar"
-          className="simple-progress-bar"
-        >
-          <span style={{ width: progressWidth }}></span>
-        </div>
-        <div
-          ref="controls"
-          className="controls"
-          onMouseEnter={ this.handleMouseEnterControls }
-          onMouseMove={ e => e.stopPropagation() }
-          onTouchMove={ this.handleMouseEnterControls }
-          onTouchEnd={ this.setHideControlsTimeout }
-        >
-          <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
-          <div className="control-group">
-            <div className="button-wrapper">
-              <div
-                className="button play-button"
-                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-                onClick={this.handleVideoPlayPause}
-              >
-              </div>
-            </div>
-            <div className="button-wrapper">
-              <div
-                className="button"
-                dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-                onClick={this.handlePrevClick}
-              >
-              </div>
-            </div>
-            <div className="button-wrapper">
-              <div
-                className="button"
-                dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-                onClick={this.handleNextClick}
-              >
-              </div>
-            </div>
-            <div className="button-wrapper">
-              <div
-                className="button"
-                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                onClick={this.handleVolumeClick}
-              >
-              </div>
-            </div>
+          <div
+            ref="simpleProgressBar"
+            className="simple-progress-bar"
+          >
+            <span style={{ width: progressWidth }}></span>
           </div>
-          <Timeline
-            currentTime={this.props.currentTime}
-            duration={ this.video && this.video.duration || 0 }
-            onTimeChange={this.changeVideoTime}
-            items={this.props.chapters}
-          />
+          <div
+            ref="controls"
+            className="controls"
+            onMouseEnter={ this.handleMouseEnterControls }
+            onMouseMove={ e => e.stopPropagation() }
+            onTouchMove={ this.handleMouseEnterControls }
+            onTouchEnd={ this.setHideControlsTimeout }
+          >
+            <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
+            <div className="control-group">
+              <div className="button-wrapper">
+                <div
+                  className="button play-button"
+                  dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                  onClick={this.handleVideoPlayPause}
+                >
+                </div>
+              </div>
+              <div className="button-wrapper">
+                <div
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+                  onClick={this.handlePrevClick}
+                >
+                </div>
+              </div>
+              <div className="button-wrapper">
+                <div
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+                  onClick={this.handleNextClick}
+                >
+                </div>
+              </div>
+              <div className="button-wrapper">
+                <div
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                  onClick={this.handleVolumeClick}
+                >
+                </div>
+              </div>
+            </div>
+            <Timeline
+              currentTime={this.props.currentTime}
+              duration={ this.video && this.video.duration || 0 }
+              onTimeChange={this.changeVideoTime}
+              items={this.props.chapters}
+            />
+          </div>
         </div>
       </div>
     )

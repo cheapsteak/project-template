@@ -38,6 +38,7 @@ export default class Chapter extends React.Component {
   }
 
   componentDidMount() {
+    this.containerEl = findDOMNode(this);
     this.setupParallax();
   }
 
@@ -45,9 +46,71 @@ export default class Chapter extends React.Component {
     this.setupParallax();
   }
 
+  componentWillAppear(callback) {
+    setTimeout(() => {
+      this.refs.heroVideo.play();
+      callback();
+    }, 0);
+  }
+
+  componentWillEnter(callback) {
+    setTimeout(() => {
+      this.refs.heroVideo.play();
+      callback();
+    }, 1500);
+  }
+
+  componentWillLeave(callback) {
+    this.refs.heroVideo.pause();
+    animate.set(this.containerEl, {zIndex: 999999});
+    const path = location.pathname.replace(CONFIG.basePath + '/', '');
+    (path === 'grid') ? this.animateOutFade(callback) : this.animateOutSwipe(callback);
+  }
+
   componentWillUnmount() {
     this.cleanup();
     window.removeEventListener('resize', this.handleResize);
+  };
+
+  animateOutSwipe = (callback) => {
+    const duration = 1.2;
+    const ease = Expo.easeOut;
+    const delay = 0.8;
+
+    animate.staggerTo(document.querySelectorAll('.chapter-page .page-component'), 1, {
+      autoAlpha: 0,
+      scale: 0.9,
+      ease
+    }, 0.1);
+    animate.to(this.refs.main, 1.2, {backgroundColor: '#000', ease});
+    animate.to(this.refs.nav, 0.4, {y: '-100%', ease});
+
+    return animate.all([
+        animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
+        animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
+        animate.to(this.refs.pageWrapper, duration, {x: '100%', ease, delay}),
+      ])
+      .then(() => callback && callback())
+  };
+
+  animateOutFade = (callback) => {
+    const duration = 1.2;
+    const ease = Expo.easeOut;
+    const delay = 0.8;
+
+    animate.staggerTo(document.querySelectorAll('.chapter-page .page-component'), 1, {
+      autoAlpha: 0,
+      scale: 0.9,
+      ease
+    }, 0.1);
+
+    animate.to(this.refs.nav, 0.4, {y: '-100%', ease});
+    animate.to(this.refs.main, 2, {backgroundColor: '#000', ease});
+
+    return animate.all([
+        animate.to(this.containerEl, duration, {autoAlpha: 0, ease, delay})
+      ])
+      .then(() => callback && callback())
   };
 
   getTarget = (component, slug) => {
@@ -170,7 +233,13 @@ export default class Chapter extends React.Component {
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
-    return <section ref="chapter" className={`chapter-page`}>
+    return (
+      <section
+        ref="chapter"
+        className={`chapter-page`}
+        style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
+      >
+      <div ref="pageWrapper" className={`page-wrapper`}>
       <nav ref="nav" className="nav">
         <Link
           className={`nav-button left`}
@@ -203,12 +272,11 @@ export default class Chapter extends React.Component {
         <div ref="heroVideoContainer" className="page-component chapter-header">
           <video
             ref="heroVideo"
-            autoPlay={true}
+            autoPlay={false}
             loop={true}
             src={this.state.data.hero.bgVideoUrl}
             poster={this.state.data.hero.poster}
             onLoadedMetadata={this.handleMetadataLoaded}
-            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           ></video>
           <div className={`hero-content`}>
             <div className={`hero-title`}>{this.state.data.title}</div>
@@ -347,7 +415,8 @@ export default class Chapter extends React.Component {
           />
         </footer>
       </div>
+      </div>
     </section>
-      ;
+    );
   }
 }

@@ -66,7 +66,7 @@ export default class LandingPage extends React.Component {
   componentWillLeave(callback) {
     this.refs.video.pause();
     const path = location.pathname.replace(CONFIG.basePath + '/', '');
-    (path === 'grid') ? this.animateOutToGrid(callback) : this.animateOutToVideo(callback);
+    (path === 'grid') ? this.animateOutFade(callback) : this.animateOutSwipe(callback);
   }
 
   componentWillUnmount() {
@@ -141,7 +141,7 @@ export default class LandingPage extends React.Component {
 
   animateOnVideoLoaded = () => {
     const ease = Expo.easeOut;
-    const staggerEls = [this.refs.description, this.ctaWatch, this.ctaExplore];
+    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch];
 
     this.setState({shouldShowFooter: true});
 
@@ -156,27 +156,33 @@ export default class LandingPage extends React.Component {
     ])
   };
 
-  animateOutToGrid = (callback) => {
+  animateOutFade = (callback) => {
     const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
 
     this.setState({shouldShowFooter: false});
 
     return animate
       .all([
-        animate.staggerTo(staggerEls, 0.6, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1),
-        animate.to(this.refs.videoContainer, 1, {autoAlpha: 0}),
+        animate.staggerTo(staggerEls, 0.8, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1),
+        animate.to(this.refs.videoContainer, 1.2, {autoAlpha: 0}),
         animate.to(this.containerEl, 0, {backgroundColor: 'rgba(0,0,0,0)'})
       ])
       .then(() => callback && callback())
   };
 
-  animateOutToVideo = (callback) => {
-    const duration = 1;
+  animateOutSwipe = (callback) => {
+    const duration = 1.2;
     const ease = Expo.easeOut;
+    const delay = 0.8;
+
+    const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
+    this.setState({shouldShowFooter: false});
+
+    animate.staggerTo(staggerEls, 0.8, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1);
 
     return animate.all([
-        animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
-        animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease: ease})
+        animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
+        animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease, delay})
       ])
       .then(() => callback && callback())
   };
