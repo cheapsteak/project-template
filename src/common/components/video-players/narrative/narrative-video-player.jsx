@@ -135,6 +135,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   componentWillEnter(callback) {
+    // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       if (!detect.isMobile) {
         this.video.play();
