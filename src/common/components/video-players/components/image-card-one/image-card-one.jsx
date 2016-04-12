@@ -6,24 +6,11 @@ import animate from 'gsap-promise';
 
 
 function calculateAnimationStates(els) {
-  const zoomedInRect = els.card.parentNode.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width + zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height + zoomedOutVideoMargin * 2
-  }
-  const scaledRatio = {
-    x: zoomedOutRect.width/zoomedInRect.width,
-    y: zoomedOutRect.height/zoomedInRect.height
-  }
-
   return {
     out: {
       card: {
         opacity: 0,
-        y: 110,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
+        y: 110
       },
       frontOverlay: {
         y: els.frontOverlay.offsetHeight
@@ -40,9 +27,7 @@ function calculateAnimationStates(els) {
       card: {
         delay: 0.3,
         opacity: 1,
-        y: 0,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
+        y: 0
       },
       frontOverlay: {
         delay: 0.7,
@@ -110,7 +95,7 @@ export default class ImageCardOne extends React.Component {
     return (
       <div
         ref="card"
-        className="image-card-one"
+        className="image-card image-card-one"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />

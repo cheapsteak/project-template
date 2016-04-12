@@ -173,13 +173,12 @@
     opacity: 0;
 
     .replay-group {
-      $group-width: 90px;
-      $group-height: 115px;
-      width: $group-width;
-      height: $group-height;
+      @include scale-prop('width', 90);
+      @include scale-prop('height', 115);
+      @include scale-prop('bottom', -65);
       position: absolute;
-      top: calc(85% - #{$group-height * 0.5});
-      left: calc(50% - #{$group-width * 0.5});
+      left: 50%;
+      transform: translate(-50%, 50%);
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -187,8 +186,8 @@
     }
 
     .replay-button {
-      width: 65px;
-      height: 65px;
+      @include scale-prop('width', 65);
+      @include scale-prop('height', 65);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -201,6 +200,10 @@
           transform: rotate(180deg) translateZ(0);
           transition: transform 0.3s ease;
         }
+
+        & + .replay-label {
+          color: rgba(255,255,255,0.6);
+        }
       }
 
       svg {
@@ -212,8 +215,8 @@
     .replay-label {
       position:block;
       font-weight: bold;
-      @include scale-prop('font-size', 24);
-      color: #8F8F8F;
+      @include scale-prop('font-size', 28);
+      color: rgba(255,255,255,0.4);
     }
 
     .replay-group-chapter {
@@ -253,24 +256,24 @@
       }
 
       .replay-label {
-        font-size: 28px;
+        @include scale-prop('font-size', 28);
         color: #F2F2F2;
       }
     }
 
     .replay-group-grid {
-      $group-width: 80px;
-      $group-height: 95px;
-      position: absolute;
-      width: $group-width;
-      height: $group-height;
-      top: calc(80% - #{$group-height * 0.5});
-      left: calc(50% - #{$group-width * 0.5});
+      // $group-width: 80px;
+      // $group-height: 95px;
+      // position: absolute;
+      // width: $group-width;
+      // height: $group-height;
+      // top: calc(80% - #{$group-height * 0.5});
+      // left: calc(50% - #{$group-width * 0.5});
 
-      .replay-button {
-        width: 55px;
-        height: 55px;
-      }
+      // .replay-button {
+      //   width: 55px;
+      //   height: 55px;
+      // }
     }
   }
 }

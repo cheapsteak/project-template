@@ -10,8 +10,9 @@
 
   .video-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
 
     .circle-cta {
       position: absolute;
@@ -111,18 +112,29 @@
     z-index: 100;
   }
 
-  .image-card-one {
-    left: calc(50% - 375px);
-  }
+  .end-overlay {
+    .end-overlay-ui {
+      position: relative;
+      top: 41%;
+      // @include scale-prop('top', 120);
+      transform: translateY(-50%);
+    }
 
-  .image-card-two {
-    left: calc(50% + 20px);
+    .image-cards {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+
+      & > .image-card {
+        @include scale-prop('margin', 20);
+      }
+    }
   }
 
   .progress-play-button {
     @include scale-prop('width', 110);
     @include scale-prop('height', 110);
-
     position: absolute;
     top: 50%;
     left: 50%;

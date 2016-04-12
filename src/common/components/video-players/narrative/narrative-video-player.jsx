@@ -46,8 +46,12 @@ export default class NarrativeVideoPlayer extends React.Component {
   wrapperVisible = false;
 
   componentDidMount() {
-    this.containerEl = findDOMNode(this);
+    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+
     this.animationStates = calculateAnimationStates(this.refs);
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+
+    this.containerEl = findDOMNode(this);
 
     const initialState = this.props.useFullControls
       ? 'idle'
@@ -315,14 +319,17 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleResize = () => {
+    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+
     this.animationStates = calculateAnimationStates(this.refs);
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
 
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.refs.videoWrapper, {
-        scaleX: this.animationStates.idle.videoWrapper.scaleX,
-        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+        width: this.animationStates.idle.videoWrapper.width,
+        height: this.animationStates.idle.videoWrapper.height,
       });
     }
 
@@ -548,30 +555,32 @@ export default class NarrativeVideoPlayer extends React.Component {
               ref="endingOverlay"
               className="end-overlay"
             >
+            <div className="end-overlay-ui">
               <TransitionGroup
                 component="div"
-                className="route-content-wrapper full-height"
+                className="image-cards"
               >
                 {
                   this.state.showEndingCTA
-                    ? [
+                  ? [
                     <ChaptersImageCard
                       gridButton={true}
                       key={'chapter-card'}
                       label="See All"
                       title="Chapters"
-                      href="http://jobs.successacademies.org/"
+                      route="/grid"
                       image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
                     />,
                     <CareerImageCard
                       key={'careers-card'}
                       label="Careers"
                       title="Join Our<br/>Team"
-                      route="/grid"
+                      href="http://jobs.successacademies.org/"
+                      target="__blank"
                       image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
                     />
                   ]
-                    : undefined
+                  : undefined
                 }
               </TransitionGroup>
               <div
@@ -590,6 +599,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                 >
                   Replay
                 </label>
+              </div>
               </div>
             </div>
           </div>

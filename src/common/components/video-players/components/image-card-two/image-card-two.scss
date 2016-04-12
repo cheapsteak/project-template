@@ -1,13 +1,10 @@
 .image-card-two {
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  // @include scale-prop('width', 350);
-  // @include scale-prop('height', 440);
-  width: 350px;
-  height: 440px;
+  @include scale-prop('width', 350);
+  @include scale-prop('height', 440);
   overflow: hidden;
   background-color: #444444;
   cursor: pointer;
