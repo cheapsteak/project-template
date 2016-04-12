@@ -1,7 +1,7 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
-import Panorama from 'common/components/panorama/panorama-redux.jsx';
+import Panorama from 'common/components/panorama/panorama.jsx';
 import model from '../../model/panoramas-model.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
@@ -25,6 +25,9 @@ export default class MobileArticle extends React.Component {
       bottomBorder: true
     }));
 
+
+    console.log(panoramaData);
+        
     this.setState({
       data: panoramaData
     });
@@ -40,6 +43,7 @@ export default class MobileArticle extends React.Component {
           this.state.data
           ? <Panorama
               slug={this.state.data.slug}
+              src={this.state.data.src}
               hasMenu={false}
             />
           : null

@@ -39,18 +39,18 @@ export default class Landing extends React.Component {
           <Link to="/chapters">
             <Button
               className="cta-explore"
-              style={{border: "1px solid rgba(255,255,255,0.2)"}}
               text="Main Menu"
               color="#ffffff"
+              backgroundColor="#EB9729"
+              hoverBackgroundColor="#EB9729"
               svgIcon={IconExplore}
             />
           </Link>
           <Link to="/videos">
             <Button
               text="See Classes In Action"
+              style={{border: "1px solid rgba(255,255,255,0.2)"}}
               color="#ffffff"
-              backgroundColor="#EB9729"
-              hoverBackgroundColor="#EB9729"
               svgIcon={IconWatch}
             />
           </Link>

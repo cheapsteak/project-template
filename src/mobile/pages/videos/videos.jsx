@@ -52,6 +52,7 @@ export default class MobileVideos extends React.Component {
   render () {
     return (
       <div ref="container" className="mobile-videos">
+        <div className="top-overlay"></div>
         <div ref="contentWrapper" className="content-wrapper">
           <div className="header">
             <h1>See Classes in Action</h1>
@@ -76,7 +77,6 @@ export default class MobileVideos extends React.Component {
             })
           }
         </div>
-        <div className="top-overlay"></div>
       </div>
     )
   }
