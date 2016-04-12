@@ -8,10 +8,11 @@ import store from 'common/store.js';
 import { getCurrentChapter } from 'common/store.js';
 import chaptersModel from 'common/models/chapters-model';
 import _ from 'lodash';
-
+import ConnectTransitionWrapper from 'common/components/ConnectTransitionWrapper';
 const allChapters = chaptersModel.getAll();
 
-@connect(state => ({ video: state.narrativeVideo}) )
+@ConnectTransitionWrapper()
+@connect(state => ({ video: state.narrativeVideo}), undefined, undefined, { withRef: true } )
 class NarrativeVideoPlayerRedux extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +36,7 @@ class NarrativeVideoPlayerRedux extends React.Component {
     const video = this.props.video;
 
     return <NarrativeVideoPlayer
+      ref="wrappedInstance"
       onVideoTimeChange={this.boundActionCreators.setVideoTime}
       onVideoPlay={this.boundActionCreators.playVideo}
       onVideoPause={this.boundActionCreators.pauseVideo}

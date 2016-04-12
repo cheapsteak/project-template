@@ -51,6 +51,7 @@ export default class GridPage extends React.Component {
   }
 
   componentWillLeave(callback) {
+    animate.set(this.containerEl, {zIndex: 999999});
     this.animateOut().then(() => callback && callback());
   }
 
@@ -84,15 +85,23 @@ export default class GridPage extends React.Component {
   };
 
   animateOut = () => {
-    const duration = 1;
+    const duration = 1.2;
     const ease = Expo.easeOut;
+    const delay = 0.8;
 
-    animate.set(this.containerEl, {overflow: 'hidden'});
-    animate.set(this.refs.pageWrapper, {overflow: 'hidden', paddingRight: scrollbarSize.get()});
+    var gridElements = document.querySelectorAll('.grid-page .grid-item');
+    gridElements = Array.prototype.slice.call(gridElements);
+    gridElements.sort(() => 0.5 - Math.random()); // shuffle
+
+    animate.staggerTo(gridElements, 1, {autoAlpha: 0, scale: 0.9, ease}, 0.03);
+    animate.to(this.refs.menu.containerEl, 0.6, {y: '-130%', ease});
 
     return animate.all([
-      animate.to(this.containerEl, duration, {x: '-100%', ease: ease}),
-      animate.to(this.refs.pageWrapper, duration, {x: '100%', autoAlpha: 0, ease: ease})
+      //animate.set(this.containerEl, {overflow: 'hidden', delay}),
+      //animate.set(this.refs.pageWrapper, {overflow: 'hidden', paddingRight: scrollbarSize.get(), delay}),
+      animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
+      animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
+      animate.to(this.refs.pageWrapper, duration, {x: '100%', ease, delay})
     ])
   };
 

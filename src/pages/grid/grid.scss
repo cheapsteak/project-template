@@ -1,15 +1,15 @@
 .grid-page {
   @include absolute-100;
   background-color: #000;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  overflow: hidden;
   box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
   z-index: 200;
 
   .page-wrapper {
     @include absolute-100;
-    height: auto;
+    //height: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
 
   .grid {

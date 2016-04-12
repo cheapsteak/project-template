@@ -8,6 +8,7 @@ $orange: #f99100;
   height: 100%;
   overflow: hidden;
   background-color: white;
+  @include absolute-100;
 
   .component-title {
     //@extend .col-4;
@@ -239,6 +240,10 @@ $orange: #f99100;
     .text-container {
       margin-top: - $parallax-amplitude * 2;
     }
+  }
+
+  .page-wrapper {
+    @include  absolute-100;
   }
 }
 
