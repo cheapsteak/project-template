@@ -507,7 +507,7 @@ export default class NarrativeVideoPlayer extends React.Component {
               <RectangularButton
                 ref={ node => this.refs.cornerButton = findDOMNode(node) }
                 className="explore-button"
-                text="Chapter Menu"
+                text="Main Menu"
                 color="#ffffff"
                 backgroundColor="#f99100"
                 hoverBackgroundColor="#f99100"
