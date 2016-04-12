@@ -48,8 +48,9 @@
     color: white;
     @include scale-prop('font-size', 12);
     position: absolute;
-    top: 14px;
-    right: 10px;
+    top: 25%;
+    right: 1%;
+    transform: translateY(-50%);
   }
 
   .simple-progress-bar {
@@ -132,17 +133,24 @@
       align-items: center;
       flex: 1;
       cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.3s ease-out;
+
+      &:hover {
+        opacity: 1;
+      }
 
       &.play-button {
         svg {
-          width: 12px;
+          // width: 12px;
+          @include scale-prop('width', 12);
         }
       }
 
       svg {
         fill: white;
-        width: 20px;
-        height: 15px;
+        @include scale-prop('width', 20);
+        @include scale-prop('height', 15); 
 
         * {
           fill: white;

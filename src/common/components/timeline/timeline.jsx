@@ -151,7 +151,7 @@ export default class Timeline extends React.Component {
   render () {
     const { style, duration, items } = this.props;
     const progress = duration ? (this.state.time/duration * 100) : 0;
-    const hideTimeStamp = this.state.time/duration > 0.94;
+    const hideTimeStamp = this.state.time/duration > 0.945;
 
     return (
       <div ref="timeline" className="timeline" style={style}>
