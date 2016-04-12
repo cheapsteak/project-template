@@ -71,6 +71,14 @@ export default class MobileHeader extends React.Component {
     }
   };
 
+  handleMenuLogoClick = () => {
+    if(this.props.currentKey !== '/'){
+      this.context.router.push('/');
+    } else {
+      this.props.closeMenu();
+    }
+  };
+
   render () {
     const { className, style, color = '', backgroundColor = '' } = this.props;
     const hiddenStyle = {
@@ -106,6 +114,7 @@ export default class MobileHeader extends React.Component {
             className="logo-icon menu-content"
             style={ this.props.title === 'SA' ? {} : hiddenStyle }
             dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            onClick={this.handleMenuLogoClick}
           >
           </div>
         </div>

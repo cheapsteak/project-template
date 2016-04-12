@@ -9,7 +9,8 @@ export default class RotateScreen extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     src: React.PropTypes.string,
-    status: React.PropTypes.string
+    status: React.PropTypes.string,
+    onExitFullscreen: React.PropTypes.func
   };
 
   componentDidMount() {
@@ -29,11 +30,12 @@ export default class RotateScreen extends React.Component {
     if(this.props.status !== nextProps.status) {
       this.refs.video.currentTime = 0;
 
-      if(detect.md.is('iPhone')) {
-        setTimeout(() => {
+      if(detect.md.is('iPhone') && nextProps.status === 'play') {
+        // setTimeout(() => {
           this.refs.video.play();
+          setTimeout(()=> this.refs.video.play(),100)
           this.props.onExitFullscreen();
-        },300);
+        // },300);
       } else {
         nextProps.status === 'play' ? this.playVideo() : this.stopVideo();
       }

@@ -103,11 +103,11 @@ export default class Mobile extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    const key = pathname.split('/')[1] || 'root';
+    const key = pathname.split('/')[1] || '/';
 
     return (
       <div ref="root" className="mobile full-height">
-        <Header />
+        <Header currentKey={key} />
         <RotateScreen />
         <TransitionGroup
           component="div"
