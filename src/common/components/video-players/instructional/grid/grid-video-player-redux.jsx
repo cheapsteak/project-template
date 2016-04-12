@@ -6,7 +6,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import store from 'common/store.js';
 import _ from 'lodash';
+import ConnectTransitionWrapper from 'common/components/ConnectTransitionWrapper';
 
+@ConnectTransitionWrapper()
 @connect(state => ({ videos: state.instructionalVideos}), null, null, { withRef: true })
 class GridVideoPlayerRedux extends React.Component {
   constructor(props) {

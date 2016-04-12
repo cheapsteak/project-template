@@ -135,6 +135,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   }
 
   componentWillEnter(callback) {
+    // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       if (!detect.isMobile) {
         this.video.play();
@@ -506,7 +507,7 @@ export default class NarrativeVideoPlayer extends React.Component {
               <RectangularButton
                 ref={ node => this.refs.cornerButton = findDOMNode(node) }
                 className="explore-button"
-                text="Chapter Menu"
+                text="Main Menu"
                 color="#ffffff"
                 backgroundColor="#f99100"
                 hoverBackgroundColor="#f99100"

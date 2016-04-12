@@ -47,13 +47,12 @@ export default class Chapter extends React.Component {
   }
 
   componentWillAppear(callback) {
-    setTimeout(() => {
-      this.refs.heroVideo.play();
-      callback();
-    }, 0);
+    this.refs.heroVideo.play();
+    callback();
   }
 
   componentWillEnter(callback) {
+    // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       this.refs.heroVideo.play();
       callback();

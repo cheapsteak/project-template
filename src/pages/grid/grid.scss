@@ -6,8 +6,10 @@
   z-index: 200;
 
   .page-wrapper {
+    background-color: #000;
     @include absolute-100;
     //height: auto;
+    overflow-x: hidden;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
