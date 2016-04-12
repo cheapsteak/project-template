@@ -8,7 +8,6 @@ import ContentList from './content-list/content-list.jsx';
 import animate from 'gsap-promise';
 import * as headerActionCreators from '../../components/mobile-header/mobile-header-actions';
 import * as chapterActionCreators from './chapters-actions.js';
-import narrativeVideoData from '../../data/narrative-video.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
 
@@ -40,7 +39,7 @@ export default class MobileChapters extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { pathname } = nextProps.location;
-    let key = pathname.split('/')[3];
+    let key = pathname.split('/')[2];
     
     if(key) {
       animate.set(this.refs.container, {overflowY: 'hidden'});
@@ -53,7 +52,7 @@ export default class MobileChapters extends React.Component {
 
   setHeader = (props) => {
     const { pathname } = props.location;
-    let key = pathname.split('/')[3];
+    let key = pathname.split('/')[2];
 
     if(!key) {
       store.dispatch(headerActionCreators.setHeaderSettings({
@@ -102,7 +101,7 @@ export default class MobileChapters extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    let key = pathname.split('/')[3] || 'root';
+    let key = pathname.split('/')[2] || 'root';
 
     return (
       <div ref="container" className="mobile-chapters">
@@ -121,7 +120,6 @@ export default class MobileChapters extends React.Component {
                   onClick={this.handleItemClick.bind(null, chapter, i)}
                 >
                   <div className="chapter-text">
-                    <label>Chapter</label>
                     <h1 dangerouslySetInnerHTML={{ __html: chapter.name }}></h1>
                   </div>
                   <img className="chapter-image" src={chapter.image} />
@@ -139,10 +137,12 @@ export default class MobileChapters extends React.Component {
                     chapter.isOpen
                     ? <ContentList
                         key={chapter.name}
-                        narrativeVideo={ narrativeVideoData }
+                        name={chapter.name}
+                        scholar={chapter.scholar}
+                        narrativeVideo={ chapter.narrativeVideo }
                         instructionalVideos={chapter.instructionalVideos}
                         photoEssay={chapter.photoEssay}
-                        panorama={chapter.panorama}
+                        panoramas={chapter.panoramas}
                         articles={chapter.articles}
                         podcast={chapter.podcast}
                       />

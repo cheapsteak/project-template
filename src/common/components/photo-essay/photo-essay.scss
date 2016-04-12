@@ -34,7 +34,9 @@
 
   .photo-description {
     width: 50%;
-    @include scale('height', 260px, #{(260/1400*100)}vw, #{(260/1400*100)}vw);
+    // copy from client is longer than anticipated, but we might still change this back
+    // @include scale('height', 260px, #{(260/1400*100)}vw, #{(260/1400*100)}vw);
+    @include scale('max-height', 300px, #{(300/1400*100)}vw, #{(300/1400*100)}vw);
     background-color: rgba(255, 255, 255, 0.85);
     background-clip: padding-box;
     border-top: 40px solid rgba(255, 255, 255, 0.5);
@@ -105,6 +107,17 @@
       @include scale-prop('padding-left', 20);
       color: white;
       background-color: #2B2B2B;
+    }
+  }
+
+  .fullbrowser-wrapper & {
+    .parallax-target {
+      height: 100%;
+      transform: matrix(1, 0, 0, 1, 0, 0) !important;
+      transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+      .photo-slider {
+        height: 100%;
+      }
     }
   }
 }

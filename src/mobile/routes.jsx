@@ -9,7 +9,7 @@ import MobilePanorama from './pages/panorama/panorama.jsx';
 import MobileVideos from './pages/videos/videos.jsx';
 import MobileLearnMore from './pages/learn-more/learn-more.jsx';
 
-export default <Route path="mobile" component={MobileApp}>
+export default <Route path="/" component={MobileApp}>
   <IndexRoute component={MobileLanding}/>
   <Route path="chapters" component={MobileChapters}>
     <Route path="articles/:slug" component={MobileArticle} />

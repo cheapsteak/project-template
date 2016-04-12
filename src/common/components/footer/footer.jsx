@@ -128,6 +128,14 @@ export default class Footer extends React.Component {
             >
               Privacy Policy
             </a>
+            <a
+              href="http://jobs.successacademies.org/"
+              target="_blank"
+              onClick={this.playClickSound}
+              onMouseEnter={this.playMouseEnterSound}
+            >
+              Careers
+            </a>
           </div>
           <div
             className="share-links"

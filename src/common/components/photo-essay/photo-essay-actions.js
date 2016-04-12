@@ -5,10 +5,13 @@ export const PREV_PHOTO = 'PREV_PHOTO';
 export const NEXT_PHOTO = 'NEXT_PHOTO';
 export const SET_PHOTO_ESSAY = 'SET_PHOTO_ESSAY';
 
-export function setPhotoEssay(slug) {
+export function setPhotoEssay(slug, index) {
   return {
     type: SET_PHOTO_ESSAY,
-    data: data.get(slug)
+    data: {
+      photoEssay: data.get(slug),
+      index
+    }
   }
 }
 

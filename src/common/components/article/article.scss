@@ -26,6 +26,11 @@
     flex: 0.66;
     @include scale-prop('padding-left', 20);
 
+
+    i {
+      font-style: italic;
+    }
+
     img {
       @include scale-prop('margin-top', 20);
       @include scale-prop('margin-bottom', 20);
@@ -40,6 +45,10 @@
       color: #777;
     }
     
+    ol {
+      list-style-type: decimal; 
+      list-style-position: inside; 
+    }
 
     ul {
       display: table;

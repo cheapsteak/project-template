@@ -9,7 +9,7 @@ import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
 import MuteButtonSvg from 'svgs/video-player-mute.svg';
 import VolumeButtonSvg from 'svgs/video-player-volume.svg';
-import RightArrowSvg from 'svgs/icon-rightarrow.svg';
+import RightArrowSvg from 'svgs/bubble-cta-arrow.svg';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
@@ -437,7 +437,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             <RectangularButton
               ref={ node => this.refs.cornerButton = findDOMNode(node) }
               className="explore-button"
-              text="Chapter Menu"
+              text="Main Menu"
               color="#ffffff"
               backgroundColor="#f99100"
               hoverBackgroundColor="#f99100"
@@ -469,8 +469,8 @@ export default class NarrativeVideoPlayer extends React.Component {
           >
             <div className="circle-wrapper">
               <div className="circle-cta-text">
-                <label className="stagger-cta">Discover More:</label>
                 <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+                <label className="stagger-cta">Learn More</label>
               </div>
               <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
             </div>

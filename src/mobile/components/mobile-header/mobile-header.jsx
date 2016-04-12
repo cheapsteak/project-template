@@ -62,12 +62,20 @@ export default class MobileHeader extends React.Component {
       if(this.context.previousRoute) {
         this.context.router.goBack();
       } else {
-        this.context.router.replace('/mobile');
+        this.context.router.replace('/');
       }
 
       this.props.closeMenu();
     } else {
       this.props.toggleMenu();
+    }
+  };
+
+  handleMenuLogoClick = () => {
+    if(this.props.currentKey !== '/'){
+      this.context.router.push('/');
+    } else {
+      this.props.closeMenu();
     }
   };
 
@@ -106,6 +114,7 @@ export default class MobileHeader extends React.Component {
             className="logo-icon menu-content"
             style={ this.props.title === 'SA' ? {} : hiddenStyle }
             dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            onClick={this.handleMenuLogoClick}
           >
           </div>
         </div>

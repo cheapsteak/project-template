@@ -77,7 +77,7 @@ export default class ChapterContentList extends React.Component {
         >
           <ListItem
             label="Play"
-            name="Narrative Video"
+            name={`Meet ${this.props.scholar}`}
             isVideo={true}
             image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
@@ -96,7 +96,7 @@ export default class ChapterContentList extends React.Component {
                 <ListItem
                   key={i}
                   label="Play"
-                  name={`Instructional Video${number}`}
+                  name={`${this.props.name === 'Welcome' ? 'College Persistance' : 'In the Classroom'}${number}`}
                   isVideo={true}
                   image={ video.iconImage }
                   duration={ video.duration }
@@ -117,14 +117,18 @@ export default class ChapterContentList extends React.Component {
               : null
           }
           {
-            this.props.panorama
-              ? <ListItem
-                label="Experience"
-                name={ `${this.props.panorama.title} 360` }
-                image={ this.props.panorama.iconImage }
-                to={ this.props.panorama.route }
-              />
-              : null
+            this.props.panoramas.map((panorama, i) => {
+              return (
+                <ListItem
+                  key={i}
+                  label="Experience"
+                  name={ `${panorama.title} 360` }
+                  isVideo={true}
+                  image={ panorama.iconImage }
+                  to={ panorama.route }
+                />
+              )
+            })
           }
           {
             this.props.articles.map(article => {
@@ -141,7 +145,7 @@ export default class ChapterContentList extends React.Component {
             this.props.podcast
             ? <ListItem
                 label="Listen"
-                name="Podcast"
+                name="A Message From Eva"
                 image={ this.props.podcast.iconImage }
                 isExternalLink={true}
                 to={ this.props.podcast.src }

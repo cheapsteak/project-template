@@ -12,7 +12,7 @@ export default class MobileLearnMore extends React.Component {
     store.dispatch(headerActionCreators.setHeaderSettings({
       type: 'learn-more',
       color: '#ffffff',
-      title: 'Learn More',
+      title: 'SA',
       bottomBorder: true,
       backButton: true
     }));

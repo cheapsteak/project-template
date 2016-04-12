@@ -72,11 +72,6 @@ export default [
       },
       {
         id: '3',
-        description: 'Our scholars look forward to the annual 5th grade camping trip. Hands-on learning happens everywhere, including in the great outdoors.',
-        image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
-      },
-      {
-        id: '4',
         description: 'Sotheby’s SY 2014-2015',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
       }

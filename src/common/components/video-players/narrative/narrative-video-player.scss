@@ -27,34 +27,68 @@
         position: relative;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.15);
         color: white;
         font-weight: bold;
-        transition: all 0.3s ease-out;
-      }
 
-      &:hover {
-        .circle-wrapper {
-          background-color: rgba(255, 255, 255, 0.2);
-          transform: scale(1.1);
+        .cta-arrow {
+          position: absolute;
+          transform: translateY(-50%);
+          top: 50%;
+          right: 15%;
+          width: 5%;
+          transition: all 0.3s ease-out;
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          width: 12%;
+          // height: 1.1%;
+          @include scale-prop(height, 2.5);
+          background-color: white;
+          top: 48.3%;
+          right: 13%;
+          opacity: 0;
+          transform: translateX(-30%);
+          transition: all 0.3s ease-out;
+        }
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          background-color: rgba(255, 255, 255, 0.15);
+          transition: all 0.3s ease-out;
+        }
+
+        &:hover {
+          .cta-arrow {
+            right: 12%;
+          }
+
+          &:before {
+            opacity: 1;
+            transform: translateX(0);
+          }
+
+          &:after {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 110%;
+            height: 110%;
+            transform: translate(-5%, -5%);
+          }
         }
       }
 
       .circle-cta-text {
         position: absolute;
         left: 10%;
-        top: 40%;
+        top: 50%;
         text-align: left;
         color: white;
-      }
-
-      .cta-arrow {
-        position: absolute;
-        transform: translateY(-50%);
-        top: 50%;
-        right: 12%;
-        width: 5%;
+        transform: translateY(-50%) translateZ(0);
       }
 
       label {
