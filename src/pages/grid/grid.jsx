@@ -54,6 +54,7 @@ export default class GridPage extends React.Component {
   }
 
   componentWillLeave(callback) {
+    animate.set(this.containerEl, {zIndex: 999999});
     if (this.state.prevRoutePath.indexOf('instructional-videos') !== -1) {
       this.animateFromInstructionalVideo().then(() => callback && callback());
     } else {

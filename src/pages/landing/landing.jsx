@@ -32,6 +32,10 @@ export default class LandingPage extends React.Component {
     shouldShowFooter: false
   };
 
+  static contextTypes = {
+    previousRoute: React.PropTypes.string
+  };
+
   componentWillMount() {
     this.setState({data: {...landingData}});
   }
@@ -60,7 +64,23 @@ export default class LandingPage extends React.Component {
   }
 
   componentWillEnter(callback) {
-    this.initAnimateInPromise = this.animateIn(callback, {delay: 0});
+    animate.set(this.containerEl, {zIndex: 1});
+    this.refs.video.pause();
+    this.createTitleAnimation();
+    this.logoAnimation.goToAndStop(this.logoAnimation.totalFrames, true);
+
+    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch];
+    animate.set([this.refs.loaderContainer, this.refs.coverBg], {autoAlpha: 0});
+    animate.set([this.refs.contentContainer, staggerEls], {y: 0, autoAlpha: 1});
+    animate.set([this.refs.subtitle, this.refs.title, this.refs.video], {scale: 1});
+
+    setTimeout(() => {
+      this.setState({shouldShowFooter: true});
+      this.refs.video.play();
+      animate.set(this.containerEl, {zIndex: 999999});
+    }, 700);
+
+    callback();
   }
 
   componentWillLeave(callback) {
@@ -75,6 +95,16 @@ export default class LandingPage extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
+  createTitleAnimation = () => {
+    this.logoAnimation = bodymovin.loadAnimation({
+      container: this.refs.title, // the dom element
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      animationData: JSON.parse(require('./logo-animation-string.js')) // the animation data
+    });
+  };
+
   init = (callback) => {
     if (this.isInitialized) {
       return
@@ -84,7 +114,6 @@ export default class LandingPage extends React.Component {
     callback();
 
     this.resize();
-    this.refs.video.play();
 
     return Promise.all([
       this.initAnimateInPromise,
@@ -124,13 +153,7 @@ export default class LandingPage extends React.Component {
       }, 0.3)
       .then(() => callback && callback())
 
-    this.logoAnimation = bodymovin.loadAnimation({
-      container: this.refs.title, // the dom element
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      animationData: JSON.parse(require('./logo-animation-string.js')) // the animation data
-    });
+    this.createTitleAnimation();
 
     this.logoAnimation.setSpeed(1);
     this.logoAnimation.play();
@@ -143,7 +166,9 @@ export default class LandingPage extends React.Component {
     const ease = Expo.easeOut;
     const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch];
 
-    this.setState({shouldShowFooter: true});
+    if (!this.context.previousRoute) this.setState({shouldShowFooter: true});
+
+    this.refs.video.play();
 
     return animate.all([
       animate.to(this.refs.loaderContainer, 0.3, {autoAlpha: 0}),
