@@ -559,8 +559,8 @@ export default class NarrativeVideoPlayer extends React.Component {
                       key={'chapter-card'}
                       label="See All"
                       title="Chapters"
-                      route="/grid"
-                      image={`${ASSET_PATH}/narrative-ending-card.jpg`}
+                      href="http://jobs.successacademies.org/"
+                      image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
                     />,
                     <CareerImageCard
                       key={'careers-card'}
