@@ -73,7 +73,7 @@ export default function ConnectTransitionWrapper() {
       }
 
       render() {
-        return <ConnectedComponent props={this.props} ref="connectInstance" />;
+        return <ConnectedComponent {...this.props} ref="connectInstance" />;
       }
     }
 

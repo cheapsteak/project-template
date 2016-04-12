@@ -19,6 +19,7 @@ import watchify from 'watchify';
 import watch from 'gulp-watch';
 import inject from 'gulp-inject';
 import modRewrite from 'connect-modrewrite';
+import rename from 'gulp-rename';
 
 // eslint "no-process-env":0
 const production = process.env.NODE_ENV === 'production';
@@ -175,8 +176,16 @@ gulp.task('styles', () => {
 });
 
 gulp.task('assets', () => {
-  return gulp.src(paths.assets.source)
-    .pipe(gulp.dest(paths.assets.destination));
+  var pipeline = gulp.src(paths.assets.source);
+  if(production) {
+    pipeline = pipeline.pipe(rename(function (path) {
+      if (path.extname === '.production') {
+        path.extname = '';
+      }
+    }));
+  }
+  pipeline = pipeline.pipe(gulp.dest(paths.assets.destination));
+  return pipeline;
 });
 
 gulp.task('server', () => {

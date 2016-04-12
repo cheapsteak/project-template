@@ -18,7 +18,8 @@
     "release": "npm run build:production",
     "deploy:dev": "npm run build:dev && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool/",
     "deploy:qa": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-qa/",
-    "deploy:preview": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-preview/"
+    "deploy:preview": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-preview/",
+    "deploy:production": "npm run build:production && sh deploy-production.sh"
   },
   "license": "ISC",
   "repository": "https://github.com/Jam3/prj-success-academy",
@@ -88,6 +89,7 @@
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
     "gulp-inject": "^3.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-rev": "^4.0.0",
     "gulp-rimraf": "^0.2.0",

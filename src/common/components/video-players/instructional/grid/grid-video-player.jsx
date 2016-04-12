@@ -56,6 +56,7 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
+    this.containerEl = findDOMNode(this);
     this.animationStates = calculateAnimationStates(this.refs);
 
     let initialState = this.props.useFullControls
@@ -133,6 +134,37 @@ export default class GridVideoPlayer extends React.Component {
     }
   }
 
+  componentWillAppear(callback) {
+    if (!detect.isMobile) {
+      this.video.play();
+      this.props.onVideoPlay();
+    }
+    callback();
+  }
+
+  componentWillEnter(callback) {
+    //this.props.onVideoPause();
+    //this.video.pause();
+
+    // timeout is needed because we want to start playing video only after previous page animateOut is done
+    setTimeout(() => {
+      if (!detect.isMobile) {
+        this.video.play();
+        this.props.onVideoPlay();
+      }
+      callback();
+    }, 1500);
+  }
+
+  componentWillLeave(callback) {
+    animate.set(this.containerEl, {zIndex: 999999});
+    this.isAnimatingOut = true;
+    this.props.onVideoPause();
+    this.video.pause();
+    this.props.hideFullControls();
+    this.animateOutFade(callback);
+  }
+
   componentWillUnmount() {
     clearInterval(this.nextVideoIntervalId);
     clearTimeout(this.hideControlsTimeoutId);
@@ -141,6 +173,18 @@ export default class GridVideoPlayer extends React.Component {
     window.removeEventListener('resize', this.handleResize);
     this.stopAnimations();
   }
+
+  animateOutFade = (callback) => {
+    const duration = 1.2;
+    const ease = Expo.easeOut;
+
+    this.props.hideFullControls();
+
+    return animate.all([
+        animate.to(this.containerEl, duration, {autoAlpha: 0, ease: ease, delay: 0.5})
+      ])
+      .then(() => callback && callback())
+  };
 
   get videoEnded () {
     return this.video && this.video.currentTime === this.video.duration;
@@ -236,12 +280,14 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   handleComponentMouseMove = (e) => {
+    if (this.isAnimatingOut) return;
+
     const mouseCoords = {
       x: e.clientX,
       y: e.clientY
     };
 
-    if(this.videoEnded || !this.lastMouseCoord) {
+    if(this.isAnimatingOut || this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
       return;
     }

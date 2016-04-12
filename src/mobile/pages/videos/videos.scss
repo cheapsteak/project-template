@@ -3,7 +3,7 @@
   $item-height: 36.234vh;
   overflow-x: hidden;
   position: relative;
-  background-color: white;
+  height: 100%;
 
   .top-overlay {
     position: absolute;
@@ -17,7 +17,7 @@
 
   .content-wrapper {
     width: 100vw;
-    max-height: 100vh;
+    max-height: 100%;
     padding-top: calc(8.945vh);
     overflow-x: hidden;
     overflow-y: scroll;
@@ -123,15 +123,15 @@
     }
   }
 
-  a {
+  .video-item {
     &:nth-child(2) {
-      .video-item  .panel-label {
+      .panel-label {
         background-color: rgba(134,102,56,0.5); // Yellow
       }
     }
 
     &:nth-child(3) {
-      .video-item  .panel-label {
+      .panel-label {
         // background-color: rgba(63,69,72,0.5); // Grey
         background-color: rgba(72,115,150,0.5); // Light Blue
 
@@ -139,14 +139,14 @@
     }
 
     &:nth-child(4) {
-      .video-item  .panel-label {
+      .panel-label {
         // background-color: rgba(12,19,31,0.5); // Red
         background-color: rgba(12,18,32,0.5); // Navy
       }
     }
 
     &:nth-child(5) {
-      .video-item  .panel-label {
+      .panel-label {
         // background-color: rgba(72,115,150,0.5); // Light Blue
         background-color: rgba(63,69,72,0.5); // Grey
         
@@ -154,14 +154,14 @@
     }
 
     &:nth-child(6) {
-      .video-item  .panel-label {
+      .panel-label {
         background-color: rgba(72,115,150,0.5); // Light Blue
       }
     }
 
 
     &:nth-child(7) {
-      .video-item  .panel-label {  
+      .panel-label {  
         // background-color: rgba(12,18,32,0.5); // Red
         background-color: rgba(63,69,72,0.5); // Grey
       }
