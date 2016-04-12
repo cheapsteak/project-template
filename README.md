@@ -71,6 +71,37 @@ var filePath = settings.ASSET_PATH + 'fancy/fancy-graphic.png';
 
 ## DEPLOYMENT
 
+**Important note:** when deploying with `NODE_ENV=production`, assets that have the extension of `.production` will overwrite assets with the same name without the `.production` extension.
+
+E.g. `.htaccess.production` will become `.htaccess` when deploying for production and the original `.htaccess` will be ignored.
+
+This project uses both npm scripts and Codeship for deployment.  
+The Codeship project URLS is https://codeship.com/projects/140231  
+
+The following branches are tracked and auto deployed when pushed to:  
+
 ```bash
-$ npm run build:production
+# Auto deploys to the internal dev/preview server at successacademy.jam3.net/middleschool/
+# This is for producers and designers to keep track of progress
+master
+# Auto deploys to the internal qa server at successacademy.jam3.net/middleschool-qa/
+# This allows us to keep the internal dev/preview server up-to-date without having
+# to worry if it will interfere with QA runs, and also prevent confusions from not 
+# knowing whether a bug is not reproduceable because it's already been fixed
+deploy/qa
+# Auto deploys to the client-preview server at successacademy.jam3.net/middleschool-preview/
+# This will be a substitute for the staging server but is not an actual staging server
+# as it does not reflect production environment
+deploy/preview
+# Auto deploys to the production server at virtualtour.successacademies.org/middleschool
+deploy/production
+```
+
+We also have manual deployment tasks that we can use as a fail-safe if Codeship goes offline
+
+```bash
+npm run deploy:dev
+npm run deploy:qa
+npm run deploy:preview
+npm run deploy:production
 ```

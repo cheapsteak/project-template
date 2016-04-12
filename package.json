@@ -89,6 +89,7 @@
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
     "gulp-inject": "^3.0.0",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-rev": "^4.0.0",
     "gulp-rimraf": "^0.2.0",
