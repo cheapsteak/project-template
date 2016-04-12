@@ -6,6 +6,7 @@
   padding-top: calc(8.945vh);
   background: url('#{$ASSET_PATH}/images/mobile-learn-more-bg.jpg') no-repeat center;
   color: white;
+  height: 100%;
 
   .top-overlay {
     position: fixed;
@@ -29,7 +30,7 @@
   main {
     width: 100%;
     padding: 0 5.334vw;
-    height: calc(100vh - 8.945vh);
+    height: 100%;
     overflow-y: scroll;
   }
 

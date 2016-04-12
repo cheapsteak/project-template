@@ -153,7 +153,7 @@ export default [
   },
   {
     slug: 'computer-science-1',
-    chapterName: 'Computer Science',
+    chapterSlug: 'computer-science',
     title: 'Reprogramming Gender and Racial Stereotypes — One Line of Code at a Time',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
@@ -170,7 +170,7 @@ export default [
   },
   {
     slug: 'literacy-and-writing-1',
-    chapterName: 'Literacy And Writing',
+    chapterSlug: 'literacy-and-writing',
     title: '"Tuesday" by Sela Emery',
     image: `${config.ASSET_PATH}/images/article-welcome-1.jpg`,
     aboveFoldSelector: '#above-fold',
