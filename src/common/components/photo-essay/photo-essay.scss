@@ -27,6 +27,8 @@
     position: absolute;
     bottom: 0;
     // required for edge. children widths don't take effect if parent has display flex
+  }
+  .photo-controls {
     .unknown &, .edge &, .ie & {
       width: 15vw;
     }
