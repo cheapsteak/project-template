@@ -14,6 +14,17 @@
     @include gpu;
   }
 
+  &.is-tablet {
+    @include scale-prop(top, 100);
+  }
+
+  &.is-phone {
+    @include scale-prop(top, 40);
+    @include scale-prop(left, 20);
+    transform: scale(0.7);
+    transform-origin: 0 0;
+  }
+
   p {
     font-weight: bold;
     @include scale-prop(font-size, 9);

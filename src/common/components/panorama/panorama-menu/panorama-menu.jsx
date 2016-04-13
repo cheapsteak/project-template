@@ -57,8 +57,10 @@ export default class PanoramaMenu extends React.Component {
 
   animateIn = () => {
     if (this.props.currMode === this.props.modes.LEAVE_IDLE) {
-      if (!detect.isTablet) animate.set(this.containerEl, {x: '-50%'});
+      if (!detect.isMobile) animate.set(this.containerEl, {x: '-50%'});
+      animate.set(this.containerEl, {autoAlpha: 1});
     } else {
+      if (detect.isMobile) animate.set(this.containerEl, {autoAlpha: 0});
       animate.set(this.containerEl, {x: '0%'});
     }
 

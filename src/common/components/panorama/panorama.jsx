@@ -13,6 +13,8 @@ import PanoramaControls from './panorama-controls/panorama-controls';
 import PanoramaMenu from './panorama-menu/panorama-menu';
 import PanoramaCursor from './panorama-cursor/panorama-cursor';
 import PanoramaLoader from './panorama-loader/panorama-loader';
+import IconCursor from 'svgs/icon-360-cursor.svg';
+import IconAccelerometer from 'svgs/replay-arrow.svg';
 
 const states = {
   LOADING: 'loading',
@@ -84,6 +86,10 @@ export default class Panorama extends React.Component {
     this.context.eventBus.on('enterFullBrowser', this.handleEnterFullBrowser);
     this.context.eventBus.on('leaveFullBrowser', this.handleLeaveFullBrowser);
 
+    if (detect.isTablet) {
+      animate.to(this.refs.accelerometerToggle, 0, {y: '100%', autoAlpha: 0, ease: Expo.easeOut});
+    }
+
     //this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
     //this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
   }
@@ -111,6 +117,12 @@ export default class Panorama extends React.Component {
   handleCloseClick = () => {
     this.setState({mode: modes.LEAVE_FB});
     animate.to(this.refs.closeButton, 0.5, {y: '-100%', autoAlpha: 0, ease: Expo.easeOut});
+
+    if (detect.isTablet) {
+      animate.to(this.refs.accelerometerToggle, 0.5, {y: '100%', autoAlpha: 0, ease: Expo.easeOut});
+      this.orientationControls.disconnect();
+      this.setState({status: states.IDLE});
+    }
   };
 
   handleLeaveIdle = () => {
@@ -139,11 +151,20 @@ export default class Panorama extends React.Component {
       .then(() => {
         this.setState({mode: modes.ENTER_FB});
         animate.to(this.refs.closeButton, 0.5, {y: '0%', autoAlpha: 1, ease: Expo.easeOut});
+
+        if (detect.isTablet) {
+          animate.to(this.refs.accelerometerToggle, 0.5, {y: '0%', autoAlpha: 1, ease: Expo.easeOut});
+        }
       })
   };
 
   handleLeaveFullBrowser = () => {
     const clientRect = this.containerEl.parentNode.getBoundingClientRect();
+
+    if (detect.isMobile) {
+      animate.to(this.refs.touchOverlay, 0.5, {autoAlpha: 1, delay: 0.1});
+    }
+
     animate.to(this.containerEl, 0.4, {
         top: clientRect.top,
         left: clientRect.left,
@@ -155,7 +176,6 @@ export default class Panorama extends React.Component {
       .then(() => {
         animate.set(this.containerEl, {clearProps: 'all'});
         this.setState({mode: modes.ENTER_IDLE});
-        if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 1});
       })
   };
 
@@ -252,12 +272,10 @@ export default class Panorama extends React.Component {
       status = states.INIT;
       this.orientationControls.disconnect();
       this.panorama.rotate(this.props.initLong, this.props.initLat);
-      if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 1});
     } else {
       this.updateZoomLevel(0);
       status = states.ACCELEROMETER;
       this.orientationControls.connect();
-      if (detect.isMobile) animate.set(this.refs.touchOverlay, {autoAlpha: 0});
     }
     this.setState({status});
   };
@@ -282,7 +300,7 @@ export default class Panorama extends React.Component {
 
   handleMobileOverlayClick = () => {
     if (detect.isMobile && this.state.mode === modes.ENTER_IDLE) {
-      animate.set(this.refs.touchOverlay, {autoAlpha: 0});
+      animate.to(this.refs.touchOverlay, 0.3, {autoAlpha: 0});
       this.handleLeaveIdle();
       setTimeout(() => {
         this.handleEnterFullBrowser();
@@ -292,8 +310,10 @@ export default class Panorama extends React.Component {
 
   render() {
     const isMobile = this.state.isMobile;
+    const isTablet = detect.isTablet;
+    const isPhone = detect.isPhone;
 
-    const controls = /*isMobile ? null :*/ (
+    const controls = (
       <PanoramaControls
         zoomLevel={this.state.zoomLevel}
         modes={{...modes}}
@@ -303,27 +323,11 @@ export default class Panorama extends React.Component {
 
     const accelerometerToggle = !isMobile ? null : (
       <div
+        ref="accelerometerToggle"
         className={`accelerometer button ${this.state.status}`}
         onClick={this.handleAccelerometerClick}
       >
-        <span>AC</span>
-      </div>
-    );
-
-    const closeButton = /*isMobile ? null :*/ (
-      <div
-        ref="closeButton"
-        className={`close-btn`}
-        onClick={this.handleCloseClick}
-      >
-        <RectangularButton
-          style={{width: '100%', height: '100%'}}
-          text={`Close`}
-          color={`#fff`}
-          svgIcon={IconClose}
-          backgroundColor={`#f7910b`}
-          hoverBackgroundColor={`#de8209`}
-        />
+        <div className={`accelerometer-icon`} dangerouslySetInnerHTML={{ __html: IconAccelerometer }}></div>
       </div>
     );
 
@@ -332,19 +336,20 @@ export default class Panorama extends React.Component {
         modes={{...modes}}
         currMode={this.state.mode}
         setPanorama={this.props.setPanorama}
-        className={isMobile?'is-mobile':''}
+        className={isTablet?'is-tablet':''}
       />
     ) : null;
 
     return (
       <div
-        className={`panorama ${this.state.status} ${this.props.className} ${isMobile ? 'is-mobile' : ''}`}
+        className={`panorama ${this.state.status} ${this.props.className} ${isTablet ? 'is-tablet': (isPhone?'is-phone':'')}`}
         onMouseMove={this.handleMouseMove}
       >
         <PanoramaCompass
           rotation={this.state.rotation.x * 180 / Math.PI}
           modes={{...modes}}
           currMode={this.state.mode}
+          className={isTablet ? 'is-tablet': (isPhone?'is-phone':'')}
         />
 
         <PanoramaCursor
@@ -359,21 +364,45 @@ export default class Panorama extends React.Component {
         </TransitionGroup>
 
         {menu}
-        {controls}
+
+        <PanoramaControls
+          zoomLevel={this.state.zoomLevel}
+          modes={{...modes}}
+          currMode={this.state.mode}
+        />
+
+        <div
+          ref="closeButton"
+          className={`close-btn`}
+          onClick={this.handleCloseClick}
+        >
+          <RectangularButton
+            style={{width: '100%', height: '100%'}}
+            text={`Close`}
+            color={`#fff`}
+            svgIcon={IconClose}
+            backgroundColor={`#f7910b`}
+            hoverBackgroundColor={`#de8209`}
+          />
+        </div>
+
         {accelerometerToggle}
-        {closeButton}
 
         <div className="parallax-target-wrapper psv-inject-target-wrapper">
           <div ref="psvInjectTarget" className="parallax-target psv-inject-target">
           </div>
         </div>
 
-        {isMobile && <div
+        {isTablet && <div
           ref="touchOverlay"
           className={`touch-overlay`}
           onClick={this.handleMobileOverlayClick}
         >
-          Click to interact
+          <div className={`cta-container`}>
+            <div className={`overlay-icon`} dangerouslySetInnerHTML={{ __html: IconCursor }}>
+            </div>
+            <p>Tap to interact</p>
+          </div>
         </div>
         }
 

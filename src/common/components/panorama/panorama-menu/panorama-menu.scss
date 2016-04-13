@@ -14,9 +14,8 @@ $width: 560;
   overflow: hidden;
   @include gpu;
 
-  &.is-mobile {
-    left: auto;
-    right: 0;
+  &.is-tablet {
+    left: 0;
   }
 
   &:focus {

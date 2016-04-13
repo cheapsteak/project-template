@@ -41,17 +41,29 @@
   }
 
   .accelerometer {
+    @include flex-center;
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 70px;
-    height: 70px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #999;
     z-index: 1000;
 
+    .accelerometer-icon {
+      width: 50%;
+      height: 50%;
+
+      svg {
+        fill: #fff;
+      }
+    }
+
     &.accelerometer-on {
-      color: red;
-      font-weight: 900;
+      background-color: #fff;
+
+      .accelerometer-icon {
+
+        svg {
+          fill: #999;
+        }
+      }
     }
   }
 
@@ -71,15 +83,48 @@
 
   .touch-overlay {
     @include absolute-100;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.3);
     @include flex-center;
     color: #fff;
-    font-size: 40px;
+    @include scale-prop('font-size', 30);
+
+    .cta-container {
+      text-align: center;
+      @include scale-prop('width', 100);
+
+      .overlay-icon {
+        position: relative;
+        margin: auto;
+        @include scale-prop('width', 80);
+        @include scale-prop('height', 80);
+        @include scale-prop('margin-bottom', 20);
+      }
+    }
   }
 
-  &.is-mobile {
+  &.is-tablet, &.is-phone {
     .panorama-controls {
       display: none;
+    }
+  }
+
+  &.is-tablet {
+
+    .accelerometer {
+      @include scale-prop('left', 30);
+      @include scale-prop('bottom', 30);
+      @include scale-prop('width', 60);
+      @include scale-prop('height', 60);
+    }
+  }
+
+  &.is-phone {
+
+    .accelerometer {
+      @include scale-prop('left', 20);
+      @include scale-prop('bottom', 20);
+      @include scale-prop('width', 50);
+      @include scale-prop('height', 50);
     }
   }
 }

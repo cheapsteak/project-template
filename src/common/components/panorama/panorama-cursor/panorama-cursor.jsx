@@ -1,7 +1,7 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
-import IconClose from 'svgs/icon-360-cursor.svg';
+import IconCursor from 'svgs/icon-360-cursor.svg';
 
 export default class PanoramaCursor extends React.Component {
 
@@ -43,7 +43,7 @@ export default class PanoramaCursor extends React.Component {
         className={`panorama-cursor`}
         style={{transform: translateStyles}}
       >
-        <div dangerouslySetInnerHTML={{ __html: IconClose }}></div>
+        <div dangerouslySetInnerHTML={{ __html: IconCursor }}></div>
       </div>
     );
   }
