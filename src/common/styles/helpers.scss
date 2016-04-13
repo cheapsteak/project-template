@@ -43,6 +43,18 @@
   }
 }
 
+@mixin scale-calc-add($prop, $baseVal, $size) {
+  @media (max-width: $break-large) {
+    #{$prop}: calc(#{$baseVal} + #{$size} * 1px);
+  }
+  @media (min-width: $break-large + 1) {
+    #{$prop}: calc(#{$baseVal} + #{$size*(100/$large-size)} * 1vw);
+  }
+  @media (min-width: $break-xlarge + 1) {
+    #{$prop}: calc(#{$baseVal} + #{$size*($xlarge-size/$large-size)} * 1px);
+  }
+}
+
 .margin-auto-vertical {
   margin-top: auto;
   margin-bottom: auto;

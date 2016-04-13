@@ -37,7 +37,7 @@ export default class Layout extends React.Component {
 
     this.tiles = this.getTiles();
     this.fillers = document.querySelectorAll('.grid-page .filler');
-    animate.set(this.fillers, {autoAlpha: 0, scale: 1.15});
+    animate.set(this.fillers, {autoAlpha: 0, scale: 1.05});
 
     this.animateIn();
   }
@@ -72,8 +72,8 @@ export default class Layout extends React.Component {
   animateIn = () => {
     setTimeout(() => {
       this.tiles.forEach((tile, index) => {
-        const delay = (0.1 * index) + (this.props.isShortDelay ? 0.3 : 0.7);
-        tile.animateIn(delay)
+        const delay = (0.15 * index) + (this.props.isShortDelay ? 0.3 : 0.7);
+        tile.animateIn(delay, index)
       });
       this.animateFillers(this.props.isShortDelay ? 0.5 : 0.9);
     });
@@ -90,22 +90,30 @@ export default class Layout extends React.Component {
       animate.staggerTo(this.fillers, 1.2, {
         scale: this.props.isFiltered ? 0.9 : 1,
         delay: delay,
-        ease: Expo.easeOut
+        ease: ViniEaseOut
       }, 0.1)
     ])
+  };
+  randomizeArray = (arr) => {
+    arr = Array.prototype.slice.call(arr);
+    arr.sort(() => 0.5 - Math.random()); // shuffle
   };
 
   applyFilter = () => {
     if (!this.fillers.animatedIn) {
       return;
     }
-    animate.to(this.fillers, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: Expo.easeOut});
+    const fillers = [...this.fillers];
+    this.randomizeArray(fillers);
+    animate.staggerTo(fillers, 0.4, {scale: 0.9, autoAlpha: 0.1, ease: ViniEaseOut}, 0.05);
   };
 
   removeFilter = () => {
     if (!this.fillers.animatedIn) {
       return;
     }
-    animate.to(this.fillers, 0.3, {scale: 1, autoAlpha: 1, ease: Expo.easeOut});
+    const fillers = [...this.fillers];
+    this.randomizeArray(fillers);
+    animate.staggerTo(fillers, 0.4, {scale: 1, autoAlpha: 1, ease: ViniEaseOut}, 0.05);
   };
 }

@@ -102,12 +102,12 @@ export default class GridTile extends React.Component {
       ctaItems = ctaItems.concat([this.refs.ctaIcon1, this.refs.ctaText1]);
     }
 
-    animate.to(this.textContainer, 0.1, {autoAlpha: 0, overwrite: 'all'})
-    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.1, ease: Expo.easeOut, overwrite: 'all'})
+    animate.to(this.textContainer, 0.3, {autoAlpha: 0, y: -20, overwrite: 'all', ease: ViniEaseOut})
+    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.1, ease: ViniEaseOut, overwrite: 'all'})
 
     if (!this.state.isMobile) {
       audio.play('button-rollover');
-      animate.staggerTo(ctaItems, 0.5, {autoAlpha: 1, y: 0, ease: Expo.easeOut, delay: 0.3, overwrite: 'all'}, 0.1)
+      animate.staggerTo(ctaItems, 0.3, {autoAlpha: 1, y: 0, ease: ViniEaseOut, delay: 0.3, overwrite: 'all'}, 0.1)
     }
   };
 
@@ -118,7 +118,7 @@ export default class GridTile extends React.Component {
 
     const pos = this.containerEl.offsetWidth * (this.state.size === sizes.LANDSCAPE ? 0.3 : 0.1);
     var ctaItems = [this.refs.ctaText0, this.refs.ctaIcon0];
-    var delay = 0.2;
+    var delay = 0.1;
 
     if (this.state.data.routes.instructionalVideos.length > 1 && this.props.isFiltered) {
       ctaItems = ctaItems.concat([this.refs.ctaText1, this.refs.ctaIcon1]);
@@ -126,25 +126,32 @@ export default class GridTile extends React.Component {
     }
 
     return animate.all([
-      animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 40, ease: Expo.easeInOut, overwrite: 'all'}, 0.1),
+      animate.staggerTo(ctaItems, 0.4, {autoAlpha: 0, y: 20, ease: ViniEaseOut, overwrite: 'all'}, 0.1),
       animate.to(this.imageContainer, 0.5, {
-        autoAlpha: 1,
         left: pos,
-        ease: Expo.easeInOut,
+        ease: ViniEaseOut,
         delay: delay,
         overwrite: 'all'
       }),
-      animate.to(this.textContainer, 0.1, {autoAlpha: 1, delay: 0.4, overwrite: 'all'})
+      animate.to(this.imageContainer, 0.3, {
+        autoAlpha: 1,
+        ease: Linear.easeNone,
+        delay: delay + 0.1,
+        //overwrite: 'all'
+      }),
+      animate.to(this.textContainer, 0.5, {autoAlpha: 1, y: 0, delay: 0.4, overwrite: 'all', ease: ViniEaseOut})
     ]);
   };
 
-  animateIn = (delay) => {
+  animateIn = (delay, index) => {
     const width = this.containerEl.offsetWidth;
     const height = this.containerEl.offsetHeight;
-    const scaleX = (width + 30) / width;
-    const scaleY = (height + 30) / height;
+    const scaleX = (width + 35) / width;
+    const scaleY = (height + 35) / height;
 
-    const ease = Expo.easeOut;
+    this.index = index;
+
+    const ease = ViniEaseOut;
 
     animate.set(this.containerEl, {autoAlpha: 0, scaleX: scaleX, scaleY: scaleY});
     animate.set([this.textContainer, this.refs.ctaContainer], {scale: 1.3});
@@ -152,31 +159,34 @@ export default class GridTile extends React.Component {
     animate.set(this.imageContainer, {scale: 1.6});
 
     return animate.all([
-      animate.to(this.containerEl, 1, {autoAlpha: 1, scale: 1, delay: delay, ease: ease}),
-      animate.to([this.textContainer, this.refs.ctaContainer], 1.5, {scale: 1, delay: delay, ease: ease}),
-      animate.to(this.imageContainer, 2, {scale: 1, delay: delay, ease: ease})
+      animate.to(this.containerEl, 0.7, {autoAlpha: 1, delay: delay, ease: Linear.easeNone}),
+      animate.to(this.containerEl, 0.5, {scale: 1, delay: delay, ease: ease}),
+      animate.to([this.textContainer, this.refs.ctaContainer], 0.5, {scale: 1, delay: delay, ease: ease}),
+      animate.to(this.imageContainer, 0.7, {scale: 1, delay: delay, ease: ease})
     ])
   };
 
   applyFilter = () => {
     this.filterApplied = true;
 
-    return animate.to(this.refs.contentWrapper, 0.3, {
+    return animate.to(this.refs.contentWrapper, 0.4, {
       scale: 0.9,
       autoAlpha: 0.1,
       pointerEvents: 'none',
-      ease: Expo.easeOut
+      ease: ViniEaseOut,
+      delay: this.index * 0.05
     });
   };
 
   removeFilter = () => {
     if (this.filterApplied) {
       this.filterApplied = false;
-      return animate.to(this.refs.contentWrapper, 0.3, {
+      return animate.to(this.refs.contentWrapper, 0.4, {
         scale: 1,
         autoAlpha: 1,
         pointerEvents: 'auto',
-        ease: Expo.easeOut
+        ease: ViniEaseOut,
+        delay: this.index * 0.05
       });
     }
   };

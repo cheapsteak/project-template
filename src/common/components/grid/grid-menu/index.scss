@@ -21,6 +21,7 @@
   .tab {
     position: relative;
     @include flex-center;
+    justify-content: flex-start;
     float: left;
     width: calc(100% / 3);
     height: 100%;
@@ -28,19 +29,26 @@
     font-weight: bold;
     @include scale-prop(font-size, 17);
     cursor: pointer;
+    @include scale-prop(padding, 30);
 
     &:focus {
       outline: none;
     }
 
+    .color {
+      @include absolute-100;
+      height: 100%;
+    }
+
     .after {
-      content: "";
       display: inline-block;
       position: absolute;
       left: 0;
-      top: 100%;
+      top: 0;
+      z-index: -1;
       width: 100%;
-      @include scale-prop(height, 20);
+      //@include scale-prop(height, 20);
+      @include scale-calc-add(height, 100%, 20);
       background-color: inherit;
       opacity: 0.55;
     }
@@ -90,9 +98,14 @@
     }
 
     @mixin idleCloseState {
-      background-color: #2b2b2b;
       p {
         color: #8f8f8f;
+      }
+      .color {
+        background-color: #2b2b2b;;
+      }
+      .after {
+        background-color: #2b2b2b;;
       }
     }
     @mixin hoverCloseState {
@@ -116,7 +129,16 @@
     }
 
     @mixin idleFilterState {
-      background-color: #8f8f8f;
+      //background-color: #8f8f8f;
+
+      .color {
+        background-color: #8f8f8f;
+      }
+      .after {
+        background-color: #8f8f8f;
+        opacity: 0.55;
+      }
+
       p {
         opacity: 0.8;
       }
@@ -146,7 +168,7 @@
       @include idleFilterState;
 
       &:hover {
-        @include hoverFilterState;
+        @include hoverCloseState;
       }
       &.active {
         @include hoverFilterState;
@@ -163,10 +185,10 @@
         @include hoverCloseState;
       }
       &:active {
-        @include activeCloseState;
+        //@include activeCloseState;
       }
       &.active {
-        @include activeCloseState;
+        //@include activeCloseState;
       }
     }
   }
