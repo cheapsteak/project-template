@@ -2,6 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import PillButton from 'common/components/pill-button/pill-button';
 import animate from 'gsap-promise';
+import detect from '../../utils/detect/index.js';
 
 export default class Article extends React.Component {
 
@@ -57,7 +58,9 @@ export default class Article extends React.Component {
     const clientRect = this.refs.article.getBoundingClientRect();
     const container = this.props.getTarget();
 
-    if (this.collapsed) {
+    if (detect.isTablet) {
+      this.collapsed ? this.expand() : this.collapse();
+    } else if (this.collapsed) {
       if (this.getDistanceFromTop() < this.getAvailableScrollDistance()) {
         await animate.to(container, 0.3, {scrollTop: this.getDistanceFromTop()});
         await this.expand();
