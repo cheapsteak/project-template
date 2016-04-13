@@ -1,4 +1,6 @@
 .narrative-video-player {
+  $ease: cubic-bezier(0.14, 0.25, 0.4, 0.99);
+
   @include absolute-100;
   top:0;
   left:0;
@@ -18,10 +20,10 @@
       position: absolute;
       right: 18%;
       opacity: 0;
-      top: calc(50% - 102px);
+      top: calc(55% - 20px);
       transform: translate(50%, -50%);
-      @include scale-prop('width', 195);
-      @include scale-prop('height', 195);
+      @include scale-prop('width', 225);
+      @include scale-prop('height', 225);
       cursor: pointer;
       z-index: 100;
 
@@ -36,23 +38,23 @@
           position: absolute;
           transform: translateY(-50%);
           top: 50%;
-          right: 15%;
+          right: 10%;
           width: 5%;
-          transition: all 0.3s ease-out;
         }
 
         &:before {
           content: '';
           position: absolute;
+          display: none;
           width: 12%;
-          // height: 1.1%;
-          @include scale-prop(height, 2.5);
+          @include scale-prop(height, 2);
           background-color: white;
-          top: 48.3%;
+          @include scale-prop(top, 110);
           right: 13%;
-          opacity: 0;
-          transform: translateX(-30%);
-          transition: all 0.3s ease-out;
+          opacity: 1;
+          transform: scaleX(0);
+          transform-origin: 0 0;
+          transition: all 0.3s $ease;
         }
 
         &:after {
@@ -60,19 +62,22 @@
           position: absolute;
           width: 100%;
           height: 100%;
-          border-radius: 50%;
+          border-radius: 100%;
           background-color: rgba(255, 255, 255, 0.15);
-          transition: all 0.3s ease-out;
+          transition: all 0.3s $ease;
         }
 
         &:hover {
           .cta-arrow {
-            right: 12%;
+            right: 6%;
+            transition: all 0.3s $ease;
           }
 
           &:before {
             opacity: 1;
-            transform: translateX(0);
+            transform: scaleX(1.2);
+            transform-origin: 100% 0;
+            transition: all 0.3s $ease;
           }
 
           &:after {
@@ -91,16 +96,17 @@
         text-align: left;
         color: white;
         transform: translateY(-50%) translateZ(0);
-      }
 
-      label {
-        display: block;
-        color: rgba(255,255,255,0.5);
-        @include scale-prop('font-size', 14);
-      }
+        label {
+          display: block;
+          color: rgba(255,255,255,0.5);
+          @include scale-prop('margin-top', 4);
+          @include scale-prop('font-size', 14);
+        }
 
-      h3 {
-        @include scale-prop('font-size', 22);
+        h3 {
+          @include scale-prop('font-size', 22);
+        }
       }
     }
   }

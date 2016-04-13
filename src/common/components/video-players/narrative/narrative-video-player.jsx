@@ -62,10 +62,14 @@ export default class NarrativeVideoPlayer extends React.Component {
     animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
     animate.set(this.refs.controls, this.animationStates[initialState].controls);
+    animate.set(this.refs.controlsUI, this.animationStates[initialState].controlsUI);
 
     animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
     animate.set(this.refs.replayLabel, this.animationStates.out.replayLabel);
+
+
+    animate.set(this.refs.ctaArrow, { x: '-200%', opacity: 0 });
 
     //if(!this.props.isPlaying) {
     //if(!this.props.useFullControls) {
@@ -228,31 +232,59 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   animateInControls = () => {
+    const staggerText = this.refs.root.querySelectorAll('.stagger-cta');
     const buttons = this.refs.root.querySelectorAll('.button');
     const dots = this.refs.root.querySelectorAll('.dot');
+    const ctaArrow = this.refs.root.querySelector('.cta-arrow');
 
     this.wrapperVisible = true;
-
     this.stopAnimations();
-    animate.staggerFrom(dots, 0.1, { delay: 0.5, opacity: 0 }, 0.1);
+
+
+    // Need Fix for animate out while this is not complete
+    animate.set(ctaArrow, { x: '-70%', opacity: 0 });
+
+    
+
+
+
+    animate.staggerFromTo(buttons, 0.3, { y: '150%', ease: ViniEaseOut }, { delay: 0.3, y: '0%', ease: ViniEaseOut }, 0.1);
+
+    animate.staggerFromTo(staggerText, 1, { opacity: 0 }, { delay: 0.8, opacity: 1, ease: ViniEaseOut }, 0.4)
+
+    const dotPromises = _.map(dots, dot => animate.set(dot, {opacity: 0, ease: ViniEaseOut }), 0.1);
+
+    Promise.all(dotPromises).then(() => animate.staggerFromTo(dots, 1, { opacity: 0 }, { delay: 0.5, opacity: 1}, 0.1))
+
+    //
+
+
 
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
-      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay),
-      animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton),
-      animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA),
-      animate.to(this.refs.controls, 0.3, this.animationStates.idle.controls),
+      animate.to(this.refs.videoWrapper, 0.6, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay)
+        .then(()=>animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton)),
+      animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA)
+        .then( () => animate.to(ctaArrow, 0.3, { delay: 0.7, x: '0%', opacity: 1 }) ),
+      animate.to(this.refs.controlsUI, 0.6, this.animationStates.idle.controlsUI),
+      animate.to(this.refs.controls, 0.6, this.animationStates.idle.controls),
       _.map(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})})
     ]);
   }
 
   animateOutControls = () => {
+
+    const ctaArrow = this.refs.root.querySelector('.cta-arrow');
+    animate.set(ctaArrow, { x: '-200%', opacity: 0 });
+
     this.stopAnimations();
     this.wrapperVisible = false;
+    const dots = this.refs.root.querySelectorAll('.dot');
+    _.forEach(dots, dot => animate.set(dot, {opacity: 0})  );
 
     const conditionalAnimations = !this.videoEnded && [
-      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.videoWrapper, 0.6, this.animationStates.out.videoWrapper),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
@@ -261,16 +293,17 @@ export default class NarrativeVideoPlayer extends React.Component {
       ...conditionalAnimations,
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
-      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
+      animate.to(this.refs.controlsUI, 0.6, this.animationStates.out.controlsUI),
+      animate.to(this.refs.controls, 0.6, this.animationStates.out.controls),
+      animate.to(this.refs.replayButton, 0.6, this.animationStates.out.replayButton),
+      animate.to(this.refs.replayLabel, 0.6, this.animationStates.out.replayLabel)
     ]);
   };
 
   animateCircleCTAText = () => {
     const el = findDOMNode(this);
     const ctaEls = el.querySelectorAll('.stagger-cta');
-    return animate.staggerFromTo(ctaEls, 0.3, { opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2);
+    return animate.staggerFromTo(ctaEls, 1, { opacity: 0, y: 40 }, { opacity: 1, y: 0, ease: ViniEaseOut }, 0.2);
   };
 
   animateInEndOverlay = () => {
@@ -281,8 +314,8 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.refs.replayButton, 0.3, this.animationStates.idle.replayButton),
-      animate.to(this.refs.replayLabel, 0.3, this.animationStates.idle.replayLabel),
+      animate.to(this.refs.replayButton, 0.6, this.animationStates.idle.replayButton),
+      animate.to(this.refs.replayLabel, 0.6, this.animationStates.idle.replayLabel),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
       animate.to(this.refs.overlay, 0.3, this.animationStates.end.overlay),
@@ -302,10 +335,10 @@ export default class NarrativeVideoPlayer extends React.Component {
       animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
-      animate.to(this.refs.replayButton, 0.3, this.animationStates.out.replayButton),
+      animate.to(this.refs.replayButton, 0.6, this.animationStates.out.replayButton),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.refs.replayLabel, 0.3, this.animationStates.out.replayLabel)
+      animate.to(this.refs.replayLabel, 0.6, this.animationStates.out.replayLabel)
     ]);
   };
 
@@ -433,7 +466,7 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
       this.hideControlsTimeoutId = undefined;
-    }, detect.isTablet? 3000: 1500);
+    }, detect.isTablet? 3000: 4000);
   };
 
   handleReplayClick = (e) => {
@@ -545,10 +578,10 @@ export default class NarrativeVideoPlayer extends React.Component {
             >
               <div className="circle-wrapper">
                 <div className="circle-cta-text">
-                  <label className="stagger-cta">Discover More:</label>
                   <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
+                  <label className="stagger-cta">Learn More</label>
                 </div>
-                <div className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
+                <div ref="ctaArrow" className="cta-arrow" dangerouslySetInnerHTML={{ __html: RightArrowSvg }}></div>
               </div>
             </Link>
             <div
@@ -618,46 +651,48 @@ export default class NarrativeVideoPlayer extends React.Component {
             onTouchEnd={ this.setHideControlsTimeout }
           >
             <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
-            <div className="control-group">
-              <div className="button-wrapper">
-                <div
-                  className="button play-button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-                  onClick={this.handleVideoPlayPause}
-                >
+            <div ref="controlsUI" className="controls-ui">
+              <div className="control-group">
+                <div className="button-wrapper">
+                  <div
+                    className="button play-button"
+                    dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                    onClick={this.handleVideoPlayPause}
+                  >
+                  </div>
+                </div>
+                <div className="button-wrapper">
+                  <div
+                    className="button"
+                    dangerouslySetInnerHTML={{__html: BackButtonSvg}}
+                    onClick={this.handlePrevClick}
+                  >
+                  </div>
+                </div>
+                <div className="button-wrapper">
+                  <div
+                    className="button"
+                    dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
+                    onClick={this.handleNextClick}
+                  >
+                  </div>
+                </div>
+                <div className="button-wrapper">
+                  <div
+                    className="button"
+                    dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                    onClick={this.handleVolumeClick}
+                  >
+                  </div>
                 </div>
               </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-                  onClick={this.handlePrevClick}
-                >
-                </div>
-              </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-                  onClick={this.handleNextClick}
-                >
-                </div>
-              </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                  onClick={this.handleVolumeClick}
-                >
-                </div>
-              </div>
+              <Timeline
+                currentTime={this.props.currentTime}
+                duration={ this.video && this.video.duration || 0 }
+                onTimeChange={this.changeVideoTime}
+                items={this.props.chapters}
+              />
             </div>
-            <Timeline
-              currentTime={this.props.currentTime}
-              duration={ this.video && this.video.duration || 0 }
-              onTimeChange={this.changeVideoTime}
-              items={this.props.chapters}
-            />
           </div>
         </div>
       </div>

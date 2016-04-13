@@ -1,7 +1,6 @@
 .video-player {
   $control-ui-height: 80px;
   $component-bg-color: #2B2A2A;
-
   background-color: $component-bg-color;
 
   video {
@@ -40,7 +39,7 @@
     left: -1px;
     width: 101%;
     height: 101%;
-    background-color: rgba(0,0,0,0.9);
+    background-color: rgba(43,43,43,0.8);
     z-index: 10;
   }
 
@@ -48,9 +47,10 @@
     color: white;
     @include scale-prop('font-size', 12);
     position: absolute;
-    top: 25%;
+    top: 26.5%;
     right: 1%;
     transform: translateY(-50%);
+    font-weight: 600;
   }
 
   .simple-progress-bar {
@@ -88,7 +88,7 @@
   }
 
   .control-group, .timeline {
-    height: 50%;
+    height: 100%;
   }
 
   .control-group {
@@ -133,7 +133,7 @@
       align-items: center;
       flex: 1;
       cursor: pointer;
-      opacity: 0.6;
+      opacity: 0.8;
       transition: opacity 0.3s ease-out;
 
       &:hover {
@@ -192,7 +192,9 @@
     .replay-group {
       @include scale-prop('width', 90);
       @include scale-prop('height', 115);
-      @include scale-prop('bottom', -65);
+
+      @include scale('bottom', -13vh, -11vh, 10vw);
+
       position: absolute;
       left: 50%;
       transform: translate(-50%, 50%);
@@ -215,25 +217,27 @@
       &:hover {
         svg {
           transform: rotate(180deg) translateZ(0);
-          transition: transform 0.3s ease;
+          transition: transform 0.5s cubic-bezier(0.14, 0.25, 0.4, 0.99);
         }
 
         & + .replay-label {
           color: rgba(255,255,255,0.6);
+          transition: color 0.5s cubic-bezier(0.14, 0.25, 0.4, 0.99);
         }
       }
 
       svg {
         width: 50%;
-        transition: transform 0.3s ease;
+        transition: transform 0.5s cubic-bezier(0.14, 0.25, 0.4, 0.99);
       }
     }
 
     .replay-label {
-      position:block;
+      position: block;
       font-weight: bold;
       @include scale-prop('font-size', 28);
       color: rgba(255,255,255,0.4);
+      transition: color 0.5s cubic-bezier(0.14, 0.25, 0.4, 0.99);
     }
 
     .replay-group-chapter {
@@ -243,8 +247,12 @@
       width: $group-width;
       min-width: 220px;
       height: $group-height;
-      top: calc(50% - #{$group-height * 0.5});
-      left: calc(50% - #{$group-width * 0.5});
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      transform: none !important;
 
       .replay-button {
         position: relative;
@@ -275,7 +283,15 @@
       .replay-label {
         @include scale-prop('font-size', 28);
         color: #F2F2F2;
+        font-weight: 600;
       }
     }
+  }
+
+  .controls-ui {
+    position: relative;
+    display: flex;
+    width: 100%;
+    @include scale-prop('height', 40);
   }
 }

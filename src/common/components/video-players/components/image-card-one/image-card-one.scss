@@ -1,15 +1,13 @@
 .image-card-one {
-  // position: absolute;
   @include scale-prop('width', 350);
   @include scale-prop('height', 440);
-  // width: 350px;
-  // height: 440px;
   overflow: hidden;
   background-color: #444444;
   cursor: pointer;
   top: calc(50% - 280px);
   color: rgba(255,255,255, 0.8);
   overflow: hidden;
+  @include gpu;
 
   &:hover {
     .bottom-overlay-front {
@@ -32,6 +30,7 @@
     position: relative;
     opacity: 0.6;
     width: 100%;
+    @include gpu;
   }
 
   .bottom-overlay-front, .bottom-overlay-back {
@@ -40,6 +39,55 @@
     bottom: 0;
     left: 0;
     background-color: rgba(100,100,100, 0.8);
+  }
+
+  .outer-content-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    @include scale-prop('height', 140);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .learn-more-button, label {
+      margin-bottom: 6px;
+    }
+
+    label {
+      color: rgba(143,143,143,0.8);
+      font-size: 16px;
+      @include scale-prop('font-size', 16);
+      font-weight: bold;
+    }
+
+    h3 {
+      color: rgba(255,255,255,0.8);
+      font-weight: 600;
+      @include scale-prop('font-size', 30);
+      margin-bottom: 18px;
+    }
+
+    .learn-more-button {
+      font-size: 16px;
+      color: #8F8F8F;
+      width: 28px;
+      height: 28px;
+      line-height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      font-weight: bold;
+      background-color: #2B2B2B;
+
+      svg {
+        width: 40%;
+        fill: #8F8F8F;
+      }
+    }
+
   }
 
   .bottom-overlay-front {
