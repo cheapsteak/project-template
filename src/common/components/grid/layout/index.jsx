@@ -105,7 +105,7 @@ export default class Layout extends React.Component {
     }
     const fillers = [...this.fillers];
     this.randomizeArray(fillers);
-    animate.staggerTo(fillers, 0.3, {scale: 0.9, autoAlpha: 0.1, ease: ViniEaseOut}, 0.05);
+    animate.staggerTo(fillers, 0.4, {scale: 0.9, autoAlpha: 0.1, ease: ViniEaseOut}, 0.05);
   };
 
   removeFilter = () => {
@@ -114,6 +114,6 @@ export default class Layout extends React.Component {
     }
     const fillers = [...this.fillers];
     this.randomizeArray(fillers);
-    animate.staggerTo(fillers, 0.3, {scale: 1, autoAlpha: 1, ease: ViniEaseOut}, 0.05);
+    animate.staggerTo(fillers, 0.4, {scale: 1, autoAlpha: 1, ease: ViniEaseOut}, 0.05);
   };
 }

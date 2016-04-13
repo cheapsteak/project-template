@@ -163,7 +163,6 @@ export default class GridPage extends React.Component {
 
     return animate.all([
       animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
-      //animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
       animate.to(this.refs.pageWrapper, duration, {x: '100%', ease, delay})
     ])
   };
@@ -172,7 +171,6 @@ export default class GridPage extends React.Component {
     const duration = 1.2;
     const ease = Expo.easeOut;
     const delay = 0.4;
-    debugger
 
     this.animateOutContent();
 

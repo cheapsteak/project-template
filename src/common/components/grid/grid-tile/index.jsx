@@ -169,24 +169,24 @@ export default class GridTile extends React.Component {
   applyFilter = () => {
     this.filterApplied = true;
 
-    return animate.to(this.refs.contentWrapper, 0.3, {
+    return animate.to(this.refs.contentWrapper, 0.4, {
       scale: 0.9,
       autoAlpha: 0.1,
       pointerEvents: 'none',
       ease: ViniEaseOut,
-      delay: this.index * 0.03
+      delay: this.index * 0.05
     });
   };
 
   removeFilter = () => {
     if (this.filterApplied) {
       this.filterApplied = false;
-      return animate.to(this.refs.contentWrapper, 0.3, {
+      return animate.to(this.refs.contentWrapper, 0.4, {
         scale: 1,
         autoAlpha: 1,
         pointerEvents: 'auto',
         ease: ViniEaseOut,
-        delay: this.index * 0.03
+        delay: this.index * 0.05
       });
     }
   };
