@@ -1,6 +1,7 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
+import detect from 'common/utils/detect';
 
 export default class PanoramaCompass extends React.Component {
 
@@ -40,7 +41,9 @@ export default class PanoramaCompass extends React.Component {
   }
 
   animateIn = () => {
-    animate.to(this.containerEl, 0.5, {y: 0, autoAlpha: 1, ease: Expo.easeOut});
+    if (this.props.currMode === this.props.modes.LEAVE_IDLE || !detect.isTablet) {
+      animate.to(this.containerEl, 0.5, {y: 0, autoAlpha: 1, ease: Expo.easeOut});
+    }
   };
 
   animateOut = () => {
