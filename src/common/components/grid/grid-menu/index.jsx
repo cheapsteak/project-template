@@ -40,7 +40,7 @@ export default class GridMenu extends React.Component {
     this.containerEl = findDOMNode(this);
     this.tabs = [this.refs.returnTab, this.refs.filterTab, this.refs.closeTab];
 
-    animate.set(this.containerEl, {y: '-125%'});
+    animate.set(this.containerEl, {y: '-170%'});
 
     setTimeout(() => this.resize());
     window.addEventListener('resize', this.handleWindowResize);
@@ -63,17 +63,33 @@ export default class GridMenu extends React.Component {
     animate.set(this.containerEl, {width: window.innerWidth - scrollbarWidth});
   };
 
-  animateIn = (duration = 0.5, delay = 0, ease = Expo.easeOut) => {
+  animateIn = (duration = 0.5, delay = 0, ease = ViniEaseOut) => {
     const ctaItems = [this.refs.returnIcon, this.refs.returnText, this.refs.filterIcon, this.refs.filterText, this.refs.closeIcon, this.refs.closeText];
+    const colorTabs = [this.refs.returnTabColor, this.refs.filterTabColor, this.refs.closeTabColor];
     const afterTabs = [this.refs.returnTabAfter, this.refs.filterTabAfter, this.refs.closeTabAfter];
 
     animate.set(ctaItems, {y: 20, autoAlpha: 0, transition: 'none'});
-    animate.set(afterTabs, {y: '-100%'});
+    animate.set(colorTabs, {y: '-170%'});
 
     return animate.all([
-      animate.to(this.containerEl, duration, {y: '0%', ease: ease, delay: delay}),
-      animate.to(afterTabs, 0.6, {y: '0%', ease: ease, delay: delay + 0.1}),
-      animate.staggerTo(ctaItems, 0.8, {y: 0, autoAlpha: 0.8, delay: delay + 0.3, ease: ease}, 0.1)
+      animate.to(this.containerEl, duration, {y: '0%', ease, delay: delay}),
+      animate.to(colorTabs, duration + 0.2, {y: '0%', ease, delay: delay - 0.1}),
+      animate.staggerTo(ctaItems, 0.5, {y: 0, autoAlpha: 0.8, delay: delay + 0.4, ease}, 0.1)
+        .then(() => animate.set(ctaItems, {clearProps: 'all'}))
+    ])
+  };
+
+  animateOut = (duration = 0.5, delay = 0, ease = ViniEaseOut) => {
+    const ctaItems = [this.refs.returnIcon, this.refs.returnText, this.refs.filterIcon, this.refs.filterText, this.refs.closeIcon, this.refs.closeText];
+    const colorTabs = [this.refs.returnTabColor, this.refs.filterTabColor, this.refs.closeTabColor];
+    const afterTabs = [this.refs.returnTabAfter, this.refs.filterTabAfter, this.refs.closeTabAfter];
+
+    animate.set(ctaItems, {transition: 'none'});
+
+    return animate.all([
+      animate.staggerTo(ctaItems, 0.3, {autoAlpha: 0, y: -20, delay, ease}, 0.1),
+      animate.to(colorTabs, duration * 2, {y: '-170%', ease, delay: delay + 0.5}),
+      animate.to(this.containerEl, duration * 1.5, {y: '-170%', ease, delay: delay + 0.5})
         .then(() => animate.set(ctaItems, {clearProps: 'all'}))
     ])
   };
@@ -139,13 +155,14 @@ export default class GridMenu extends React.Component {
           onMouseEnter={this.playRolloverSfx}
           to={`narrative-video`}
         >
+          <div ref="returnTabColor" className={`color`}></div>
+          <div ref="returnTabAfter" className={`after`}></div>
           <div
             ref="returnIcon"
             className={`icon return ${isReturn ? 'back' : 'play'}`}
             dangerouslySetInnerHTML={{ __html: isReturn ? IconBack : IconPlay }}
           ></div>
           <p ref="returnText">{isReturn ? 'Return to Documentary' : 'Watch Documentary'}</p>
-          <div ref="returnTabAfter" className={`after`}></div>
         </Link>
 
         <div
@@ -155,13 +172,14 @@ export default class GridMenu extends React.Component {
           onMouseEnter={this.playRolloverSfx}
           onMouseLeave={this.handleFilterMouseLeave}
         >
+          <div ref="filterTabColor" className={`color`}></div>
+          <div ref="filterTabAfter" className={`after`}></div>
           <div
             ref="filterIcon"
             className={`icon filter`}
             dangerouslySetInnerHTML={{ __html: IconFilter }}
           ></div>
           <p ref="filterText">See Classes in Action</p>
-          <div ref="filterTabAfter" className={`after`}></div>
         </div>
 
         <div
@@ -170,13 +188,14 @@ export default class GridMenu extends React.Component {
           onClick={this.handleCloseClick}
           onMouseEnter={this.playRolloverSfx}
         >
+          <div ref="closeTabColor" className={`color`}></div>
+          <div ref="closeTabAfter" className={`after`}></div>
           <div
             ref="closeIcon"
             className={`icon close`}
             dangerouslySetInnerHTML={{ __html: IconClose }}
           ></div>
           <p ref="closeText">Close</p>
-          <div ref="closeTabAfter" className={`after`}></div>
         </div>
 
       </div>

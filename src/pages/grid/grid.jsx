@@ -120,41 +120,50 @@ export default class GridPage extends React.Component {
   animateIn = () => {
     this.setState({isMenuVisible: true});
 
-    const ease = Expo.easeOut;
+    const ease = ViniEaseOut;
     const duration = 0.6;
-    const delay = 1.5;
+    const delay = 1.1;
 
     return animate.all([
-      animate.to(this.refs.grid.containerEl, duration, {ease, delay, y: '0%'}),
-      this.refs.menu.animateIn(duration, delay, ease)
+      animate.to(this.refs.grid.containerEl, duration, {ease: ViniEaseOut, delay, y: '0%'}),
+      this.refs.menu.animateIn(duration - 0.1, delay, ease)
     ])
   };
 
   animateOutContent = () => {
     const duration = 1.2;
-    const ease = Expo.easeOut;
+    const ease = Expo.easeInOut;
     const delay = 0.8;
 
-    var gridElements = document.querySelectorAll('.grid-page .grid-item');
-    gridElements = Array.prototype.slice.call(gridElements);
+    var tiles = document.querySelectorAll('.grid-page .grid-tile');
+    var fillers = document.querySelectorAll('.grid-page .filler');
+    tiles = Array.prototype.slice.call(tiles);
+    fillers = Array.prototype.slice.call(fillers);
+    const gridElements = tiles.concat(fillers);
     gridElements.sort(() => 0.5 - Math.random()); // shuffle
 
-    animate.staggerTo(gridElements, 1, {autoAlpha: 0, scale: 0.9, ease}, 0.03);
-    animate.to(this.refs.menu.containerEl, 0.6, {y: '-130%', ease});
+    animate.staggerTo(tiles, 1.4, {scale: 0.6, ease}, 0.1);
+    animate.staggerTo(tiles, 1, {autoAlpha: 0, ease: Linear.easeNone}, 0.1);
+
+    animate.staggerTo(fillers, 1.1, {scale: 0.6, ease, delay: 0.15}, 0.1);
+    animate.staggerTo(fillers, 0.7, {autoAlpha: 0, ease: Linear.easeNone, delay: 0.15}, 0.1);
+
+    //animate.to(this.refs.menu.containerEl, 0.6, {y: '-130%', ease});
+    this.refs.menu.animateOut();
 
     this.setState({isMenuVisible: false});
   };
 
   animateOut = () => {
-    const duration = 1.2;
-    const ease = Expo.easeOut;
-    const delay = 0.8;
+    const duration = 1.1;
+    const ease = new Ease(BezierEasing(.62, .12, 0, .92).get);
+    const delay = 0.5;
 
     this.animateOutContent();
 
     return animate.all([
       animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
-      animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
+      //animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
       animate.to(this.refs.pageWrapper, duration, {x: '100%', ease, delay})
     ])
   };
@@ -162,7 +171,8 @@ export default class GridPage extends React.Component {
   animateToInstructionalVideo = () => {
     const duration = 1.2;
     const ease = Expo.easeOut;
-    const delay = 0.8;
+    const delay = 0.4;
+    debugger
 
     this.animateOutContent();
 
