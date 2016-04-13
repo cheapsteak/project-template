@@ -173,7 +173,7 @@ export default class Chapter extends React.Component {
       const scene = new ScrollMagic.Scene({
         triggerHook: 'onEnter',
         triggerElement: el,
-        duration: window.innerHeight,
+        duration: window.innerHeight + el.clientHeight,
       })
 
       scene.on('enter', (e) => {
@@ -187,11 +187,12 @@ export default class Chapter extends React.Component {
       })
 
       scene.on('progress', (e) => {
+        TweenMax.killTweensOf(el);
         el.setAttribute('data-progress', e.progress);
         el.setAttribute('data-debug-opacity', getOpacity(e.progress));
-        TweenMax.to(el, 0.1, {
+        TweenMax.to(el, 0.3, {
           y: getY(e.progress),
-          //opacity: getOpacity(e.progress),
+          ease: ViniEaseOut,
         })
       })
 
