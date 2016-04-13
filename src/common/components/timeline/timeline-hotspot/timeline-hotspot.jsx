@@ -71,15 +71,15 @@ export default class TimelineHotspot extends React.Component {
   expandDot = () => {
     const { dot, dotBg } = this.refs;
 
-    animate.to(dot, 0.1, { borderWidth: 5, borderColor: 'rgba(255,255,255,0.45)' });
-    animate.to(dotBg, 0.3, { scale: 1 });
+    dot.classList.add('hovered');
+    // animate.to(dotBg, 0.3, { scale: 1 });
   };
 
   collapseDot = () => {
     const { dot, dotBg } = this.refs;
 
-    animate.to(dot, 0.1, { borderWidth: 3, borderColor: 'rgba(255,255,255,1)' });
-    animate.to(dotBg, 0.3, { scale: 0 });
+    dot.classList.remove('hovered');
+    // animate.to(dotBg, 0.3, { scale: 0 });
   };
 
   render() {
@@ -104,7 +104,6 @@ export default class TimelineHotspot extends React.Component {
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         >
-          <span ref="dotBg"></span>
         </div>
       </div>
     )

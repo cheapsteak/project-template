@@ -16,8 +16,8 @@ export default function calculateAnimationStates (els) {
         y: els.simpleProgressBar.offsetHeight
       },
       videoWrapper: {
-        scaleX: 1,
-        scaleY: 1,
+        width: window.innerWidth,
+        height: window.innerHeight,
         cursor: 'none'
       },
       overlay: {
@@ -40,7 +40,7 @@ export default function calculateAnimationStates (els) {
         y: 100
       },
       cornerButton: {
-        y: -els.cornerButton.offsetHeight - 5
+        y: -els.cornerButton.offsetHeight - 70
       },
       moreAboutCTA: {
         opacity: 0,
@@ -52,7 +52,7 @@ export default function calculateAnimationStates (els) {
         y: 50
       },
       controls: {
-        y: zoomedOutVideoMargin * 2,
+        y: zoomedOutVideoMargin * 2 + 70,
         height: zoomedOutVideoMargin * 2
       }
     },
@@ -62,8 +62,8 @@ export default function calculateAnimationStates (els) {
         y: 0
       },
       videoWrapper: {
-        scaleX: zoomedOutRect.width/zoomedInRect.width,
-        scaleY: zoomedOutRect.height/zoomedInRect.height,
+        width: window.innerWidth - (zoomedOutVideoMargin*2),
+        height: window.innerHeight - (zoomedOutVideoMargin*2),
         cursor: 'default'
       },
       overlay: {

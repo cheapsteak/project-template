@@ -3,27 +3,15 @@ import { findDOMNode } from 'react-dom';
 import { Link } from 'react-router';
 import IconExplore from 'svgs/icon-explore.svg';
 import animate from 'gsap-promise';
-
+import scale from 'common/utils/scaleAt1400';
+import clamp from 'clamp';
 
 function calculateAnimationStates(els) {
-  const zoomedInRect = els.card.parentNode.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width + zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height + zoomedOutVideoMargin * 2
-  }
-  const scaledRatio = {
-    x: zoomedOutRect.width/zoomedInRect.width,
-    y: zoomedOutRect.height/zoomedInRect.height
-  }
-
   return {
     out: {
       card: {
         opacity: 0,
         y: 110,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
       },
       icon: {
         opacity: 0,
@@ -43,8 +31,6 @@ function calculateAnimationStates(els) {
         delay: 0.3,
         opacity: 1,
         y: 0,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
       },
       icon: {
         delay: 0.6,
@@ -105,15 +91,18 @@ export default class ImageCardTwo extends React.Component {
 
   render() {
     return (
-      <Link to={this.props.route}
+      <a
+        to={this.props.route}
+        href={this.props.href}
         ref={ node => this.refs.card = findDOMNode(node) }
-        className="image-card-two"
+        className="ending-card image-card-two"
+        target={this.props.target}
       >
         <img src={this.props.image} />
         <div ref="icon" className="icon">></div>
         <label ref="label">{this.props.label}</label>
         <h3 ref="title" dangerouslySetInnerHTML={{ __html: this.props.title }}></h3>
-      </Link>
+      </a>
     )
   }
 }
