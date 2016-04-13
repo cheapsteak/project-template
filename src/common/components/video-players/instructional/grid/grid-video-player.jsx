@@ -37,7 +37,7 @@ export default class GridVideoPlayer extends React.Component {
     previousRoute: React.PropTypes.string
   };
 
-  static nextVideoCountdownTime = 15;
+  static nextVideoCountdownTime = 1500000000;
 
   nextVideoIntervalId = undefined;
   hideControlsTimeoutId = undefined;
@@ -56,8 +56,12 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    this.containerEl = findDOMNode(this);
+    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+
     this.animationStates = calculateAnimationStates(this.refs);
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+
+    this.containerEl = findDOMNode(this);
 
     let initialState = this.props.useFullControls
       ? 'idle'
@@ -191,14 +195,17 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   handleResize = () => {
+    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
+
     this.animationStates = calculateAnimationStates(this.refs);
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
 
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.refs.videoWrapper, {
-        scaleX: this.animationStates.idle.videoWrapper.scaleX,
-        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+        width: this.animationStates.idle.videoWrapper.width,
+        height: this.animationStates.idle.videoWrapper.height,
       });
     }
 
@@ -466,48 +473,50 @@ export default class GridVideoPlayer extends React.Component {
             ref="endingOverlay"
             className="end-overlay"
           >
-            <TransitionGroup
-              component="div"
-              className="route-content-wrapper full-height"
-            >
-            {
-              this.state.showEndingCTA
-              ? [
-                <ImageCard
-                  key={'currentId'}
-                  label="Discover:"
-                  title={this.props.title}
-                  route={this.props.chapterRoute}
-                  image={this.props.endingCardImage}
-                />
-                ,
-                <VideoCard
-                  key={'nextVideoId'}
-                  title={nextVideo.title}
-                  route={nextVideoRoute}
-                  video={nextVideo.src}
-                  timeLeft={this.state.nextVideoTimeLeft}
-                />
-              ]
-              : undefined
-            }
-            </TransitionGroup>
-            <div
-              className="replay-group"
-            >
+            <div className="end-overlay-ui">
+              <TransitionGroup
+                component="div"
+                className="ending-cards full-height"
+              >
+              {
+                this.state.showEndingCTA
+                ? [
+                  <ImageCard
+                    key={'currentId'}
+                    label="Discover:"
+                    title={this.props.title}
+                    route={this.props.chapterRoute}
+                    image={this.props.endingCardImage}
+                  />
+                  ,
+                  <VideoCard
+                    key={'nextVideoId'}
+                    title={nextVideo.title}
+                    route={nextVideoRoute}
+                    video={nextVideo.src}
+                    timeLeft={this.state.nextVideoTimeLeft}
+                  />
+                ]
+                : undefined
+              }
+              </TransitionGroup>
               <div
-                ref="replayButton"
-                className="replay-button"
-                onClick={this.handleReplayClick}
-                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                className="replay-group"
               >
+                <div
+                  ref="replayButton"
+                  className="replay-button"
+                  onClick={this.handleReplayClick}
+                  dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                >
+                </div>
+                <label
+                  ref="replayLabel"
+                  className="replay-label"
+                >
+                  Replay
+                </label>
               </div>
-              <label
-                ref="replayLabel"
-                className="replay-label"
-              >
-                Replay
-              </label>
             </div>
           </div>
           <RectangularButton

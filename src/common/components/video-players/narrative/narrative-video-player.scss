@@ -10,8 +10,9 @@
 
   .video-wrapper {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
 
     .circle-cta {
       position: absolute;
@@ -111,18 +112,9 @@
     z-index: 100;
   }
 
-  .image-card-one {
-    left: calc(50% - 375px);
-  }
-
-  .image-card-two {
-    left: calc(50% + 20px);
-  }
-
   .progress-play-button {
     @include scale-prop('width', 110);
     @include scale-prop('height', 110);
-
     position: absolute;
     top: 50%;
     left: 50%;
