@@ -95,7 +95,7 @@ export default class ImageCardTwo extends React.Component {
         to={this.props.route}
         href={this.props.href}
         ref={ node => this.refs.card = findDOMNode(node) }
-        className="image-card image-card-two"
+        className="ending-card image-card-two"
         target={this.props.target}
       >
         <img src={this.props.image} />

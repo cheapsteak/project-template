@@ -95,7 +95,7 @@ export default class ImageCardOne extends React.Component {
     return (
       <div
         ref="card"
-        className="image-card image-card-one"
+        className="ending-card image-card-one"
       >
         <Link to={this.props.route}>
           <img src={this.props.image} />

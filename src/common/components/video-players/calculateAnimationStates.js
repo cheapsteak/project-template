@@ -16,8 +16,6 @@ export default function calculateAnimationStates (els) {
         y: els.simpleProgressBar.offsetHeight
       },
       videoWrapper: {
-        // scaleX: 1,
-        // scaleY: 1,
         width: window.innerWidth,
         height: window.innerHeight,
         cursor: 'none'

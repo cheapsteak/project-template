@@ -172,6 +172,23 @@
     z-index: 50;
     opacity: 0;
 
+    .end-overlay-ui {
+      position: relative;
+      top: 41%;
+      transform: translateY(-50%);
+    }
+
+    .ending-cards {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+
+      & > .ending-card {
+        @include scale-prop('margin', 20);
+      }
+    }
+
     .replay-group {
       @include scale-prop('width', 90);
       @include scale-prop('height', 115);
@@ -259,21 +276,6 @@
         @include scale-prop('font-size', 28);
         color: #F2F2F2;
       }
-    }
-
-    .replay-group-grid {
-      // $group-width: 80px;
-      // $group-height: 95px;
-      // position: absolute;
-      // width: $group-width;
-      // height: $group-height;
-      // top: calc(80% - #{$group-height * 0.5});
-      // left: calc(50% - #{$group-width * 0.5});
-
-      // .replay-button {
-      //   width: 55px;
-      //   height: 55px;
-      // }
     }
   }
 }

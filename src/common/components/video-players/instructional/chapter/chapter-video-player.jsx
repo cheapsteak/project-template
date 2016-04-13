@@ -43,8 +43,13 @@ export default class ChapterVideoPlayer extends React.Component {
   wrapperVisible = false;
 
   componentDidMount() {
-
     this.animationStates = calculateAnimationStates(this.els);
+
+    if(!this.props.isFullBrowser) {
+      const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.els.videoWrapper);
+
+      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    }
 
     const initialState = this.props.useFullControls
       ? 'idle'
@@ -121,6 +126,8 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillLeaveFullBrowser = () => {
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = undefined;
+
     animate.to(this.els.videoWrapper, 0.6, this.animationStates.out.videoWrapper);
     return Promise.resolve();
   };
@@ -152,24 +159,29 @@ export default class ChapterVideoPlayer extends React.Component {
   handleResize = () => {
     this.animationStates = calculateAnimationStates(this.els);
 
+    // we need to prevent the original cloned video component from updating its video size based on its own container
+    if(!this.props.isFullBrowser) {
+      const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.els.videoWrapper);
+
+      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    }
+
     animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.els.videoWrapper, {
-        scaleX: this.animationStates.idle.videoWrapper.scaleX,
-        scaleY: this.animationStates.idle.videoWrapper.scaleY,
+        width: this.animationStates.idle.videoWrapper.width,
+        height: this.animationStates.idle.videoWrapper.height,
       });
     }
 
     animate.set(this.video, {clearProps: 'all'});
 
-    // if(this.props.isFullBrowser) {
-      if (window.innerWidth > window.innerHeight) {
-        BgCover.BackgroundCover(this.video, this.els.videoWrapper);
-      } else {
-        animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
-      }
-    // }
+    if (window.innerWidth > window.innerHeight) {
+      BgCover.BackgroundCover(this.video, this.els.videoWrapper);
+    } else {
+      animate.set(this.video, {position: 'absolute', top: '50%', y: '-50%', height: 'auto'});
+    }
   };
 
   handleComponentMouseMove = (e) => {

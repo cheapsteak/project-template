@@ -5,26 +5,11 @@ import PlayButton from '../../../play-button/play-button.jsx';
 import BgCover from 'background-cover';
 
 function calculateAnimationStates(els) {
-  const zoomedInRect = els.card.parentNode.getBoundingClientRect();
-  const zoomedOutVideoMargin = 40;
-  const zoomedOutRect = {
-    width: zoomedInRect.width + zoomedOutVideoMargin * 2,
-    height: zoomedInRect.height + zoomedOutVideoMargin * 2
-  }
-
-  const scaledRatio = {
-    x: zoomedOutRect.width/zoomedInRect.width,
-    y: zoomedOutRect.height/zoomedInRect.height
-  }
-
   return {
     out: {
       card: {
         opacity: 0,
-        x: 20 * scaledRatio.x,
         y: 100,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
       },
       topUI: {
         opacity: 0
@@ -38,17 +23,13 @@ function calculateAnimationStates(els) {
       },
       counterText: {
         opacity: 0,
-        y: 100
       }
     },
     idle: {
       card: {
         delay: 0.3,
         opacity: 1,
-        x: 20 * scaledRatio.x,
         y: 0,
-        scaleX: scaledRatio.x,
-        scaleY: scaledRatio.y
       },
       topUI: {
         delay: 0.5,
@@ -64,9 +45,8 @@ function calculateAnimationStates(els) {
         y: 0
       },
       counterText: {
-        delay: 0.9,
         opacity: 1,
-        y: 0
+        y:0
       }
     }
   };
@@ -143,7 +123,7 @@ export default class NextVideoCard extends React.Component {
     return (
       <div
         ref="card"
-        className="video-card"
+        className="ending-card video-card"
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >

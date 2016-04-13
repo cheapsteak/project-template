@@ -112,26 +112,6 @@
     z-index: 100;
   }
 
-  .end-overlay {
-    .end-overlay-ui {
-      position: relative;
-      top: 41%;
-      // @include scale-prop('top', 120);
-      transform: translateY(-50%);
-    }
-
-    .image-cards {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      overflow: hidden;
-
-      & > .image-card {
-        @include scale-prop('margin', 20);
-      }
-    }
-  }
-
   .progress-play-button {
     @include scale-prop('width', 110);
     @include scale-prop('height', 110);

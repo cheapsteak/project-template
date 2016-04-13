@@ -555,51 +555,51 @@ export default class NarrativeVideoPlayer extends React.Component {
               ref="endingOverlay"
               className="end-overlay"
             >
-            <div className="end-overlay-ui">
-              <TransitionGroup
-                component="div"
-                className="image-cards"
-              >
-                {
-                  this.state.showEndingCTA
-                  ? [
-                    <ChaptersImageCard
-                      gridButton={true}
-                      key={'chapter-card'}
-                      label="See All"
-                      title="Chapters"
-                      route="/grid"
-                      image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
-                    />,
-                    <CareerImageCard
-                      key={'careers-card'}
-                      label="Careers"
-                      title="Join Our<br/>Team"
-                      href="http://jobs.successacademies.org/"
-                      target="__blank"
-                      image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
-                    />
-                  ]
-                  : undefined
-                }
-              </TransitionGroup>
-              <div
-                className="replay-group"
-              >
+              <div className="end-overlay-ui">
+                <TransitionGroup
+                  component="div"
+                  className="ending-cards"
+                >
+                  {
+                    this.state.showEndingCTA
+                    ? [
+                      <ChaptersImageCard
+                        gridButton={true}
+                        key={'chapter-card'}
+                        label="See All"
+                        title="Chapters"
+                        route="/grid"
+                        image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
+                      />,
+                      <CareerImageCard
+                        key={'careers-card'}
+                        label="Careers"
+                        title="Join Our<br/>Team"
+                        href="http://jobs.successacademies.org/"
+                        target="__blank"
+                        image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                      />
+                    ]
+                    : undefined
+                  }
+                </TransitionGroup>
                 <div
-                  ref="replayButton"
-                  className="replay-button"
-                  onClick={this.handleReplayClick}
-                  dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                  className="replay-group"
                 >
+                  <div
+                    ref="replayButton"
+                    className="replay-button"
+                    onClick={this.handleReplayClick}
+                    dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                  >
+                  </div>
+                  <label
+                    ref="replayLabel"
+                    className="replay-label"
+                  >
+                    Replay
+                  </label>
                 </div>
-                <label
-                  ref="replayLabel"
-                  className="replay-label"
-                >
-                  Replay
-                </label>
-              </div>
               </div>
             </div>
           </div>
