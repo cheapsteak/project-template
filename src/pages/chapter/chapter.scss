@@ -283,6 +283,22 @@ $orange: #f99100;
   p {
     @include scale-prop('margin-bottom', 15);
   }
+
+  .article {
+    @media (max-width: 768px) {
+      width: 100%;
+      .article-content-wrapper {
+        display: flex;
+        flex-direction: column;
+        .article-title {
+          margin-bottom: 40px;
+        }
+        .article-content {
+          padding-left: 0;
+        }
+      }
+    }
+  }
 }
 
 .photo-essay {
