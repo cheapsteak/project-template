@@ -17,7 +17,7 @@
     "linklocal": "linklocal",
     "release": "npm run build:production",
     "deploy:dev": "npm run build:dev && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool/",
-    "deploy:qa": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-qa/",
+    "deploy:qa": "npm run build:qa && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-qa/",
     "deploy:preview": "npm run build:preview && sshpass -p MrILaSv5ci5iM9sRlbkpFeymMz0ZpQ rsync -rPz build/ successacademy@successacademy.jam3.net:/home/successacademy/public_html/middleschool-preview/",
     "deploy:production": "npm run build:production && sh deploy-production.sh"
   },
