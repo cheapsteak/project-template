@@ -217,12 +217,14 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.localStorageIntervalId = undefined;
   };
 
-  unmute = () => {
-    animate.to(this.video, 0.5, { volume: 1, ease: Quad.easeIn });
+  unmute = (cb) => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
+      .then(cb);
   };
 
-  mute = () => {
-    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn });
+  mute = (cb) => {
+    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
+      .then(cb);
   };
 
   playVideo = () => {
@@ -230,7 +232,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 0 });
         this.video.play();
-        animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn });
+        this.unmute();
       } else {
         this.video.play();
       }
@@ -241,8 +243,8 @@ export default class NarrativeVideoPlayer extends React.Component {
     if(!this.video.paused) {
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
-        animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn }).then(() => {
-          this.video.pause();
+        this.mute(() => {
+          this.video && this.video.pause();
         });
       } else {
         this.video && this.video.pause();
