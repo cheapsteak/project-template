@@ -4,10 +4,21 @@ import IconExplore from 'svgs/icon-explore.svg';
 import IconPlay from 'svgs/icon-thumbnail-play.svg';
 import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
+import VideoPlayer from '../../../components/video-player/video-player';
 
-function ConditionalLink (props) {
-  if(props.isExternalLink) {
-    return <a className={props.className} href={props.to} target="__blank">{props.children}</a>
+function ListWrapper (props) {
+  if(props.isVideo) {
+    return (
+      <div className={props.className} onClick={props.onClick}>
+        <VideoPlayer
+          src={props.src}
+          preload="none"
+          status={props.videoStatus}
+          onExitFullscreen={props.onExitFullscreen}
+        />
+        {props.children}
+      </div>
+    )
   } else {
     return <Link className={props.className} to={props.to}>{props.children}</Link>
   }
@@ -16,7 +27,7 @@ function ConditionalLink (props) {
 function ListItem (props) {
 
   return (
-    <ConditionalLink className="list-item" {...props} >
+    <ListWrapper className="list-item" {...props} >
       <img src={ props.image } />
       <div className="list-text-content">
         <span>
@@ -32,7 +43,7 @@ function ListItem (props) {
           : null
         }
       </div>
-    </ConditionalLink>
+    </ListWrapper>
   )
 }
 
@@ -41,7 +52,19 @@ const duration = 0.3;
 
 export default class ChapterContentList extends React.Component {
 
+  state = {
+    videoStatuses: []
+  };
+
   componentDidMount() {
+    this.setState({
+      videoStatuses: [
+        this.props.narrativeVideo && 'paused',
+        ...this.props.instructionalVideos.map(() => 'paused'),
+        this.props.podcast && 'paused',
+      ].filter(Boolean)
+    })
+
     animate.set(this.refs.list, { height: 0 });
   }
 
@@ -65,6 +88,22 @@ export default class ChapterContentList extends React.Component {
     return animate.to(this.refs.list, duration/1.5, { height: 0, ease: easeType.easeOut });
   }
 
+  playVideo = (i) => {
+    this.setState({ videoStatuses: [ 
+      ...this.state.videoStatuses.slice(0, i),
+      'play',
+      ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
+    ]});
+  };
+
+  pauseVideo = (i) => {
+    this.setState({ videoStatuses: [ 
+      ...this.state.videoStatuses.slice(0, i),
+      'paused',
+      ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
+    ]});
+  };
+
   render () {
     return (
       <div
@@ -78,11 +117,13 @@ export default class ChapterContentList extends React.Component {
           <ListItem
             label="Play"
             name={`Meet ${this.props.scholar}`}
-            isVideo={true}
+            isVideo={ true }
+            onClick={ this.playVideo.bind(null, 0) }
+            onExitFullscreen={ this.pauseVideo.bind(null, 0) }
+            videoStatus={ this.state.videoStatuses[0] }
             image={ this.props.narrativeVideo.iconImage }
             duration={ this.props.narrativeVideo.duration }
-            isExternalLink={true}
-            to={ this.props.narrativeVideo.src }
+            src={ this.props.narrativeVideo.src }
           />
           <div className="list-divider">
             <span dangerouslySetInnerHTML={{ __html: IconExplore }}></span>
@@ -94,14 +135,16 @@ export default class ChapterContentList extends React.Component {
 
               return (
                 <ListItem
-                  key={i}
+                  key={ i }
                   label="Play"
                   name={`${this.props.name === 'Welcome' ? 'College Persistance' : 'In the Classroom'}${number}`}
-                  isVideo={true}
+                  isVideo={ true }
+                  onClick={ this.playVideo.bind(null, i+1) }
+                  onExitFullscreen={ this.pauseVideo.bind(null, i+1) }
+                  videoStatus={ this.state.videoStatuses[i+1] }
                   image={ video.iconImage }
                   duration={ video.duration }
-                  isExternalLink={true}
-                  to={ video.src }
+                  src={ video.src }
                 />
               )
             })
@@ -147,7 +190,10 @@ export default class ChapterContentList extends React.Component {
                 label="Listen"
                 name="A Message From Eva"
                 image={ this.props.podcast.iconImage }
-                isExternalLink={true}
+                isVideo={true}
+                onClick={ this.playVideo.bind(null, this.state.videoStatuses.length-1) }
+                onExitFullscreen={ this.pauseVideo.bind(null, this.state.videoStatuses.length-1) }
+                videoStatus={ this.state.videoStatuses[this.state.videoStatuses.length-1] }
                 to={ this.props.podcast.src }
               />
             : null

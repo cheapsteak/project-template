@@ -46,18 +46,11 @@
 
     img {
       height: 100%;
-
-      // Temporary fix for ios
-      @media (-webkit-min-device-pixel-ratio: 3),
-             (min-resolution: 192dpi) {
-          height: auto;
-          width: 25vw;
-      }
     }
 
     .list-text-content {
       display: flex;
-      width: 100%;
+      flex: 1;
       align-items: center;
       padding: 0 5.333vw;
 
@@ -75,6 +68,7 @@
       h4 {
         font-size: 4.4vw;
         color: white;
+        line-height: 4.8vw;
       }
 
       .item-duration {
