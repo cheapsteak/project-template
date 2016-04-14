@@ -28,6 +28,32 @@ class PhotoEssay extends React.Component {
     audio.play('button-rollover');
   };
 
+  componentWillEnterFullBrowser = (originalComponent) => {
+    const cloneEl = findDOMNode(this);
+    const originalEl = findDOMNode(originalComponent);
+
+    const cloneParallaxTarget = cloneEl.querySelector('.parallax-target');
+    const originalParallaxTarget = originalEl.querySelector('.parallax-target');
+
+    cloneParallaxTarget.setAttribute('style', originalParallaxTarget.getAttribute('style'));
+    animate.to(cloneParallaxTarget, 0.5, {y: 0, opacity: 0.5});
+
+    return Promise.resolve();
+  }
+
+  componentWillLeaveFullBrowser = (originalComponent) => {
+    const cloneEl = findDOMNode(this);
+    const originalEl = findDOMNode(originalComponent);
+
+    const cloneParallaxTarget = cloneEl.querySelector('.parallax-target');
+    const originalParallaxTarget = originalEl.querySelector('.parallax-target');
+
+    const originalParallaxOffset = originalParallaxTarget.parentNode.getBoundingClientRect().top - originalParallaxTarget.getBoundingClientRect().top;
+
+    animate.to(cloneParallaxTarget, 0.5, {y: originalParallaxOffset});
+    return Promise.resolve();
+  }
+
   render() {
     const {style, photos, index, isFullBrowser, fullBrowserRoute, fullBrowserExitRoute, className} = this.props;
     const photo = photos && photos[index] || {};

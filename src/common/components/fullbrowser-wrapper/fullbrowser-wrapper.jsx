@@ -23,10 +23,10 @@ export default class FullBrowserWrapper extends React.Component {
 
   componentWillEnterFullBrowser = async () => {
     const component = unwrapComponent(this.refs.child);
+    var target = this.props.getTarget(this.refs.child, this.props.params.slug)
 
     if(component.componentWillEnterFullBrowser) {
-          
-      await component.componentWillEnterFullBrowser()
+      await component.componentWillEnterFullBrowser(target)
     }
 
     return this.animateToFullBrowser();
@@ -47,10 +47,10 @@ export default class FullBrowserWrapper extends React.Component {
 
   componentWillLeaveFullBrowser = async () => {
     const component = unwrapComponent(this.refs.child);
-
+    var target = this.props.getTarget(this.refs.child, this.props.params.slug)
 
     if(component.componentWillLeaveFullBrowser) {
-       await component.componentWillLeaveFullBrowser();
+       await component.componentWillLeaveFullBrowser(target);
     }
     await this.animateToTarget();
 
