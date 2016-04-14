@@ -217,11 +217,11 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.localStorageIntervalId = undefined;
   };
 
-  unmute = async () => {
+  unmute = () => {
     return animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
   };
 
-  mute = async () => {
+  mute = () => {
     return animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
   };
 
