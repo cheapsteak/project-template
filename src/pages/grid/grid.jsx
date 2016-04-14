@@ -11,6 +11,8 @@ import Layout1740 from 'common/components/grid/layout/layout-1740';
 import Layout1920 from 'common/components/grid/layout/layout-1920';
 import GridMenu from 'common/components/grid/grid-menu';
 import scrollbarSize from 'common/utils/scrollbar-size';
+import Preload from 'inject-prefetch';
+import chaptersData  from 'common/models/chapters-model';
 
 const breakpoints = [890, 1060, 1230, 1400, 1570, 1740, 1920];
 
@@ -117,6 +119,12 @@ export default class GridPage extends React.Component {
     this.handleWindowResize();
   };
 
+  preloadNextContent = () => {
+    var data = chaptersData.getAll();
+    data = data.map(chapter => chapter.hero.poster);
+    Preload(data);
+  };
+
   animateIn = () => {
     this.setState({isMenuVisible: true});
 
@@ -125,9 +133,10 @@ export default class GridPage extends React.Component {
     const delay = 1.1;
 
     return animate.all([
-      animate.to(this.refs.grid.containerEl, duration, {ease: ViniEaseOut, delay, y: '0%'}),
-      this.refs.menu.animateIn(duration - 0.1, delay, ease)
-    ])
+        animate.to(this.refs.grid.containerEl, duration, {ease: ViniEaseOut, delay, y: '0%'}),
+        this.refs.menu.animateIn(duration - 0.1, delay, ease)
+      ])
+      .then(()=> this.preloadNextContent())
   };
 
   animateOutContent = () => {
@@ -154,7 +163,7 @@ export default class GridPage extends React.Component {
 
   animateOut = () => {
     const duration = 1.1;
-    const ease = new Ease(BezierEasing(.62, .12, 0, .92).get);
+    const ease = SereneEaseInOut;
     const delay = 0.5;
 
     this.animateOutContent();
@@ -167,7 +176,7 @@ export default class GridPage extends React.Component {
 
   animateToInstructionalVideo = () => {
     const duration = 1.1;
-    const ease = new Ease(BezierEasing(.62, .12, 0, .92).get);
+    const ease = SereneEaseInOut;
     const delay = 0.5;
 
     this.animateOutContent();
