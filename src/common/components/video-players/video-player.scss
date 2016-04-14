@@ -192,9 +192,7 @@
     .replay-group {
       @include scale-prop('width', 90);
       @include scale-prop('height', 115);
-
-      @include scale('bottom', -13vh, -11vh, 10vw);
-
+      @include scale-prop('bottom', -65);
       position: absolute;
       left: 50%;
       transform: translate(-50%, 50%);
