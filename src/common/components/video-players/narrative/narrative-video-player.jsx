@@ -540,7 +540,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.props.showFullControls();
     this.setHideControlsTimeout();
   };
-  
+
   handleCircleGridCtaClick = () => {
     tracking.trackEvent({
       category: 'Explore grid CTA',
@@ -560,6 +560,14 @@ export default class NarrativeVideoPlayer extends React.Component {
       category: 'Narrative video player end - Explore grid CTA',
       label: 'Narrative Video'
     });
+  };
+
+  handleEndVideoCareersCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Narrative video player end - Careers CTA',
+      label: 'Narrative Video'
+    });
+  };
 
   handleClick = (e) => {
     if(e.target.id === 'videoOverlay') {
@@ -661,6 +669,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                         href="http://jobs.successacademies.org/"
                         target="__blank"
                         image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                        onClick={this.handleEndVideoCareersCtaClick}
                       />
                     ]
                     : undefined
