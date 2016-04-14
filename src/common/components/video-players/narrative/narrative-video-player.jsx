@@ -352,10 +352,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleResize = () => {
-    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
-
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 

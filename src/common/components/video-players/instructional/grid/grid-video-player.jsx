@@ -200,7 +200,7 @@ export default class GridVideoPlayer extends React.Component {
     const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
 
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
@@ -213,6 +213,10 @@ export default class GridVideoPlayer extends React.Component {
 
     animate.set(this.video, {clearProps: 'all'});
 
+    this.videoResize();
+  };
+
+  videoResize = () => {
     if (window.innerWidth > window.innerHeight) {
       BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
     } else {

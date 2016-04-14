@@ -162,12 +162,8 @@ export default class ChapterVideoPlayer extends React.Component {
 
     // we need to prevent the original cloned video component from updating its video size based on its own container
     if(!this.props.isFullBrowser) {
-      const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.els.videoWrapper);
-
-      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
     }
-
-    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.els.videoWrapper, {
@@ -176,8 +172,13 @@ export default class ChapterVideoPlayer extends React.Component {
       });
     }
 
+    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
     animate.set(this.video, {clearProps: 'all'});
 
+    this.videoResize();
+  };
+
+  videoResize = () => {
     if (window.innerWidth > window.innerHeight) {
       BgCover.BackgroundCover(this.video, this.els.videoWrapper);
     } else {
