@@ -56,12 +56,8 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount');
-        
-    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
-
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     this.containerEl = findDOMNode(this);
 
@@ -621,14 +617,18 @@ export default class GridVideoPlayer extends React.Component {
                   }
                 </TransitionGroup>
               </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                  onClick={this.handleVolumeClick}
-                >
-                </div>
-              </div>
+              {
+                !detect.isTablet
+                ? <div className="button-wrapper">
+                    <div
+                      className="button"
+                      dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                      onClick={this.handleVolumeClick}
+                    >
+                    </div>
+                  </div>
+                : null
+              }
             </div>
             <Timeline
               currentTime={this.props.currentTime || 0}
