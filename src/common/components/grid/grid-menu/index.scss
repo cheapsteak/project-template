@@ -47,7 +47,6 @@
       top: 0;
       z-index: -1;
       width: 100%;
-      //@include scale-prop(height, 20);
       @include scale-calc-add(height, 100%, 20);
       background-color: inherit;
       opacity: 0.55;
@@ -93,13 +92,12 @@
 
     p {
       @include scale-prop(margin-top, 5);
-      opacity: 0.8;
       transition: color 0.3s, opacity 0.3s, transform 0.3s;
     }
 
     @mixin idleCloseState {
       p {
-        color: #8f8f8f;
+        color: rgba(143, 143, 143, 0.8);
       }
       .color {
         background-color: #2b2b2b;;
@@ -110,27 +108,14 @@
     }
     @mixin hoverCloseState {
       p {
-        opacity: 1;
+        color: rgba(143, 143, 143, 1);
       }
       .icon {
         transform: scale(1.1);
       }
     }
-    @mixin activeCloseState {
-      p {
-        color: #000;
-        opacity: 0.5;
-      }
-      .icon {
-        transform: scale(1);
-        background-color: #000;
-        opacity: 0.5;
-      }
-    }
 
     @mixin idleFilterState {
-      //background-color: #8f8f8f;
-
       .color {
         background-color: #8f8f8f;
       }
@@ -140,7 +125,7 @@
       }
 
       p {
-        opacity: 0.8;
+        color: rgba(255, 255, 255, 0.8);
       }
       .icon {
         background-color: rgba(255, 255, 255, 0);
@@ -153,7 +138,15 @@
     }
     @mixin hoverFilterState {
       p {
-        opacity: 1;
+        color: rgba(255, 255, 255, 1);
+      }
+      .icon {
+        transform: scale(1.1);
+      }
+    }
+    @mixin activeFilterState {
+      p {
+        color: rgba(255, 255, 255, 1);
       }
       .icon {
         border-color: rgba(255, 255, 255, 1);
@@ -168,10 +161,10 @@
       @include idleFilterState;
 
       &:hover {
-        @include hoverCloseState;
+        @include hoverFilterState;
       }
       &.active {
-        @include hoverFilterState;
+        @include activeFilterState;
       }
       &.deactivated {
         @include idleFilterState;
@@ -183,12 +176,6 @@
 
       &:hover {
         @include hoverCloseState;
-      }
-      &:active {
-        //@include activeCloseState;
-      }
-      &.active {
-        //@include activeCloseState;
       }
     }
   }

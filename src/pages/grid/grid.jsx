@@ -131,14 +131,13 @@ export default class GridPage extends React.Component {
   };
 
   animateOutContent = () => {
-    const duration = 1.2;
     const ease = Expo.easeInOut;
-    const delay = 0.8;
 
     var tiles = document.querySelectorAll('.grid-page .grid-tile');
     var fillers = document.querySelectorAll('.grid-page .filler');
     tiles = Array.prototype.slice.call(tiles);
     fillers = Array.prototype.slice.call(fillers);
+
     const gridElements = tiles.concat(fillers);
     gridElements.sort(() => 0.5 - Math.random()); // shuffle
 
@@ -148,7 +147,6 @@ export default class GridPage extends React.Component {
     animate.staggerTo(fillers, 1.1, {scale: 0.6, ease, delay: 0.15}, 0.1);
     animate.staggerTo(fillers, 0.7, {autoAlpha: 0, ease: Linear.easeNone, delay: 0.15}, 0.1);
 
-    //animate.to(this.refs.menu.containerEl, 0.6, {y: '-130%', ease});
     this.refs.menu.animateOut();
 
     this.setState({isMenuVisible: false});
@@ -168,26 +166,25 @@ export default class GridPage extends React.Component {
   };
 
   animateToInstructionalVideo = () => {
-    const duration = 1.2;
-    const ease = Expo.easeOut;
-    const delay = 0.4;
+    const duration = 1.1;
+    const ease = new Ease(BezierEasing(.62, .12, 0, .92).get);
+    const delay = 0.5;
 
     this.animateOutContent();
 
     return animate.all([
-      animate.set(this.containerEl, {overflow: 'hidden'}),
-      animate.set(this.refs.pageWrapper, {overflow: 'hidden', paddingRight: scrollbarSize.get()}),
+      animate.set(this.containerEl, {overflow: 'hidden', delay: 0.5}),
+      animate.set(this.refs.pageWrapper, {overflow: 'hidden', paddingRight: scrollbarSize.get(), delay: 0.5}),
       animate.to(this.refs.grid.containerEl, duration, {x: '100%', ease, delay}),
       animate.to(this.refs.menu.containerEl, duration, {x: '100%', ease, delay}),
-      animate.to(this.refs.pageWrapper, duration, {x: '-100%', ease, delay}),
-      animate.to(this.refs.pageWrapper, duration, {autoAlpha: 0.6, delay})
+      animate.to(this.refs.pageWrapper, duration, {x: '-100%', ease, delay})
     ])
   };
 
   animateFromInstructionalVideo = () => {
-    const duration = 1.2;
-    const ease = Expo.easeOut;
-    const delay = 0.8;
+    const ease = ViniEaseOut;
+    const duration = 0.6;
+    const delay = 1.1;
 
     const videoContainer = this.videoContainer.children[0];
     animate.to(videoContainer, 1, {autoAlpha: 0});
