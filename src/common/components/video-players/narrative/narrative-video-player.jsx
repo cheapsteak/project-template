@@ -217,14 +217,12 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.localStorageIntervalId = undefined;
   };
 
-  unmute = (cb) => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
-      .then(cb);
+  unmute = () => {
+    return animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
   };
 
-  mute = (cb) => {
-    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
-      .then(cb);
+  mute = () => {
+    return animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
   };
 
   playVideo = () => {
@@ -233,22 +231,23 @@ export default class NarrativeVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
+        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
     }
   };
 
-  pauseVideo = () => {
+  pauseVideo = async () => {
     if(!this.video.paused) {
+      !this.props.useFullControls && this.props.showFullControls();
+
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
-        this.mute(() => {
-          this.video && this.video.pause();
-        });
-      } else {
-        this.video && this.video.pause();
+        await this.mute();
       }
+
+      this.video && this.video.pause();
     }
   };
 
@@ -541,7 +540,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.props.showFullControls();
     this.setHideControlsTimeout();
   };
-
+  
   handleCircleGridCtaClick = () => {
     tracking.trackEvent({
       category: 'Explore grid CTA',
@@ -561,6 +560,11 @@ export default class NarrativeVideoPlayer extends React.Component {
       category: 'Narrative video player end - Explore grid CTA',
       label: 'Narrative Video'
     });
+
+  handleClick = (e) => {
+    if(e.target.id === 'videoOverlay') {
+      this.handleVideoPlayPause();
+    }
   };
 
   render() {
@@ -574,6 +578,7 @@ export default class NarrativeVideoPlayer extends React.Component {
         style={style}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
+        onClick={this.handleClick}
       >
         <div ref="pageWrapper" className={`page-wrapper`}>
           <div
@@ -584,9 +589,7 @@ export default class NarrativeVideoPlayer extends React.Component {
               id="videoOverlay"
               ref="overlay"
               className="video-overlay"
-              onClick={this.handleOverlayClick}
             >
-
             </div>
             <Link to="/grid" onClick={this.handleCircleGridCtaClick}>
               <RectangularButton
@@ -736,7 +739,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                     </div>
                   : null
                 }
-                
+
               </div>
               <Timeline
                 currentTime={this.props.currentTime}
