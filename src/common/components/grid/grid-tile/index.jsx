@@ -196,6 +196,13 @@ export default class GridTile extends React.Component {
     }
   };
 
+  handleCtaClick = () => {
+    tracking.trackEvent({
+      category: this.state.data.slug + (this.props.isFiltered ? ' in action CTA' : ' learn more CTA'),
+      label: 'Grid'
+    });
+  };
+
   render() {
     if (!this.state.data) return <div/>;
 
@@ -229,7 +236,7 @@ export default class GridTile extends React.Component {
             links.map((link, index) => {
               const width = links.length > 1 ? 'half-width' : 'full-width';
               return (
-                <Link className={`${width}`} to={`${link}`} key={index}>
+                <Link className={`${width}`} to={`${link}`} key={index} onClick={this.handleCtaClick}>
                   <div ref="ctaContainer" className={`cta`}>
                     <div
                       ref={`ctaIcon${index}`}

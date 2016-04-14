@@ -99,6 +99,11 @@ export default class GridMenu extends React.Component {
 
     audio.play('button-click');
 
+    tracking.trackEvent({
+      category: 'Instructional video filter CTA',
+      label: 'Grid'
+    });
+
     if (this.state.filterTabState === states.IDLE || this.state.filterTabState === states.DEACTIVATED) {
       filterTabState = states.ACTIVE
     } else if (this.state.filterTabState === states.ACTIVE) {
@@ -119,6 +124,11 @@ export default class GridMenu extends React.Component {
       return;
     }
 
+    tracking.trackEvent({
+      category: 'Close CTA',
+      label: 'Grid'
+    });
+
     audio.play('button-click');
     this.setState({closeTabState: states.ACTIVE});
 
@@ -133,6 +143,11 @@ export default class GridMenu extends React.Component {
     if (this.state.returnTabState === states.ACTIVE) {
       return;
     }
+
+    tracking.trackEvent({
+      category: !localStorage.getItem('narrative-video-time') ? 'Watch documentary CTA' : 'Replay documentary CTA',
+      label: 'Grid'
+    });
 
     audio.play('button-click');
     this.setState({returnTabState: states.ACTIVE});
