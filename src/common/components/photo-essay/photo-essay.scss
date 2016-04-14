@@ -115,7 +115,7 @@
   .fullbrowser-wrapper & {
     .parallax-target {
       height: 100%;
-      transform: matrix(1, 0, 0, 1, 0, 0) !important;
+      // transform: matrix(1, 0, 0, 1, 0, 0) !important;
       transition: transform 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
       .photo-slider {
         height: 100%;
