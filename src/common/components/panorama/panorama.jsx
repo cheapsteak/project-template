@@ -14,7 +14,7 @@ import PanoramaMenu from './panorama-menu/panorama-menu';
 import PanoramaCursor from './panorama-cursor/panorama-cursor';
 import PanoramaLoader from './panorama-loader/panorama-loader';
 import IconCursor from 'svgs/icon-360-cursor.svg';
-import IconAccelerometer from 'svgs/replay-arrow.svg';
+import IconAccelerometer from 'svgs/icon-toggle.svg';
 
 const states = {
   LOADING: 'loading',
