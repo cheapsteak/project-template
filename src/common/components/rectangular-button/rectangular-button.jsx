@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Promise from 'bluebird';
 
 const easeType = Quad;
-const duration = 0.15;
+const duration = 0.2;
 
 export default class RectangularButton extends React.Component {
 
@@ -48,38 +48,38 @@ export default class RectangularButton extends React.Component {
 
   animateOnMouseLeave = () => {
     return Promise.all([
-      animate.to(this.refs.text, duration, {y: 20, autoAlpha: 0, ease: easeType.easeIn})
+      animate.to(this.refs.text, duration, {y: 20, autoAlpha: 0, ease: ViniEaseOut})
         .then(() => {
           animate.set(this.refs.text, {y: -20});
-          animate.to(this.refs.text, duration, {y: 0, autoAlpha: 1, ease: easeType.easeIn});
+          animate.to(this.refs.text, duration, {y: 0, autoAlpha: 1, ease: ViniEaseOut});
         }),
       animate.to(this.refs.button, duration, {
         backgroundColor: this.props.backgroundColor,
-        ease: easeType.easeIn
+        ease: ViniEaseOut
       }),
-      this.refs.icon && animate.to(this.refs.icon, duration, {delay: 0.1, y: 20, autoAlpha: 0, ease: easeType.easeIn})
+      this.refs.icon && animate.to(this.refs.icon, duration, {delay: 0.1, y: 20, autoAlpha: 0, ease: ViniEaseOut})
         .then(() => {
           animate.set(this.refs.icon, {y: -20});
-          animate.to(this.refs.icon, duration, {y: 0, autoAlpha: 1, ease: easeType.easeIn});
+          animate.to(this.refs.icon, duration, {y: 0, autoAlpha: 1, ease: ViniEaseOut});
         })
     ]);
   };
 
   animateOnMouseEnter = () => {
     return Promise.all([
-      this.refs.icon && animate.to(this.refs.icon, duration, {delay: 0, y: -20, autoAlpha: 0, ease: easeType.easeOut})
+      this.refs.icon && animate.to(this.refs.icon, duration, {delay: 0, y: -20, autoAlpha: 0, ease: ViniEaseOut})
         .then(() => {
           animate.set(this.refs.icon, {y: 20});
-          animate.to(this.refs.icon, duration, {y: 0, autoAlpha: 1, ease: easeType.easeOut});
+          animate.to(this.refs.icon, duration, {y: 0, autoAlpha: 1, ease: ViniEaseOut});
         }),
-      animate.to(this.refs.text, duration, {y: -20, autoAlpha: 0, ease: easeType.easeOut, delay: 0.1})
+      animate.to(this.refs.text, duration, {y: -20, autoAlpha: 0, ease: ViniEaseOut, delay: 0.1})
         .then(() => {
           animate.set(this.refs.text, {y: 20});
-          animate.to(this.refs.text, duration, {y: 0, autoAlpha: 1, ease: easeType.easeOut});
+          animate.to(this.refs.text, duration, {y: 0, autoAlpha: 1, ease: ViniEaseOut});
         }),
       animate.to(this.refs.button, duration, {
         backgroundColor: this.props.hoverBackgroundColor || 'rgba(0,0,0,0)',
-        ease: easeType.easeOut
+        ease: ViniEaseOut
       })
     ]);
   };

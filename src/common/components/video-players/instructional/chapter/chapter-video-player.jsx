@@ -63,6 +63,7 @@ export default class ChapterVideoPlayer extends React.Component {
     animate.set(this.els.overlay, this.animationStates[initialState].overlay);
     animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.els.controls, this.animationStates[initialState].controls);
+    animate.set(this.refs.controlsUI, this.animationStates[initialState].controlsUI),
     animate.set(this.els.endingOverlay, this.animationStates.out.endingOverlay);
 
     this.props.isPlaying && this.video && this.video.play();
@@ -281,7 +282,8 @@ export default class ChapterVideoPlayer extends React.Component {
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.els.overlay, 0.3, this.animationStates.idle.overlay),
       animate.to(this.els.cornerButton, 0.3, this.animationStates.idle.cornerButton),
-      animate.to(this.els.controls, 0.3, this.animationStates.idle.controls),
+      animate.to(this.els.controls, 0.6, this.animationStates.idle.controls),
+      animate.to(this.refs.controlsUI, 0.6, this.animationStates.idle.controlsUI),
     ]);
   };
 
@@ -297,7 +299,8 @@ export default class ChapterVideoPlayer extends React.Component {
     return Promise.all([
       ...conditionalAnimations,
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.els.controls, 0.3, this.animationStates.out.controls)
+      animate.to(this.els.controls, 0.6, this.animationStates.out.controls),
+      animate.to(this.refs.controlsUI, 0.6, this.animationStates.out.controlsUI),
     ]);
   };
 
@@ -445,57 +448,59 @@ export default class ChapterVideoPlayer extends React.Component {
           onTouchEnd={ this.setHideControlsTimeout }
         >
           <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
-          <div className="control-group">
-            <div className="button-wrapper">
-              <div
-                className="button play-button"
-                dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-                onClick={this.handleVideoPlayPause}
-              >
-              </div>
-            </div>
-            <div className="button-wrapper">
-              <div
-                className="button"
-                dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                onClick={this.handleVolumeClick}
-              >
-              </div>
-            </div>
-            {
-              isFullBrowser
-                ? <div className="button-wrapper">
+          <div ref="controlsUI" className="controls-ui">
+            <div className="control-group">
+              <div className="button-wrapper">
                 <div
-                  className="button fullscreen-button"
-                  onClick={ () => this.props.exitFullBrowser(route) }
+                  className="button play-button"
+                  dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
+                  onClick={this.handleVideoPlayPause}
                 >
-                  <div
-                    dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
                 </div>
               </div>
-                : <div className="button-wrapper">
-                <Link
-                  className="button fullscreen-button"
-                  to={route}
+              <div className="button-wrapper">
+                <div
+                  className="button"
+                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                  onClick={this.handleVolumeClick}
                 >
-                  <div
-                    dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
-                </Link>
+                </div>
               </div>
+              {
+                isFullBrowser
+                  ? <div className="button-wrapper">
+                  <div
+                    className="button fullscreen-button"
+                    onClick={ () => this.props.exitFullBrowser(route) }
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
+                  </div>
+                </div>
+                  : <div className="button-wrapper">
+                  <Link
+                    className="button fullscreen-button"
+                    to={route}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
+                  </Link>
+                </div>
+              }
+            </div>
+            {
+              /*
+                The duration is put into the store and pass down to the component
+                to account for the work around with moving around the video node
+              */
             }
+            <Timeline
+              currentTime={this.props.currentTime || 0}
+              duration={this.props.duration || 0}
+              onTimeChange={this.changeVideoTime}
+              items={[]}
+            />
           </div>
-          {
-            /*
-              The duration is put into the store and pass down to the component
-              to account for the work around with moving around the video node
-            */
-          }
-          <Timeline
-            currentTime={this.props.currentTime || 0}
-            duration={this.props.duration || 0}
-            onTimeChange={this.changeVideoTime}
-            items={[]}
-          />
         </div>
       </div>
     )
