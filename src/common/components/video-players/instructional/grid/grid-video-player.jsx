@@ -439,7 +439,7 @@ export default class GridVideoPlayer extends React.Component {
 
 
   render() {
-    const { style, modelSlug, prevVideo, nextVideo, className } = this.props;
+    const { style, modelSlug, prevVideo, nextVideo, className = '' } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const prevVideoRoute = prevVideo ? prevVideo.gridRoute : '/';
     const nextVideoRoute = nextVideo ? nextVideo.gridRoute : '/';
@@ -447,7 +447,7 @@ export default class GridVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className={`video-player instructional-video-player grid-player ${className || ''}`}
+        className={`video-player instructional-video-player grid-player ${className} ${this.state.isReady ? ' ready' : ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
@@ -465,7 +465,6 @@ export default class GridVideoPlayer extends React.Component {
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
             poster={this.props.poster}
-            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
 
