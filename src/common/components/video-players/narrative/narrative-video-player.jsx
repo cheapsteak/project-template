@@ -46,10 +46,8 @@ export default class NarrativeVideoPlayer extends React.Component {
   wrapperVisible = false;
 
   componentDidMount() {
-    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
-
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     this.containerEl = findDOMNode(this);
 
@@ -262,7 +260,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     return Promise.all([
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
-      animate.to(this.refs.videoWrapper, 0.6, this.animationStates.idle.videoWrapper),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay)
         .then(()=>animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton)),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA)
@@ -284,7 +282,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     _.forEach(dots, dot => animate.set(dot, {opacity: 0})  );
 
     const conditionalAnimations = !this.videoEnded && [
-      animate.to(this.refs.videoWrapper, 0.6, this.animationStates.out.videoWrapper),
+      animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
@@ -352,11 +350,11 @@ export default class NarrativeVideoPlayer extends React.Component {
   /************************/
 
   handleResize = () => {
-    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
-
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
+console.log('resize');
+    
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
@@ -525,7 +523,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className="video-player narrative-video-player ${className || ''}"
+        className={`video-player narrative-video-player${this.state.isReady ? ' ready' : ''} ${className || ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
@@ -677,14 +675,19 @@ export default class NarrativeVideoPlayer extends React.Component {
                   >
                   </div>
                 </div>
-                <div className="button-wrapper">
-                  <div
-                    className="button"
-                    dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                    onClick={this.handleVolumeClick}
-                  >
-                  </div>
-                </div>
+                {
+                  !detect.isTablet
+                  ? <div className="button-wrapper">
+                      <div
+                        className="button"
+                        dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                        onClick={this.handleVolumeClick}
+                      >
+                      </div>
+                    </div>
+                  : null
+                }
+                
               </div>
               <Timeline
                 currentTime={this.props.currentTime}
