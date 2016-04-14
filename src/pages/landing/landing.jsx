@@ -222,6 +222,20 @@ export default class LandingPage extends React.Component {
     this.refs.video.play()
   };
 
+  handleVideoCtaClick = () => {
+    tracking.trackEvent({
+      category: !localStorage.getItem('narrative-video-time') ? 'Watch documentary CTA' : 'Resume documentary CTA',
+      label: 'Landing Page'
+    });
+  };
+
+  handleExploreCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Explore grid CTA',
+      label: 'Landing Page'
+    });
+  };
+
   render() {
     const isReturn = !!localStorage.getItem('narrative-video-time');
 
@@ -259,6 +273,7 @@ export default class LandingPage extends React.Component {
                 ref="ctaExplore"
                 className={`cta explore`}
                 to={`grid`}
+                onClick={this.handleVideoCtaClick}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
@@ -273,6 +288,7 @@ export default class LandingPage extends React.Component {
                 ref="ctaWatch"
                 className={`cta watch`}
                 to={`narrative-video`}
+                onClick={this.handleExploreCtaClick}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
@@ -298,6 +314,7 @@ export default class LandingPage extends React.Component {
                   className={`landing-footer`}
                   primaryBackgroundColor={`rgba(37, 40, 42, 0.4)`}
                   secondaryBackgroundColor={`rgba(138, 141, 142,0.2)`}
+                  analyticsLabel={`Landing Page`}
                 />
               )
             }

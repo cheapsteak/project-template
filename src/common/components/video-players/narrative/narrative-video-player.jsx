@@ -245,7 +245,7 @@ export default class NarrativeVideoPlayer extends React.Component {
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
         await this.mute();
-      } 
+      }
 
       this.video && this.video.pause();
     }
@@ -301,7 +301,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.stopAnimations();
     this.wrapperVisible = false;
     const dots = this.refs.root.querySelectorAll('.dot');
-    _.forEach(dots, dot => animate.set(dot, {opacity: 0})  );
+    _.forEach(dots, dot => animate.set(dot, {opacity: 0}));
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -494,6 +494,11 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.animateOutEndOverlay();
     this.props.hideFullControls();
     this.playVideo();
+
+    tracking.trackEvent({
+      category: 'Narrative video player end - Replay CTA',
+      label: 'Narrative Video'
+    });
   };
 
   handleOverlayClick = (e) => {
@@ -536,6 +541,34 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.setHideControlsTimeout();
   };
 
+  handleCircleGridCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Explore grid CTA',
+      label: 'Narrative Video'
+    });
+  };
+
+  handleChapterCtaClick = () => {
+    tracking.trackEvent({
+      category: this.props.currentChapter.slug + ' learn more CTA',
+      label: 'Narrative Video'
+    });
+  };
+
+  handleEndVideoGridCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Narrative video player end - Explore grid CTA',
+      label: 'Narrative Video'
+    });
+  };
+
+  handleEndVideoCareersCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Narrative video player end - Careers CTA',
+      label: 'Narrative Video'
+    });
+  };
+
   handleClick = (e) => {
     if(e.target.id === 'videoOverlay') {
       this.handleVideoPlayPause();
@@ -566,7 +599,7 @@ export default class NarrativeVideoPlayer extends React.Component {
               className="video-overlay"
             >
             </div>
-            <Link to="/grid">
+            <Link to="/grid" onClick={this.handleCircleGridCtaClick}>
               <RectangularButton
                 ref={ node => this.refs.cornerButton = findDOMNode(node) }
                 className="explore-button"
@@ -598,6 +631,7 @@ export default class NarrativeVideoPlayer extends React.Component {
               ref={node => this.refs.circleCTA = findDOMNode(node)}
               className="circle-cta"
               to={`/chapters/${this.props.currentChapter.slug}`}
+              onClick={this.handleChapterCtaClick}
             >
               <div className="circle-wrapper">
                 <div className="circle-cta-text">
@@ -626,6 +660,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                         title="Chapters"
                         route="/grid"
                         image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
+                        onClick={this.handleEndVideoGridCtaClick}
                       />,
                       <CareerImageCard
                         key={'careers-card'}
@@ -634,6 +669,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                         href="http://jobs.successacademies.org/"
                         target="__blank"
                         image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                        onClick={this.handleEndVideoCareersCtaClick}
                       />
                     ]
                     : undefined
@@ -712,7 +748,7 @@ export default class NarrativeVideoPlayer extends React.Component {
                     </div>
                   : null
                 }
-                
+
               </div>
               <Timeline
                 currentTime={this.props.currentTime}

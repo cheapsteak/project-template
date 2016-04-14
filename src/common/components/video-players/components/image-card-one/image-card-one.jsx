@@ -236,12 +236,13 @@ export default class ImageCardOne extends React.Component {
         className="ending-card image-card-one"
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
+        onClick={this.props.onClick}
       >
         <Link to={this.props.route}>
           <img ref="image" src={this.props.image} />
           <div className="outer-content-wrapper">
             {
-              this.props.gridButton 
+              this.props.gridButton
               ? <span ref="button" className="learn-more-button" dangerouslySetInnerHTML={{__html: IconExplore }}></span>
               : <div ref="button" className="learn-more-button">+</div>
             }

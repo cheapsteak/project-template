@@ -271,7 +271,7 @@ export default class Chapter extends React.Component {
             />
           </Link>
         </nav>
-        
+
         <div ref="heroVideoContainer" className="page-component chapter-header">
           <video
             ref="heroVideo"
@@ -415,6 +415,7 @@ export default class Chapter extends React.Component {
           <Footer
             primaryBackgroundColor={`#3e4548`}
             secondaryBackgroundColor={`#52585b`}
+            analyticsLabel={`Chapter Page ${this.state.data.title}`}
           />
         </footer>
       </div>

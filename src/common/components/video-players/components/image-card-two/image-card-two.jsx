@@ -117,6 +117,7 @@ export default class ImageCardTwo extends React.Component {
         ref={ node => this.refs.card = findDOMNode(node) }
         className="ending-card image-card-two"
         target={this.props.target}
+        onClick={this.props.onClick}
       >
         <img ref="image" src={this.props.image} />
         <div ref="icon" className="icon">></div>

@@ -17,7 +17,8 @@ export default class Footer extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     primaryBackgroundColor: React.PropTypes.string,
-    secondaryBackgroundColor: React.PropTypes.string
+    secondaryBackgroundColor: React.PropTypes.string,
+    analyticsLabel: React.PropTypes.string
   };
 
   componentDidMount() {
@@ -56,21 +57,78 @@ export default class Footer extends React.Component {
   handleFacebookClick = () => {
     this.share.facebook();
     this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Facebook',
+      label: 'Share'
+    });
   };
 
   handleTwitterClick = () => {
     this.share.twitter('', 'Success Academy middle school scholars take you #insideSuccess. Watch the virtual tour: ');
     this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Twitter',
+      label: 'Share'
+    });
   };
 
   handleEmailClick = () => {
     window.location.href = 'mailto:?subject=Success Academy middle school&body=I just took the Success Academy middle school virtual tour! Check it out here: ' + location.origin + CONFIG.basePath;
     this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Email',
+      label: 'Share'
+    });
   };
 
-  handleLearnMoreClick = () => {
+  handleLogoClick = () => {
+    this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'SA logo',
+      label: this.props.analyticsLabel || 'Footer'
+    });
+
+  };
+
+  handleHomeClick = () => {
+    this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Home',
+      label: this.props.analyticsLabel || 'Footer'
+    });
+  };
+
+  handleAboutClick = () => {
     store.dispatch(actionCreators.openModal());
     this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'About',
+      label: this.props.analyticsLabel || 'Footer'
+    });
+  };
+
+  handlePolicyClick = () => {
+    this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Privacy Policy',
+      label: this.props.analyticsLabel || 'Footer'
+    });
+  };
+
+  handleCareersClick = () => {
+    this.playClickSound();
+
+    tracking.trackEvent({
+      category: 'Careers',
+      label: this.props.analyticsLabel || 'Footer'
+    });
   };
 
   playClickSound = () => {
@@ -101,10 +159,11 @@ export default class Footer extends React.Component {
             className="main-links"
             style={{ backgroundColor: this.props.primaryBackgroundColor }}
           >
+
             <a
               className="logo-link"
               href="http://www.successacademies.org" target="_blank"
-              onClick={this.playClickSound}
+              onClick={this.handleLogoClick}
               onMouseEnter={this.playMouseEnterSound}
             >
               <div
@@ -113,29 +172,34 @@ export default class Footer extends React.Component {
               >
               </div>
             </a>
-            <Link to={`/`} className="home-link">Home</Link>
+
+            <Link to={`/`} className="home-link" onClick={this.handleHomeClick}>Home</Link>
+
             <a
-              onClick={this.handleLearnMoreClick}
+              onClick={this.handleAboutClick}
               onMouseEnter={this.playMouseEnterSound}
             >
               About
             </a>
+
             <a
               href="http://www.successacademies.org/privacy-policy/"
               target="_blank"
-              onClick={this.playClickSound}
+              onClick={this.handlePolicyClick}
               onMouseEnter={this.playMouseEnterSound}
             >
               Privacy Policy
             </a>
+
             <a
               href="http://jobs.successacademies.org/"
               target="_blank"
-              onClick={this.playClickSound}
+              onClick={this.handleCareersClick}
               onMouseEnter={this.playMouseEnterSound}
             >
               Careers
             </a>
+
           </div>
           <div
             className="share-links"
