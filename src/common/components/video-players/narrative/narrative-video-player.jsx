@@ -86,7 +86,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     if (!detect.isMobile) {
       setTimeout(() => {
-        //this.props.isPlaying && this.video.play();
+        //this.props.isPlaying && this.playVideo();
       }, 600);
     }
 
@@ -124,7 +124,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying !== nextProps.isPlaying) {
-      nextProps.isPlaying ? this.video.play() : this.video.pause();
+      nextProps.isPlaying ? this.playVideo() : this.pauseVideo();
     }
 
     if(this.props.isMuted !== nextProps.isMuted) {
@@ -134,7 +134,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   componentWillAppear(callback) {
     if (!detect.isMobile) {
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
     }
     callback();
@@ -144,7 +144,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       if (!detect.isMobile) {
-        this.video.play();
+        this.playVideo();
         this.props.onVideoPlay();
       }
       callback();
@@ -217,12 +217,39 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.localStorageIntervalId = undefined;
   };
 
-  unmute = () => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  unmute = (cb) => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
+      .then(cb);
   };
 
-  mute = () => {
-    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+  mute = (cb) => {
+    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
+      .then(cb);
+  };
+
+  playVideo = () => {
+    if(this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 0 });
+        this.video.play();
+        this.unmute();
+      } else {
+        this.video.play();
+      }
+    }
+  };
+
+  pauseVideo = () => {
+    if(!this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 1 });
+        this.mute(() => {
+          this.video && this.video.pause();
+        });
+      } else {
+        this.video && this.video.pause();
+      }
+    }
   };
 
   /************************/
@@ -242,10 +269,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     // Need Fix for animate out while this is not complete
     animate.set(ctaArrow, { x: '-70%', opacity: 0 });
 
-    
-
-
-
     animate.staggerFromTo(buttons, 0.3, { y: '150%', ease: ViniEaseOut }, { delay: 0.3, y: '0%', ease: ViniEaseOut }, 0.1);
 
     animate.staggerFromTo(staggerText, 1, { opacity: 0 }, { delay: 0.8, opacity: 1, ease: ViniEaseOut }, 0.4)
@@ -254,7 +277,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     Promise.all(dotPromises).then(() => animate.staggerFromTo(dots, 1, { opacity: 0 }, { delay: 0.5, opacity: 1}, 0.1))
 
-    //
+    ///////////////////////////////////////////////////////
 
 
 
@@ -353,8 +376,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.animationStates = calculateAnimationStates(this.refs);
     this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
-console.log('resize');
-    
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
@@ -406,10 +427,10 @@ console.log('resize');
 
   handleVideoPlayPause = () => {
     if(this.props.isPlaying) {
-      this.video.pause();
+      this.pauseVideo();
       clearTimeout(this.hideControlsTimeoutId);
     } else {
-      this.video.play();
+      this.playVideo();
     }
   };
 
@@ -473,7 +494,7 @@ console.log('resize');
     this.changeVideoTime(0);
     this.animateOutEndOverlay();
     this.props.hideFullControls();
-    this.video.play();
+    this.playVideo();
   };
 
   handleOverlayClick = (e) => {
@@ -481,7 +502,7 @@ console.log('resize');
 
     if(e.target.id === 'videoOverlay') {
       this.props.hideFullControls();
-      !this.props.isPlaying && this.video.play();
+      !this.props.isPlaying && this.playVideo();
       clearTimeout(this.hideControlsTimeoutId);
     }
   };
@@ -507,7 +528,7 @@ console.log('resize');
   handleTouchStart = () => {
     if (!this.userHasInteracted) {
       this.userHasInteracted = true;
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
       animate.to(this.refs.playButton.containerEl, 0.3, {autoAlpha: 0});
     }

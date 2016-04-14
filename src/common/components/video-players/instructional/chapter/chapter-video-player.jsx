@@ -64,7 +64,7 @@ export default class ChapterVideoPlayer extends React.Component {
     animate.set(this.refs.controlsUI, this.animationStates[initialState].controlsUI),
     animate.set(this.els.endingOverlay, this.animationStates.out.endingOverlay);
 
-    this.props.isPlaying && this.video && this.video.play();
+    this.props.isPlaying && this.video && this.playVideo();
 
     window.addEventListener('resize', this.handleResize);
   }
@@ -93,7 +93,7 @@ export default class ChapterVideoPlayer extends React.Component {
     }
 
     if(this.props.isPlaying !== nextProps.isPlaying) {
-      nextProps.isPlaying ? this.video.play() : this.video.pause();
+      nextProps.isPlaying ? this.playVideo() : this.pauseVideo();
     }
 
     if(this.props.isMuted !== nextProps.isMuted) {
@@ -236,10 +236,10 @@ export default class ChapterVideoPlayer extends React.Component {
 
   handleVideoPlayPause = () => {
     if(this.props.isPlaying) {
-      this.video.pause();
+      this.pauseVideo();
       this.props.onVideoPause();
     } else {
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
     }
   };
@@ -265,12 +265,39 @@ export default class ChapterVideoPlayer extends React.Component {
     }
   }
 
-  unmute = () => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+  unmute = (cb) => {
+    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
+      .then(cb);
   };
 
-  mute = () => {
-    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+  mute = (cb) => {
+    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
+      .then(cb);
+  };
+
+  playVideo = () => {
+    if(this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 0 });
+        this.video.play();
+        this.unmute();
+      } else {
+        this.video.play();
+      }
+    }
+  };
+
+  pauseVideo = () => {
+    if(!this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 1 });
+        this.mute(() => {
+          this.video && this.video.pause();
+        });
+      } else {
+        this.video && this.video.pause();
+      }
+    }
   };
 
   animateInControls = () => {
@@ -339,7 +366,7 @@ export default class ChapterVideoPlayer extends React.Component {
   handleTouchStart = () => {
     if (!this.userHasInteracted) {
       this.userHasInteracted = true;
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
     }
 
