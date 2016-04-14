@@ -56,12 +56,8 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount');
-        
-    const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
-
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     this.containerEl = findDOMNode(this);
 
@@ -200,7 +196,7 @@ export default class GridVideoPlayer extends React.Component {
     const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
 
     this.animationStates = calculateAnimationStates(this.refs);
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
@@ -213,6 +209,10 @@ export default class GridVideoPlayer extends React.Component {
 
     animate.set(this.video, {clearProps: 'all'});
 
+    this.videoResize();
+  };
+
+  videoResize = () => {
     if (window.innerWidth > window.innerHeight) {
       BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
     } else {
@@ -439,7 +439,7 @@ export default class GridVideoPlayer extends React.Component {
 
 
   render() {
-    const { style, modelSlug, prevVideo, nextVideo, className } = this.props;
+    const { style, modelSlug, prevVideo, nextVideo, className = '' } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const prevVideoRoute = prevVideo ? prevVideo.gridRoute : '/';
     const nextVideoRoute = nextVideo ? nextVideo.gridRoute : '/';
@@ -447,7 +447,7 @@ export default class GridVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
-        className={`video-player instructional-video-player grid-player ${className || ''}`}
+        className={`video-player instructional-video-player grid-player ${className} ${this.state.isReady ? ' ready' : ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
@@ -465,7 +465,6 @@ export default class GridVideoPlayer extends React.Component {
             onEnded={this.handleEnded}
             onTimeUpdate={this.handleTimeUpdate}
             poster={this.props.poster}
-            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
           >
           </video>
 
@@ -617,14 +616,18 @@ export default class GridVideoPlayer extends React.Component {
                   }
                 </TransitionGroup>
               </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                  onClick={this.handleVolumeClick}
-                >
-                </div>
-              </div>
+              {
+                !detect.isTablet
+                ? <div className="button-wrapper">
+                    <div
+                      className="button"
+                      dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                      onClick={this.handleVolumeClick}
+                    >
+                    </div>
+                  </div>
+                : null
+              }
             </div>
             <Timeline
               currentTime={this.props.currentTime || 0}

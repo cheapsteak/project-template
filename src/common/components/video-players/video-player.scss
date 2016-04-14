@@ -3,11 +3,18 @@
   $component-bg-color: #2B2A2A;
   background-color: $component-bg-color;
 
+  &.ready {
+    video {
+      visibility: visible !important;
+    }
+  }
+
   video {
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
+    visibility: hidden;
   }
 
   &.no-zoom {
@@ -110,6 +117,13 @@
       @include flex-center;
       position: relative;
       height: 100%;
+
+
+      // When there is only 3 buttons (grid, chapter)
+      &:nth-child(1):nth-last-child(2),
+      &:nth-child(2):nth-last-child(1) {
+          width: 50%;
+      }
 
       // When there is only 3 buttons (grid, chapter)
       &:nth-child(1):nth-last-child(3),

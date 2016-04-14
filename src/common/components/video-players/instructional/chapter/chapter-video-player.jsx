@@ -46,9 +46,7 @@ export default class ChapterVideoPlayer extends React.Component {
     this.animationStates = calculateAnimationStates(this.els);
 
     if(!this.props.isFullBrowser) {
-      const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.els.videoWrapper);
-
-      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
     }
 
     const initialState = this.props.useFullControls
@@ -78,7 +76,7 @@ export default class ChapterVideoPlayer extends React.Component {
     } else if(this.props.useFullControls !== nextProps.useFullControls && !this.videoEnded) {
       if(nextProps.useFullControls) {
         this.animateInControls();
-      } else {
+      } else if(this.props.isPlaying) {
         this.animateOutControls();
       }
     }
@@ -162,12 +160,8 @@ export default class ChapterVideoPlayer extends React.Component {
 
     // we need to prevent the original cloned video component from updating its video size based on its own container
     if(!this.props.isFullBrowser) {
-      const videoWrapperOnUpdate = () => BgCover.BackgroundCover(this.video, this.els.videoWrapper);
-
-      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = videoWrapperOnUpdate;
+      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
     }
-
-    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.els.videoWrapper, {
@@ -176,8 +170,13 @@ export default class ChapterVideoPlayer extends React.Component {
       });
     }
 
+    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
     animate.set(this.video, {clearProps: 'all'});
 
+    this.videoResize();
+  };
+
+  videoResize = () => {
     if (window.innerWidth > window.innerHeight) {
       BgCover.BackgroundCover(this.video, this.els.videoWrapper);
     } else {
@@ -222,7 +221,7 @@ export default class ChapterVideoPlayer extends React.Component {
     this.hideControlsTimeoutId = setTimeout(() => {
       this.props.hideFullControls();
       this.hideControlsTimeoutId = undefined;
-    }, 1500);
+    }, 4000);
   };
 
   handleMetadataLoaded = () => {
@@ -357,8 +356,7 @@ export default class ChapterVideoPlayer extends React.Component {
       <div
         ref={ node => this.els.root = node }
         className={
-          `video-player instructional-video-player chapter-player ${className} ${noZoom ? 'no-zoom' : ''} ${init ? 'init' : ''}
-          `
+          `video-player instructional-video-player chapter-player ${className} ${noZoom ? 'no-zoom' : ''} ${init ? 'init' : ''} ${this.state.isReady || this.props.isFullBrowser ? ' ready' : ''}`
         }
         style={style}
         onMouseLeave={this.handleComponentMouseMove}
@@ -379,8 +377,8 @@ export default class ChapterVideoPlayer extends React.Component {
           className={`video-wrapper`}
         >
           {
-            !isFullBrowser ?
-              <video
+            !isFullBrowser
+            ? <video
                 id={this.videoId}
                 preload="auto"
                 ref={(node) => this.video = node }
@@ -392,7 +390,7 @@ export default class ChapterVideoPlayer extends React.Component {
                 style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
               >
               </video>
-              : undefined
+            : undefined
           }
           <RectangularButton
             ref={ node => this.els.cornerButton = findDOMNode(node) }
@@ -458,14 +456,19 @@ export default class ChapterVideoPlayer extends React.Component {
                 >
                 </div>
               </div>
-              <div className="button-wrapper">
-                <div
-                  className="button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                  onClick={this.handleVolumeClick}
-                >
-                </div>
-              </div>
+              
+              {
+                !detect.isTablet
+                ? <div className="button-wrapper">
+                      <div
+                        className="button"
+                        dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
+                        onClick={this.handleVolumeClick}
+                      >
+                      </div>
+                    </div>
+                : null
+              }
               {
                 isFullBrowser
                   ? <div className="button-wrapper">
