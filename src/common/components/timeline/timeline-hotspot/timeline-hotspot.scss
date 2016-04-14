@@ -4,6 +4,7 @@
   transform: translateY(-50%);
   z-index: 3;
   cursor: default;
+  @include gpu;
 
   .dot {
     position: relative;
@@ -16,6 +17,7 @@
     transform: translate(-50%, -50%);
     z-index: 10;
     opacity: 1;
+    @include gpu;
 
     &:before, &:after {
       content: '';
@@ -23,6 +25,7 @@
       top: 50%;
       left: 50%;
       border-radius: 100%;
+      @include gpu;
     }
 
     &:before {

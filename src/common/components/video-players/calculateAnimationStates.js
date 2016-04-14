@@ -16,13 +16,15 @@ export default function calculateAnimationStates (els) {
         y: els.simpleProgressBar.offsetHeight
       },
       videoWrapper: {
+        delay: 0.3,
         width: window.innerWidth,
         height: window.innerHeight,
-        cursor: 'none'
+        cursor: 'none',
+        ease: ViniEaseOut
       },
       overlay: {
         opacity: 0,
-        visibility: 'hidden'
+        // visibility: 'hidden'
       },
       endingOverlay: {
         delay: 0.1,
@@ -32,12 +34,15 @@ export default function calculateAnimationStates (els) {
       replayButton: {
         opacity: 0,
         visibility: 'hidden',
-        y: 100
+        rotation: 40,
+        y: 50,
+        ease: ViniEaseOut
       },
       replayLabel: {
         opacity: 0,
         visibility: 'hidden',
-        y: 100
+        y: 50,
+        ease: ViniEaseOut
       },
       cornerButton: {
         y: -els.cornerButton.offsetHeight - 70
@@ -49,11 +54,17 @@ export default function calculateAnimationStates (els) {
       circleCTA: {
         opacity: 0,
         visibility: 'hidden',
-        y: 50
+        scale: 1.1
       },
       controls: {
-        y: zoomedOutVideoMargin * 2 + 70,
-        height: zoomedOutVideoMargin * 2
+        delay: 0.2,
+        y: '170%',
+        height: zoomedOutVideoMargin * 2,
+        ease: ViniEaseOut
+      },
+      controlsUI: {
+        y: '170%',
+        ease: ViniEaseOut
       }
     },
     idle: {
@@ -64,10 +75,11 @@ export default function calculateAnimationStates (els) {
       videoWrapper: {
         width: window.innerWidth - (zoomedOutVideoMargin*2),
         height: window.innerHeight - (zoomedOutVideoMargin*2),
-        cursor: 'default'
+        cursor: 'default',
+        ease: ViniEaseOut
       },
       overlay: {
-        opacity: 0.4,
+        opacity: 1,
         visibility: 'visible'
       },
       endingOverlay: {
@@ -75,16 +87,19 @@ export default function calculateAnimationStates (els) {
         opacity: 0.99
       },
       replayButton: {
-        delay: 0.8,
+        delay: 1.6,
         opacity: 1,
         visibility: 'visible',
-        y: 0
+        rotation: 0,
+        y: 0,
+        ease: ViniEaseOut
       },
       replayLabel: {
-        delay: 1.2,
+        delay: 2,
         opacity: 1,
         visibility: 'visible',
-        y: 0
+        y: 0,
+        ease: ViniEaseOut
       },
       cornerButton: {
         y: -1
@@ -95,13 +110,20 @@ export default function calculateAnimationStates (els) {
         visibility: 'visible',
       },
       circleCTA: {
+        delay: 0.6,
         opacity: 1,
         visibility: 'visible',
-        y: 0
+        scale: 1
       },
       controls: {
-        y: 0,
-        height: zoomedOutVideoMargin * 2
+        y: '0%',
+        height: zoomedOutVideoMargin * 2,
+        ease: ViniEaseOut
+      },
+      controlsUI: {
+        delay: 0.1,
+        y: '0%',
+        ease: ViniEaseOut
       }
     },
     end: {

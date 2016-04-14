@@ -5,6 +5,8 @@ import HoverCard from './timeline-hover-card/timeline-hover-card.jsx';
 import animate from 'gsap-promise';
 import _ from 'lodash';
 import detect from '../../utils/detect/';
+import clamp from 'clamp';
+import scale from 'common/utils/scaleAt1400';
 
 export default class Timeline extends React.Component {
 
@@ -66,7 +68,7 @@ export default class Timeline extends React.Component {
     if (detect.isMobile) return;
     const { hoveredTimeStampContainer, hoveredTimeStamp, hoveredTimeStampDot } = this.refs;
 
-    animate.to(hoveredTimeStamp, 0.3, { top: -22});
+    animate.to(hoveredTimeStamp, 0.3, { top: clamp(scale(-27, window.innerWidth), -27, -35)  });
     animate.to(hoveredTimeStampContainer, 0.3, { opacity: 1 });
     animate.to(hoveredTimeStampDot, 0.3, { delay: 0.1, scale: 1 });
   };

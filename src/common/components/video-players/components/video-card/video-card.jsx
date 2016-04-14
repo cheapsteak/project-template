@@ -10,19 +10,24 @@ function calculateAnimationStates(els) {
       card: {
         opacity: 0,
         y: 100,
+        ease: ViniEaseOut
       },
       topUI: {
-        opacity: 0
+        opacity: 0,
+        ease: ViniEaseOut
       },
       button: {
-        scale: 0
+        scale: 0,
+        ease: ViniEaseOut
       },
       title: {
         opacity: 0,
-        y: 100
+        y: 100,
+        ease: ViniEaseOut
       },
       counterText: {
         opacity: 0,
+        ease: ViniEaseOut
       }
     },
     idle: {
@@ -30,23 +35,28 @@ function calculateAnimationStates(els) {
         delay: 0.3,
         opacity: 1,
         y: 0,
+        ease: ViniEaseOut
       },
       topUI: {
         delay: 0.5,
-        opacity: 1
+        opacity: 1,
+        ease: ViniEaseOut
       },
       button: {
         delay: 0.6,
-        scale: 1
+        scale: 1,
+        ease: ViniEaseOut
       },
       title: {
         delay: 0.9,
         opacity: 1,
-        y: 0
+        y: 0,
+        ease: ViniEaseOut
       },
       counterText: {
         opacity: 1,
-        y:0
+        y: 0,
+        ease: ViniEaseOut
       }
     }
   };
@@ -76,11 +86,11 @@ export default class NextVideoCard extends React.Component {
     const { card, topUI, button, buttonShadow, title, counterText } = this.refs;
 
     Promise.all([
-      animate.to(card, 0.3, this.animationStates.idle.card),
-      animate.to(topUI, 0.3, this.animationStates.idle.topUI),
-      animate.to(button, 0.3, this.animationStates.idle.button),
-      animate.to(title, 0.3, this.animationStates.idle.title),
-      animate.to(counterText, 0.3, this.animationStates.idle.counterText),
+      animate.to(card, 0.8, this.animationStates.idle.card),
+      animate.to(topUI, 0.8, this.animationStates.idle.topUI),
+      animate.to(button, 0.8, this.animationStates.idle.button),
+      animate.to(title, 0.8, this.animationStates.idle.title),
+      animate.to(counterText, 0.8, this.animationStates.idle.counterText),
     ])
     .then(callback);
   }
@@ -89,11 +99,11 @@ export default class NextVideoCard extends React.Component {
     const { card, topUI, button, buttonShadow, title, counterText } = this.refs;
 
     Promise.all([
-      animate.to(card, 0.3, this.animationStates.out.card),
-      animate.to(topUI, 0.3, this.animationStates.out.topUI),
-      animate.to(button, 0.3, this.animationStates.out.button),
-      animate.to(title, 0.3, this.animationStates.out.title),
-      animate.to(counterText, 0.3, this.animationStates.out.counterText),
+      animate.to(card, 0.8, this.animationStates.out.card),
+      animate.to(topUI, 0.8, this.animationStates.out.topUI),
+      animate.to(button, 0.8, this.animationStates.out.button),
+      animate.to(title, 0.8, this.animationStates.out.title),
+      animate.to(counterText, 0.8, this.animationStates.out.counterText),
     ])
     .then(callback);
   }
