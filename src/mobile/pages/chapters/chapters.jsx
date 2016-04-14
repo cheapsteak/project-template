@@ -10,6 +10,7 @@ import * as headerActionCreators from '../../components/mobile-header/mobile-hea
 import * as chapterActionCreators from './chapters-actions.js';
 import store from 'common/store';
 import pageTransitions from '../page-transitions.jsx';
+import VideoPlayer from '../../components/video-player/video-player';
 
 @pageTransitions
 export default class MobileChapters extends React.Component {

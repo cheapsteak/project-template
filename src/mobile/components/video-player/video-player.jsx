@@ -10,12 +10,13 @@ export default class RotateScreen extends React.Component {
     className: React.PropTypes.string,
     src: React.PropTypes.string,
     status: React.PropTypes.string,
-    onExitFullscreen: React.PropTypes.func
+    onExitFullscreen: React.PropTypes.func,
+    preload: React.PropTypes.string,
   };
 
   componentDidMount() {
     this.refs.video.style.opacity = 0;
-    animate.set(this.refs.video, { opacity: 0, width: 1, height: 1, x: -window.innerWidth/2, y: -window.innerHeight/2 });
+    animate.set(this.refs.video, { opacity: 0, width: 1, height: 1, position: 'fixed', top: 0, left: 0, x: window.innerWidth/2, y: window.innerHeight/2 });
     document.addEventListener('fullscreenchange', this.handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', this.handleFullscreenChange);
   }
@@ -96,7 +97,7 @@ export default class RotateScreen extends React.Component {
     const { className = '', style } = this.props;
 
     return (
-      <video ref="video" className={className} style={style} src={this.props.src} />
+      <video ref="video" preload={this.props.preload} className={className} style={style} src={this.props.src} />
     )
   }
 }
