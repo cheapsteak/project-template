@@ -45,14 +45,8 @@
     }
 
     img {
-      height: 100%;
-
-      // Temporary fix for ios
-      @media (-webkit-min-device-pixel-ratio: 3),
-             (min-resolution: 192dpi) {
-          height: auto;
-          width: 25vw;
-      }
+      height: auto;
+      max-width: 21.84%;
     }
 
     .list-text-content {
@@ -75,6 +69,7 @@
       h4 {
         font-size: 4.4vw;
         color: white;
+        line-height: 4.8vw;
       }
 
       .item-duration {

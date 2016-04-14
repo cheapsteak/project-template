@@ -14,6 +14,7 @@ import Preload from 'inject-prefetch';
 import _ from 'lodash';
 import chaptersModel from './model/chapters-model.js';
 import instructionalVideosModel from './model/instructional-videos-model.js';
+import detect from 'common/utils/detect/index.js';
 
 Preload([
   MobileMenu.backgroundImage,
@@ -104,9 +105,12 @@ export default class Mobile extends React.Component {
   render () {
     const { pathname } = this.props.location;
     const key = pathname.split('/')[1] || '/';
+    const deviceType = detect.isAndroid ? 'android' : 'ios';
 
+    console.log();
+        
     return (
-      <div ref="root" className="mobile full-height">
+      <div ref="root" className={`mobile full-height ${deviceType}`}>
         <Header currentKey={key} />
         <RotateScreen />
         <TransitionGroup
