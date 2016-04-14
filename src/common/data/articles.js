@@ -100,7 +100,7 @@ export default [
                 <tr>
                   <th>Grade(s)</th>
                   <th>Venue</th>
-                  <th>Exhibit/Program</th>
+                  <th>Exhibit / Program</th>
                   <th>Connection to Study Topics</th>
                 </tr>
                 <tr>
@@ -112,7 +112,7 @@ export default [
                 <tr>
                   <td>Grade 5</td>
                   <td>The Brooklyn Museum</td>
-                  <td>Egypt Reborn: Art for Eternity/Assyrian Reliefs</td>
+                  <td>Egypt Reborn: Art for Eternity / Assyrian Reliefs</td>
                   <td>Ancient Egyptian artwork</td>
                 </tr>
                 <tr>
