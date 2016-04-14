@@ -265,14 +265,12 @@ export default class ChapterVideoPlayer extends React.Component {
     }
   }
 
-  unmute = (cb) => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
-      .then(cb);
+  unmute = async () => {
+    return animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
   };
 
-  mute = (cb) => {
-    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
-      .then(cb);
+  mute = async () => {
+    return animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
   };
 
   playVideo = () => {
@@ -281,19 +279,21 @@ export default class ChapterVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
+        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
     }
   };
 
-  pauseVideo = () => {
+  pauseVideo = async () => {
     if(!this.video.paused) {
+      !this.props.useFullControls && this.props.showFullControls();
+
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
-        this.mute(() => {
-          this.video && this.video.pause();
-        });
+        await this.mute();
+        this.video && this.video.pause();
       } else {
         this.video && this.video.pause();
       }
@@ -374,6 +374,12 @@ export default class ChapterVideoPlayer extends React.Component {
     this.setHideControlsTimeout();
   };
 
+  handleClick = (e) => {
+    if(e.target.id === 'videoOverlay' || e.target.id === this.videoId) {
+      this.handleVideoPlayPause();
+    }
+  };
+
   render() {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
     const { style, modelSlug, basePath, isFullBrowser, fullBrowserChapterRoute, chapterRoute, className = '', noZoom, init } = this.props;
@@ -389,6 +395,7 @@ export default class ChapterVideoPlayer extends React.Component {
         onMouseLeave={this.handleComponentMouseMove}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
+        onClick={this.handleClick}
       >
         <div
           className={`chapter-video-poster`}
@@ -439,6 +446,7 @@ export default class ChapterVideoPlayer extends React.Component {
           }
           <div
             ref={ node => this.els.overlay = node }
+            id="videoOverlay"
             className="video-overlay">
           </div>
           <div

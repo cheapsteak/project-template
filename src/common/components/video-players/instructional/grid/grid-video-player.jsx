@@ -343,14 +343,12 @@ export default class GridVideoPlayer extends React.Component {
     }, 4000);
   }
 
-  unmute = (cb) => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
-      .then(cb);
+  unmute = async () => {
+    return animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn })
   };
 
-  mute = (cb) => {
-    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
-      .then(cb);
+  mute = async () => {
+    return animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn })
   };
 
   playVideo = () => {
@@ -359,19 +357,21 @@ export default class GridVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
+        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
     }
   };
 
-  pauseVideo = () => {
+  pauseVideo = async () => {
     if(!this.video.paused) {
+      !this.props.useFullControls && this.props.showFullControls();
+
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
-        this.mute(() => {
-          this.video && this.video.pause();
-        });
+        await this.mute();
+        this.video && this.video.pause();
       } else {
         this.video && this.video.pause();
       }
@@ -464,6 +464,11 @@ export default class GridVideoPlayer extends React.Component {
     this.setHideControlsTimeout();
   };
 
+  handleClick = (e) => {
+    if(e.target.id === 'videoOverlay') {
+      this.handleVideoPlayPause();
+    }
+  };
 
   render() {
     const { style, modelSlug, prevVideo, nextVideo, className = '' } = this.props;
@@ -478,6 +483,7 @@ export default class GridVideoPlayer extends React.Component {
         style={style}
         onMouseMove={this.handleComponentMouseMove}
         onTouchStart={this.handleTouchStart}
+        onClick={this.handleClick}
       >
         <div
           ref="videoWrapper"
@@ -569,7 +575,12 @@ export default class GridVideoPlayer extends React.Component {
               activeText={`More About ${this.props.title}`}
             />
           </Link>
-          <div ref="overlay" className="video-overlay"></div>
+          <div
+            ref="overlay"
+            id="videoOverlay"
+            className="video-overlay"
+          >
+          </div>
         </div>
         <div
           ref="simpleProgressBar"
