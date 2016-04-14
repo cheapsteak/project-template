@@ -117,7 +117,8 @@ export default class LandingPage extends React.Component {
 
     return Promise.all([
       this.initAnimateInPromise,
-      this.videoLoadPromise
+      this.videoLoadPromise,
+      this.titleAnimationPromise,
     ]).then(() => {
       this.preloadNextContent();
       this.animateOnVideoLoaded();
@@ -157,6 +158,11 @@ export default class LandingPage extends React.Component {
 
     this.logoAnimation.setSpeed(1);
     this.logoAnimation.play();
+
+    this.titleAnimationPromise = new Promise((resolve, reject) => {
+      this.logoAnimation.addEventListener('complete', () => resolve());
+    });
+
     animate.set(this.refs.title.querySelectorAll('svg g g g g g path'), {stroke: '#f99100'});
 
     return Promise.all([scalingAnimation]);
