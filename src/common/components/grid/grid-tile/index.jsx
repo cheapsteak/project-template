@@ -103,7 +103,7 @@ export default class GridTile extends React.Component {
     }
 
     animate.to(this.textContainer, 0.3, {autoAlpha: 0, y: -20, overwrite: 'all', ease: ViniEaseOut})
-    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.1, ease: ViniEaseOut, overwrite: 'all'})
+    animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.12, ease: ViniEaseOut, overwrite: 'all'})
 
     if (!this.state.isMobile) {
       audio.play('button-rollover');
@@ -169,6 +169,9 @@ export default class GridTile extends React.Component {
   applyFilter = () => {
     this.filterApplied = true;
 
+    // fix for weirdly masking tile on scroll
+    animate.set(this.refs.contentWrapper.parentNode, {perspective: 'none', '-webkit-perspective': 'none'});
+
     return animate.to(this.refs.contentWrapper, 0.4, {
       scale: 0.9,
       autoAlpha: 0.1,
@@ -179,6 +182,8 @@ export default class GridTile extends React.Component {
   };
 
   removeFilter = () => {
+    animate.set(this.refs.contentWrapper.parentNode, {clearProps: 'perspective'});
+
     if (this.filterApplied) {
       this.filterApplied = false;
       return animate.to(this.refs.contentWrapper, 0.4, {

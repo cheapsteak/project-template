@@ -94,18 +94,14 @@ export default class Layout extends React.Component {
       }, 0.1)
     ])
   };
-  randomizeArray = (arr) => {
-    arr = Array.prototype.slice.call(arr);
-    arr.sort(() => 0.5 - Math.random()); // shuffle
-  };
 
   applyFilter = () => {
     if (!this.fillers.animatedIn) {
       return;
     }
     const fillers = [...this.fillers];
-    this.randomizeArray(fillers);
-    animate.staggerTo(fillers, 0.4, {scale: 0.9, autoAlpha: 0.1, ease: ViniEaseOut}, 0.05);
+    //fillers.sort(() => 0.5 - Math.random());
+    animate.staggerTo(fillers, 0.4, {scale: 0.9, autoAlpha: 0.1, ease: ViniEaseOut, delay: 0.05}, 0.05);
   };
 
   removeFilter = () => {
@@ -113,7 +109,7 @@ export default class Layout extends React.Component {
       return;
     }
     const fillers = [...this.fillers];
-    this.randomizeArray(fillers);
-    animate.staggerTo(fillers, 0.4, {scale: 1, autoAlpha: 1, ease: ViniEaseOut}, 0.05);
+    //fillers.sort(() => 0.5 - Math.random());
+    animate.staggerTo(fillers, 0.4, {scale: 1, autoAlpha: 1, ease: ViniEaseOut, delay: 0.05}, 0.05);
   };
 }

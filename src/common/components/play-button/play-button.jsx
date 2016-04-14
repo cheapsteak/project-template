@@ -58,13 +58,13 @@ export default class PlayButton extends React.Component {
   componentDidMount() {
     this.containerEl = findDOMNode(this);
 
-    this.colorCircle = new ProgressBar.Circle(this.refs.iconContainer, {
+    this.colorCircle = new ProgressBar.Circle(this.refs.progressTarget, {
       color: this.props.circleColor,
       strokeWidth: 6,
       duration: 500
     });
 
-    this.whiteCircle = new ProgressBar.Circle(this.refs.iconContainer, {
+    this.whiteCircle = new ProgressBar.Circle(this.refs.progressTarget, {
       color: '#fff',
       strokeWidth: 8
     });
@@ -173,6 +173,7 @@ export default class PlayButton extends React.Component {
     return (
       <div className={`progress-play-button ${componentClassName}`}>
         {!this.props.shouldHideHalo && <div className={`play-button-shadow`}></div>}
+        <div ref="progressTarget" className={`progress-target`}></div>
         <div
           ref="iconContainer"
           className={`icon-container`}

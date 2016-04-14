@@ -74,7 +74,7 @@ export default class GridMenu extends React.Component {
     return animate.all([
       animate.to(this.containerEl, duration, {y: '0%', ease, delay: delay}),
       animate.to(colorTabs, duration + 0.2, {y: '0%', ease, delay: delay - 0.1}),
-      animate.staggerTo(ctaItems, 0.5, {y: 0, autoAlpha: 0.8, delay: delay + 0.4, ease}, 0.1)
+      animate.staggerTo(ctaItems, 0.5, {y: 0, autoAlpha: 1, delay: delay + 0.4, ease}, 0.1)
         .then(() => animate.set(ctaItems, {clearProps: 'all'}))
     ])
   };

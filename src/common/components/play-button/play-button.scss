@@ -2,6 +2,15 @@
   display: inline-block;
   @include scale-prop(width, 145);
   @include scale-prop(height, 145);
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+
+  .progress-target {
+    position: absolute;
+    width: 101%;
+    height: 101%;
+  }
 
   svg {
     fill: #6d7880;
@@ -20,7 +29,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background-color: #fff;
     cursor: pointer;
     border-radius: 50%;
 
