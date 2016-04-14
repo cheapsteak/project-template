@@ -293,10 +293,9 @@ export default class ChapterVideoPlayer extends React.Component {
       if(!this.props.isMuted && !detect.isMobile) {
         animate.set(this.video, { volume: 1 });
         await this.mute();
-        this.video && this.video.pause();
-      } else {
-        this.video && this.video.pause();
       }
+
+      this.video && this.video.pause();
     }
   };
 
