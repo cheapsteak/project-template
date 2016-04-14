@@ -31,6 +31,7 @@ $orange: #f99100;
   .main {
     position: relative;
     height: 100%;
+    //z-index: 1;
     //@include scale('top', 50px, #{(50/1400 * 100)}vw, 70px);
 
     // @include scale('margin-top', 50px, #{(50/1400 * 100)}vw, 70px);
@@ -56,7 +57,7 @@ $orange: #f99100;
   .nav {
     position: fixed;
     top: 0;
-    z-index: 100;
+    z-index: 1;
     @include scale('height', 50px, #{(50/1400*100)}vw, #{(70/1400*100)}vw);
     width: 100%;
     // @media (max-width: $break-large) {

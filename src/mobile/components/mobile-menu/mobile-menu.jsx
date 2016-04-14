@@ -77,11 +77,11 @@ export default class MobileMenu extends React.Component {
   };
 
   handleTwitterClick = () => {
-    this.share.twitter('', 'Visit Success Academy website.');
+    this.share.twitter('', 'Success Academy middle school scholars take you #insideSuccess. Watch the virtual tour: ');
   };
 
   handleEmailClick = () => {
-    window.location.href = 'mailto:mail@example.org';
+    window.location.href = 'mailto:?subject=Success Academy middle school&body=I just took the Success Academy middle school virtual tour! Check it out here: ' + location.origin + CONFIG.basePath;
   };
 
   handleMenuItemClick = (route, e) => {
