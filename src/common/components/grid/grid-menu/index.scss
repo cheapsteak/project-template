@@ -91,6 +91,7 @@
     }
 
     p {
+      width: 80%;
       @include scale-prop(margin-top, 5);
       transition: color 0.3s, opacity 0.3s, transform 0.3s;
     }

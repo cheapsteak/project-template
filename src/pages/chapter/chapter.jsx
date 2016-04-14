@@ -240,35 +240,38 @@ export default class Chapter extends React.Component {
         style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
       >
       <div ref="pageWrapper" className={`page-wrapper`}>
-      <nav ref="nav" className="nav">
-        <Link
-          className={`nav-button left`}
-          to={`/narrative-video`}
-        >
-          <RectangularButton
-            style={{height: '100%'}}
-            text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
-            color={`#adafaf`}
-            svgIcon={isReturn ? IconLeftArrow : IconPlayOutline}
-            backgroundColor={`#565d60`}
-            hoverBackgroundColor={`#3e4548`}
-          />
-        </Link>
-        <Link
-          className={`nav-button right`}
-          to={`grid`}
-        >
-          <RectangularButton
-            style={{height: '100%'}}
-            text={`Main Menu`}
-            color={`#adafaf`}
-            svgIcon={IconExplore}
-            backgroundColor={`#565d60`}
-            hoverBackgroundColor={`#3e4548`}
-          />
-        </Link>
-      </nav>
+
       <div ref="main" className="main">
+
+        <nav ref="nav" className="nav">
+          <Link
+            className={`nav-button left`}
+            to={`/narrative-video`}
+          >
+            <RectangularButton
+              style={{height: '100%'}}
+              text={` ${isReturn ? 'Return to Documentary' : 'Watch Documentary'}`}
+              color={`#adafaf`}
+              svgIcon={isReturn ? IconLeftArrow : IconPlayOutline}
+              backgroundColor={`#565d60`}
+              hoverBackgroundColor={`#3e4548`}
+            />
+          </Link>
+          <Link
+            className={`nav-button right`}
+            to={`grid`}
+          >
+            <RectangularButton
+              style={{height: '100%'}}
+              text={`Main Menu`}
+              color={`#adafaf`}
+              svgIcon={IconExplore}
+              backgroundColor={`#565d60`}
+              hoverBackgroundColor={`#3e4548`}
+            />
+          </Link>
+        </nav>
+        
         <div ref="heroVideoContainer" className="page-component chapter-header">
           <video
             ref="heroVideo"
@@ -415,6 +418,7 @@ export default class Chapter extends React.Component {
           />
         </footer>
       </div>
+
       </div>
     </section>
     );

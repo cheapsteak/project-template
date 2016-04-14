@@ -182,17 +182,17 @@ export default class GridTile extends React.Component {
   };
 
   removeFilter = () => {
-    animate.set(this.refs.contentWrapper.parentNode, {clearProps: 'perspective'});
-
     if (this.filterApplied) {
       this.filterApplied = false;
+
       return animate.to(this.refs.contentWrapper, 0.4, {
-        scale: 1,
-        autoAlpha: 1,
-        pointerEvents: 'auto',
-        ease: ViniEaseOut,
-        delay: this.index * 0.05
-      });
+          scale: 1,
+          autoAlpha: 1,
+          pointerEvents: 'auto',
+          ease: ViniEaseOut,
+          delay: this.index * 0.05
+        })
+        .then(() => animate.set(this.refs.contentWrapper.parentNode, {clearProps: 'perspective'}))
     }
   };
 
