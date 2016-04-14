@@ -112,7 +112,7 @@ export default class GridVideoPlayer extends React.Component {
         this.clearCountdown();
         this.animateOutEndOverlay();
         this.props.hideFullControls();
-        this.video.play();
+        this.playVideo();
       }
     }
 
@@ -128,7 +128,7 @@ export default class GridVideoPlayer extends React.Component {
       this.clearCountdown();
       this.animateOutEndOverlay();
       this.props.hideFullControls();
-      this.video.play();
+      this.playVideo();
     }
 
     if(this.props.isMuted !== nextProps.isMuted) {
@@ -138,7 +138,7 @@ export default class GridVideoPlayer extends React.Component {
 
   componentWillAppear(callback) {
     if (!detect.isMobile) {
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
     }
     callback();
@@ -146,12 +146,12 @@ export default class GridVideoPlayer extends React.Component {
 
   componentWillEnter(callback) {
     //this.props.onVideoPause();
-    //this.video.pause();
+    //this.pauseVideo();
 
     // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       if (!detect.isMobile) {
-        this.video.play();
+        this.playVideo();
         this.props.onVideoPlay();
       }
       callback();
@@ -162,7 +162,7 @@ export default class GridVideoPlayer extends React.Component {
     animate.set(this.containerEl, {zIndex: 999999});
     this.isAnimatingOut = true;
     this.props.onVideoPause();
-    this.video.pause();
+    this.pauseVideo();
     this.props.hideFullControls();
     this.animateOutFade(callback);
   }
@@ -170,7 +170,7 @@ export default class GridVideoPlayer extends React.Component {
   componentWillUnmount() {
     clearInterval(this.nextVideoIntervalId);
     clearTimeout(this.hideControlsTimeoutId);
-    this.video.pause();
+    this.pauseVideo();
     // this.props.onVideoPause();
     window.removeEventListener('resize', this.handleResize);
     this.stopAnimations();
@@ -225,7 +225,7 @@ export default class GridVideoPlayer extends React.Component {
     this.props.onVideoMetadataLoaded && this.props.onVideoMetadataLoaded(this.video.duration);
 
     if(this.props.isPlaying && !detect.isMobile) {
-      this.video.play();
+      this.playVideo();
     }
 
     this.handleResize();
@@ -241,10 +241,10 @@ export default class GridVideoPlayer extends React.Component {
     this.hideControlsTimeoutId = undefined;
 
     if(this.props.isPlaying) {
-      this.video.pause();
+      this.pauseVideo();
       this.props.onVideoPause();
     } else {
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
     }
   };
@@ -344,11 +344,36 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   unmute = () => {
-    animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeOut });
+    animate.to(this.video, 0.5, { volume: 1, ease: Quad.easeIn });
   };
 
   mute = () => {
-    animate.to(this.video, 0.8, { volume: 0, ease: Quad.easeOut });
+    animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn });
+  };
+
+  playVideo = () => {
+    if(this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 0 });
+        this.video.play();
+        animate.to(this.video, 0.8, { volume: 1, ease: Quad.easeIn });
+      } else {
+        this.video.play();
+      }
+    }
+  };
+
+  pauseVideo = () => {
+    if(!this.video.paused) {
+      if(!this.props.isMuted && !detect.isMobile) {
+        animate.set(this.video, { volume: 1 });
+        animate.to(this.video, 0.5, { volume: 0, ease: Quad.easeIn }).then(() => {
+          this.video && this.video.pause();
+        });
+      } else {
+        this.video.pause();
+      }
+    }
   };
 
   animateInControls = () => {
@@ -428,7 +453,7 @@ export default class GridVideoPlayer extends React.Component {
   handleTouchStart = () => {
     if (!this.userHasInteracted) {
       this.userHasInteracted = true;
-      this.video.play();
+      this.playVideo();
       this.props.onVideoPlay();
       animate.to(this.refs.playButton.containerEl, 0.3, {autoAlpha: 0});
     }
