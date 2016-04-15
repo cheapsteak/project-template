@@ -70,9 +70,15 @@ export default class MobileVideos extends React.Component {
             this.data.map((video, i) => {
               return (
                 <div key={i} className="video-item" onClick={this.handleVideoClick.bind(null, i)}>
-                  <VideoPlayer src={video.src} preload="none" status={this.state.videoStatuses[i]} onExitFullscreen={this.pauseVideo.bind(null, i)} />
+                  <VideoPlayer
+                    src={video.src}
+                    preload="none"
+                    status={this.state.videoStatuses[i]} onExitFullscreen={this.pauseVideo.bind(null, i)}
+                    trackingCategory={`Mobile Instructional Video - ${video.slug}`}
+                    trackingLabel="Instructional Video"
+                  />
                   <h1 dangerouslySetInnerHTML={{ __html: video.title }}></h1>
-                  <img className="video-image" src={video.backgroundImage} />
+                  <img className="video-image" src={video.backgroundImage}/>
                   <div className="panel-label">
                     <div className="play-svg" dangerouslySetInnerHTML={{ __html: PlayIconSvg }}></div>
                     <label>Play Video</label>

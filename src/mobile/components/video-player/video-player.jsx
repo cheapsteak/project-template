@@ -2,6 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import detect from 'common/utils/detect';
+import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class RotateScreen extends React.Component {
 
@@ -9,6 +10,8 @@ export default class RotateScreen extends React.Component {
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     src: React.PropTypes.string,
+    trackingCategory: React.PropTypes.string,
+    trackingLabel: React.PropTypes.string,
     status: React.PropTypes.string,
     onExitFullscreen: React.PropTypes.func,
     preload: React.PropTypes.string,
@@ -19,11 +22,9 @@ export default class RotateScreen extends React.Component {
     animate.set(this.refs.video, { opacity: 0, width: 1, height: 1, position: 'fixed', top: 0, left: 0, x: window.innerWidth/2, y: window.innerHeight/2 });
     document.addEventListener('fullscreenchange', this.handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', this.handleFullscreenChange);
-  }
 
-  componentWillUnmount() {
-    document.removeEventListener('fullscreenchange', this.handleFullscreenChange);
-    document.removeEventListener('webkitfullscreenchange', this.handleFullscreenChange);
+    this.analytics = createVideoAnalyticsTracker(this.refs.video, this.props.trackingCategory, this.props.trackingLabel);
+    this.analytics.track();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,6 +42,12 @@ export default class RotateScreen extends React.Component {
         nextProps.status === 'play' ? this.playVideo() : this.stopVideo();
       }
     }
+  }
+
+  componentWillUnmount() {
+    this.analytics.cleanup();
+    document.removeEventListener('fullscreenchange', this.handleFullscreenChange);
+    document.removeEventListener('webkitfullscreenchange', this.handleFullscreenChange);
   }
 
   playVideo = () => {

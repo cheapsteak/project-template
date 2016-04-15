@@ -17,6 +17,7 @@ import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
+import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class ChapterVideoPlayer extends React.Component {
   static propTypes = {
@@ -67,6 +68,11 @@ export default class ChapterVideoPlayer extends React.Component {
     this.props.isPlaying && this.video && this.playVideo();
 
     window.addEventListener('resize', this.handleResize);
+
+    if(this.video) {
+      this.analytics = createVideoAnalyticsTracker(this.video, `Instructional Video Player - ${this.props.slug}`, 'Instructional Video');
+      this.analytics.track();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -145,6 +151,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+    this.analytics && this.analytics.cleanup();
   }
 
   changeVideoTime = (time) => {

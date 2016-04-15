@@ -22,6 +22,7 @@ import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
 import PlayButton from 'common/components/play-button/play-button';
+import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class NarrativeVideoPlayer extends React.Component {
 
@@ -69,26 +70,8 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     animate.set(this.refs.ctaArrow, { x: '-200%', opacity: 0 });
 
-    //if(!this.props.isPlaying) {
-    //if(!this.props.useFullControls) {
-    //this.props.showFullControls();
-    //}
-    //}
-
-    // const fakeVideoObj = {clientWidth: 1920, clientHeight: 1080, style: {}};
-    // BgCover.BackgroundCover(fakeVideoObj, this.refs.videoWrapper);
-    // this.video.width = parseFloat(fakeVideoObj.style.width);
-    // this.video.height = parseFloat(fakeVideoObj.style.height);
-    // this.video.style.width = fakeVideoObj.style.width;
-    // this.video.style.height = fakeVideoObj.style.height;
-    // this.video.style.top = fakeVideoObj.style.width.top;
-    // this.video.style.left = fakeVideoObj.style.left;
-
-    if (!detect.isMobile) {
-      setTimeout(() => {
-        //this.props.isPlaying && this.playVideo();
-      }, 600);
-    }
+    this.analytics = createVideoAnalyticsTracker(this.video, 'Narrative Video Player', 'Narrative Video');
+    this.analytics.track();
 
     window.addEventListener('resize', this.handleResize);
   }
@@ -165,6 +148,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.props.hideFullControls();
     window.removeEventListener('resize', this.handleResize);
     this.clearTimeStorageInterval();
+    this.analytics.cleanup();
   }
 
   animateOutSwipe = (callback) => {
@@ -419,7 +403,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     }
   };
 
-  handleTimeUpdate = () => {
+  handleTimeUpdate = (e) => {
     const currentChapter = this.props.currentChapter;
     this.props.onVideoTimeChange(this.video.currentTime);
   };
