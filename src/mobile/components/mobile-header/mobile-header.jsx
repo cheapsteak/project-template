@@ -62,7 +62,8 @@ export default class MobileHeader extends React.Component {
       if(this.context.previousRoute) {
         this.context.router.goBack();
       } else {
-        this.context.router.replace('/');
+        const nextRoute = this.props.currentKey !== 'learn-more' ? '/chapters' : '/';
+        this.context.router.push(nextRoute);
       }
 
       this.props.closeMenu();
@@ -93,15 +94,19 @@ export default class MobileHeader extends React.Component {
           className="mobile-header"
         > 
           <div
-            ref="menuIcon"
-            className="mobile-menu-icon"
+            className="icon-wrapper"
             onClick={this.handleMenuIconClick}
           >
-            {
-              _.range(3).map((i) => {
-                return <span key={i} className="menu-content"></span>
-              })
-            }
+            <div
+              ref="menuIcon"
+              className="mobile-menu-icon"
+            >
+              {
+                _.range(3).map((i) => {
+                  return <span key={i} className="menu-content"></span>
+                })
+              }
+            </div>
           </div>
           <div
             ref="title"
@@ -111,11 +116,15 @@ export default class MobileHeader extends React.Component {
             {this.props.title}
           </div>
           <div
-            className="logo-icon menu-content"
-            style={ this.props.title === 'SA' ? {} : hiddenStyle }
-            dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            className="icon-wrapper"
             onClick={this.handleMenuLogoClick}
           >
+            <div
+              className="logo-icon menu-content"
+              style={ this.props.title === 'SA' ? {} : hiddenStyle }
+              dangerouslySetInnerHTML={{ __html: SALogoSvg }}
+            >
+            </div>
           </div>
         </div>
       </div>

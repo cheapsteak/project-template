@@ -41,12 +41,12 @@ export default class MobileChapters extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { pathname } = nextProps.location;
     let key = pathname.split('/')[2];
-    
-    if(key) {
-      animate.set(this.refs.container, {overflowY: 'hidden'});
-    } else {
-      animate.set(this.refs.container, {overflowY: 'scroll'});
-    }
+
+    // if(key) {
+    //   animate.set(this.refs.container, {overflowY: 'hidden'});
+    // } else {
+    //   animate.set(this.refs.container, {overflowY: 'scroll'});
+    // }
 
     this.setHeader(nextProps);
   }
@@ -102,12 +102,12 @@ export default class MobileChapters extends React.Component {
 
   render () {
     const { pathname } = this.props.location;
-    let key = pathname.split('/')[2] || 'root';
+    let key = pathname.split('/')[2];
 
     return (
-      <div ref="container" className="mobile-chapters">
+      <div ref="container" className={`mobile-chapters`}>
         <div ref="topOverlay" className="top-overlay"></div>
-        <div ref="content" className="content-wrapper">
+        <div ref="content"className={`content-wrapper${key ? ' no-scroll' : ''}`}>
         {
           this.state.chapters.map((chapter, i) => {
             return (
@@ -133,7 +133,8 @@ export default class MobileChapters extends React.Component {
                     <span>{ chapter.isOpen ? 'Close' : 'Expand' }</span>
                   </div>
                 </div>
-                <TransitionGroup>
+                <TransitionGroup
+                >
                   {
                     chapter.isOpen
                     ? <ContentList
@@ -154,6 +155,7 @@ export default class MobileChapters extends React.Component {
             )
           })
         }
+        </div>
         <TransitionGroup component="div">
           {
             this.props.children
@@ -161,7 +163,6 @@ export default class MobileChapters extends React.Component {
             : <div />
           }
         </TransitionGroup>
-        </div>
       </div>
     )
   }

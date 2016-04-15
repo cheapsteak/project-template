@@ -8,6 +8,13 @@
   width: 100%;
   height: 100%;
 
+  &.no-scroll {
+    .content-wrapper {
+      overflow: hidden !important;
+      pointer-events: none;
+    }
+  }
+
   .top-overlay {
     position: absolute;
     top: 0;
@@ -19,11 +26,20 @@
   }
 
   .content-wrapper {
+    position: relative;
     width: 100vw;
     height: 100%;
     padding-top: calc(8.945vh);
     overflow-x: hidden;
     overflow-y: scroll;
+    z-index: 5;
+
+    &.no-scroll {
+      // .content-wrapper {
+        overflow: hidden !important;
+        pointer-events: none;
+      // }
+    }
   }
 
   .chapter-wrapper {
