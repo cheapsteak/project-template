@@ -34,8 +34,8 @@ export default class MobilePhotoEssay extends React.Component {
     const { className = '' } = this.props;
     return (
       <div className={`mobile-photo-essay ${className}`}>
+        <div className="top-overlay"></div>
         <main>
-          <div className="top-overlay"></div>
           {
             this.state.data.photos.map(photo => {
               return (

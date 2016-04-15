@@ -24,8 +24,6 @@ export default class MobileMenu extends React.Component {
     router: React.PropTypes.object
   };
 
-  static backgroundImage = `${config.ASSET_PATH}/mobile-menu-background.jpg`;
-
   data = [
     {
       route: '/chapters',

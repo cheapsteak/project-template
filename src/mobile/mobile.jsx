@@ -15,10 +15,11 @@ import _ from 'lodash';
 import chaptersModel from './model/chapters-model.js';
 import instructionalVideosModel from './model/instructional-videos-model.js';
 import detect from 'common/utils/detect/index.js';
+import config from '../../config.js';
 
 Preload([
-  MobileMenu.backgroundImage,
-  ...(_.flatten(chaptersModel.getAll().slice(0, 3).map(chapter => {
+  `${config.ASSET_PATH}/images/mobile-menu-background.jpg`,
+  ...(_.flatten(chaptersModel.getAll().map(chapter => {
     return [
       ...chapter.articles.map(article => article.iconImage),
       ...chapter.instructionalVideos.map(video => video.iconImage),

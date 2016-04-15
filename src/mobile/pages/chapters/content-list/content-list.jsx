@@ -6,7 +6,7 @@ import ClockIconSvg from 'svgs/clock-icon.svg';
 import animate from 'gsap-promise';
 import VideoPlayer from '../../../components/video-player/video-player';
 
-function ListWrapper (props) {
+function ListItemWrapper (props) {
   if(props.isVideo) {
     return (
       <div className={props.className} onClick={props.onClick}>
@@ -25,9 +25,8 @@ function ListWrapper (props) {
 }
 
 function ListItem (props) {
-
   return (
-    <ListWrapper className="list-item" {...props} >
+    <ListItemWrapper className="list-item" {...props} >
       <img src={ props.image } />
       <div className="list-text-content">
         <span>
@@ -43,7 +42,7 @@ function ListItem (props) {
           : null
         }
       </div>
-    </ListWrapper>
+    </ListItemWrapper>
   )
 }
 
