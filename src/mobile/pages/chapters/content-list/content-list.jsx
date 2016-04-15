@@ -14,6 +14,8 @@ function ListItemWrapper (props) {
           src={props.src}
           preload="none"
           status={props.videoStatus}
+          trackingCategory={props.trackingCategory}
+          trackingLabel={props.trackingLabel}
           onExitFullscreen={props.onExitFullscreen}
         />
         {props.children}
@@ -88,6 +90,11 @@ i
   }
 
   playVideo = (i) => {
+    tracking.trackEvent({
+      category: 'Mobile - Instructional video ' + this.props.instructionalVideos[i-1].slug,
+      label: 'Instructional Video'
+    });
+
     this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'play',
@@ -128,6 +135,8 @@ i
             name={`Meet ${this.props.scholar}`}
             isVideo={ true }
             onClick={ this.handleNarrativeVideoClick }
+            trackingCategory={`Mobile - Narrative Video - ${this.props.name}`}
+            trackingLabel="Narrative Video"
             onExitFullscreen={ this.pauseVideo.bind(null, 0) }
             videoStatus={ this.state.videoStatuses[0] }
             image={ this.props.narrativeVideo.iconImage }
@@ -151,6 +160,8 @@ i
                   onClick={ this.playVideo.bind(null, i+1) }
                   onExitFullscreen={ this.pauseVideo.bind(null, i+1) }
                   videoStatus={ this.state.videoStatuses[i+1] }
+                  trackingCategory={`Mobile - Instructional Video - ${video.slug}`}
+                  trackingLabel="Instructional Video"
                   image={ video.iconImage }
                   duration={ video.duration }
                   src={ video.src }

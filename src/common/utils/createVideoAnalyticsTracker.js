@@ -1,7 +1,9 @@
+import tracking from 'common/utils/tracking.js';
 const intervalLength = 1000 * 5;
 
-export default function trackVideoAnalytics(videoStorageId, videoEl) {
-  let timeWatched = parseFloat(localStorage.getItem(videoStorageId) || 0);
+export default function createVideoAnalyticsTracker(videoEl, videoTrackingId, trackingLabel) {
+  !localStorage.getItem(videoTrackingId) && localStorage.setItem(videoTrackingId, 0);
+  let timeWatched = parseFloat(localStorage.getItem(videoTrackingId));
   let previousTimeSent = timeWatched;
   let previousTime;
   let trackingInterval;
@@ -10,8 +12,14 @@ export default function trackVideoAnalytics(videoStorageId, videoEl) {
     if(timeWatched === previousTimeSent) {
       return;
     }
-    localStorage.setItem(videoStorageId, timeWatched);
-    console.log('fake-ga sending time', Math.round(timeWatched/1000));
+
+    localStorage.setItem(videoTrackingId, timeWatched);
+    tracking.trackEvent({
+      category: videoTrackingId,
+      action: 'Watched',
+      label: trackingLabel,
+      value: Math.round(timeWatched/1000)
+    });
     previousTimeSent = timeWatched;
   };
 
@@ -20,8 +28,6 @@ export default function trackVideoAnalytics(videoStorageId, videoEl) {
     timeWatched += now - previousTime;
     previousTime = now;
   };
-
-  !localStorage.getItem(videoStorageId) && localStorage.setItem(videoStorageId, 0);
 
   function handleVideoPlay () {
     previousTime = new Date().getTime();
@@ -39,9 +45,9 @@ export default function trackVideoAnalytics(videoStorageId, videoEl) {
       trackingInterval = setInterval(sendAnalytics, intervalLength);
     },
     cleanup: function cleanup() {
-      video.removeEventListener('timeupdate', trackTimeWatched);
-      video.removeEventListener('play', handleVideoPlay);
-      video.removeEventListener('pause', handleVideoPause);
+      videoEl.removeEventListener('timeupdate', trackTimeWatched);
+      videoEl.removeEventListener('play', handleVideoPlay);
+      videoEl.removeEventListener('pause', handleVideoPause);
       clearInterval(trackingInterval);
     }
   }

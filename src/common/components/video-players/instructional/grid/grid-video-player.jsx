@@ -22,6 +22,7 @@ import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
 import PlayButton from 'common/components/play-button/play-button';
 import detect from 'common/utils/detect';
+import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class GridVideoPlayer extends React.Component {
   static propTypes = {
@@ -88,6 +89,9 @@ export default class GridVideoPlayer extends React.Component {
     if(this.props.isMuted) {
       this.video.volume = 0;
     }
+
+    this.analytics = createVideoAnalyticsTracker(this.video, `Instructional Video Player - ${this.props.slug}`, 'Instructional Video');
+    this.analytics.track();
   }
 
   componentWillReceiveProps(nextProps) {
