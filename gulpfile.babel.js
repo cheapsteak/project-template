@@ -157,7 +157,9 @@ gulp.task('styles', () => {
     outputStyle: production ? 'compressed' : 'nested'
   }))
   .on('error', handleError)
-  .pipe(prefix(paths.styles.browserVersions))
+  .pipe(prefix({
+      browsers: paths.styles.browserVersions
+    }))
   .pipe(concat(paths.styles.filename));
 
   if(!production) {
