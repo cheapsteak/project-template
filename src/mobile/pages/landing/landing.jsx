@@ -55,8 +55,8 @@ export default class Landing extends React.Component {
               className="cta-explore"
               text="Main Menu"
               color="#ffffff"
-              backgroundColor="#EB9729"
-              hoverBackgroundColor="#EB9729"
+              backgroundColor="#f7910b"
+              hoverBackgroundColor="#de8209"
               svgIcon={IconExplore}
               onClick={this.handleExploreCtaClick}
             />

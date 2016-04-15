@@ -436,8 +436,8 @@ export default class ChapterVideoPlayer extends React.Component {
             className="close-button"
             text="Close"
             color="#ffffff"
-            backgroundColor="#f99100"
-            hoverBackgroundColor="#f99100"
+            backgroundColor="#f7910b"
+            hoverBackgroundColor="#de8209"
             svgIcon={CloseSvg}
           />
           {
