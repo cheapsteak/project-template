@@ -74,14 +74,29 @@ export default class MobileMenu extends React.Component {
 
   handleFacebookClick = () => {
     this.share.facebook();
+
+    tracking.trackEvent({
+      category: 'Mobile - Facebook',
+      label: 'Share'
+    });
   };
 
   handleTwitterClick = () => {
     this.share.twitter('', 'Success Academy middle school scholars take you #insideSuccess. Watch the virtual tour: ');
+
+    tracking.trackEvent({
+      category: 'Mobile - Twitter',
+      label: 'Share'
+    });
   };
 
   handleEmailClick = () => {
     window.location.href = 'mailto:?subject=Success Academy middle school&body=I just took the Success Academy middle school virtual tour! Check it out here: ' + location.origin + CONFIG.basePath;
+
+    tracking.trackEvent({
+      category: 'Mobile - Email',
+      label: 'Share'
+    });
   };
 
   handleMenuItemClick = (route, e) => {
@@ -89,7 +104,48 @@ export default class MobileMenu extends React.Component {
       this.context.router.push(route);
     }
 
+    var category;
+    switch (route) {
+      case '/chapters':
+        category = 'Mobile - Explore grid CTA';
+        break;
+      case '/videos':
+        category = 'Mobile - Instructional videos grid CTA';
+        break;
+      case '/learn-more':
+        category = 'Mobile - Learn more CTA';
+        break;
+      default:
+        break;
+    }
+
+    tracking.trackEvent({
+      category: category,
+      label: 'Mobile Menu'
+    });
+
     this.props.closeMenu();
+  };
+
+  handlePolicyClick = () => {
+    tracking.trackEvent({
+      category: 'Mobile - Privacy Policy Link',
+      label: 'Mobile Menu'
+    });
+  };
+
+  handleCareersClick = () => {
+    tracking.trackEvent({
+      category: 'Mobile - Careers Link',
+      label: 'Mobile Menu'
+    });
+  };
+
+  handleSuccessAcademiesClick = () => {
+    tracking.trackEvent({
+      category: 'Mobile - Success Academies Link',
+      label: 'Mobile Menu'
+    });
   };
 
   render () {
@@ -122,13 +178,28 @@ export default class MobileMenu extends React.Component {
           })
         }
         <div className="menu-bottom">
-          <a className="bottom-item" href="http://www.successacademies.org/privacy-policy/" target="_blank">
+          <a
+            className="bottom-item"
+            href="http://www.successacademies.org/privacy-policy/"
+            target="_blank"
+            onClick={this.handlePolicyClick}
+          >
             Privacy Policy
           </a>
-          <a className="bottom-item"  href="http://www.successacademies.org" target="_blank">
+          <a
+            className="bottom-item"
+            href="http://www.successacademies.org"
+            target="_blank"
+            onClick={this.handleSuccessAcademiesClick}
+          >
             Successacademies.org
           </a>
-          <a className="bottom-item"  href="http://jobs.successacademies.org/" target="_blank">
+          <a
+            className="bottom-item"
+            href="http://jobs.successacademies.org/"
+            target="_blank"
+            onClick={this.handleCareersClick}
+          >
             Careers
           </a>
           <div className="menu-footer">

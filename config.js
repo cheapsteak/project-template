@@ -2,22 +2,22 @@ const config = {
   local: {
     ASSET_PATH: '/middleschool',
     basePath: '/middleschool',
-    gaID: ''
+    gaID: 'UA-76397429-1'
   },
   preview: {
     ASSET_PATH: '/middleschool-preview',
     basePath: '/middleschool-preview',
-    gaID: ''
+    gaID: 'UA-76397429-1'
   },
   qa: {
     ASSET_PATH: '/middleschool-qa',
     basePath: '/middleschool-qa',
-    gaID: ''
+    gaID: 'UA-76397429-1'
   },
   production: {
     ASSET_PATH: '/middleschool',
     basePath: '/middleschool',
-    gaID: ''
+    gaID: 'UA-8528348-2'
   },
   env: process.env.NODE_ENV,
   get ASSET_PATH() {

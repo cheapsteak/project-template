@@ -69,7 +69,7 @@ export default [
     podcast: undefined
   },
   {
-    name: 'Literacy &<br/>Writing',
+    name: 'Literacy & Writing',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-3.png`,
     scholar: 'Sela',
     narrativeVideo: {
@@ -163,7 +163,7 @@ export default [
     podcast: undefined
   },
   {
-    name: 'Computer<br/>Science',
+    name: 'Computer Science',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-7.png`,
     scholar: 'Raquel',
     narrativeVideo: {
@@ -213,7 +213,7 @@ export default [
     podcast: undefined
   },
   {
-    name: 'Parental<br/>Investment',
+    name: 'Parental Investment',
     image: `${config.ASSET_PATH}/images/mobile-chapters-kid-9.png`,
     scholar: 'Alexander',
     narrativeVideo: {

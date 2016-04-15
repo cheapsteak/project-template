@@ -17,7 +17,7 @@ export default class MobileVideos extends React.Component {
     videoStatuses: []
   };
 
-  data = model.getAll();
+  data = model.getAll().filter(video => video.slug !== 'welcome');
 
   componentDidMount() {
     store.dispatch(headerActionCreators.setHeaderSettings({
@@ -34,7 +34,7 @@ export default class MobileVideos extends React.Component {
   }
 
   playVideo = (i) => {
-    this.setState({ videoStatuses: [ 
+    this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'play',
       ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
@@ -42,11 +42,20 @@ export default class MobileVideos extends React.Component {
   };
 
   pauseVideo = (i) => {
-    this.setState({ videoStatuses: [ 
+    this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'paused',
       ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
     ]});
+  };
+
+  handleVideoClick = (i) => {
+    tracking.trackEvent({
+      category: 'Mobile - Instructional video  ' + this.data[i].title,
+      label: 'Instructional Video'
+    });
+
+    this.playVideo(null, i);
   };
 
   render () {
@@ -58,9 +67,9 @@ export default class MobileVideos extends React.Component {
             <h1>See Classes in Action</h1>
           </div>
           {
-            this.data.filter(video => video.slug !== 'welcome').map((video, i) => {
+            this.data.map((video, i) => {
               return (
-                <div key={i} className="video-item" onClick={this.playVideo.bind(null, i)}>
+                <div key={i} className="video-item" onClick={this.handleVideoClick.bind(null, i)}>
                   <VideoPlayer src={video.src} preload="none" status={this.state.videoStatuses[i]} onExitFullscreen={this.pauseVideo.bind(null, i)} />
                   <h1 dangerouslySetInnerHTML={{ __html: video.title }}></h1>
                   <img className="video-image" src={video.backgroundImage} />
