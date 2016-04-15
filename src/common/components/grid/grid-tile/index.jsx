@@ -195,9 +195,18 @@ export default class GridTile extends React.Component {
     }
   };
 
-  handleCtaClick = () => {
+  handleCtaClick = (i) => {
+    // console.log('props', this.props);
+
+    // console.log('state',this.state)
+        
+
+    const trackingCategory = !this.props.isFiltered
+    ? `${this.state.data.slug} in action CTA`
+    : `${this.state.data.instructionalVideosCtas[i]} learn more CTA`;
+
     tracking.trackEvent({
-      category: this.state.data.slug + (this.props.isFiltered ? ' in action CTA' : ' learn more CTA'),
+      category: trackingCategory,
       label: 'Grid'
     });
   };
@@ -239,7 +248,7 @@ export default class GridTile extends React.Component {
                   className={`${width}`}
                   to={`${link}`}
                   key={index}
-                  onClick={this.handleCtaClick}
+                  onClick={this.handleCtaClick.bind(null, index)}
                   onMouseEnter={() => audio.play('button-rollover')}
                 >
                   <div ref="ctaContainer" className={`cta`}>
