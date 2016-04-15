@@ -13,10 +13,20 @@
     height: 8.945vh;
     border-bottom: 1px solid rgba(255,255,255, 0.2);
     z-index: 6000;
-    padding: 0 $side-padding;
+    // padding: 0 $side-padding;
 
     &.no-border {
       border-bottom: 1px solid rgba(255,255,255, 0);
+    }
+
+    .icon-wrapper {
+      padding: 0 $side-padding;
+      display: flex;
+      align-items: center;
+
+      &:last-child {
+        margin-left: auto;
+      }
     }
 
     .menu-wrapper {
@@ -99,11 +109,11 @@
 
 
     .logo-icon {
-      margin-left: auto;
       height: 100%;
-      width: 10%;
+      width: 8.924vw;
 
       svg {
+        vertical-align: middle;
         height: 100%;
         width: 100%;
       }
