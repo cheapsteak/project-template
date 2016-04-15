@@ -166,7 +166,6 @@ export default class ChapterContentList extends React.Component {
                   key={i}
                   label="Experience"
                   name={ `${panorama.title} 360` }
-                  isVideo={true}
                   image={ panorama.iconImage }
                   to={ panorama.route }
                 />
