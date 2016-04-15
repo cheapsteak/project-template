@@ -249,6 +249,11 @@ export default class ChapterVideoPlayer extends React.Component {
 
     // Delay the replay by x time due to animations
     setTimeout(this.handleVideoPlayPause, 500);
+
+    tracking.trackEvent({
+      category: 'Instructional video player end - Replay CTA',
+      label: 'Instructional Video'
+    });
   };
 
   handleVolumeClick = (e) => {

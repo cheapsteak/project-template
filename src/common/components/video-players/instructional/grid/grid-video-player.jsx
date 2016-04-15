@@ -279,6 +279,11 @@ export default class GridVideoPlayer extends React.Component {
   handleReplayClick = (e) => {
     this.changeVideoTime(0);
     setTimeout(this.handleVideoPlayPause, 1000);
+
+    tracking.trackEvent({
+      category: 'Instructional video player end - Replay CTA',
+      label: 'Instructional Video'
+    });
   };
 
   handleEnded = (e) => {
@@ -323,6 +328,11 @@ export default class GridVideoPlayer extends React.Component {
     } else {
       this.context.router.replace('/grid');
     }
+
+    tracking.trackEvent({
+      category: 'Instructional video player - Close CTA',
+      label: 'Instructional Video'
+    });
   };
 
   changeVideoTime = (time) => {
@@ -469,6 +479,28 @@ export default class GridVideoPlayer extends React.Component {
     }
   };
 
+  handleLearnMoreClick = () => {
+    this.props.onVideoPause();
+    tracking.trackEvent({
+      category: 'Instructional video player -' + this.props.slug + ' learn more',
+      label: 'Instructional Video'
+    });
+  };
+
+  handleChapterCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Instructional video player end - ' + this.props.slug + ' learn more CTA',
+      label: 'Instructional Video'
+    });
+  };
+
+  handleNextVideoCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Instructional video player end - ' + this.props.slug + ' play next video CTA',
+      label: 'Instructional Video'
+    });
+  };
+
   render() {
     const { style, modelSlug, prevVideo, nextVideo, className = '' } = this.props;
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
@@ -522,6 +554,7 @@ export default class GridVideoPlayer extends React.Component {
                     title={this.props.title}
                     route={this.props.chapterRoute}
                     image={this.props.endingCardImage}
+                    onClick={this.handleChapterCtaClick}
                   />
                   ,
                   <VideoCard
@@ -530,6 +563,7 @@ export default class GridVideoPlayer extends React.Component {
                     route={nextVideoRoute}
                     video={nextVideo.src}
                     timeLeft={this.state.nextVideoTimeLeft}
+                    onClick={this.handleNextVideoCtaClick}
                   />
                 ]
                 : undefined
@@ -565,7 +599,7 @@ export default class GridVideoPlayer extends React.Component {
             onClick={this.handleCloseButtonClick}
           />
           <Link
-            onClick={this.props.onVideoPause}
+            onClick={this.handleLearnMoreClick}
             className="more-about-cta"
             ref={ node => this.refs.moreAboutCTA = findDOMNode(node) }
             to={this.props.chapterRoute || '/'}>

@@ -67,7 +67,7 @@ export default class ChapterContentList extends React.Component {
 
     animate.set(this.refs.list, { height: 0 });
   }
-
+i
   componentWillAppear(callback) {
     this.animateIn().then(callback);
   }
@@ -89,7 +89,7 @@ export default class ChapterContentList extends React.Component {
   }
 
   playVideo = (i) => {
-    this.setState({ videoStatuses: [ 
+    this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'play',
       ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
@@ -97,11 +97,21 @@ export default class ChapterContentList extends React.Component {
   };
 
   pauseVideo = (i) => {
-    this.setState({ videoStatuses: [ 
+    this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'paused',
       ...this.state.videoStatuses.slice(i+1, this.state.videoStatuses.length)
     ]});
+  };
+
+  handleNarrativeVideoClick = () => {
+
+    tracking.trackEvent({
+      category: 'Mobile - Narrative video ' + this.props.name,
+      label: 'Narrative Video'
+    });
+
+    this.playVideo(null, 0);
   };
 
   render () {
@@ -118,7 +128,7 @@ export default class ChapterContentList extends React.Component {
             label="Play"
             name={`Meet ${this.props.scholar}`}
             isVideo={ true }
-            onClick={ this.playVideo.bind(null, 0) }
+            onClick={ this.handleNarrativeVideoClick }
             onExitFullscreen={ this.pauseVideo.bind(null, 0) }
             videoStatus={ this.state.videoStatuses[0] }
             image={ this.props.narrativeVideo.iconImage }

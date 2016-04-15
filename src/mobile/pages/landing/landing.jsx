@@ -28,6 +28,20 @@ export default class Landing extends React.Component {
     }));
   };
 
+  handleInActionCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Mobile - Instructional videos grid CTA',
+      label: 'Landing Page'
+    });
+  };
+
+  handleExploreCtaClick = () => {
+    tracking.trackEvent({
+      category: 'Mobile - Explore grid CTA',
+      label: 'Landing Page'
+    });
+  };
+
   render () {
     return (
       <div className="mobile-landing">
@@ -44,9 +58,10 @@ export default class Landing extends React.Component {
               backgroundColor="#EB9729"
               hoverBackgroundColor="#EB9729"
               svgIcon={IconExplore}
+              onClick={this.handleExploreCtaClick}
             />
           </Link>
-          <Link to="/videos">
+          <Link to="/videos" onClick={this.handleInActionCtaClick}>
             <Button
               text="See Classes In Action"
               style={{border: "1px solid rgba(255,255,255,0.2)"}}

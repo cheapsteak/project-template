@@ -50,6 +50,7 @@
 
     h1, .panel-label {
       font-weight: bold;
+      max-width: 60%;
     }
 
     h1 {
@@ -149,7 +150,7 @@
       .panel-label {
         // background-color: rgba(72,115,150,0.5); // Light Blue
         background-color: rgba(63,69,72,0.5); // Grey
-        
+
       }
     }
 
@@ -161,7 +162,7 @@
 
 
     &:nth-child(7) {
-      .panel-label {  
+      .panel-label {
         // background-color: rgba(12,18,32,0.5); // Red
         background-color: rgba(63,69,72,0.5); // Grey
       }

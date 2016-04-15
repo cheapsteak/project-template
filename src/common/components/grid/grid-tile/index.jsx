@@ -106,7 +106,6 @@ export default class GridTile extends React.Component {
     animate.to(this.imageContainer, 0.5, {autoAlpha: 0.1, left: pos, delay: 0.12, ease: ViniEaseOut, overwrite: 'all'})
 
     if (!this.state.isMobile) {
-      audio.play('button-rollover');
       animate.staggerTo(ctaItems, 0.3, {autoAlpha: 1, y: 0, ease: ViniEaseOut, delay: 0.3, overwrite: 'all'}, 0.1)
     }
   };
@@ -236,7 +235,13 @@ export default class GridTile extends React.Component {
             links.map((link, index) => {
               const width = links.length > 1 ? 'half-width' : 'full-width';
               return (
-                <Link className={`${width}`} to={`${link}`} key={index} onClick={this.handleCtaClick}>
+                <Link
+                  className={`${width}`}
+                  to={`${link}`}
+                  key={index}
+                  onClick={this.handleCtaClick}
+                  onMouseEnter={() => audio.play('button-rollover')}
+                >
                   <div ref="ctaContainer" className={`cta`}>
                     <div
                       ref={`ctaIcon${index}`}
