@@ -188,8 +188,6 @@ export default class Chapter extends React.Component {
 
       scene.on('progress', (e) => {
         TweenMax.killTweensOf(el);
-        el.setAttribute('data-progress', e.progress);
-        el.setAttribute('data-debug-opacity', getOpacity(e.progress));
         TweenMax.to(el, 0.3, {
           y: getY(e.progress),
           ease: ViniEaseOut,
