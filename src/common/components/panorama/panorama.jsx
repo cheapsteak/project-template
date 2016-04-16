@@ -90,6 +90,8 @@ export default class Panorama extends React.Component {
       animate.to(this.refs.accelerometerToggle, 0, {y: '100%', autoAlpha: 0, ease: Expo.easeOut});
     }
 
+    this.refs.placeholder.style.visibility = 'hidden';
+
     //this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
     //this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
   }
@@ -228,7 +230,7 @@ export default class Panorama extends React.Component {
     });
   };
 
-  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
+  initNewPanorama = (src, long, lat) => {
     if (this.panorama) this.panorama.destroy();
 
     this.setState({status: states.LOADING});
@@ -248,6 +250,11 @@ export default class Panorama extends React.Component {
       this.panorama.rotate(long, lat);
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
       this.setOrientationControls();
+
+      if (this.isShowingPlaceholder) {
+        this.isShowingPlaceholder = false;
+        this.refs.placeholder.style.visibility = 'hidden';
+      }
     });
 
     this.panorama.on('zoom-updated', (zoomLevelNum) => {
@@ -264,6 +271,15 @@ export default class Panorama extends React.Component {
       };
       this.setState({long, lat, rotation});
     });
+  };
+
+  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
+    if (this.props.src) {
+      // draw current panorama to placeholder canvas before swapping source
+      this.drawPlaceholderCanvas(src, long, lat);
+    } else {
+      this.initNewPanorama(src, long, lat);
+    }
   };
 
   handleAccelerometerClick = () => {
@@ -306,6 +322,27 @@ export default class Panorama extends React.Component {
         this.handleEnterFullBrowser();
       }, 300);
     }
+  };
+
+  drawPlaceholderCanvas = (src, long, lat) => {
+    const sourceCanvas = document.querySelector('.psv-canvas-container canvas');
+
+    var targetCanvas = this.refs.placeholder;
+    var targetCanvasContext = targetCanvas.getContext('2d');
+    targetCanvas.width = sourceCanvas.width;
+    targetCanvas.height = sourceCanvas.height;
+
+    var img = new Image();
+    img.onload = () => {
+      targetCanvasContext.drawImage(img, 0, 0, targetCanvas.width, targetCanvas.height);
+
+      this.isShowingPlaceholder = true;
+      this.refs.placeholder.style.visibility = 'visible';
+
+      this.initNewPanorama(src, long, lat);
+    };
+
+    img.src = sourceCanvas.toDataURL('image/png', 1);
   };
 
   render() {
@@ -389,8 +426,8 @@ export default class Panorama extends React.Component {
         {accelerometerToggle}
 
         <div className="parallax-target-wrapper psv-inject-target-wrapper">
-          <div ref="psvInjectTarget" className="parallax-target psv-inject-target">
-          </div>
+          <div ref="psvInjectTarget" className="parallax-target psv-inject-target"></div>
+          <canvas ref="placeholder" className={`parallax-target panorama-placeholder`}></canvas>
         </div>
 
         {isTablet && <div
