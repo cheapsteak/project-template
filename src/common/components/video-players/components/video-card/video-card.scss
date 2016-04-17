@@ -9,7 +9,9 @@
   .next-video-button {
     position: absolute;
     @include scale-prop('top', 50);
-    @include scale-prop('left', 162);
+    left: 0;
+    right: 0;
+    margin: auto;
     @include scale-prop('width', 28);
     @include scale-prop('height', 28);
     @include scale-prop('font-size', 16);
@@ -36,6 +38,10 @@
     position: absolute;
     @include scale-prop('top', 110);
     width: 100%;
+    max-width: 80%;
+    left: 0;
+    right: 0;
+    margin: auto;
     text-align: center;
     color: white;
     font-weight: 600;

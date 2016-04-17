@@ -1,0 +1,17 @@
+.simple-progress-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  @include scale-prop('height', 8);
+  background-color: #2B2A2A;
+
+  & > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: #8F8F8F;
+    transition: width 0.1s ease-out;
+  }
+}

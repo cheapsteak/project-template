@@ -12,14 +12,11 @@ export default function calculateAnimationStates (els) {
 
   return {
     out: {
-      simpleProgressBar: {
-        y: els.simpleProgressBar.offsetHeight
-      },
       videoWrapper: {
         delay: 0.3,
         width: window.innerWidth,
         height: window.innerHeight,
-        cursor: 'none',
+        // cursor: 'none',
         ease: ViniEaseOut
       },
       overlay: {
@@ -55,27 +52,13 @@ export default function calculateAnimationStates (els) {
         opacity: 0,
         visibility: 'hidden',
         scale: 1.1
-      },
-      controls: {
-        delay: 0.2,
-        y: '170%',
-        height: zoomedOutVideoMargin * 2,
-        ease: ViniEaseOut
-      },
-      controlsUI: {
-        y: '170%',
-        ease: ViniEaseOut
       }
     },
     idle: {
-      simpleProgressBar: {
-        delay: 0.1,
-        y: 0
-      },
       videoWrapper: {
         width: window.innerWidth - (zoomedOutVideoMargin*2),
         height: window.innerHeight - (zoomedOutVideoMargin*2),
-        cursor: 'default',
+        // cursor: 'default',
         ease: ViniEaseOut
       },
       overlay: {
@@ -115,16 +98,6 @@ export default function calculateAnimationStates (els) {
         visibility: 'visible',
         scale: 1
       },
-      controls: {
-        y: '0%',
-        height: zoomedOutVideoMargin * 2,
-        ease: ViniEaseOut
-      },
-      controlsUI: {
-        delay: 0.1,
-        y: '0%',
-        ease: ViniEaseOut
-      }
     },
     end: {
       overlay: {

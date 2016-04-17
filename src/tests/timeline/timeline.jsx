@@ -1,5 +1,5 @@
 import React from 'react';
-import Timeline from 'common/components/timeline/timeline';
+import Timeline from 'common/components/video-players/components/timeline/timeline';
 
 export default function () {
   return <div style={{ backgroundColor: 'black', width: '100%', height: '100vh'}}>
