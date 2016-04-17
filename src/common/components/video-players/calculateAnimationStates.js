@@ -16,7 +16,7 @@ export default function calculateAnimationStates (els) {
         delay: 0.3,
         width: window.innerWidth,
         height: window.innerHeight,
-        // cursor: 'none',
+        cursor: 'none',
         ease: ViniEaseOut
       },
       overlay: {
@@ -58,7 +58,7 @@ export default function calculateAnimationStates (els) {
       videoWrapper: {
         width: window.innerWidth - (zoomedOutVideoMargin*2),
         height: window.innerHeight - (zoomedOutVideoMargin*2),
-        // cursor: 'default',
+        cursor: 'default',
         ease: ViniEaseOut
       },
       overlay: {

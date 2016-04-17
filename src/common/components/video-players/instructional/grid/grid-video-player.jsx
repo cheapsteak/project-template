@@ -32,7 +32,7 @@ export default class GridVideoPlayer extends React.Component {
     previousRoute: React.PropTypes.string
   };
 
-  static nextVideoCountdownTime = 2;
+  static nextVideoCountdownTime = 15;
 
   nextVideoIntervalId = undefined;
   hideControlsTimeoutId = undefined;
@@ -59,7 +59,6 @@ export default class GridVideoPlayer extends React.Component {
     let initialState = this.props.useFullControls
       ? 'idle'
       : 'out';
-
 
     // Temporary Fix for race condition between store update and component mounting
     initialState = 'out';
@@ -181,7 +180,7 @@ export default class GridVideoPlayer extends React.Component {
     return animate.all([
         animate.to(this.containerEl, duration, {autoAlpha: 0, ease: ease, delay: 0.5})
       ])
-      .then(() => callback && callback())
+      .then(callback)
   };
 
   get videoEnded () {
@@ -388,7 +387,11 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateInControls = () => {
+    if(this.isAnimatingOut) return
+
     this.wrapperVisible = true;
+
+    // this.stopAnimations();
 
     return Promise.all([
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
@@ -399,10 +402,15 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateOutControls = () => {
+    // if(this.isAnimatingOut) return
+
+    // this.stopAnimations(_.omit(this.refs, 'endingOverlay'));
+
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
     ];
+
 
     this.wrapperVisible = false;
 
@@ -414,7 +422,8 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateInEndOverlay = () => {
-    this.stopAnimations();
+    // this.stopAnimations(_.omit(this.refs, 'endingOverlay'));
+    
 
     this.zoomedOut = true;
 
@@ -447,8 +456,8 @@ export default class GridVideoPlayer extends React.Component {
     ]);
   };
 
-  stopAnimations = () => {
-    TweenMax.killTweensOf(_.values(this.refs));
+  stopAnimations = (els) => {
+    TweenMax.killTweensOf(els || _.values(this.refs));
   }
 
   handleTouchStart = () => {
@@ -530,52 +539,50 @@ export default class GridVideoPlayer extends React.Component {
             ref="endingOverlay"
             className="end-overlay"
           >
-            <div className="end-overlay-ui">
-              <TransitionGroup
-                component="div"
-                className="ending-cards"
-              >
-              {
-                this.state.showEndingCTA
-                ? [
-                  <ImageCard
-                    key={'currentId'}
-                    label="Discover:"
-                    title={this.props.title}
-                    route={this.props.chapterRoute}
-                    image={this.props.endingCardImage}
-                    onClick={this.handleChapterCtaClick}
-                  />
-                  ,
-                  <VideoCard
-                    key={'nextVideoId'}
-                    title={nextVideo.title}
-                    route={nextVideoRoute}
-                    video={nextVideo.src}
-                    timeLeft={this.state.nextVideoTimeLeft}
-                    onClick={this.handleNextVideoCtaClick}
-                  />
-                ]
-                : undefined
-              }
-              </TransitionGroup>
+            <TransitionGroup
+              component="div"
+              className="ending-cards"
+            >
+            {
+              this.state.showEndingCTA
+              ? [
+                <ImageCard
+                  key={'currentId'}
+                  label="Discover:"
+                  title={this.props.title}
+                  route={this.props.chapterRoute}
+                  image={this.props.endingCardImage}
+                  onClick={this.handleChapterCtaClick}
+                />
+                ,
+                <VideoCard
+                  key={'nextVideoId'}
+                  title={nextVideo.title}
+                  route={nextVideoRoute}
+                  video={nextVideo.src}
+                  timeLeft={this.state.nextVideoTimeLeft}
+                  onClick={this.handleNextVideoCtaClick}
+                />
+              ]
+              : undefined
+            }
+            </TransitionGroup>
+            <div
+              className="replay-group"
+            >
               <div
-                className="replay-group"
+                ref="replayButton"
+                className="replay-button"
+                onClick={this.handleReplayClick}
+                dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
               >
-                <div
-                  ref="replayButton"
-                  className="replay-button"
-                  onClick={this.handleReplayClick}
-                  dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-                >
-                </div>
-                <label
-                  ref="replayLabel"
-                  className="replay-label"
-                >
-                  Replay
-                </label>
               </div>
+              <label
+                ref="replayLabel"
+                className="replay-label"
+              >
+                Replay
+              </label>
             </div>
           </div>
           <RectangularButton
