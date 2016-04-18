@@ -534,7 +534,7 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   handleChapterCtaClick = () => {
     tracking.trackEvent({
-      category: this.props.currentChapter.slug + ' learn more CTA',
+      category: this.props.currentChapter.title + ' learn more CTA',
       label: 'Narrative Video'
     });
   };
