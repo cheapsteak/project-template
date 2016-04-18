@@ -40,8 +40,9 @@ export default class Footer extends React.Component {
 
   animateIn = (callback) => {
     animate.set(this.containerEl, {y: '100%'});
+    const delay = localStorage.getItem('narrative-video-time') ? 1.1 : 0.9;
 
-    animate.to(this.containerEl, 0.7, {y: '0%', ease: Expo.easeOut, delay: 0.9})
+    animate.to(this.containerEl, 0.7, {y: '0%', ease: Expo.easeOut, delay})
       .then(() => {
         callback && callback()
       })
