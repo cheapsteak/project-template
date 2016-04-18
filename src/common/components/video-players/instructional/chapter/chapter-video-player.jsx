@@ -1,17 +1,12 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
-import Timeline from 'common/components/timeline/timeline';
 import PlayButton from 'common/components/play-button/play-button';
 import RectangularButton from 'common/components/rectangular-button/rectangular-button';
-import PlayButtonSvg from 'svgs/icon-play.svg';
-import PauseButtonSvg from 'svgs/icon-pause.svg';
-import MuteButtonSvg from 'svgs/video-player-mute.svg';
-import VolumeButtonSvg from 'svgs/video-player-volume.svg';
+import VideoControls from 'common/components/video-players/components/video-controls/video-controls';
+import SimpleProgressBar from 'common/components/video-players/components/simple-progress-bar/simple-progress-bar';
+import TransitionGroup from 'react-transition-group-plus';
 import CloseSvg from 'svgs/icon-close.svg';
-import EnterFullBrowserButtonSvg from 'svgs/video-player-enter-fullbrowser.svg';
-import ExitFullBrowserButtonSvg from 'svgs/video-player-exit-fullbrowser.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
-import { Link } from 'react-router';
 import animate from 'gsap-promise';
 import calculateAnimationStates from '../../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
@@ -61,8 +56,6 @@ export default class ChapterVideoPlayer extends React.Component {
     animate.set(this.els.cornerButton, this.animationStates[initialState].cornerButton);
     animate.set(this.els.overlay, this.animationStates[initialState].overlay);
     animate.set(this.els.videoWrapper, this.animationStates[initialState].videoWrapper);
-    animate.set(this.els.controls, this.animationStates[initialState].controls);
-    animate.set(this.refs.controlsUI, this.animationStates[initialState].controlsUI),
     animate.set(this.els.endingOverlay, this.animationStates.out.endingOverlay);
 
     this.props.isPlaying && this.video && this.playVideo();
@@ -177,7 +170,6 @@ export default class ChapterVideoPlayer extends React.Component {
       });
     }
 
-    animate.set(this.els.controls, { height: this.animationStates.idle.controls.height });
     animate.set(this.video, {clearProps: 'all'});
 
     this.videoResize();
@@ -315,12 +307,9 @@ export default class ChapterVideoPlayer extends React.Component {
     this.wrapperVisible = true;
 
     return Promise.all([
-      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.els.overlay, 0.3, this.animationStates.idle.overlay),
       animate.to(this.els.cornerButton, 0.3, this.animationStates.idle.cornerButton),
-      animate.to(this.els.controls, 0.6, this.animationStates.idle.controls),
-      animate.to(this.refs.controlsUI, 0.6, this.animationStates.idle.controlsUI),
     ]);
   };
 
@@ -328,7 +317,6 @@ export default class ChapterVideoPlayer extends React.Component {
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.els.cornerButton, 0.3, this.animationStates.out.cornerButton),
-      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
 
     this.wrapperVisible = false;
@@ -336,8 +324,6 @@ export default class ChapterVideoPlayer extends React.Component {
     return Promise.all([
       ...conditionalAnimations,
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
-      animate.to(this.els.controls, 0.6, this.animationStates.out.controls),
-      animate.to(this.refs.controlsUI, 0.6, this.animationStates.out.controlsUI),
     ]);
   };
 
@@ -345,9 +331,7 @@ export default class ChapterVideoPlayer extends React.Component {
     this.wrapperVisible = true;
 
     return Promise.all([
-      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.els.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
-      animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.els.cornerButton, 0.3, this.animationStates.idle.cornerButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.end.overlay),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.idle.endingOverlay)
@@ -362,8 +346,6 @@ export default class ChapterVideoPlayer extends React.Component {
     return Promise.all([
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.els.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.els.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.els.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.els.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(this.els.cornerButton, 0.3, this.animationStates.out.cornerButton),
       animate.to(this.els.overlay, 0.3, this.animationStates.out.overlay),
@@ -390,6 +372,14 @@ export default class ChapterVideoPlayer extends React.Component {
       this.handleVideoPlayPause();
     }
   };
+
+  handleFullBrowserClick = () => {
+    if(this.props.isFullBrowser) {
+      this.props.exitFullBrowser(this.props.chapterRoute);
+    } else {
+      this.context.router.push(this.props.fullBrowserChapterRoute);
+    }
+  }
 
   render() {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
@@ -475,82 +465,40 @@ export default class ChapterVideoPlayer extends React.Component {
               />
             </div>
           </div>
-        {/* This is a fix for BgCover making video absolute */}
         </div>
-        <div
-          ref={ node => this.els.simpleProgressBar = node }
-          className="simple-progress-bar"
+        <TransitionGroup
+          component="div"
+          className="video-controls-wrapper"
         >
-          <span style={{ width: progressWidth }}></span>
-        </div>
-        <div
-          className="controls"
-          ref={ node => this.els.controls = node }
-          onMouseEnter={this.handleControlsMouseEnter}
-          onMouseMove={ (e) => e.stopPropagation() }
-          onTouchMove={ this.handleControlsMouseEnter }
-          onTouchEnd={ this.setHideControlsTimeout }
-        >
-          <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
-          <div ref="controlsUI" className="controls-ui">
-            <div className="control-group">
-              <div className="button-wrapper">
-                <div
-                  className="button play-button"
-                  dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-                  onClick={this.handleVideoPlayPause}
-                >
-                </div>
-              </div>
-              
-              {
-                !detect.isTablet
-                ? <div className="button-wrapper">
-                      <div
-                        className="button"
-                        dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                        onClick={this.handleVolumeClick}
-                      >
-                      </div>
-                    </div>
-                : null
-              }
-              {
-                isFullBrowser
-                  ? <div className="button-wrapper">
-                  <div
-                    className="button fullscreen-button"
-                    onClick={ () => this.props.exitFullBrowser(route) }
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
-                  </div>
-                </div>
-                  : <div className="button-wrapper">
-                  <Link
-                    className="button fullscreen-button"
-                    to={route}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{__html: isFullBrowser ? ExitFullBrowserButtonSvg : EnterFullBrowserButtonSvg }}></div>
-                  </Link>
-                </div>
-              }
-            </div>
-            {
-              /*
-                The duration is put into the store and pass down to the component
-                to account for the work around with moving around the video node
-              */
-            }
-            <Timeline
-              currentTime={this.props.currentTime || 0}
-              duration={this.props.duration || 0}
-              onTimeChange={this.changeVideoTime}
-              items={[]}
-            />
-          </div>
-        </div>
+          {
+           !this.video || (this.video && this.videoEnded) 
+           ? null
+             : this.props.useFullControls
+             ? <VideoControls
+                 key="chapter-player-video-control"
+                 isPlaying={this.props.isPlaying}
+                 isMuted={this.props.isMuted}
+                 currentTime={this.props.currentTime}
+                 duration={this.video && this.video.duration}
+                 isFullBrowser={this.props.isFullBrowser}
+
+                 onScrubberClick={this.changeVideoTime}
+                 onMouseEnter={this.handleMouseEnterControls}
+                 onMouseMove={e => e.stopPropagation()}
+                 onTouchMove={this.handleMouseEnterControls}
+                 onTouchEnd={this.setHideControlsTimeout}
+
+                 playPauseButton={this.handleVideoPlayPause}
+                 muteButton={this.handleVolumeClick}
+                 fullBrowserButton={this.handleFullBrowserClick}
+               />
+             : <SimpleProgressBar
+                key="chapter-player-simple-control"
+                currentTime={this.props.currentTime}
+                duration={this.props.duration}
+               />
+          }
+        </TransitionGroup>
       </div>
     )
   }

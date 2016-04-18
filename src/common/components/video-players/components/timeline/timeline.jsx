@@ -4,7 +4,7 @@ import HotSpot from './timeline-hotspot/timeline-hotspot.jsx';
 import HoverCard from './timeline-hover-card/timeline-hover-card.jsx';
 import animate from 'gsap-promise';
 import _ from 'lodash';
-import detect from '../../utils/detect/';
+import detect from 'common/utils/detect';
 import clamp from 'clamp';
 import scale from 'common/utils/scaleAt1400';
 
@@ -153,7 +153,7 @@ export default class Timeline extends React.Component {
   render () {
     const { style, duration, items } = this.props;
     const progress = duration ? (this.state.time/duration * 100) : 0;
-    const hideTimeStamp = this.state.time/duration > 0.945;
+    const hideTimeStamp = this.state.time/duration > 0.94;
 
     return (
       <div ref="timeline" className="timeline" style={style}>
@@ -179,11 +179,14 @@ export default class Timeline extends React.Component {
 
           { /* The progress indicator */}
           <div
-            className={`timeline-cover ${hideTimeStamp ? 'hide-time' : ''}`}
+            className="timeline-cover"
             style={{ width: `${progress}%` }}
             data-time={this.secondsToMinutes(this.state.time)}
           >
-            <span ref="progressHead"></span>
+            <div className="progress-head-wrapper">
+              <span ref="progressHead" className="progress-head"></span>
+              <span className={`progress-timestamp ${hideTimeStamp ? 'hide' : ''}`}>{this.secondsToMinutes(this.state.time)}</span>
+            </div>
           </div>
           {
             /* Check if there is a duration before setting the dots for the case of video metadata currently loading */

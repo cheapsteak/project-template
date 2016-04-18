@@ -1,27 +1,22 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
-import Timeline from 'common/components/timeline/timeline';
-import PlayButtonSvg from 'svgs/icon-play.svg';
-import PauseButtonSvg from 'svgs/icon-pause.svg';
-import BackButtonSvg from 'svgs/video-back-button.svg';
-import ForwardButtonSvg from 'svgs/video-forward-button.svg';
+import {Link} from 'react-router';
+import ChaptersImageCard from 'common/components/video-players/components/image-card-one/image-card-one.jsx';
+import CareerImageCard from 'common/components/video-players/components/image-card-two/image-card-two.jsx';
+import PlayButton from 'common/components/play-button/play-button';
+import RectangularButton from 'common/components/rectangular-button/rectangular-button';
+import VideoControls from 'common/components/video-players/components/video-controls/video-controls';
+import SimpleProgressBar from 'common/components/video-players/components/simple-progress-bar/simple-progress-bar';
 import IconExplore from 'svgs/icon-explore.svg';
 import ReplayArrowSvg from 'svgs/replay-arrow.svg';
-import MuteButtonSvg from 'svgs/video-player-mute.svg';
-import VolumeButtonSvg from 'svgs/video-player-volume.svg';
 import RightArrowSvg from 'svgs/bubble-cta-arrow.svg';
-import RectangularButton from 'common/components/rectangular-button/rectangular-button';
 import TransitionGroup from 'react-transition-group-plus';
 import animate from 'gsap-promise';
 import _ from 'lodash';
-import {Link} from 'react-router';
-import ChaptersImageCard from '../components/image-card-one/image-card-one.jsx';
-import CareerImageCard from '../components/image-card-two/image-card-two.jsx';
 import calculateAnimationStates from '../calculateAnimationStates.js';
 import secondsToMinutes from 'common/utils/seconds-to-minutes.js';
 import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
-import PlayButton from 'common/components/play-button/play-button';
 import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class NarrativeVideoPlayer extends React.Component {
@@ -60,8 +55,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     animate.set(this.refs.overlay, this.animationStates[initialState].overlay);
     animate.set(this.refs.videoWrapper, this.animationStates[initialState].videoWrapper);
     animate.set(this.refs.circleCTA, this.animationStates[initialState].circleCTA);
-    animate.set(this.refs.controls, this.animationStates[initialState].controls);
-    animate.set(this.refs.controlsUI, this.animationStates[initialState].controlsUI);
 
     animate.set(this.refs.endingOverlay, this.animationStates.out.endingOverlay);
     animate.set(this.refs.replayButton, this.animationStates.out.replayButton);
@@ -241,8 +234,6 @@ export default class NarrativeVideoPlayer extends React.Component {
 
   animateInControls = () => {
     const staggerText = this.refs.root.querySelectorAll('.stagger-cta');
-    const buttons = this.refs.root.querySelectorAll('.button');
-    const dots = this.refs.root.querySelectorAll('.dot');
     const ctaArrow = this.refs.root.querySelector('.cta-arrow');
 
     this.wrapperVisible = true;
@@ -251,29 +242,17 @@ export default class NarrativeVideoPlayer extends React.Component {
 
     // Need Fix for animate out while this is not complete
     animate.set(ctaArrow, { x: '-70%', opacity: 0 });
-
-    animate.staggerFromTo(buttons, 0.3, { y: '150%', ease: ViniEaseOut }, { delay: 0.3, y: '0%', ease: ViniEaseOut }, 0.1);
-
     animate.staggerFromTo(staggerText, 1, { opacity: 0 }, { delay: 0.8, opacity: 1, ease: ViniEaseOut }, 0.4)
-
-    const dotPromises = _.map(dots, dot => animate.set(dot, {opacity: 0, ease: ViniEaseOut }), 0.1);
-
-    Promise.all(dotPromises).then(() => animate.staggerFromTo(dots, 1, { opacity: 0 }, { delay: 0.5, opacity: 1}, 0.1))
-
     ///////////////////////////////////////////////////////
 
 
 
     return Promise.all([
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
       animate.to(this.refs.overlay, 0.3, this.animationStates.idle.overlay)
         .then(()=>animate.to(this.refs.cornerButton, 0.3, this.animationStates.idle.cornerButton)),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.idle.circleCTA)
         .then( () => animate.to(ctaArrow, 0.3, { delay: 0.7, x: '0%', opacity: 1 }) ),
-      animate.to(this.refs.controlsUI, 0.6, this.animationStates.idle.controlsUI),
-      animate.to(this.refs.controls, 0.6, this.animationStates.idle.controls),
-      _.map(buttons, (button) => { animate.fromTo(button, 0.3, { y: 50 }, { delay: 0.3, y: 0})})
     ]);
   }
 
@@ -290,15 +269,12 @@ export default class NarrativeVideoPlayer extends React.Component {
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar)
     ];
 
     return Promise.all([
       ...conditionalAnimations,
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.circleCTA, 0.3, this.animationStates.out.circleCTA),
-      animate.to(this.refs.controlsUI, 0.6, this.animationStates.out.controlsUI),
-      animate.to(this.refs.controls, 0.6, this.animationStates.out.controls),
       animate.to(this.refs.replayButton, 0.6, this.animationStates.out.replayButton),
       animate.to(this.refs.replayLabel, 0.6, this.animationStates.out.replayLabel)
     ]);
@@ -315,9 +291,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.wrapperVisible = true;
 
     return Promise.all([
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.out.simpleProgressBar),
       animate.to(this.refs.videoWrapper, 0.8, this.animationStates.idle.videoWrapper),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
       animate.to(this.refs.replayButton, 0.6, this.animationStates.idle.replayButton),
       animate.to(this.refs.replayLabel, 0.6, this.animationStates.idle.replayLabel),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
@@ -336,8 +310,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     return Promise.all([
       animate.to(this.refs.overlay, 0.3, this.animationStates.out.overlay),
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
-      animate.to(this.refs.controls, 0.3, this.animationStates.out.controls),
-      animate.to(this.refs.simpleProgressBar, 0.3, this.animationStates.idle.simpleProgressBar),
       animate.to(this.refs.endingOverlay, 0.3, this.animationStates.out.endingOverlay),
       animate.to(this.refs.replayButton, 0.6, this.animationStates.out.replayButton),
       animate.to(this.refs.cornerButton, 0.3, this.animationStates.out.cornerButton),
@@ -350,7 +322,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     if (!this.isAnimatingOut) TweenMax.killTweensOf(_.values(this.refs));
   };
 
-
   /************************/
   /*       Handlers       */
   /************************/
@@ -358,8 +329,6 @@ export default class NarrativeVideoPlayer extends React.Component {
   handleResize = () => {
     this.animationStates = calculateAnimationStates(this.refs);
     this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
-
-    animate.set(this.refs.controls, { height: this.animationStates.idle.controls.height });
 
     if(this.wrapperVisible) {
       animate.set(this.refs.videoWrapper, {
@@ -420,7 +389,7 @@ export default class NarrativeVideoPlayer extends React.Component {
   handlePrevClick = (e) => {
     const currentTime = this.props.currentTime;
     const times = this.props.chapters.map(point => point.time).reverse();
-    const newTime =  _.find(times, (time) => time < currentTime) || 0;
+    const newTime =  _.find(times, (time) => time < currentTime && currentTime - time > 1) || 0;
 
     this.video.currentTime = newTime;
   };
@@ -468,7 +437,7 @@ export default class NarrativeVideoPlayer extends React.Component {
         this.props.hideFullControls();
       }
       this.hideControlsTimeoutId = undefined;
-    }, detect.isTablet? 3000: 4000);
+    }, detect.isTablet? 3000: 3500);
   };
 
   handleReplayClick = (e) => {
@@ -629,119 +598,88 @@ export default class NarrativeVideoPlayer extends React.Component {
               ref="endingOverlay"
               className="end-overlay"
             >
-              <div className="end-overlay-ui">
-                <TransitionGroup
-                  component="div"
-                  className="ending-cards"
-                >
-                  {
-                    this.state.showEndingCTA
-                    ? [
-                      <ChaptersImageCard
-                        gridButton={true}
-                        key={'chapter-card'}
-                        label="See All"
-                        title="Chapters"
-                        route="/grid"
-                        image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
-                        onClick={this.handleEndVideoGridCtaClick}
-                      />,
-                      <CareerImageCard
-                        key={'careers-card'}
-                        label="Careers"
-                        title="Join Our<br/>Team"
-                        href="http://jobs.successacademies.org/"
-                        target="__blank"
-                        image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
-                        onClick={this.handleEndVideoCareersCtaClick}
-                      />
-                    ]
-                    : undefined
-                  }
-                </TransitionGroup>
-                <div
-                  className="replay-group"
-                >
-                  <div
-                    ref="replayButton"
-                    className="replay-button"
-                    onClick={this.handleReplayClick}
-                    dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
-                  >
-                  </div>
-                  <label
-                    ref="replayLabel"
-                    className="replay-label"
-                  >
-                    Replay
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            ref="simpleProgressBar"
-            className="simple-progress-bar"
-          >
-            <span style={{ width: progressWidth }}></span>
-          </div>
-          <div
-            ref="controls"
-            className="controls"
-            onMouseEnter={ this.handleMouseEnterControls }
-            onMouseMove={ e => e.stopPropagation() }
-            onTouchMove={ this.handleMouseEnterControls }
-            onTouchEnd={ this.setHideControlsTimeout }
-          >
-            <span className="label-duration">{secondsToMinutes(this.video && this.video.duration || 0)}</span>
-            <div ref="controlsUI" className="controls-ui">
-              <div className="control-group">
-                <div className="button-wrapper">
-                  <div
-                    className="button play-button"
-                    dangerouslySetInnerHTML={{__html: !this.props.isPlaying ? PlayButtonSvg : PauseButtonSvg }}
-                    onClick={this.handleVideoPlayPause}
-                  >
-                  </div>
-                </div>
-                <div className="button-wrapper">
-                  <div
-                    className="button"
-                    dangerouslySetInnerHTML={{__html: BackButtonSvg}}
-                    onClick={this.handlePrevClick}
-                  >
-                  </div>
-                </div>
-                <div className="button-wrapper">
-                  <div
-                    className="button"
-                    dangerouslySetInnerHTML={{__html: ForwardButtonSvg}}
-                    onClick={this.handleNextClick}
-                  >
-                  </div>
-                </div>
+              <TransitionGroup
+                component="div"
+                className="ending-cards"
+              >
                 {
-                  !detect.isTablet
-                  ? <div className="button-wrapper">
-                      <div
-                        className="button"
-                        dangerouslySetInnerHTML={{__html: !this.props.isMuted ? VolumeButtonSvg : MuteButtonSvg }}
-                        onClick={this.handleVolumeClick}
-                      >
-                      </div>
-                    </div>
-                  : null
+                  this.state.showEndingCTA
+                  ? [
+                    <ChaptersImageCard
+                      gridButton={true}
+                      key={'chapter-card'}
+                      label="See All"
+                      title="Chapters"
+                      route="/grid"
+                      image={`${ASSET_PATH}/images/narrative-ending-chapters-card.jpg`}
+                      onClick={this.handleEndVideoGridCtaClick}
+                    />,
+                    <CareerImageCard
+                      key={'careers-card'}
+                      label="Careers"
+                      title="Join Our<br/>Team"
+                      href="http://jobs.successacademies.org/"
+                      target="__blank"
+                      image={`${ASSET_PATH}/images/narrative-ending-career-card.jpg`}
+                      onClick={this.handleEndVideoCareersCtaClick}
+                    />
+                  ]
+                  : undefined
                 }
-
+              </TransitionGroup>
+              <div
+                className="replay-group"
+              >
+                <div
+                  ref="replayButton"
+                  className="replay-button"
+                  onClick={this.handleReplayClick}
+                  dangerouslySetInnerHTML={{ __html: ReplayArrowSvg }}
+                >
+                </div>
+                <label
+                  ref="replayLabel"
+                  className="replay-label"
+                >
+                  Replay
+                </label>
               </div>
-              <Timeline
-                currentTime={this.props.currentTime}
-                duration={ this.video && this.video.duration || 0 }
-                onTimeChange={this.changeVideoTime}
-                items={this.props.chapters}
-              />
             </div>
           </div>
+          <TransitionGroup
+            component="div"
+            className="video-controls-wrapper"
+          >
+            {
+             this.state.showEndingCTA
+             ? null
+             : this.props.useFullControls
+               ? <VideoControls
+                   key="narrative-player-video-control"
+                   isPlaying={ this.props.isPlaying }
+                   isMuted={ this.props.isMuted }
+                   currentTime={ this.props.currentTime }
+                   duration={ this.video.duration }
+
+                   onScrubberClick={this.changeVideoTime}
+                   onMouseEnter={ this.handleMouseEnterControls }
+                   onMouseMove={ e => e.stopPropagation() }
+                   onTouchMove={ this.handleMouseEnterControls }
+                   onTouchEnd={ this.setHideControlsTimeout }
+
+                   playPauseButton={ this.handleVideoPlayPause }
+                   prevButton={ this.handlePrevClick }
+                   nextButton={ this.handleNextClick }
+                   muteButton={ this.handleVolumeClick }
+                   hotspots={ this.props.chapters}
+                 />
+               : <SimpleProgressBar
+                   key="narrative-player-simple-control"
+                   currentTime={ this.props.currentTime }
+                   duration={ this.props.duration }
+                 />
+            }
+          </TransitionGroup>
         </div>
       </div>
     )
