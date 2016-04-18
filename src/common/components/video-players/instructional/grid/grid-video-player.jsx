@@ -163,6 +163,7 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillUnmount() {
+    this.isAnimatingOut = true;
     clearInterval(this.nextVideoIntervalId);
     clearTimeout(this.hideControlsTimeoutId);
     this.pauseVideo();
@@ -300,7 +301,7 @@ export default class GridVideoPlayer extends React.Component {
       return;
     }
 
-    if(!this.props.useFullControls && !this.videoEnded && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
+    if(!this.props.useFullControls && !this.videoEnded && !this.isAnimatingOut && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
       this.setHideControlsTimeout();
     }
