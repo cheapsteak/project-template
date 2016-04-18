@@ -289,12 +289,22 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   handleComponentMouseMove = (e) => {
-    if (this.isAnimatingOut) return;
-
     const mouseCoords = {
       x: e.clientX,
       y: e.clientY
     };
+
+    if (this.isAnimatingOut) return;
+
+    if(_.includes(['rectangle-button', 'pill-button', 'video-controls'], e.target.id)) {
+      if(this.hideControlsTimeoutId) {
+        clearTimeout(this.hideControlsTimeoutId);
+        this.hideControlsTimeoutId = undefined;
+      }
+
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
 
     if(this.isAnimatingOut || this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
@@ -303,8 +313,9 @@ export default class GridVideoPlayer extends React.Component {
 
     if(!this.props.useFullControls && !this.videoEnded && !this.isAnimatingOut && !_.isEqual(this.lastMouseCoord, mouseCoords)) {
       this.props.showFullControls();
-      this.setHideControlsTimeout();
     }
+
+    this.setHideControlsTimeout();
 
     this.lastMouseCoord = mouseCoords;
   };
@@ -367,10 +378,11 @@ export default class GridVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
-        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
+
+      this.setHideControlsTimeout();
     }
   };
 
@@ -587,6 +599,7 @@ export default class GridVideoPlayer extends React.Component {
             </div>
           </div>
           <RectangularButton
+            id="rectangle-button"
             ref={ node => this.refs.cornerButton = findDOMNode(node) }
             className="close-button"
             text="Close"
@@ -602,6 +615,7 @@ export default class GridVideoPlayer extends React.Component {
             ref={ node => this.refs.moreAboutCTA = findDOMNode(node) }
             to={this.props.chapterRoute || '/'}>
             <PillButton
+              id="pill-button"
               idleText={`More About ${this.props.title}`}
               activeText={`More About ${this.props.title}`}
             />
@@ -621,6 +635,7 @@ export default class GridVideoPlayer extends React.Component {
             this.isAnimatingOut ? null :
             this.props.useFullControls
             ? <VideoControls
+                id="video-controls"
                 key={`video-controls-${this.props.slug}`}
                 isPlaying={this.props.isPlaying}
                 isMuted={this.props.isMuted}
@@ -628,9 +643,7 @@ export default class GridVideoPlayer extends React.Component {
                 duration={this.video && this.video.duration}
 
                 onScrubberClick={this.changeVideoTime}
-                onMouseEnter={this.handleMouseEnterControls}
-                onMouseMove={e => e.stopPropagation()}
-                onTouchMove={this.handleMouseEnterControls}
+                onTouchMove={this.handleComponentMouseMove}
                 onTouchEnd={this.setHideControlsTimeout}
 
                 playPauseButton={this.handleVideoPlayPause}

@@ -191,6 +191,16 @@ export default class ChapterVideoPlayer extends React.Component {
       y: e.clientY
     };
 
+    if(_.includes(['rectangle-button', 'video-controls'], e.target.id)) {
+      if(this.hideControlsTimeoutId) {
+        clearTimeout(this.hideControlsTimeoutId);
+        this.hideControlsTimeoutId = undefined;
+      }
+
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
+
     if(this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
       return;
@@ -283,10 +293,11 @@ export default class ChapterVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
-        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
+
+      this.setHideControlsTimeout();
     }
   };
 
@@ -428,6 +439,7 @@ export default class ChapterVideoPlayer extends React.Component {
             : undefined
           }
           <RectangularButton
+            id="rectangle-button"
             ref={ node => this.els.cornerButton = findDOMNode(node) }
             onClick={ this.handleCloseClick }
             className="close-button"
@@ -475,6 +487,7 @@ export default class ChapterVideoPlayer extends React.Component {
            ? null
              : this.props.useFullControls
              ? <VideoControls
+                id="video-controls"
                  key="chapter-player-video-control"
                  isPlaying={this.props.isPlaying}
                  isMuted={this.props.isMuted}
@@ -483,9 +496,7 @@ export default class ChapterVideoPlayer extends React.Component {
                  isFullBrowser={this.props.isFullBrowser}
 
                  onScrubberClick={this.changeVideoTime}
-                 onMouseEnter={this.handleMouseEnterControls}
-                 onMouseMove={e => e.stopPropagation()}
-                 onTouchMove={this.handleMouseEnterControls}
+                 onTouchMove={this.handleComponentMouseMove}
                  onTouchEnd={this.setHideControlsTimeout}
 
                  playPauseButton={this.handleVideoPlayPause}
