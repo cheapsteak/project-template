@@ -6,13 +6,19 @@ import FullscreenButtonSvg from 'svgs/photo-essay-fullscreen-button.svg';
 import {Link} from 'react-router';
 import animate from 'gsap-promise';
 import TransitionGroup from 'react-transition-group-plus';
-
 import TransitionItem from './transition-item.jsx';
+import Slider from './slider/slider.jsx';  
+
 
 class PhotoEssay extends React.Component {
   constructor(props) {
     super(props)
   }
+
+  state = {
+    isHoveringNext: false,
+    isHoveringPrevious: false,
+  };
 
   handlePrevClick = () => {
     audio.play('button-click');
@@ -24,8 +30,24 @@ class PhotoEssay extends React.Component {
     this.props.onNextClick();
   };
 
-  handleButtonMouseOver = () => {
+  handleNextMouseEnter = () => {
     audio.play('button-rollover');
+    // might need to disable this for tablet
+    this.setState({isHoveringNext: true });
+  };
+
+  handlePreviousMouseEnter = () => {
+    audio.play('button-rollover');
+    // might need to disable this for tablet
+    this.setState({isHoveringPrevious: true });
+  };
+
+  handleNextMouseLeave = () => {
+    this.setState({isHoveringNext: false });
+  };
+
+  handlePreviousMouseLeave = () => {
+    this.setState({isHoveringPrevious: false });
   };
 
   componentWillEnterFullBrowser = (originalComponent) => {
@@ -66,36 +88,13 @@ class PhotoEssay extends React.Component {
         {/* need a wrapper for scrollmagic / parallax effect */}
         <div className="parallax-target">
           {/* need another wrapper for slideshow */}
-          <div
-            className="photo-slider"
-            style={{
-              transform: `translateX( ${-100 * index}%)`,
-              transition: `transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1)`,
-            }}
+          <Slider
+            currentIndex={index || 0}
+            photos={photos || []}
+            shouldPreviewPreviousPhoto={this.state.isHoveringPrevious}
+            shouldPreviewNextPhoto={this.state.isHoveringNext}
           >
-            {
-              photos && photos.map((photo, index) => {
-                const style = index === 0
-                  ? {
-                    position:  'static'
-                  }
-                  : {
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    transform: `translateX(${100 * index}%)`
-                  };
-
-                return <div
-                    key={index}
-                    className="image-wrapper"
-                    style={style}
-                  >
-                    <img src={photo.image}/>
-                  </div>
-              })
-            }
-          </div>
+          </Slider>
         </div>
         <div className="photo-description">
           <h3>About this picture</h3>
@@ -120,13 +119,15 @@ class PhotoEssay extends React.Component {
           <div
             className="button back-button"
             onClick={this.handlePrevClick}
-            onMouseEnter={this.handleButtonMouseOver}
+            onMouseEnter={this.handlePreviousMouseEnter}
+            onMouseLeave={this.handlePreviousMouseLeave}
             dangerouslySetInnerHTML={{ __html: BackButtonSvg }}
           ></div>
           <div
             className="button next-button"
             onClick={this.handleNextClick}
-            onMouseEnter={this.handleButtonMouseOver}
+            onMouseEnter={this.handleNextMouseEnter}
+            onMouseLeave={this.handleNextMouseLeave}
             dangerouslySetInnerHTML={{ __html: NextButtonSvg }}
           ></div>
           {
