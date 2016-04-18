@@ -2,7 +2,7 @@ import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
 import detect from 'common/utils/detect';
-import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
+//import createVideoAnalyticsTracker from 'common/utils/createVideoAnalyticsTracker';
 
 export default class RotateScreen extends React.Component {
 
@@ -23,8 +23,8 @@ export default class RotateScreen extends React.Component {
     document.addEventListener('fullscreenchange', this.handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', this.handleFullscreenChange);
 
-    this.analytics = createVideoAnalyticsTracker(this.refs.video, this.props.trackingCategory, this.props.trackingLabel);
-    this.analytics.track();
+    //this.analytics = createVideoAnalyticsTracker(this.refs.video, this.props.trackingCategory, this.props.trackingLabel);
+    //this.analytics.track();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,7 +45,7 @@ export default class RotateScreen extends React.Component {
   }
 
   componentWillUnmount() {
-    this.analytics.cleanup();
+    //this.analytics.cleanup();
     document.removeEventListener('fullscreenchange', this.handleFullscreenChange);
     document.removeEventListener('webkitfullscreenchange', this.handleFullscreenChange);
   }
@@ -76,7 +76,7 @@ export default class RotateScreen extends React.Component {
     } else if(el.msRequestFullscreen) {
       el.msRequestFullscreen();
     }
-    
+
     el.style.opacity = 1;
   };
 
