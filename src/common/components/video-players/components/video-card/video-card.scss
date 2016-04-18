@@ -23,6 +23,10 @@
     background-color: #2B2B2B;
   }
 
+  video {
+    pointer-events: none;
+  }
+
   label {
     position: absolute;
     @include scale-prop('top', 90);

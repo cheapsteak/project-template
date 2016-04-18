@@ -322,7 +322,6 @@ export default class NarrativeVideoPlayer extends React.Component {
     if (!this.isAnimatingOut) TweenMax.killTweensOf(_.values(this.refs));
   };
 
-
   /************************/
   /*       Handlers       */
   /************************/
