@@ -22,12 +22,14 @@ body {
 @import 'common/components/pill-button/pill-button';
 @import 'common/components/article/article';
 @import 'common/components/learn-more-modal/learn-more-modal';
-@import 'common/components/timeline/timeline';
-@import 'common/components/timeline/timeline-hotspot/timeline-hotspot';
-@import 'common/components/timeline/timeline-hover-card/timeline-hover-card';
 @import 'common/components/video-players/video-player.scss';
 @import 'common/components/video-players/narrative/narrative-video-player';
 @import 'common/components/video-players/instructional/instructional-video-player';
+@import 'common/components/video-players/components/timeline/timeline';
+@import 'common/components/video-players/components/timeline/timeline-hotspot/timeline-hotspot';
+@import 'common/components/video-players/components/timeline/timeline-hover-card/timeline-hover-card';
+@import 'common/components/video-players/components/video-controls/video-controls';
+@import 'common/components/video-players/components/simple-progress-bar/simple-progress-bar';
 @import 'common/components/video-players/components/image-card-one/image-card-one';
 @import 'common/components/video-players/components/image-card-two/image-card-two';
 @import 'common/components/video-players/components/video-card/video-card';

@@ -35,8 +35,8 @@
 
   .bottom-overlay-front, .bottom-overlay-back {
     position: absolute;
-    width: 100%;
-    bottom: 0;
+    width: 101%;
+    bottom: -1px; // Fix for image showing even when overflow is hidden
     left: 0;
     background-color: rgba(100,100,100, 0.8);
   }

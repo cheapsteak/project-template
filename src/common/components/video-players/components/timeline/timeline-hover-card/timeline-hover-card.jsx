@@ -21,6 +21,21 @@ export default class TimelineHoverCard extends React.Component {
     animate.set(this.refs.text, { y: 50, opacity: 0 });
   }
 
+  componentWillAppear(callback) {
+    const el = findDOMNode(this);
+    const container = this.props.getContainer();
+
+    this.cardHeight = this.refs.rect.offsetHeight;
+    const height = this.refs.rect.offsetHeight;
+
+    animate.set(this.refs.line, { y: -(container.offsetHeight/2 + 35), scaleY: 1, transformOrigin: '0 0', ease: ViniEaseOut });
+    animate.set(this.refs.rect, { display:'inline-block', y: -(container.offsetHeight/2 + 70 + this.cardHeight), ease: ViniEaseOut });
+    animate.set(this.refs.background, { delay: 0.18, scaleY: 1, y: 0, transformOrigin: '0 1', ease: ViniEaseOut });
+    animate.set(this.refs.text, { delay: 0.3, y: 0, opacity: 1, ease: ViniEaseOut });
+
+    callback();
+  }
+
   componentWillEnter (callback) {
     const el = findDOMNode(this);
     const container = this.props.getContainer();
