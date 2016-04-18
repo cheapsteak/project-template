@@ -40,7 +40,6 @@ export default class TransitionItem extends React.Component {
   componentWillEnter (callback) {
     const timeline = this.getTimeline();
 
-    console.log('willenter');
     const el = findDOMNode(this);
     const duration = this.getDuration('enter');
     TweenMax.killTweensOf(timeline);
@@ -57,7 +56,6 @@ export default class TransitionItem extends React.Component {
     );
 
     if (this.props.shouldTransitionParentNodeHeight && el.getBoundingClientRect().height) {
-      console.log('tpnh');
       TweenMax.killTweensOf(el.parentNode);
       TweenMax.to(el.parentNode, duration, {
         height: el.getBoundingClientRect().height,
@@ -70,7 +68,6 @@ export default class TransitionItem extends React.Component {
     const timeline = this.getTimeline();
     const el = findDOMNode(this);
     const duration = this.getDuration('leave');
-    console.log('leave duration', duration);
     TweenMax.killTweensOf(timeline);
 
     timeline.seek('idle');
