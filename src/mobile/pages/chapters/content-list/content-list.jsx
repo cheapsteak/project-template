@@ -214,6 +214,7 @@ i
                 name="A Message From Eva"
                 image={ this.props.podcast.iconImage }
                 isVideo={true}
+                src={ this.props.podcast.src }
                 onClick={ this.playVideo.bind(null, this.state.videoStatuses.length-1) }
                 onExitFullscreen={ this.pauseVideo.bind(null, this.state.videoStatuses.length-1) }
                 videoStatus={ this.state.videoStatuses[this.state.videoStatuses.length-1] }
