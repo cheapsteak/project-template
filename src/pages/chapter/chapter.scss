@@ -233,6 +233,12 @@ $orange: #f99100;
       margin-top: - $parallax-amplitude;
       margin-bottom: - $parallax-amplitude;
       position: relative;
+
+      &.psv-inject-target, &.panorama-placeholder-container {
+        width: calc(100% + #{$parallax-amplitude * 2});
+        margin-left: - $parallax-amplitude;
+        margin-right: - $parallax-amplitude;
+      }
     }
   }
 

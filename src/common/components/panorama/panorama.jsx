@@ -16,6 +16,8 @@ import PanoramaLoader from './panorama-loader/panorama-loader';
 import IconCursor from 'svgs/icon-360-cursor.svg';
 import IconAccelerometer from 'svgs/icon-toggle.svg';
 
+const parallaxAmplitude = 50;
+
 const states = {
   LOADING: 'loading',
   INIT: 'init',
@@ -89,6 +91,8 @@ export default class Panorama extends React.Component {
     if (detect.isTablet) {
       animate.to(this.refs.accelerometerToggle, 0, {y: '100%', autoAlpha: 0, ease: Expo.easeOut});
     }
+
+    animate.set(this.refs.placeholderContainer, {autoAlpha: 0});
 
     //this.containerEl.addEventListener('mousewheel', this.handleMouseWheel);
     //this.containerEl.addEventListener('DOMMouseScroll', this.handleMouseWheel);
@@ -228,7 +232,7 @@ export default class Panorama extends React.Component {
     });
   };
 
-  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
+  initNewPanorama = (src, long, lat) => {
     if (this.panorama) this.panorama.destroy();
 
     this.setState({status: states.LOADING});
@@ -248,6 +252,11 @@ export default class Panorama extends React.Component {
       this.panorama.rotate(long, lat);
       this.panorama.zoom(initZoomLevel * zoomRangeNum);
       this.setOrientationControls();
+
+      if (this.isShowingPlaceholder) {
+        this.isShowingPlaceholder = false;
+        this.setPosterToPanoramaTransition();
+      }
     });
 
     this.panorama.on('zoom-updated', (zoomLevelNum) => {
@@ -264,6 +273,54 @@ export default class Panorama extends React.Component {
       };
       this.setState({long, lat, rotation});
     });
+  };
+
+  setPanoramaToPosterTransition = (src, long, lat) => {
+    const scale = (this.refs.placeholder.offsetHeight - parallaxAmplitude) / this.refs.placeholder.offsetHeight;
+
+    animate.set([this.refs.placeholderContainer, this.refs.placeholder], {autoAlpha: 1, scale: 1});
+    animate.set(this.refs.psvInjectTarget, {autoAlpha: 0});
+
+    animate.to(this.refs.placeholder, 0.6, {
+        autoAlpha: 0.2,
+        scale: scale,
+        ease: ViniEaseOut
+      })
+      .then(() => {
+        this.initNewPanorama(src, long, lat);
+      });
+  };
+
+  setPosterToPanoramaTransition = () => {
+    const canvasContainer = document.querySelector('.psv-canvas-container');
+    const scale = (canvasContainer.offsetHeight + parallaxAmplitude) / canvasContainer.offsetHeight;
+
+    // set timeout to improve transition performance
+    setTimeout(() => {
+      animate.set(this.refs.psvInjectTarget, {autoAlpha: 1});
+      animate.set(canvasContainer, {scale, autoAlpha: 0});
+
+      animate.to(this.refs.placeholderContainer, 0.4, {autoAlpha: 0});
+
+      animate.to(canvasContainer, 0.8, {
+        scale: 1,
+        ease: ViniEaseOut,
+      });
+      animate.to(canvasContainer, 1, {
+        autoAlpha: 1,
+        ease: Linear.easeNone,
+      })
+
+    }, 200);
+  };
+
+  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
+    if (this.props.src && !detect.isPhone) {
+      // draw current panorama to placeholder canvas before swapping source
+      this.drawPlaceholderCanvas(src, long, lat);
+    } else {
+      this.initNewPanorama(src, long, lat);
+    }
   };
 
   handleAccelerometerClick = () => {
@@ -306,6 +363,25 @@ export default class Panorama extends React.Component {
         this.handleEnterFullBrowser();
       }, 300);
     }
+  };
+
+  drawPlaceholderCanvas = (src, long, lat) => {
+    const sourceCanvas = document.querySelector('.psv-canvas-container canvas');
+
+    var targetCanvas = this.refs.placeholder;
+    var targetCanvasContext = targetCanvas.getContext('2d');
+    targetCanvas.width = sourceCanvas.width;
+    targetCanvas.height = sourceCanvas.height;
+
+    var img = new Image();
+    img.onload = () => {
+      targetCanvasContext.drawImage(img, 0, 0, targetCanvas.width, targetCanvas.height);
+
+      this.isShowingPlaceholder = true;
+      this.setPanoramaToPosterTransition(src, long, lat);
+    };
+
+    img.src = sourceCanvas.toDataURL('image/png', 1);
   };
 
   render() {
@@ -389,7 +465,9 @@ export default class Panorama extends React.Component {
         {accelerometerToggle}
 
         <div className="parallax-target-wrapper psv-inject-target-wrapper">
-          <div ref="psvInjectTarget" className="parallax-target psv-inject-target">
+          <div ref="psvInjectTarget" className="parallax-target psv-inject-target"></div>
+          <div ref="placeholderContainer" className="panorama-placeholder-container parallax-target">
+            <canvas ref="placeholder" className={`panorama-placeholder`}></canvas>
           </div>
         </div>
 

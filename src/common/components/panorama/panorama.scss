@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   user-select: none;
-  background-color: #f4f4f4;
+  background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   @include gpu;
 
   * {
@@ -29,14 +29,11 @@
 
   .psv-container, .psv-canvas-container {
     height: 100%;
-    transition: opacity 0.3s;
+    //transition: opacity 0.3s;
   }
 
   .psv-container, .psv-canvas-container, .psv-hud {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    @include absolute-100;
     //cursor: none !important;
   }
 
@@ -64,6 +61,16 @@
           fill: #999;
         }
       }
+    }
+  }
+
+  .panorama-placeholder-container {
+    @include absolute-100;
+    position: absolute !important;
+
+    canvas {
+      width: 100%;
+      height: 100%;
     }
   }
 
