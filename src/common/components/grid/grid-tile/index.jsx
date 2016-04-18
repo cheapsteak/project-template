@@ -198,7 +198,7 @@ export default class GridTile extends React.Component {
   handleCtaClick = (i) => {
     const trackingCategory = this.props.isFiltered
       ? `${this.state.data.instructionalVideosCtas && this.state.data.instructionalVideosCtas[i] || this.state.data.title} in action CTA`
-      : `${this.state.data.slug} learn more CTA`;
+      : `${this.state.data.title} learn more CTA`;
 
     tracking.trackEvent({
       category: trackingCategory,

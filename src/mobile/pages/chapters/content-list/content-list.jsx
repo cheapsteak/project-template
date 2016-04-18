@@ -90,11 +90,6 @@ i
   }
 
   playVideo = (i) => {
-    tracking.trackEvent({
-      category: 'Mobile - Instructional video ' + this.props.instructionalVideos[i-1].slug,
-      label: 'Instructional Video'
-    });
-
     this.setState({ videoStatuses: [
       ...this.state.videoStatuses.slice(0, i),
       'play',
@@ -118,6 +113,15 @@ i
     });
 
     this.playVideo(null, 0);
+  };
+
+  handleInstructionalVideoClick = (i) => {
+    tracking.trackEvent({
+      category: 'Mobile - Instructional video ' + this.props.instructionalVideos[i].title,
+      label: 'Instructional Video'
+    });
+
+    this.playVideo(null, i+1);
   };
 
   render () {
@@ -157,7 +161,7 @@ i
                   label="Play"
                   name={`${this.props.name === 'Welcome' ? 'College Persistance' : 'In the Classroom'}${number}`}
                   isVideo={ true }
-                  onClick={ this.playVideo.bind(null, i+1) }
+                  onClick={ this.handleInstructionalVideoClick.bind(null, i) }
                   onExitFullscreen={ this.pauseVideo.bind(null, i+1) }
                   videoStatus={ this.state.videoStatuses[i+1] }
                   trackingCategory={`Mobile - Instructional Video - ${video.slug}`}

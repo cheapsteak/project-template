@@ -486,21 +486,21 @@ export default class GridVideoPlayer extends React.Component {
   handleLearnMoreClick = () => {
     this.props.onVideoPause();
     tracking.trackEvent({
-      category: 'Instructional video player -' + this.props.slug + ' learn more',
+      category: 'Instructional video player - ' + this.props.title + ' learn more',
       label: 'Instructional Video'
     });
   };
 
   handleChapterCtaClick = () => {
     tracking.trackEvent({
-      category: 'Instructional video player end - ' + this.props.slug + ' learn more CTA',
+      category: 'Instructional video player end - ' + this.props.title + ' learn more CTA',
       label: 'Instructional Video'
     });
   };
 
   handleNextVideoCtaClick = () => {
     tracking.trackEvent({
-      category: 'Instructional video player end - ' + this.props.slug + ' play next video CTA',
+      category: 'Instructional video player end - ' + this.props.title + ' play next video CTA',
       label: 'Instructional Video'
     });
   };

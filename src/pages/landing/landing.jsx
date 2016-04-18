@@ -273,7 +273,7 @@ export default class LandingPage extends React.Component {
                 ref="ctaExplore"
                 className={`cta explore`}
                 to={`grid`}
-                onClick={this.handleVideoCtaClick}
+                onClick={this.handleExploreCtaClick}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
@@ -288,7 +288,7 @@ export default class LandingPage extends React.Component {
                 ref="ctaWatch"
                 className={`cta watch`}
                 to={`narrative-video`}
-                onClick={this.handleExploreCtaClick}
+                onClick={this.handleVideoCtaClick}
               >
                 <RectangularButton
                   style={{width: '100%', height: '100%'}}
