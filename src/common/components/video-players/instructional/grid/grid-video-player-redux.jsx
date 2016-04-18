@@ -19,7 +19,7 @@ class GridVideoPlayerRedux extends React.Component {
   componentWillMount () {
     const slug = this.props.slug || this.props.params.slug;
 
-    this.boundActionCreators.setVideo(slug, { useFullControls: false, isPlaying: true });
+    this.boundActionCreators.setVideo(slug, { useFullControls: false, isPlaying: false });
   }
 
   render () {
