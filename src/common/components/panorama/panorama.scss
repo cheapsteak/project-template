@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   user-select: none;
-  background-color: #f4f4f4;
+  background: url('#{$ASSET_PATH}/images/noise-grey.png') repeat;
   @include gpu;
 
   * {
@@ -64,9 +64,14 @@
     }
   }
 
-  .panorama-placeholder {
+  .panorama-placeholder-container {
     @include absolute-100;
     position: absolute !important;
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .close-btn {

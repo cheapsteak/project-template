@@ -7,6 +7,7 @@
   @include gpu;
   @include scale-prop(width, 50);
   @include scale-prop(height, 50);
+  z-index: 1000;
 
   $orange: #f99100;
 
