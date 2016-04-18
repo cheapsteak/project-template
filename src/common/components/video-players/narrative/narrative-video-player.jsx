@@ -652,33 +652,33 @@ export default class NarrativeVideoPlayer extends React.Component {
             className="video-controls-wrapper"
           >
             {
-             this.props.useFullControls
-             ? <VideoControls
-                 key="narrative-player-video-control"
-                 isPlaying={ this.props.isPlaying }
-                 isMuted={ this.props.isMuted }
-                 currentTime={ this.props.currentTime }
-                 duration={ this.video.duration }
+             this.state.showEndingCTA
+             ? null
+             : this.props.useFullControls
+               ? <VideoControls
+                   key="narrative-player-video-control"
+                   isPlaying={ this.props.isPlaying }
+                   isMuted={ this.props.isMuted }
+                   currentTime={ this.props.currentTime }
+                   duration={ this.video.duration }
 
-                 onScrubberClick={this.changeVideoTime}
-                 onMouseEnter={ this.handleMouseEnterControls }
-                 onMouseMove={ e => e.stopPropagation() }
-                 onTouchMove={ this.handleMouseEnterControls }
-                 onTouchEnd={ this.setHideControlsTimeout }
+                   onScrubberClick={this.changeVideoTime}
+                   onMouseEnter={ this.handleMouseEnterControls }
+                   onMouseMove={ e => e.stopPropagation() }
+                   onTouchMove={ this.handleMouseEnterControls }
+                   onTouchEnd={ this.setHideControlsTimeout }
 
-                 playPauseButton={ this.handleVideoPlayPause }
-                 prevButton={ this.handlePrevClick }
-                 nextButton={ this.handleNextClick }
-                 muteButton={ this.handleVolumeClick }
-                 hotspots={ this.props.chapters}
-               />
-             : !this.state.showEndingCTA
-                ? <SimpleProgressBar
-                    key="narrative-player-simple-control"
-                    currentTime={ this.props.currentTime }
-                    duration={ this.props.duration }
-                  />
-                : null
+                   playPauseButton={ this.handleVideoPlayPause }
+                   prevButton={ this.handlePrevClick }
+                   nextButton={ this.handleNextClick }
+                   muteButton={ this.handleVolumeClick }
+                   hotspots={ this.props.chapters}
+                 />
+               : <SimpleProgressBar
+                   key="narrative-player-simple-control"
+                   currentTime={ this.props.currentTime }
+                   duration={ this.props.duration }
+                 />
             }
           </TransitionGroup>
         </div>
