@@ -471,30 +471,32 @@ export default class ChapterVideoPlayer extends React.Component {
           className="video-controls-wrapper"
         >
           {
-           this.props.useFullControls
-           ? <VideoControls
-               key="narrative-player-video-control"
-               isPlaying={this.props.isPlaying}
-               isMuted={this.props.isMuted}
-               currentTime={this.props.currentTime}
-               duration={this.video && this.video.duration}
-               isFullBrowser={this.props.isFullBrowser}
+           !this.video || (this.video && this.videoEnded) 
+           ? null
+             : this.props.useFullControls
+             ? <VideoControls
+                 key="chapter-player-video-control"
+                 isPlaying={this.props.isPlaying}
+                 isMuted={this.props.isMuted}
+                 currentTime={this.props.currentTime}
+                 duration={this.video && this.video.duration}
+                 isFullBrowser={this.props.isFullBrowser}
 
-               onScrubberClick={this.changeVideoTime}
-               onMouseEnter={this.handleMouseEnterControls}
-               onMouseMove={e => e.stopPropagation()}
-               onTouchMove={this.handleMouseEnterControls}
-               onTouchEnd={this.setHideControlsTimeout}
+                 onScrubberClick={this.changeVideoTime}
+                 onMouseEnter={this.handleMouseEnterControls}
+                 onMouseMove={e => e.stopPropagation()}
+                 onTouchMove={this.handleMouseEnterControls}
+                 onTouchEnd={this.setHideControlsTimeout}
 
-               playPauseButton={this.handleVideoPlayPause}
-               muteButton={this.handleVolumeClick}
-               fullBrowserButton={this.handleFullBrowserClick}
-             />
-           : <SimpleProgressBar
-              key="narrative-player-simple-control"
-              currentTime={this.props.currentTime}
-              duration={this.props.duration}
-             />
+                 playPauseButton={this.handleVideoPlayPause}
+                 muteButton={this.handleVolumeClick}
+                 fullBrowserButton={this.handleFullBrowserClick}
+               />
+             : <SimpleProgressBar
+                key="chapter-player-simple-control"
+                currentTime={this.props.currentTime}
+                duration={this.props.duration}
+               />
           }
         </TransitionGroup>
       </div>
