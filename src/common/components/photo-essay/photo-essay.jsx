@@ -15,6 +15,11 @@ class PhotoEssay extends React.Component {
     super(props)
   }
 
+  state = {
+    isHoveringNext: false,
+    isHoveringPrevious: false,
+  };
+
   handlePrevClick = () => {
     audio.play('button-click');
     this.props.onPrevClick();
@@ -25,8 +30,24 @@ class PhotoEssay extends React.Component {
     this.props.onNextClick();
   };
 
-  handleButtonMouseOver = () => {
+  handleNextMouseEnter = () => {
     audio.play('button-rollover');
+    // might need to disable this for tablet
+    this.setState({isHoveringNext: true });
+  };
+
+  handlePreviousMouseEnter = () => {
+    audio.play('button-rollover');
+    // might need to disable this for tablet
+    this.setState({isHoveringPrevious: true });
+  };
+
+  handleNextMouseLeave = () => {
+    this.setState({isHoveringNext: false });
+  };
+
+  handlePreviousMouseLeave = () => {
+    this.setState({isHoveringPrevious: false });
   };
 
   componentWillEnterFullBrowser = (originalComponent) => {
@@ -68,8 +89,10 @@ class PhotoEssay extends React.Component {
         <div className="parallax-target">
           {/* need another wrapper for slideshow */}
           <Slider
-            index={index}
-            photos={photos}
+            currentIndex={index || 0}
+            photos={photos || []}
+            shouldPreviewPreviousPhoto={this.state.isHoveringPrevious}
+            shouldPreviewNextPhoto={this.state.isHoveringNext}
           >
           </Slider>
         </div>
@@ -96,13 +119,15 @@ class PhotoEssay extends React.Component {
           <div
             className="button back-button"
             onClick={this.handlePrevClick}
-            onMouseEnter={this.handleButtonMouseOver}
+            onMouseEnter={this.handlePreviousMouseEnter}
+            onMouseLeave={this.handlePreviousMouseLeave}
             dangerouslySetInnerHTML={{ __html: BackButtonSvg }}
           ></div>
           <div
             className="button next-button"
             onClick={this.handleNextClick}
-            onMouseEnter={this.handleButtonMouseOver}
+            onMouseEnter={this.handleNextMouseEnter}
+            onMouseLeave={this.handleNextMouseLeave}
             dangerouslySetInnerHTML={{ __html: NextButtonSvg }}
           ></div>
           {

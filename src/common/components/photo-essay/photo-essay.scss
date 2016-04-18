@@ -7,25 +7,6 @@
   height: 100%;
   background-color: black;
 
-  .image-wrapper {
-    @include flex-center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    img {
-      overflow: hidden;
-
-      @supports (object-fit: cover) {
-        & {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-    }
-  }
-
   .photo-controls, .photo-description {
     position: absolute;
     bottom: 0;
@@ -70,6 +51,7 @@
     display: flex;
     right: 0;
     user-select: none;
+    z-index: 120;
 
     .button {
       flex: 1;
