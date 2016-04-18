@@ -42,7 +42,7 @@ export default [
     ],
     podcast: {
       iconImage: `${config.ASSET_PATH}/images/mobile-list-thumbnail-4.jpg`,
-      src: 'https://player.vimeo.com/external/160156123.hd.mp4?s=3a124481f349bd0b62a5731ea4ad1166caf5dd40&profile_id=119&a=1'
+      src: 'http://successacademy.jam3.net/temp-assets/planet-money-664.mp4'
     }
   },
   {
