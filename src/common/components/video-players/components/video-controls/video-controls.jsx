@@ -77,6 +77,7 @@ function Button(props) {
 export default class VideoControls extends React.Component {
 
   static propTypes = {
+    id: React.PropTypes.string,
     style: React.PropTypes.object,
     currentTime: React.PropTypes.number.isRequired,
     onMouseEnter: React.PropTypes.func,
@@ -170,6 +171,7 @@ export default class VideoControls extends React.Component {
   render () {
     return (
       <div
+        id={this.props.id}
         ref="container"
         className="video-controls"
         onMouseEnter={this.props.onMouseEnter}

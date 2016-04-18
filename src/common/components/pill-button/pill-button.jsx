@@ -5,6 +5,7 @@ import Promise from 'bluebird';
 export default class PillButton extends React.Component {
 
   static propTypes = {
+    id: React.PropTypes.string,
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     idleText: React.PropTypes.string,
@@ -133,6 +134,7 @@ export default class PillButton extends React.Component {
 
     return (
       <div
+        id={this.props.id}
         ref="pillButton"
         className={`pill-button ${className || ''}`}
         style={style}

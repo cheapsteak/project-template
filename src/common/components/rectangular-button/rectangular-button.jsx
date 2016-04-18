@@ -9,6 +9,7 @@ const duration = 0.2;
 export default class RectangularButton extends React.Component {
 
   static propTypes = {
+    id: React.PropTypes.string,
     style: React.PropTypes.object,
     className: React.PropTypes.string,
     text: React.PropTypes.string,
@@ -93,6 +94,7 @@ export default class RectangularButton extends React.Component {
 
     return (
       <div
+        id={this.props.id}
         ref="button"
         className={`rectangular-button ${className || ''}`}
         style={style}

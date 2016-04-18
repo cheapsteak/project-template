@@ -208,10 +208,11 @@ export default class NarrativeVideoPlayer extends React.Component {
         animate.set(this.video, { volume: 0 });
         this.video.play();
         this.unmute();
-        this.setHideControlsTimeout();
       } else {
         this.video.play();
       }
+
+      this.setHideControlsTimeout();
     }
   };
 
@@ -404,17 +405,23 @@ export default class NarrativeVideoPlayer extends React.Component {
     this.video.currentTime = newTime;
   };
 
-  handleMouseEnterControls = (e) => {
-    clearTimeout(this.hideControlsTimeoutId);
-  };
-
   handleComponentMouseMove = (e) => {
-    if (this.isAnimatingOut) return;
-
     const mouseCoords = {
       x: e.clientX,
       y: e.clientY
     };
+
+    if (this.isAnimatingOut) return;
+
+    if(_.includes(['rectangle-button', 'circle-cta', 'video-controls'], e.target.id)) {
+      if(this.hideControlsTimeoutId) {
+        clearTimeout(this.hideControlsTimeoutId);
+        this.hideControlsTimeoutId = undefined;
+      }
+
+      this.lastMouseCoord = mouseCoords;
+      return;
+    }
 
     if (this.isAnimatingOut || this.videoEnded || !this.lastMouseCoord) {
       this.lastMouseCoord = mouseCoords;
@@ -535,6 +542,7 @@ export default class NarrativeVideoPlayer extends React.Component {
     return (
       <div
         ref="root"
+        id="video-player"
         className={`video-player narrative-video-player${this.state.isReady ? ' ready' : ''} ${className || ''}`}
         style={style}
         onMouseMove={this.handleComponentMouseMove}
@@ -554,6 +562,7 @@ export default class NarrativeVideoPlayer extends React.Component {
             </div>
             <Link to="/grid" onClick={this.handleCircleGridCtaClick}>
               <RectangularButton
+                id="rectangle-button"
                 ref={ node => this.refs.cornerButton = findDOMNode(node) }
                 className="explore-button"
                 text="Main Menu"
@@ -586,7 +595,9 @@ export default class NarrativeVideoPlayer extends React.Component {
               to={`/chapters/${this.props.currentChapter.slug}`}
               onClick={this.handleChapterCtaClick}
             >
-              <div className="circle-wrapper">
+              <div 
+              id="circle-cta"
+              className="circle-wrapper">
                 <div className="circle-cta-text">
                   <h3 className="stagger-cta">{this.props.currentChapter.title}</h3>
                   <label className="stagger-cta">Learn More</label>
@@ -652,32 +663,31 @@ export default class NarrativeVideoPlayer extends React.Component {
           >
             {
              this.state.showEndingCTA
-             ? null
-             : this.props.useFullControls
-               ? <VideoControls
-                   key="narrative-player-video-control"
-                   isPlaying={ this.props.isPlaying }
-                   isMuted={ this.props.isMuted }
-                   currentTime={ this.props.currentTime }
-                   duration={ this.video.duration }
+               ? null
+               : this.props.useFullControls
+                 ? <VideoControls
+                     id="video-controls"
+                     key="narrative-player-video-control"
+                     isPlaying={ this.props.isPlaying }
+                     isMuted={ this.props.isMuted }
+                     currentTime={ this.props.currentTime }
+                     duration={ this.video.duration }
 
-                   onScrubberClick={this.changeVideoTime}
-                   onMouseEnter={ this.handleMouseEnterControls }
-                   onMouseMove={ e => e.stopPropagation() }
-                   onTouchMove={ this.handleMouseEnterControls }
-                   onTouchEnd={ this.setHideControlsTimeout }
+                     onScrubberClick={this.changeVideoTime}
+                     onTouchMove={this.handleComponentMouseMove}
+                     onTouchEnd={ this.setHideControlsTimeout }
 
-                   playPauseButton={ this.handleVideoPlayPause }
-                   prevButton={ this.handlePrevClick }
-                   nextButton={ this.handleNextClick }
-                   muteButton={ this.handleVolumeClick }
-                   hotspots={ this.props.chapters}
-                 />
-               : <SimpleProgressBar
-                   key="narrative-player-simple-control"
-                   currentTime={ this.props.currentTime }
-                   duration={ this.props.duration }
-                 />
+                     playPauseButton={ this.handleVideoPlayPause }
+                     prevButton={ this.handlePrevClick }
+                     nextButton={ this.handleNextClick }
+                     muteButton={ this.handleVolumeClick }
+                     hotspots={ this.props.chapters}
+                   />
+                 : <SimpleProgressBar
+                     key="narrative-player-simple-control"
+                     currentTime={ this.props.currentTime }
+                     duration={ this.props.duration }
+                   />
             }
           </TransitionGroup>
         </div>
