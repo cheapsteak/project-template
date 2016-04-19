@@ -38,11 +38,6 @@ export default <Provider store={store}>
             <Route path="narrative-video*" components={NarrativeVideoPlayer} />
             <Route path="chapters/:chapter_slug" component={Chapter}>
               <Route
-                path="instructional-videos/:slug"
-                component={FullBrowserWrapper}
-                childComponent={ChapterVideoPlayer}
-              />
-              <Route
                 path="photo-essay/:slug"
                 component={FullBrowserWrapper}
                 childComponent={PhotoEssay}

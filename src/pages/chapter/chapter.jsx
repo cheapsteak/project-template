@@ -132,10 +132,6 @@ export default class Chapter extends React.Component {
   };
 
   getTarget = (component, slug) => {
-    if (component instanceof InstructionalVideo) {
-
-      return this.refs.instructionalVideo;
-    }
     if (component instanceof PhotoEssay) {
       return this.refs.photoEssay;
     }
