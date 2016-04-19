@@ -44,7 +44,7 @@
     "lodash": "^4.6.1",
     "mobile-detect": "^1.3.0",
     "packery": "github:namniak/packery.git",
-    "photo-sphere-viewer-sa": "^3.1.3",
+    "photo-sphere-viewer-sa": "^3.2.0",
     "progressbar.js": "^1.0.0",
     "raf": "^3.2.0",
     "react": "^0.14.7",

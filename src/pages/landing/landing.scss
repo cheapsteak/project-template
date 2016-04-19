@@ -41,7 +41,7 @@ $orange: #f99100;
   .content-container {
     position: relative;
     display: inline-block;
-    width: 80%;
+    width: 70%;
     @include scale-prop(max-width, 1000);
     cursor: default;
 
@@ -51,11 +51,9 @@ $orange: #f99100;
     }
 
     .title {
-      @include scale-prop(font-size, 100);
-      @include scale-prop(margin-top, 60);
-      @include scale-prop(margin-bottom, 40);
+      @include scale-prop(margin-top, 80);
+      @include scale-prop(margin-bottom, 50);
       color: $orange;
-      text-transform: capitalize;
     }
 
     .description {
@@ -63,14 +61,15 @@ $orange: #f99100;
       @include scale-prop(font-size, 20);
       color: rgba(143, 143, 143, 1);
       margin: auto;
-      @include scale-prop(max-width, 500);
+      //@include scale-prop(max-width, 350);
+      //line-height: 140%;
     }
 
     .cta-container {
       display: inline-block;
       margin-left: auto;
       margin-right: auto;
-      @include scale-prop(margin-top, 80);
+      @include scale-prop(margin-top, 40);
       @include scale-prop(width, 258);
 
       .cta {
@@ -84,6 +83,50 @@ $orange: #f99100;
 
           .button-text {
             @include scale-prop(padding-left, 20);
+          }
+        }
+
+        &.restart {
+          display: block;
+          height: auto;
+          width: auto;
+          @include scale-prop(margin-top, 40);
+          text-align: center;
+          @include scale-prop(height, 35);
+          @include flex-center;
+
+          .replay-icon {
+            display: flex;
+            position: relative;
+            @include scale-prop(width, 15);
+            @include scale-prop(height, 15);
+            @include scale-prop(margin-right, 10);
+            @include scale-prop(top, -2);
+            transition: opacity 0.3s, transform 0.5s;
+
+            svg {
+              width: 100%;
+              height: 100%;
+              fill: #fff !important;
+              stroke: #fff;
+            }
+          }
+          .replay-text {
+            display: flex;
+            @include scale-prop(font-size, 17);
+            color: #fff;
+            transition: opacity 0.3s;
+          }
+
+          &:hover {
+            .replay-icon {
+              opacity: 0.6;
+              animation: rotate 0.5s 1;
+              animation-timing-function: cubic-bezier(0.14, 0.25, 0.4, 0.99);
+            }
+            .replay-text {
+              opacity: 0.6;
+            }
           }
         }
       }
@@ -116,7 +159,6 @@ $orange: #f99100;
       @include scale-prop(height, 40);
       margin-left: auto;
       fill: $orange;
-      //animation: spin 2.5s infinite;
     }
 
     p {
@@ -126,12 +168,12 @@ $orange: #f99100;
     }
   }
 
-  @keyframes spin {
+  @keyframes rotate {
     from {
-      transform: rotateY(0deg);
+      transform: rotateZ(0deg);
     }
     to {
-      transform: rotateY(360deg);
+      transform: rotateZ(360deg);
     }
   }
 

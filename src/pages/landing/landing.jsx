@@ -16,6 +16,7 @@ import Footer from 'common/components/footer/footer';
 import TransitionGroup from 'react-addons-transition-group';
 import detect from 'common/utils/detect';
 import bodymovin from 'bodymovin';
+import ReplaySvg from 'svgs/restart-arrow.svg';
 
 export default class LandingPage extends React.Component {
 
@@ -46,8 +47,13 @@ export default class LandingPage extends React.Component {
     this.containerEl = findDOMNode(this);
     this.ctaWatch = findDOMNode(this.refs.ctaWatch);
     this.ctaExplore = findDOMNode(this.refs.ctaExplore);
+    this.ctaRestart = findDOMNode(this.refs.ctaRestart);
 
-    animate.set([this.refs.description, this.ctaWatch, this.ctaExplore], {autoAlpha: 0, y: 40});
+    if (!localStorage.getItem('narrative-video-time')) {
+      animate.set(this.ctaRestart, {display: 'none'});
+    }
+
+    animate.set([this.refs.description, this.ctaWatch, this.ctaExplore, this.ctaRestart], {autoAlpha: 0, y: 40});
     animate.set([this.refs.video, this.refs.title], {scale: 1.25});
     animate.set(this.refs.contentContainer, {y: textPos});
 
@@ -69,7 +75,7 @@ export default class LandingPage extends React.Component {
     this.createTitleAnimation();
     this.logoAnimation.goToAndStop(this.logoAnimation.totalFrames, true);
 
-    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch];
+    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch, this.ctaRestart];
     animate.set([this.refs.loaderContainer, this.refs.coverBg], {autoAlpha: 0});
     animate.set([this.refs.contentContainer, staggerEls], {y: 0, autoAlpha: 1});
     animate.set([this.refs.subtitle, this.refs.title, this.refs.video], {scale: 1});
@@ -116,13 +122,15 @@ export default class LandingPage extends React.Component {
     this.resize();
 
     return Promise.all([
-      this.initAnimateInPromise,
-      this.videoLoadPromise,
-      this.titleAnimationPromise,
-    ]).then(() => {
-      this.preloadNextContent();
-      this.animateOnVideoLoaded();
-    })
+        this.initAnimateInPromise,
+        this.videoLoadPromise,
+        this.titleAnimationPromise
+      ])
+      .delay(200)
+      .then(() => {
+        this.preloadNextContent();
+        this.animateOnVideoLoaded();
+      })
   };
 
   resize = () => {
@@ -170,7 +178,7 @@ export default class LandingPage extends React.Component {
 
   animateOnVideoLoaded = () => {
     const ease = Expo.easeOut;
-    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch];
+    const staggerEls = [this.refs.description, this.ctaExplore, this.ctaWatch, this.ctaRestart];
 
     if (!this.context.previousRoute) this.setState({shouldShowFooter: true});
 
@@ -188,7 +196,7 @@ export default class LandingPage extends React.Component {
   };
 
   animateOutFade = (callback) => {
-    const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
+    const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore, this.ctaRestart];
 
     this.setState({shouldShowFooter: false});
 
@@ -206,7 +214,7 @@ export default class LandingPage extends React.Component {
     const ease = Expo.easeOut;
     const delay = 0.8;
 
-    const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore];
+    const staggerEls = [this.refs.subtitle, this.refs.title, this.refs.description, this.ctaWatch, this.ctaExplore, this.ctaRestart];
     this.setState({shouldShowFooter: false});
 
     animate.staggerTo(staggerEls, 0.8, {autoAlpha: 0, scale: 0.9, ease: Expo.easeOut}, 0.1);
@@ -232,6 +240,17 @@ export default class LandingPage extends React.Component {
   handleExploreCtaClick = () => {
     tracking.trackEvent({
       category: 'Explore grid CTA',
+      label: 'Landing Page'
+    });
+  };
+
+  handleRestartCtaClick = () => {
+    localStorage.setItem('narrative-video-time', 0);
+
+    audio.play('button-click')
+
+    tracking.trackEvent({
+      category: 'Restart documentary CTA',
       label: 'Landing Page'
     });
   };
@@ -298,6 +317,17 @@ export default class LandingPage extends React.Component {
                   backgroundColor={`#f7910b`}
                   hoverBackgroundColor={`#de8209`}
                 />
+              </Link>
+
+              <Link
+                ref="ctaRestart"
+                className={`cta restart`}
+                to={`narrative-video`}
+                onClick={this.handleRestartCtaClick}
+                onMouseEnter={() => audio.play('button-rollover')}
+              >
+                <div className="replay-icon" dangerouslySetInnerHTML={{ __html: ReplaySvg }}></div>
+                <div className="replay-text">Restart Tour</div>
               </Link>
             </div>
           </div>
