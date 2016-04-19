@@ -372,6 +372,7 @@ $orange: #f99100;
 }
 
 .instructional-video-component {
+  margin: auto;
   width: calc(100% - #{(115/1400*100*2)}vw);
   @include scale-calc-deduct('height', 100vw*9/16, 115);
   overflow: hidden;

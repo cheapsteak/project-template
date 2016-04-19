@@ -1,7 +1,6 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
-// import TransitionGroup from 'react-addons-transition-group';
 import TransitionGroup from 'react-transition-group-plus';
 
 import Layout890 from 'common/components/grid/layout/layout-890';

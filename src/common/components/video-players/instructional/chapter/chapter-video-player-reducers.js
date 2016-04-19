@@ -4,7 +4,8 @@ import {
   SET_CHAPTER_VIDEO_DURATION,
   PLAY_CHAPTER_VIDEO,
   STOP_CHAPTER_VIDEO,
-  SET_CHAPTER_VIDEO_OPTIONS
+  SET_CHAPTER_VIDEO_OPTIONS,
+  TOGGLE_CHAPTER_VIDEO_FULL_BROWSER
 } from './chapter-video-player-actions.js';
 
 import { ERROR } from 'common/actions/handle-error.js';
@@ -41,6 +42,8 @@ function video(state = {}, action) {
 
     case SET_CHAPTER_VIDEO_DURATION:
       return Object.assign({}, state, { duration: action.duration });
+    case TOGGLE_CHAPTER_VIDEO_FULL_BROWSER:
+      return Object.assign({}, state, { isFullBrowser: !state.isFullBrowser });
 
     case ERROR:
       console.warn('Failed to set video', action.error);
@@ -64,9 +67,8 @@ function videos(state = {}, action) {
     case SET_CHAPTER_VIDEO_TIME:
     case SET_CHAPTER_VIDEO_OPTIONS:
     case SET_CHAPTER_VIDEO_DURATION:
+    case TOGGLE_CHAPTER_VIDEO_FULL_BROWSER:
       if(!state[action.slug]) {
-        console.log('state',state);
-            
         console.warn('Attempting to set non-existant video with slug:', action.slug);
         return state;
       }

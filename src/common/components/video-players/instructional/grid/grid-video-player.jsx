@@ -154,8 +154,6 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillLeave(callback) {
-    console.log('LEEAVE');
-        
     animate.set(this.containerEl, {zIndex: 999999});
     this.isAnimatingOut = true;
     this.props.onVideoPause();
