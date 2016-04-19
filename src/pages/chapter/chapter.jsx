@@ -191,7 +191,6 @@ export default class Chapter extends React.Component {
         TweenMax.killTweensOf(el);
         const min = clamp(100/1920 * window.innerWidth, 50, 100);
         const max = - min;
-        console.log(min);
         TweenMax.to(el, 0.3, {
           y: getY(e.progress, min, max),
           ease: ViniEaseOut,
