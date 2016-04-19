@@ -412,7 +412,7 @@ export default class GridVideoPlayer extends React.Component {
 
     this.wrapperVisible = true;
 
-    this.stopAnimations();
+    // this.stopAnimations();
 
     return Promise.all([
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.idle.videoWrapper),
@@ -425,7 +425,7 @@ export default class GridVideoPlayer extends React.Component {
   animateOutControls = () => {
     if(this.isAnimatingOut) return
 
-    this.stopAnimations();
+    // this.stopAnimations();
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -444,7 +444,6 @@ export default class GridVideoPlayer extends React.Component {
 
   animateInEndOverlay = () => {
     // this.stopAnimations(_.omit(this.refs, 'endingOverlay'));
-    
 
     this.zoomedOut = true;
 
@@ -565,27 +564,27 @@ export default class GridVideoPlayer extends React.Component {
               className="ending-cards"
             >
             {
-              // this.state.showEndingCTA
-              // ? [
-              //   <ImageCard
-              //     key={'currentId'}
-              //     label="Discover:"
-              //     title={this.props.title}
-              //     route={this.props.chapterRoute}
-              //     image={this.props.endingCardImage}
-              //     onClick={this.handleChapterCtaClick}
-              //   />
-              //   ,
-              //   <VideoCard
-              //     key={'nextVideoId'}
-              //     title={nextVideo.title}
-              //     route={nextVideoRoute}
-              //     video={nextVideo.src}
-              //     timeLeft={this.state.nextVideoTimeLeft}
-              //     onClick={this.handleNextVideoCtaClick}
-              //   />
-              // ]
-              // : undefined
+              this.state.showEndingCTA
+              ? [
+                <ImageCard
+                  key={'currentId'}
+                  label="Discover:"
+                  title={this.props.title}
+                  route={this.props.chapterRoute}
+                  image={this.props.endingCardImage}
+                  onClick={this.handleChapterCtaClick}
+                />
+                ,
+                <VideoCard
+                  key={'nextVideoId'}
+                  title={nextVideo.title}
+                  route={nextVideoRoute}
+                  video={nextVideo.src}
+                  timeLeft={this.state.nextVideoTimeLeft}
+                  onClick={this.handleNextVideoCtaClick}
+                />
+              ]
+              : undefined
             }
             </TransitionGroup>
             <div
@@ -640,42 +639,42 @@ export default class GridVideoPlayer extends React.Component {
           className="video-controls-wrapper"
         >
           {
-            // this.isAnimatingOut ? null :
-            // this.props.useFullControls
-            // ? <VideoControls
-            //     id="video-controls"
-            //     key={`video-controls-${this.props.slug}`}
-            //     isPlaying={this.props.isPlaying}
-            //     isMuted={this.props.isMuted}
-            //     currentTime={this.props.currentTime}
-            //     duration={this.video && this.video.duration}
+            this.isAnimatingOut ? null :
+            this.props.useFullControls
+            ? <VideoControls
+                id="video-controls"
+                key={`video-controls-${this.props.slug}`}
+                isPlaying={this.props.isPlaying}
+                isMuted={this.props.isMuted}
+                currentTime={this.props.currentTime}
+                duration={this.video && this.video.duration}
 
-            //     onScrubberClick={this.changeVideoTime}
-            //     onTouchMove={this.handleComponentMouseMove}
-            //     onTouchEnd={this.setHideControlsTimeout}
+                onScrubberClick={this.changeVideoTime}
+                onTouchMove={this.handleComponentMouseMove}
+                onTouchEnd={this.setHideControlsTimeout}
 
-            //     playPauseButton={this.handleVideoPlayPause}
-            //     prevButton={{
-            //       onClick: this.handlePrevClick,
-            //       hoverCard: prevVideo && {
-            //         text: prevVideo.title
-            //       }
-            //     }}
-            //     nextButton={{
-            //       onClick: this.handleNextClick,
-            //       hoverCard: nextVideo && {
-            //         text: nextVideo.title
-            //       }
-            //     }}
-            //     muteButton={this.handleVolumeClick}
-            //   />
-            // : !this.state.showEndingCTA
-            //   ? <SimpleProgressBar
-            //       key={`simple-progress-bar-${this.props.slug}`}
-            //       currentTime={this.props.currentTime}
-            //       duration={this.props.duration}
-            //     />
-            //   : null
+                playPauseButton={this.handleVideoPlayPause}
+                prevButton={{
+                  onClick: this.handlePrevClick,
+                  hoverCard: prevVideo && {
+                    text: prevVideo.title
+                  }
+                }}
+                nextButton={{
+                  onClick: this.handleNextClick,
+                  hoverCard: nextVideo && {
+                    text: nextVideo.title
+                  }
+                }}
+                muteButton={this.handleVolumeClick}
+              />
+            : !this.state.showEndingCTA
+              ? <SimpleProgressBar
+                  key={`simple-progress-bar-${this.props.slug}`}
+                  currentTime={this.props.currentTime}
+                  duration={this.props.duration}
+                />
+              : null
           }
         </TransitionGroup>
       </div>

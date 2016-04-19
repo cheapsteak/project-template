@@ -29,6 +29,8 @@ export default class Chapter extends React.Component {
     isMobile: detect.isMobile
   };
 
+  handlingResize = true;
+
   cleanupOperations = [];
 
   componentWillMount() {
@@ -52,11 +54,26 @@ export default class Chapter extends React.Component {
   }
 
   componentWillEnter(callback) {
+    const animatedEls = [
+      this.containerEl,
+      ...document.querySelectorAll('.chapter-page .page-component'),
+      this.refs.main,
+      this.refs.nav,
+      this.refs.pageWrapper
+    ];
+
+    TweenMax.killTweensOf(animatedEls)
+    TweenMax.set(animatedEls, { clearProps: 'all' });
+
     // timeout is needed because we want to start playing video only after previous page animateOut is done
     setTimeout(() => {
       this.refs.heroVideo.play();
       callback();
     }, 1500);
+
+    if(!this.handlingResize) {
+      window.addEventListener('resize', this.handleResize);
+    }
   }
 
   componentWillLeave(callback) {
@@ -69,6 +86,7 @@ export default class Chapter extends React.Component {
   componentWillUnmount() {
     this.cleanup();
     window.removeEventListener('resize', this.handleResize);
+    this.handlingResize = false;
   };
 
   animateOutSwipe = (callback) => {
@@ -202,6 +220,7 @@ export default class Chapter extends React.Component {
     scrollController.addScene(scrollScenes);
 
     window.addEventListener('resize', this.handleResize);
+    this.handlingResize = true;
   }
 
   cleanup = () => {
@@ -229,6 +248,8 @@ export default class Chapter extends React.Component {
   };
 
   render() {
+    window.ccccc = this;
+
     if (!this.state.data) return <div/>;
 
     const isReturn = !!localStorage.getItem('narrative-video-time');

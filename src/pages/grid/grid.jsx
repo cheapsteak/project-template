@@ -54,12 +54,17 @@ export default class GridPage extends React.Component {
   }
 
   componentWillEnter(callback) {
+    const animatedEls = [
+      this.containerEl,
+      this.refs.pageWrapper,
+      findDOMNode(this).querySelector('.instructional-video-player'),
+      findDOMNode(this).querySelector('.grid-page')
+    ];
 
-    // TweenMax.killChildTweensOf(this.containerEl);
-    // this.resetContent();
-    animate.set(this.containerEl, { x: '0%' });
+    TweenMax.killTweensOf(animatedEls);
+    animate.set(animatedEls, { clearProps: 'all' });
         
-    this.animateIn().then(() => console.log('grid callback') || callback && callback());
+    this.animateIn().then(() => callback && callback());
   }
 
   componentWillLeave(callback) {
@@ -134,14 +139,18 @@ export default class GridPage extends React.Component {
 
   animateIn = () => {
     const el = findDOMNode(this);
+    const videoPlayer = findDOMNode(this).querySelector('.instructional-video-player');
     this.setState({isMenuVisible: true});
 
     const ease = ViniEaseOut;
     const duration = 0.6;
     const delay = 1.1;
 
-    // TweenMax.killChildTweensOf(el);
-    animate.set(findDOMNode(this).querySelector('.instructional-video-player'), {clearProps: 'all'});
+    if(videoPlayer) {
+      animate.set(videoPlayer, {clearProps: 'all'});
+      animate.set(videoPlayer, {zIndex: 1});
+    }
+
     animate.set(findDOMNode(this), {clearProps: 'all'});
 
     return animate.all([
@@ -209,11 +218,12 @@ export default class GridPage extends React.Component {
 
     const videoContainer = this.videoContainer.children[0];
     animate.to(videoContainer, 1, {autoAlpha: 0});
+    animate.set(this.refs.pageWrapper, { autoAlpha: 0 })
 
     return animate.all([
       animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
       animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
-      animate.to(videoContainer, duration, {x: '100%', ease, delay})
+      animate.to(videoContainer, duration, {x: '100%', ease, delay}),
     ])
   };
 

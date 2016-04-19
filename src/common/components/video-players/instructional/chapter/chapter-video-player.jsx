@@ -156,7 +156,7 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   get videoEnded () {
-    return this.video.currentTime === this.video.duration;
+    return !this.video || this.video.currentTime === this.video.duration;
   }
 
   handleResize = () => {
