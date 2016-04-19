@@ -63,7 +63,10 @@ export default class GridPage extends React.Component {
 
     TweenMax.killTweensOf(animatedEls);
     animate.set(animatedEls, { clearProps: 'all' });
-        
+    
+    // Fix for quick swipe back and forth
+    this.refs.grid.animateIn();
+
     this.animateIn().then(() => callback && callback());
   }
 
