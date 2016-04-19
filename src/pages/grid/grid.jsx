@@ -1,7 +1,9 @@
 import React from 'react';
 import {findDOMNode} from 'react-dom';
 import animate from 'gsap-promise';
-import TransitionGroup from 'react-addons-transition-group';
+// import TransitionGroup from 'react-addons-transition-group';
+import TransitionGroup from 'react-transition-group-plus';
+
 import Layout890 from 'common/components/grid/layout/layout-890';
 import Layout1060 from 'common/components/grid/layout/layout-1060';
 import Layout1230 from 'common/components/grid/layout/layout-1230';
@@ -52,6 +54,19 @@ export default class GridPage extends React.Component {
   }
 
   componentWillEnter(callback) {
+    const animatedEls = [
+      this.containerEl,
+      this.refs.pageWrapper,
+      findDOMNode(this).querySelector('.instructional-video-player'),
+      findDOMNode(this).querySelector('.grid-page')
+    ];
+
+    TweenMax.killTweensOf(animatedEls);
+    animate.set(animatedEls, { clearProps: 'all' });
+    
+    // Fix for quick swipe back and forth
+    this.refs.grid.animateIn();
+
     this.animateIn().then(() => callback && callback());
   }
 
@@ -126,11 +141,20 @@ export default class GridPage extends React.Component {
   };
 
   animateIn = () => {
+    const el = findDOMNode(this);
+    const videoPlayer = findDOMNode(this).querySelector('.instructional-video-player');
     this.setState({isMenuVisible: true});
 
     const ease = ViniEaseOut;
     const duration = 0.6;
     const delay = 1.1;
+
+    if(videoPlayer) {
+      animate.set(videoPlayer, {clearProps: 'all'});
+      animate.set(videoPlayer, {zIndex: 1});
+    }
+
+    animate.set(findDOMNode(this), {clearProps: 'all'});
 
     return animate.all([
         animate.to(this.refs.grid.containerEl, duration, {ease: ViniEaseOut, delay, y: '0%'}),
@@ -197,11 +221,12 @@ export default class GridPage extends React.Component {
 
     const videoContainer = this.videoContainer.children[0];
     animate.to(videoContainer, 1, {autoAlpha: 0});
+    animate.set(this.refs.pageWrapper, { autoAlpha: 0 })
 
     return animate.all([
       animate.to(this.containerEl, duration, {x: '-100%', ease, delay}),
       animate.to(this.containerEl, duration, {autoAlpha: 0.6, delay}),
-      animate.to(videoContainer, duration, {x: '100%', ease, delay})
+      animate.to(videoContainer, duration, {x: '100%', ease, delay}),
     ])
   };
 

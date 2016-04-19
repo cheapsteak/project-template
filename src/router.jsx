@@ -16,7 +16,7 @@ import mobileRoutes from './mobile/routes.jsx';
 import detect from 'common/utils/detect';
 
 function handleRouteUpdate() {
-  console.log('route updated');
+  // console.log('route updated');
   ga('send', 'pageview');
 }
 

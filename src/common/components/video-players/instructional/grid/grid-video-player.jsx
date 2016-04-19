@@ -154,6 +154,8 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillLeave(callback) {
+    console.log('LEEAVE');
+        
     animate.set(this.containerEl, {zIndex: 999999});
     this.isAnimatingOut = true;
     this.props.onVideoPause();
@@ -208,6 +210,8 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   videoResize = () => {
+    if(!this.video) return;
+
     if (window.innerWidth > window.innerHeight) {
       BgCover.BackgroundCover(this.video, this.refs.videoWrapper);
     } else {
@@ -415,9 +419,9 @@ export default class GridVideoPlayer extends React.Component {
   };
 
   animateOutControls = () => {
-    // if(this.isAnimatingOut) return
+    if(this.isAnimatingOut) return
 
-    // this.stopAnimations(_.omit(this.refs, 'endingOverlay'));
+    // this.stopAnimations();
 
     const conditionalAnimations = !this.videoEnded && [
       animate.to(this.refs.videoWrapper, 0.3, this.animationStates.out.videoWrapper),
@@ -436,7 +440,6 @@ export default class GridVideoPlayer extends React.Component {
 
   animateInEndOverlay = () => {
     // this.stopAnimations(_.omit(this.refs, 'endingOverlay'));
-    
 
     this.zoomedOut = true;
 

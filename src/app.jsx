@@ -1,5 +1,7 @@
 import React from 'react';
-import TransitionGroup from 'react-addons-transition-group';
+// import TransitionGroup from 'react-addons-transition-group';
+import TransitionGroup from 'react-transition-group-plus';
+
 import LearnMoreModal from 'common/components/learn-more-modal/learn-more-modal.jsx';
 import store from 'common/store.js';
 import * as modalActions from 'common/actions/learn-more-modal-actions.js';

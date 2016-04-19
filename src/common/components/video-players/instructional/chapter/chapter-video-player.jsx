@@ -143,6 +143,10 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   componentWillUnmount() {
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = function () {};
+    // delete this.animationStates.out.videoWrapper.onUpdate;
+    // delete this.animationStates.idle.videoWrapper.onUpdate;
+
     window.removeEventListener('resize', this.handleResize);
     this.analytics && this.analytics.cleanup();
   }
@@ -152,7 +156,7 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   get videoEnded () {
-    return this.video.currentTime === this.video.duration;
+    return !this.video || this.video.currentTime === this.video.duration;
   }
 
   handleResize = () => {
