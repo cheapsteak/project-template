@@ -337,7 +337,6 @@ export default class Chapter extends React.Component {
                       id="instructionalVideo"
                       ref='instructionalVideo'
                       slug={video.slug}
-                      noZoom={true}
                     />
                   </div>
                 </div>

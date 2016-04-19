@@ -17,17 +17,22 @@
     visibility: hidden;
   }
 
-  &.no-zoom {
+  &.not-full-browser {
     .video-wrapper {
       transform: translate(0,0) !important;
     }
 
     .close-button {
-      display: none;
+      visibility: hidden !important;
     }
 
     .video-overlay {
-      display: none;
+      visibility: hidden !important;
+    }
+
+    .video-wrapper {
+      width: 100% !important;
+      height: 100% !important;
     }
   }
 

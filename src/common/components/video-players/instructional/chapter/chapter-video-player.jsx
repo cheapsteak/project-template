@@ -33,19 +33,12 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   els = {};
-
-
-  videoId = 'target-video';
-  cloneId = 'clone-video';
   hideControlsTimeoutId = undefined;
   wrapperVisible = false;
 
   componentDidMount() {
     this.animationStates = calculateAnimationStates(this.els);
-
-    if(!this.props.isFullBrowser) {
-      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
-    }
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     const initialState = this.props.useFullControls
       ? 'idle'
@@ -63,6 +56,8 @@ export default class ChapterVideoPlayer extends React.Component {
     this.props.isPlaying && this.video && this.playVideo();
 
     window.addEventListener('resize', this.handleResize);
+
+    this.handleResize();
 
     if(this.video) {
       this.analytics = createVideoAnalyticsTracker(this.video, `Instructional Video Player - ${this.props.slug}`, 'Instructional Video');
@@ -125,8 +120,9 @@ export default class ChapterVideoPlayer extends React.Component {
       top: 0,
       left: 0,
       ease: Expo.easeOut,
-      onUpdate: () => this.handleResize
+      onUpdate: this.videoResize
     })
+    .then(this.handleResize)
   };
 
   animateOutFullBrowser = () => {
@@ -140,51 +136,12 @@ export default class ChapterVideoPlayer extends React.Component {
       width: clientRect.width,
       height: clientRect.height,
       ease: Expo.easeOut,
-      onUpdate: () => this.handleResize
+      onUpdate: this.videoResize
     })
-    .then(() => animate.set(this.els.root, { clearProps: 'all' }));
-  };
-
-  componentWillEnterFullBrowser = () => {
-    const container = this.els.videoWrapper;
-    const video = document.querySelector(`#${this.videoId}`);
-    const videoParent = video.parentNode;
-    const clone = video.cloneNode();
-    const isPlaying = !video.paused;
-
-    clone['data-reactid'] = new Date().getTime();
-    clone.id = this.cloneId;
-
-    videoParent.removeChild(video)
-    videoParent.insertBefore(clone, videoParent.firstChild);
-    container.insertBefore(video, container.firstChild);
-
-    this.video = video;
-
-    isPlaying && video.play();
-
-    this.handleResize();
-
-    return Promise.resolve();
-  };
-
-  componentWillLeaveFullBrowser = () => {
-    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = undefined;
-
-    animate.to(this.els.videoWrapper, 0.6, this.animationStates.out.videoWrapper);
-    return Promise.resolve();
-  };
-
-  componentDidLeaveFullBrowser = () => {
-    const container = findDOMNode(this);
-    const clone = document.querySelector('#clone-video');
-    const cloneParent = clone.parentNode;
-    const video = document.querySelector(`#${this.videoId}`);
-    const isPlaying = !video.paused;
-
-    cloneParent.removeChild(clone)
-    cloneParent.insertBefore(video, cloneParent.firstChild);
-    isPlaying && video.play();
+    .then(() => {
+      animate.set(this.els.root, { clearProps: 'all' })
+      this.handleResize();
+    });
   };
 
   componentWillUnmount() {
@@ -204,11 +161,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   handleResize = () => {
     this.animationStates = calculateAnimationStates(this.els);
-
-    // we need to prevent the original cloned video component from updating its video size based on its own container
-    if(!this.props.isFullBrowser) {
-      this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
-    }
+    this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = this.videoResize;
 
     if(this.wrapperVisible) {
       animate.set(this.els.videoWrapper, {
@@ -277,7 +230,7 @@ export default class ChapterVideoPlayer extends React.Component {
     this.hideControlsTimeoutId = setTimeout(() => {
       this.props.hideFullControls();
       this.hideControlsTimeoutId = undefined;
-    }, 4000);
+    }, 3500);
   };
 
   handleMetadataLoaded = () => {
@@ -322,7 +275,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
   handleCloseClick = () => {
     if(this.props.isFullBrowser) {
-      this.props.exitFullBrowser();
+      this.props.toggleFullBrowser();
     }
   }
 
@@ -426,18 +379,10 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   handleClick = (e) => {
-    if(e.target.id === 'videoOverlay' || e.target.id === this.videoId) {
+    if(e.target.id === 'videoOverlay' || e.target.id === 'video') {
       this.handleVideoPlayPause();
     }
   };
-
-  handleFullBrowserClick = () => {
-    if(this.props.isFullBrowser) {
-      this.props.exitFullBrowser(this.props.chapterRoute);
-    } else {
-      this.context.router.push(this.props.fullBrowserChapterRoute);
-    }
-  }
 
   render() {
     const progressWidth = (this.video && this.video.duration ?  this.video.currentTime / this.video.duration * 100 : 0) + '%';
@@ -448,7 +393,7 @@ export default class ChapterVideoPlayer extends React.Component {
       <div
         ref={ node => this.els.root = node }
         className={
-          `video-player instructional-video-player chapter-player ${className} ${noZoom ? 'no-zoom' : ''} ${init ? 'init' : ''} ${this.state.isReady || this.props.isFullBrowser ? ' ready' : ''}`
+          `video-player instructional-video-player chapter-player ${className}${init ? ' init' : ''}${this.state.isReady ? ' ready' : ''}${!isFullBrowser ? ' not-full-browser' : ''}`
         }
         style={style}
         onMouseLeave={this.handleComponentMouseMove}
@@ -470,7 +415,7 @@ export default class ChapterVideoPlayer extends React.Component {
           className={`video-wrapper`}
         >
           <video
-            id={this.videoId}
+            id='video'
             preload="auto"
             ref={(node) => this.video = node }
             src={this.props.src}
