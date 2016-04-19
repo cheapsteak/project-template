@@ -32,6 +32,7 @@ class ChapterVideoPlayerRedux extends React.Component {
       onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration.bind(null, this.props.slug)}
       showFullControls={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { useFullControls: true })}
       hideFullControls={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { useFullControls: false })}
+      toggleFullBrowser={this.boundActionCreators.toggleFullBrowser.bind(null, this.props.slug)}
       mute={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { isMuted: true })}
       unmute={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { isMuted: false })}
       {...this.props}

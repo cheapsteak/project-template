@@ -33,6 +33,8 @@ export default class ChapterVideoPlayer extends React.Component {
   };
 
   els = {};
+
+
   videoId = 'target-video';
   cloneId = 'clone-video';
   hideControlsTimeoutId = undefined;
@@ -98,7 +100,50 @@ export default class ChapterVideoPlayer extends React.Component {
     if(this.props.isMuted !== nextProps.isMuted) {
       nextProps.isMuted ? this.mute() : this.unmute();
     }
+
+    if(this.props.isFullBrowser !== undefined && this.props.isFullBrowser !== nextProps.isFullBrowser) {
+      nextProps.isFullBrowser
+      ? this.animateToFullBrowser()
+      : this.animateOutFullBrowser();
+    }
   }
+
+  animateToFullBrowser = () => {
+    const clientRect = this.els.root.getBoundingClientRect();
+    animate.set(this.els.root, {
+      position: 'fixed',
+      top: clientRect.top,
+      left: clientRect.left,
+      width: clientRect.width,
+      height: clientRect.height,
+      zIndex: 1000
+    })
+
+    return animate.to(this.els.root, 0.4, {
+      width: '100%',
+      height: '100%',
+      top: 0,
+      left: 0,
+      ease: Expo.easeOut,
+      onUpdate: () => this.handleResize
+    })
+  };
+
+  animateOutFullBrowser = () => {
+    const clientRect = this.els.root.parentNode.getBoundingClientRect();
+
+    animate.set(this.els.root, { zIndex: 'auto' });
+
+    return animate.to(this.els.root, 0.4, {
+      top: clientRect.top,
+      left: clientRect.left,
+      width: clientRect.width,
+      height: clientRect.height,
+      ease: Expo.easeOut,
+      onUpdate: () => this.handleResize
+    })
+    .then(() => animate.set(this.els.root, { clearProps: 'all' }));
+  };
 
   componentWillEnterFullBrowser = () => {
     const container = this.els.videoWrapper;
@@ -144,8 +189,6 @@ export default class ChapterVideoPlayer extends React.Component {
 
   componentWillUnmount() {
     this.animationStates.out.videoWrapper.onUpdate = this.animationStates.idle.videoWrapper.onUpdate = function () {};
-    // delete this.animationStates.out.videoWrapper.onUpdate;
-    // delete this.animationStates.idle.videoWrapper.onUpdate;
 
     window.removeEventListener('resize', this.handleResize);
     this.analytics && this.analytics.cleanup();
@@ -426,22 +469,18 @@ export default class ChapterVideoPlayer extends React.Component {
           ref={ node => this.els.videoWrapper = node }
           className={`video-wrapper`}
         >
-          {
-            !isFullBrowser
-            ? <video
-                id={this.videoId}
-                preload="auto"
-                ref={(node) => this.video = node }
-                src={this.props.src}
-                onLoadedMetadata={this.handleMetadataLoaded}
-                onEnded={this.handleVideoPlayPause}
-                onTimeUpdate={this.handleTimeUpdate}
-                poster={this.props.poster}
-                style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
-              >
-              </video>
-            : undefined
-          }
+          <video
+            id={this.videoId}
+            preload="auto"
+            ref={(node) => this.video = node }
+            src={this.props.src}
+            onLoadedMetadata={this.handleMetadataLoaded}
+            onEnded={this.handleVideoPlayPause}
+            onTimeUpdate={this.handleTimeUpdate}
+            poster={this.props.poster}
+            style={{visibility: this.state.isReady ? 'visible' : 'hidden'}}
+          >
+          </video>
           <RectangularButton
             id="rectangle-button"
             ref={ node => this.els.cornerButton = findDOMNode(node) }
@@ -497,7 +536,6 @@ export default class ChapterVideoPlayer extends React.Component {
                  isMuted={this.props.isMuted}
                  currentTime={this.props.currentTime}
                  duration={this.video && this.video.duration}
-                 isFullBrowser={this.props.isFullBrowser}
 
                  onScrubberClick={this.changeVideoTime}
                  onTouchMove={this.handleComponentMouseMove}
@@ -505,7 +543,7 @@ export default class ChapterVideoPlayer extends React.Component {
 
                  playPauseButton={this.handleVideoPlayPause}
                  muteButton={this.handleVolumeClick}
-                 fullBrowserButton={this.handleFullBrowserClick}
+                 fullBrowserButton={this.props.toggleFullBrowser}
                />
              : <SimpleProgressBar
                 key="chapter-player-simple-control"

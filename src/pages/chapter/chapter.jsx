@@ -331,13 +331,15 @@ export default class Chapter extends React.Component {
               return (
                 <div className="page-component" key={video.slug}>
                   <h2 className="component-title">{ video.title }</h2>
-                  <InstructionalVideo
-                    className="margin-auto-horizontal instructional-video-component"
-                    id="instructionalVideo"
-                    ref='instructionalVideo'
-                    slug={video.slug}
-                    noZoom={true}
-                  />
+                  <div className="instructional-video-component">
+                    <InstructionalVideo
+                      className="margin-auto-horizontal"
+                      id="instructionalVideo"
+                      ref='instructionalVideo'
+                      slug={video.slug}
+                      noZoom={true}
+                    />
+                  </div>
                 </div>
               )
             })
