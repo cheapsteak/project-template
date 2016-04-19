@@ -31,6 +31,11 @@ $orange: #f99100;
     & + .page-component {
       @include scale('margin-top', 100px, #{(100/1400*100)}vw, #{(100/1400*100)}vw);
     }
+
+
+    &.article-component {
+      z-index: 0;
+    }
   }
 
   .main {
