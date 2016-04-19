@@ -1,4 +1,6 @@
 import React from 'react';
+import { findDOMNode } from 'react-dom';
+import animate from 'gsap-promise';
 
 const duration = 0.5;
 let zIndexCounter = 1000;
