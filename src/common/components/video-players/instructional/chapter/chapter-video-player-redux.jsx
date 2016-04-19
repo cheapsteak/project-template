@@ -1,13 +1,13 @@
 import React from 'react';
 import { findDOMNode } from 'react-dom';
 import ChapterVideoPlayer from './chapter-video-player.jsx'
-import * as actionCreators from '../instructional-video-player-actions.js';
+import * as actionCreators from './chapter-video-player-actions.js';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import store from 'common/store.js';
 import _ from 'lodash';
 
-@connect(state => ({ videos: state.instructionalVideos}), null, null, { withRef: true })
+@connect(state => ({ videos: state.chapterVideos}), null, null, { withRef: true })
 class ChapterVideoPlayerRedux extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ class ChapterVideoPlayerRedux extends React.Component {
   componentWillMount() {
     if(this.props.slug && !this.props.isFullBrowser) {
       this.boundActionCreators.setVideo(this.props.slug);
-    }  
+    }
   }
 
   render () {
@@ -26,16 +26,16 @@ class ChapterVideoPlayerRedux extends React.Component {
     return <ChapterVideoPlayer
       ref="wrappedInstance"
       className={className}
-      onVideoTimeChange={this.boundActionCreators.setVideoTime}
-      onVideoPlay={this.boundActionCreators.playVideo}
-      onVideoPause={this.boundActionCreators.pauseVideo}
-      onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration}
-      showFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: true })}
-      hideFullControls={this.boundActionCreators.setVideoOptions.bind(null, { useFullControls: false })}
-      mute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: true })}
-      unmute={this.boundActionCreators.setVideoOptions.bind(null, { isMuted: false })}
+      onVideoTimeChange={this.boundActionCreators.setVideoTime.bind(null, this.props.slug)}
+      onVideoPlay={this.boundActionCreators.playVideo.bind(null, this.props.slug)}
+      onVideoPause={this.boundActionCreators.pauseVideo.bind(null, this.props.slug)}
+      onVideoMetadataLoaded={this.boundActionCreators.setVideoDuration.bind(null, this.props.slug)}
+      showFullControls={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { useFullControls: true })}
+      hideFullControls={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { useFullControls: false })}
+      mute={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { isMuted: true })}
+      unmute={this.boundActionCreators.setVideoOptions.bind(null, this.props.slug, { isMuted: false })}
       {...this.props}
-      {...videos.currentVideo}
+      {...videos[this.props.slug]}
     />
   }
 }
