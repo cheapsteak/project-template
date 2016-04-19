@@ -247,6 +247,8 @@ export default class LandingPage extends React.Component {
   handleRestartCtaClick = () => {
     localStorage.setItem('narrative-video-time', 0);
 
+    audio.play('button-click')
+
     tracking.trackEvent({
       category: 'Restart documentary CTA',
       label: 'Landing Page'
@@ -322,6 +324,7 @@ export default class LandingPage extends React.Component {
                 className={`cta restart`}
                 to={`narrative-video`}
                 onClick={this.handleRestartCtaClick}
+                onMouseEnter={() => audio.play('button-rollover')}
               >
                 <div className="replay-icon" dangerouslySetInnerHTML={{ __html: ReplaySvg }}></div>
                 <div className="replay-text">Restart Tour</div>
