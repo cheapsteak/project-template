@@ -70,15 +70,20 @@ export default class Panorama extends React.Component {
     eventBus: React.PropTypes.object.isRequired
   };
 
+  init = false;
+
   componentWillReceiveProps(newProps) {
-    if (newProps.src && newProps.src !== this.props.src) {
-      this.setPanorama(newProps.src, newProps.initLong, newProps.initLat);
+    if (!this.props.src && newProps.src || !this.init) {
+      this.initNewPanorama(newProps.src, newProps.initLong, newProps.initLat);
+      this.init = true;
+    } else if (newProps.src && newProps.src !== this.props.src) {
+      this.drawPlaceholderCanvas(newProps.src, newProps.initLong, newProps.initLat);
     }
   }
 
   componentDidMount() {
     this.containerEl = findDOMNode(this);
-    this.props.src && this.setPanorama();
+    (this.props.src && detect.isPhone) && this.initNewPanorama(this.props.src, this.props.initLong, this.props.initLat);
 
     this.context.eventBus.on('zoomUpdate', this.onZoomUpdate);
     this.context.eventBus.on('zoomIn', this.zoomIn);
@@ -312,15 +317,6 @@ export default class Panorama extends React.Component {
       })
 
     }, 200);
-  };
-
-  setPanorama = (src = this.props.src, long = this.props.initLong, lat = this.props.initLat) => {
-    if (this.props.src && !detect.isPhone) {
-      // draw current panorama to placeholder canvas before swapping source
-      this.drawPlaceholderCanvas(src, long, lat);
-    } else {
-      this.initNewPanorama(src, long, lat);
-    }
   };
 
   handleAccelerometerClick = () => {
