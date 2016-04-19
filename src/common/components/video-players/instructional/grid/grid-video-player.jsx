@@ -132,8 +132,6 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillAppear(callback) {
-    console.log('APPEAR');
-
     if (!detect.isMobile) {
       this.playVideo();
       this.props.onVideoPlay();
@@ -142,8 +140,6 @@ export default class GridVideoPlayer extends React.Component {
   }
 
   componentWillEnter(callback) {
-    console.log('ENTER');
-
     //this.props.onVideoPause();
     //this.pauseVideo();
 
