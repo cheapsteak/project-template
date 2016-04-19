@@ -164,7 +164,7 @@ export default [
   },
   {
     name: 'Computer Science',
-    image: `${config.ASSET_PATH}/images/mobile-thumb-cs-article-1.jpg`,
+    image: `${config.ASSET_PATH}/images/mobile-chapters-kid-7.png`,
     scholar: 'Raquel',
     narrativeVideo: {
       iconImage: `${config.ASSET_PATH}/images/mobile-thumb-cs-narrative-1.jpg`,
