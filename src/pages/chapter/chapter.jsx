@@ -249,8 +249,6 @@ export default class Chapter extends React.Component {
   };
 
   render() {
-    window.ccccc = this;
-
     if (!this.state.data) return <div/>;
 
     const isReturn = !!localStorage.getItem('narrative-video-time');
