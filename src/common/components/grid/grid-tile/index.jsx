@@ -204,6 +204,8 @@ export default class GridTile extends React.Component {
       category: trackingCategory,
       label: 'Grid'
     });
+
+    audio.play('button-click')
   };
 
   render() {

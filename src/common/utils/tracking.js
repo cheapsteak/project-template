@@ -1,4 +1,4 @@
-const DEBUG_TRACKING = true;
+const DEBUG_TRACKING = false;
 
 module.exports = (function () {
 

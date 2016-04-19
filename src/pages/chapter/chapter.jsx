@@ -356,7 +356,7 @@ export default class Chapter extends React.Component {
           /***   Articles   ***/
 
           this.state.data.articles.length
-            ? <div className="page-component">
+            ? <div className="page-component article-component">
             <h2 className="component-title">
               Articles
             </h2>
