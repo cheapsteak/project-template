@@ -1,6 +1,11 @@
 @import 'chapter-columns';
 
-$parallax-amplitude: 50px;
+$parallax-amplitude: 5.2vw;
+$max-amp: 100px;
+$min-amp: 50px;
+$min-amp-breakpoint: 961px;
+$max-amp-breakpoint: 1920px;
+
 $orange: #f99100;
 
 
@@ -234,10 +239,34 @@ $orange: #f99100;
       margin-bottom: - $parallax-amplitude;
       position: relative;
 
+      @media (max-width: $min-amp-breakpoint) {
+        height: calc(100% + #{$min-amp * 2});
+        margin-top: - $min-amp;
+        margin-bottom: - $min-amp;
+      }
+
+      @media (min-width: $max-amp-breakpoint) {
+        height: calc(100% + #{$max-amp * 2});
+        margin-top: - $max-amp;
+        margin-bottom: - $max-amp;
+      }
+
       &.psv-inject-target, &.panorama-placeholder-container {
         width: calc(100% + #{$parallax-amplitude * 2});
         margin-left: - $parallax-amplitude;
         margin-right: - $parallax-amplitude;
+
+        @media (max-width: $min-amp-breakpoint) {
+          height: calc(100% + #{$min-amp * 2});
+          margin-left: - $min-amp;
+          margin-right: - $min-amp;
+        }
+
+        @media (min-width: $max-amp-breakpoint) {
+          height: calc(100% + #{$max-amp * 2});
+          margin-left: - $max-amp;
+          margin-right: - $max-amp;
+        }
       }
     }
   }
@@ -246,6 +275,13 @@ $orange: #f99100;
     @include scale-prop(height, 480);
     .text-container {
       margin-top: - $parallax-amplitude * 2;
+      @media (max-width: $min-amp-breakpoint) {
+        margin-top: - $min-amp * 2;
+      }
+
+      @media (min-width: $max-amp-breakpoint) {
+        margin-top: - $max-amp * 2;
+      }
     }
   }
 
@@ -314,6 +350,14 @@ $orange: #f99100;
   .photo-slider {
     margin-top: - $parallax-amplitude;
     margin-bottom: - $parallax-amplitude;
+    @media (max-width: $min-amp-breakpoint) {
+      margin-top: - $min-amp;
+      margin-bottom: - $min-amp;
+    }
+    @media (min-width: $max-amp-breakpoint) {
+      margin-top: - $max-amp;
+      margin-bottom: - $max-amp;
+    }
     //transition: margin-top 0.3s, margin-bottom 0.3s;
     .fullbrowser-wrapper & {
       margin-top: 0;
@@ -331,5 +375,16 @@ $orange: #f99100;
     margin-top: -$parallax-amplitude;
     margin-bottom: -$parallax-amplitude;
     height: calc(100vw*9/16 + #{$parallax-amplitude*2});
+
+    @media (max-width: $min-amp-breakpoint) {
+      margin-left: - $min-amp;
+      margin-right: - $min-amp;
+      height: calc(100vw*9/16 + #{$min-amp*2});
+    }
+    @media (min-width: $max-amp-breakpoint) {
+      margin-left: - $max-amp;
+      margin-right: - $max-amp;
+      height: calc(100vw*9/16 + #{$max-amp*2});
+    }
   }
 }

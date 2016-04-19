@@ -21,6 +21,7 @@ import BgCover from 'background-cover';
 import detect from 'common/utils/detect';
 import scrollbarSize from '../../common/utils/scrollbar-size';
 import animate from 'gsap-promise';
+import clamp from 'clamp';
 
 export default class Chapter extends React.Component {
 
@@ -188,8 +189,11 @@ export default class Chapter extends React.Component {
 
       scene.on('progress', (e) => {
         TweenMax.killTweensOf(el);
+        const min = clamp(100/1920 * window.innerWidth, 50, 100);
+        const max = - min;
+        console.log(min);
         TweenMax.to(el, 0.3, {
-          y: getY(e.progress),
+          y: getY(e.progress, min, max),
           ease: ViniEaseOut,
         })
       })
