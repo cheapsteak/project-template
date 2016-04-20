@@ -97,7 +97,6 @@ class PhotoEssay extends React.Component {
           </Slider>
         </div>
         <div className="photo-description">
-          <h3>About this picture</h3>
           <TransitionGroup component="div" className="is-relative pin-non-first-children">
             <TransitionItem
               duration={0.3}
