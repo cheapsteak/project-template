@@ -178,12 +178,12 @@ export default [
       },
       {
         id: '1',
-        description: 'Scholars who made the Dean’s List are invited to a special breakfast with their families.',
+        description: 'Parents view scholars’ impressive computer science projects at the Code-a-thon.',
         image: `${config.ASSET_PATH}/images/sample-photo-2.jpg`
       },
       {
         id: '2',
-        description: 'At the World Heritage Potluck, scholars and families come together to celebrate the diversity found in our communities. Everyone samples food dishes from as many as 30 countries!',
+        description: 'Graduation is always an emotional time for our middle school scholars and their parents. But high school is only a few months away!',
         image: `${config.ASSET_PATH}/images/sample-photo-3.jpg`
       }
     ]
