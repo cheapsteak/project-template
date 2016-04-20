@@ -79,7 +79,8 @@ export default class VideoControls extends React.Component {
   static propTypes = {
     id: React.PropTypes.string,
     style: React.PropTypes.object,
-    currentTime: React.PropTypes.number.isRequired,
+    currentTime: React.PropTypes.number,
+    duration: React.PropTypes.number,
     onMouseEnter: React.PropTypes.func,
     onMouseMove: React.PropTypes.func,
     onTouchMove: React.PropTypes.func,
@@ -97,8 +98,6 @@ export default class VideoControls extends React.Component {
     fullBrowserButton: React.PropTypes.func,
     muteButton: React.PropTypes.func,
     hotspots: React.PropTypes.array,
-    currentTime: React.PropTypes.number,
-    duration: React.PropTypes.number,
   };
 
   static defaultProps = {
